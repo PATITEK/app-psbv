@@ -8,7 +8,7 @@
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
     <input type="text" formControlName="username" class="inputname" placeholder="Username" required>
     <input type="password" formControlName="password" class="inputname" placeholder="Password" required>
-    <ion-router-link class="forgot-password">Forgot Password?</ion-router-link>
+    <ion-router-link class="forgot-password" (click)="resetPass()">Forgot Password?</ion-router-link>
     <ion-button class="btn-signin" type="submit">Sign in My Account</ion-button>
   </form>
 
