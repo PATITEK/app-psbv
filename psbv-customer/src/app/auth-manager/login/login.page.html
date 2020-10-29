@@ -1,9 +1,20 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding">
+  <ion-item-group class="header__wrapper">
+    <ion-avatar class="header__icon">
+      <ion-icon name="person" class="header__iperson"></ion-icon>
+    </ion-avatar>
+    <ion-label class="header__label">WELCOME BACK</ion-label>
+  </ion-item-group>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <input type="text" formControlName="username" class="inputname" placeholder="Username" required>
+    <input type="password" formControlName="password" class="inputname" placeholder="Password" required>
+    <ion-router-link class="forgot-password">Forgot Password?</ion-router-link>
+    <ion-button class="btn-signin" type="submit">Sign in My Account</ion-button>
+  </form>
 
-<ion-content>
+  <ion-item-group class="question__wrapper">
+    <ion-router-link class="question">Don't have an account?</ion-router-link><br />
+    <ion-router-link class="question">Request an account to Admin user</ion-router-link>
+  </ion-item-group>
 
 </ion-content>
