@@ -8,8 +8,15 @@ const routes: Routes = [
   // },
   {
     path: '',
-    loadChildren: () => import('./auth-manager/auth-manager.module').then( m => m.AuthManagerPageModule)
-  }
+    loadChildren: () => import('./change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
+ 
+
+  // {
+  //   path: 'change-password',
+  //   loadChildren: () => import('./change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  // }
+
 ];
 @NgModule({
   imports: [
