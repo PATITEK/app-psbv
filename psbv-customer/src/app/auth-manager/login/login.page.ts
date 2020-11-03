@@ -20,19 +20,19 @@ export class LoginPage implements OnInit {
   });
   ngOnInit() {
   }
-  resetPass(){
-    this.router.navigateByUrl('auth/reset-password');
-  }
-
   // resetPass(){
-  //   const data: IDataNoti = {
-  //     title: 'PASSWORD CHANGED !',
-  //     description: 'Dear user your password has been changeed, Continue to start using app',
-  //     routerLink: '/auth'
-  //   }
-  //   this.pageNotiService.setdataStatusNoti(data);
-  //   this.router.navigate(['/statusNoti']);
+  //   this.router.navigateByUrl('auth/reset-password');
   // }
+
+  resetPass(){
+    const data: IDataNoti = {
+      title: 'PASSWORD CHANGED !',
+      description: 'Dear user your password has been changeed, Continue to start using app',
+      routerLink: '/auth'
+    }
+    this.pageNotiService.setdataStatusNoti(data);
+    this.router.navigate(['/statusNoti']);
+  }
 
 
 }

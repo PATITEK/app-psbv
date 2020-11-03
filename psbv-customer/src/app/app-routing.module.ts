@@ -10,6 +10,7 @@ const routes: Routes = [
     path: 'change-password',
     loadChildren: () => import('./change-password/change-password.module').then( m => m.ChangePasswordPageModule)
   },
+ 
   {
     path: 'auth',
     loadChildren: () => import('./auth-manager/auth-manager.module').then( m => m.AuthManagerPageModule)

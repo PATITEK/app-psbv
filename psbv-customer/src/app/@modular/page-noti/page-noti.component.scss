@@ -64,3 +64,45 @@
     font-weight: bold;
     font-size: 22px;
 }
+// Res
+@media screen and (max-width: 320px) {
+    .header__wrapper {
+        .header__label {
+            font-size: 19           px;
+        }
+        margin-bottom: 87px;
+        .header__icon {
+            .icon-check {
+                font-size: 61px;
+            }
+            margin-top: 63px;
+            width: 62px;
+            height: 62px;
+        }
+        // margin-bottom: 50px;
+    }
+    ion-header {
+        height: 60px;
+    }
+    .icon-key {
+        left: 143px;
+    }
+    .content__wrapper {
+        margin-top: 80px;
+        .content__btn-change {
+            margin-top: 100px;
+        }
+        .content__wrapper-input{
+         .content__input {
+             height: 32px;
+         }
+         .ion-lock {
+             margin: 9px 6px 8px 8px;
+         }
+         .ion-eye {
+             margin: 9px 6px 8px 8px;
+         }
+        }
+    }
+   
+ }

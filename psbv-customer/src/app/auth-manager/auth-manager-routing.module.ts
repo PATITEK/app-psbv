@@ -24,7 +24,7 @@ const routes: Routes = [
     path: 'password-changed',
     loadChildren: () => import('./password-changed/password-changed.module').then( m => m.PasswordChangedPageModule)
   },
-  // { path: '', redirectTo: 'login', pathMatch: 'full' },
+
 ];
 
 @NgModule({

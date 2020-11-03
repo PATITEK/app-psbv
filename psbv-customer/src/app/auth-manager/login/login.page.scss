@@ -77,3 +77,27 @@
    margin-inline-start: 0;
    margin-inline-end: 0;
  }
+ //  Responsive 
+ @media screen and (max-width: 320px) {
+    .header__wrapper {
+        .header__label {
+            font-size: 19px;
+        }
+    }
+    .header__wrapper {
+        margin-bottom: 50px;
+        .header__icon {
+            width: 66px;
+            margin-top: 31px;
+            height: 66px;
+            margin-top: 30px;
+            .header__iperson {
+                left: 11px;
+                top: 10px;
+            }
+
+        }
+
+    }
+  
+}
