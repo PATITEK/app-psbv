@@ -6,12 +6,13 @@ import { AuthManagerPage } from './auth-manager.page';
 const routes: Routes = [
   {
     path: '',
-    component: AuthManagerPage
+    component: AuthManagerPage,
   },
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
-  },  {
+  },
+  {
     path: 'reset-password',
     loadChildren: () => import('./reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   },
@@ -22,8 +23,8 @@ const routes: Routes = [
   {
     path: 'password-changed',
     loadChildren: () => import('./password-changed/password-changed.module').then( m => m.PasswordChangedPageModule)
-  }
-
+  },
+  // { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
 
 @NgModule({

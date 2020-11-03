@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
+import { PageNotiComponent } from './page-noti.component';
+import { PageNotiRoutingModule } from './page-noti-routing.module';
 
-import { ChangePasswordPageRoutingModule } from './change-password-routing.module';
-
-import { ChangePasswordPage } from './change-password.page';
 
 @NgModule({
+  declarations: [PageNotiComponent],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ChangePasswordPageRoutingModule
+    PageNotiRoutingModule
   ],
-  declarations: [ChangePasswordPage]
+  exports: [PageNotiComponent],
 })
-export class ChangePasswordPageModule {}
+export class PageNotiModule { }
