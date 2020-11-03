@@ -7,9 +7,15 @@ const routes: Routes = [
   //   loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   // },
   {
-    path: '',
+    path: 'auth',
     loadChildren: () => import('./auth-manager/auth-manager.module').then( m => m.AuthManagerPageModule)
-  }
+  },
+  {
+    path: 'statusNoti',
+    loadChildren: () => import('./@modular/page-noti/page-noti.module').then( m => m.PageNotiModule)
+  },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '**', redirectTo: 'auth' },
 ];
 @NgModule({
   imports: [
