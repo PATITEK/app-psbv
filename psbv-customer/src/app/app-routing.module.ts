@@ -8,21 +8,23 @@ const routes: Routes = [
   //   loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   // },
   {
-    path: '',
+    path: 'auth',
     loadChildren: () => import('./auth-manager/auth-manager.module').then( m => m.AuthManagerPageModule)
   },
   {
-    path: 'new-password',
-    loadChildren: () => import('./auth-manager/new-password/new-password.module').then( m => m.NewPasswordPageModule)
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: 'login',
-    loadChildren: () => import('./auth-manager/login/login.module').then( m => m.LoginPageModule)
+    path: 'pages',
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesPageModule)
   },
-  // {
-  //   path: 'change-password',
-  //   loadChildren: () => import('./auth-manager/login/login.module').then( m => m.LoginPageModule)
-  // },
+  {
+    path: 'statusNoti',
+    loadChildren: () => import('./@modular/page-noti/page-noti.module').then( m => m.PageNotiModule)
+  },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '**', redirectTo: 'auth' },
 
 ];
 @NgModule({
