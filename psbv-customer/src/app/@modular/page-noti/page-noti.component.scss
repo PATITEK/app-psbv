@@ -1,6 +1,4 @@
-:root {
-    --main-color: #c90a1b;
-}
+
 .header__wrapper {
     display: block;
     text-align: center;
@@ -41,26 +39,26 @@
     justify-content: center;
 }
 
- .forgot-password {
+.forgot-password {
    float: right;
    font-size: 13px;
-   color: #27233c;
+   color: var(--title-color);
    margin-top: 22px;
    margin-bottom: 44px;
   
  }
- .btn-signin {
+.btn-signin {
    width: 100%;
-   --background-color: #c90a1b;
+   --background-color: var(--main-color);
    border-radius: 4px;
-   --background: #c90a1b;
+   --background: var(--main-color);
    color: white;
    margin-top: 58px;
    height: 40px;
    margin-inline-start: 0;
    margin-inline-end: 0;
  }
- .header__label {
+.header__label {
     font-weight: bold;
     font-size: 22px;
 }

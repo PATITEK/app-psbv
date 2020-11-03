@@ -13,6 +13,6 @@ export class AuthManagerPage implements OnInit {
   ngOnInit() {
   }
   gotoLogin(){
-    this.router.navigateByUrl('auth/login');
+    this.router.navigateByUrl('/login');
   }
 }

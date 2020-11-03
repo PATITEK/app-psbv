@@ -13,12 +13,11 @@ export class PageNotiService {
   public get dataStatusNoti(): Observable<IDataNoti> {
     return this.data.asObservable();
   }
-
+  
   public setdataStatusNoti(value: IDataNoti) {
     this.data.next(value);
   }
 }
-
 export interface IDataNoti {
   title: string;
   description: string;

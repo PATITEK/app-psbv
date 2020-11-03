@@ -1,6 +1,4 @@
-:root {
-    --main-color: #c90a1b;
-}
+
 .header__wrapper {
     display: block;
     text-align: center;
@@ -10,13 +8,13 @@
         width: 80px;
         height: 80px;
         margin-top: 90px;
-        color: #c90a1b;
+        color: var(--main-color);
         padding: 29px;
         margin-bottom: 30px;
         margin-left: auto;
         margin-right: auto;
         border-radius: 50%;
-        border: 1px solid #c90a1b;
+        border: 1px solid var(--main-color);
         position: relative;
         .header__iperson {
             position: absolute;
@@ -28,20 +26,18 @@
     .header__label {
         font-weight: bold;
         font-size: 22px;
+        color: var(--title-color);
     }
 }
 
-
-
 .question {
     font-size: 13px;
-    color: #27233c;
+    color: var(--title-color);
 }
 .header-md::after {
     background-image: none;
 }
 .question__wrapper {
-    
     display: block;
     text-align: center;
     justify-content: center;
@@ -55,29 +51,28 @@
     border-radius: 8px;
     margin-top: 6px;
     font-size: 14px;
+    color: var(--title-color);
     padding-left: 26px;
- 
  }
  .forgot-password {
    float: right;
    font-size: 13px;
-   color: #27233c;
+   color: var(--title-color);
    margin-top: 22px;
    margin-bottom: 44px;
-  
  }
  .btn-signin {
    width: 100%;
-   --background-color: #c90a1b;
    border-radius: 4px;
-   --background: #c90a1b;
+   --background: var(--main-color);
    color: white;
    margin-bottom: 44px;
    height: 40px;
    margin-inline-start: 0;
    margin-inline-end: 0;
+   --background-activated: var(--main-color); 
  }
- //  Responsive 
+//  Responsive 
  @media screen and (max-width: 320px) {
     .header__wrapper {
         .header__label {
