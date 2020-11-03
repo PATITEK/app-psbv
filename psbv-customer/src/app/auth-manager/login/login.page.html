@@ -6,7 +6,7 @@
     <ion-label class="header__label">WELCOME BACK</ion-label>
   </ion-item-group>
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-    <input type="text" formControlName="username" class="inputname" placeholder="Username" required>
+    <input type="text" formControlEmail="email" class="inputname" placeholder="Email" required>
     <input type="password" formControlName="password" class="inputname" placeholder="Password" required>
     <ion-router-link class="forgot-password" (click)="resetPass()">Forgot Password?</ion-router-link>
     <ion-button class="btn-signin" type="submit">Sign in My Account</ion-button>

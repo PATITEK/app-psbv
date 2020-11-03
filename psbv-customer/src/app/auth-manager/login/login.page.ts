@@ -15,7 +15,7 @@ export class LoginPage implements OnInit {
     private pageNotiService: PageNotiService,
     ) { }
   profileForm = new FormGroup({
-    username: new FormControl(''),
+    email: new FormControl(''),
     password: new FormControl(''),
   });
   ngOnInit() {
