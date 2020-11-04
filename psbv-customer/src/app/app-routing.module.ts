@@ -27,7 +27,7 @@ const routes: Routes = [
     path: 'statusNoti',
     loadChildren: () => import('./@modular/page-noti/page-noti.module').then( m => m.PageNotiModule)
   },
-  // { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
   { path: '**', redirectTo: 'product-info' },
 
 
