@@ -20,11 +20,17 @@ const routes: Routes = [
     loadChildren: () => import('./pages/pages.module').then( m => m.PagesPageModule)
   },
   {
+    path: 'product-info',
+    loadChildren: () => import('./pages/products/products.module').then( m => m.ProductsPageModule)
+  },
+  {
     path: 'statusNoti',
     loadChildren: () => import('./@modular/page-noti/page-noti.module').then( m => m.PageNotiModule)
   },
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth' },
+  // { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '**', redirectTo: 'product-info' },
+
+
 
 ];
 @NgModule({
