@@ -23,7 +23,9 @@ export class LoginPage implements OnInit {
   // resetPass(){
   //   this.router.navigateByUrl('auth/reset-password');
   // }
-
+  login(){
+    this.router.navigateByUrl('/main/home');
+  }
   resetPass(){
     const data: IDataNoti = {
       title: 'PASSWORD CHANGED !',
