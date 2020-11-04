@@ -83,12 +83,12 @@ ion-card {
  }
 
 // Responsive
-@media screen and (max-height: 823px) and (max-width: 441px) {
-    ion-col {
-        height: 242px;
-    }
+// @media screen and (max-height: 823px) and (max-width: 441px) {
+//     ion-col {
+//         height: 242px;
+//     }
   
-}
+// }
 @media screen and (max-height: 737px) {
     ion-content {
         max-height: 516px;
