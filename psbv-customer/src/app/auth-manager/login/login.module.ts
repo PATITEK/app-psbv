@@ -8,6 +8,7 @@ import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PageNotiModule } from 'src/app/@modular/page-noti/page-noti.module';
 
 @NgModule({
   imports: [
@@ -15,8 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     IonicModule,
     LoginPageRoutingModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
   ],
   declarations: [LoginPage]
 })

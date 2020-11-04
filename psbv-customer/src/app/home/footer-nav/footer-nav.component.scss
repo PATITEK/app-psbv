@@ -1,0 +1,27 @@
+.footer__nav {
+    display: flex;
+    justify-content: space-around;
+}
+.footer__nav-icon {
+    font-size: 14px;
+    color: #797979;
+}
+.footer__nav-group {
+    display: block;
+   text-align: center;
+}
+.footer__nav-label {
+    color: #A5A5A5;
+}
+.ion-toolbar:first-of-type {
+    --border-width: 0 0 0;
+}
+.footer__nav-group.footer__nav-group--active {
+    .footer__nav-icon {
+        color: #FF6E6E;
+    }
+    .footer__nav-label {
+        color: #FF6E6E;
+    }
+   
+}
