@@ -25,7 +25,11 @@ ion-card-content {
 
 .product-info {
   --padding-top: 20px;
+<<<<<<< HEAD
   --height-top: 53%;
+=======
+  --height-top: 49%;
+>>>>>>> cc7deeb2161fefdd9450800797c3ba752c235eff
   height: var(--height-top);
   ion-card-header {
     position: relative;
@@ -42,6 +46,13 @@ ion-card-content {
       font-size: 20px;
       font-weight: bold;
       text-transform: uppercase;
+<<<<<<< HEAD
+
+      @media screen and (max-width: 320px) {
+        font-size: 16px;
+      }
+=======
+>>>>>>> cc7deeb2161fefdd9450800797c3ba752c235eff
     }
   }
 
@@ -115,19 +126,35 @@ ion-card-content {
       margin-bottom: 13px;
     }
   }
+<<<<<<< HEAD
   .product-img-block {
+<<<<<<<< HEAD:psbv-customer/src/app/home/products/products.page.scss
     // padding: 10px 0px 10px 3px;
     margin: 10px 15px 10px -10px;
     // margin-right: 15px;
     // height: 100%;
+=======
+
+  .product-img-block {
+    padding: 10px 0px 10px 3px;
+    margin-right: 15px;
+    height: 100%;
+>>>>>>> cc7deeb2161fefdd9450800797c3ba752c235eff
 
     ion-img {
       margin-left: -10px;
     }
+<<<<<<< HEAD
+========
+    margin: 10px 0px 10px -10px;
+    margin-right: 15px;
+>>>>>>>> cc7deeb2161fefdd9450800797c3ba752c235eff:psbv-customer/src/app/pages/products/products.page.scss
     height: 100px;
     width: 100px;
     border-radius: 10px;
     overflow: hidden;
+=======
+>>>>>>> cc7deeb2161fefdd9450800797c3ba752c235eff
   }
 
   ion-card-header {
@@ -160,13 +187,21 @@ ion-card-content {
 }
 @media screen and (max-height: 736px) {
   .product-info {
+<<<<<<< HEAD
     --height-top: 59%;
+=======
+    --height-top: 54%;
+>>>>>>> cc7deeb2161fefdd9450800797c3ba752c235eff
     height: var(--height-top);
   }
 }
 @media screen and (max-height: 667px) {
   .product-info {
+<<<<<<< HEAD
     --height-top: 67%;
+=======
+    --height-top: 59%;
+>>>>>>> cc7deeb2161fefdd9450800797c3ba752c235eff
     height: var(--height-top);
     
   }
@@ -179,14 +214,22 @@ ion-card-content {
 }
 @media screen and (max-height: 640px) {
   .product-info {
+<<<<<<< HEAD
     --height-top: 69%;
+=======
+    --height-top: 61%;
+>>>>>>> cc7deeb2161fefdd9450800797c3ba752c235eff
     height: var(--height-top);
   }
 
 }
 @media screen and (max-height: 568px) {
   .product-info {
+<<<<<<< HEAD
     --height-top: 69%;
+=======
+    --height-top: 61%;
+>>>>>>> cc7deeb2161fefdd9450800797c3ba752c235eff
     height: var(--height-top);
     ion-card-content {
       .img-block {
