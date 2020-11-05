@@ -1,5 +1,7 @@
 {
   "name": "psbv-customer",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

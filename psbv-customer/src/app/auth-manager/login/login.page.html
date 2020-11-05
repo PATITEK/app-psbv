@@ -9,7 +9,7 @@
     <input type="text" formControlEmail="email" class="inputname" placeholder="Email" required>
     <input type="password" formControlName="password" class="inputname" placeholder="Password" required>
     <ion-router-link class="forgot-password" (click)="resetPass()">Forgot Password?</ion-router-link>
-    <ion-button class="btn-signin" type="submit">Sign in My Account</ion-button>
+    <ion-button class="btn-signin" type="submit" (click)="login()">Sign in My Account</ion-button>
   </form>
 
   <ion-item-group class="question__wrapper">

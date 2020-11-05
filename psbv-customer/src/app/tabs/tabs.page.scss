@@ -1,1 +1,26 @@
-
+:host {
+    background-color: white;
+    ion-tabs {
+        
+        ion-tab-bar {
+            height: 61px;
+            border-top-right-radius: 25px;
+            border-top-left-radius: 25px;
+            background-color: #F8F8F8 !important;
+            ion-tab-button {
+                background-color: #f8f8f8;
+                border-top-right-radius: 35px;
+                border-top-left-radius: 35px;
+                display: flex;
+                justify-content: center;
+                svg{
+                    width: 21px;
+                }
+                .admin:active{
+                    fill: red;
+                }
+            }
+       
+        }
+    }
+}
