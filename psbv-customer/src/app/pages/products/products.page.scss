@@ -47,6 +47,10 @@ ion-card-content {
       font-size: 20px;
       font-weight: bold;
       text-transform: uppercase;
+
+      @media screen and (max-width: 320px) {
+        font-size: 16px;
+      }
     }
   }
 
@@ -104,7 +108,7 @@ ion-card-content {
   left: 0;
   right: 0;
   bottom: -2px;
-  max-height: calc(100% - var(--height-top));
+  height: calc(100% - var(--height-top));
   overflow-y: scroll;
 
   ion-list {
@@ -124,13 +128,12 @@ ion-card-content {
   }
 
   .product-img-block {
-    padding: 10px 0px 10px 3px;
+    margin: 10px 0px 10px -10px;
     margin-right: 15px;
-    height: 100%;
-
-    ion-img {
-      margin-left: -10px;
-    }
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+    overflow: hidden;
   }
 
   ion-card-header {
