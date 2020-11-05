@@ -1,6 +1,7 @@
 .product-info,
 .product-info ion-card,
-.product-info ion-item {
+.product-info ion-item,
+ion-content {
   --background: #232323;
 }
 
@@ -23,7 +24,13 @@ ion-card-content {
 }
 
 .product-info {
-  padding-bottom: 50px;
+  --padding-top: 20px;
+  --height-top: 60%;
+  height: var(--height-top);
+
+  @media screen and (max-width: 320px) {
+    --height-top: 70%;
+  }
 
   ion-card-header {
     position: relative;
@@ -44,22 +51,31 @@ ion-card-content {
   }
 
   ion-card-content {
-    ion-img {
-      border-radius: 10px;
+    .img-block {
+      border-radius: 15px;
       overflow: hidden;
       margin-top: 10px;
       margin-bottom: 10px;
-      width: 100%;
+      height: 170px;
+
+      @media screen and (max-width: 320px) {
+        height: 150px;
+      }
     }
 
     ion-card-subtitle {
       font-size: 16px;
       text-transform: none;
+      margin-left: 20px;
     }
 
     ul {
       padding-left: 13px;
       margin: 0 10px 0 10px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
 
       li {
         font-size: 13px;
@@ -69,29 +85,27 @@ ion-card-content {
       }
     }
 
-    div {
-      text-align: right;
-      margin-bottom: 20px;
-
-      ion-button {
-        --background: linear-gradient(90deg, #e52d27 -0.01%, #b31217 100%);
-        font-size: 13px;
-      }
+    ion-button {
+      --background: linear-gradient(90deg, #e52d27 -0.01%, #b31217 100%);
+      font-size: 13px;
     }
   }
 }
 
 .accessories {
-  background: white;
+  border-radius: 0;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  overflow: hidden;
-  transform: translateY(-20px);
-  margin-top: 20px;
+  background: white;
+  padding: 13px 5px 5px 5px;
+  margin: 0;
 
-  ion-card {
-    margin: 10px;
-  }
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  max-height: calc(100% - var(--height-top));
+  overflow-y: scroll;
 
   ion-list {
     margin-top: 16px;
@@ -109,18 +123,18 @@ ion-card-content {
     }
   }
 
-  .img-block {
-    padding: 10px 0 10px 0;
+  .product-img-block {
+    padding: 10px 0px 10px 3px;
+    margin-right: 15px;
+    height: 100%;
 
     ion-img {
-      position: relative;
-      border-radius: 10px;
-      overflow: hidden;
+      margin-left: -10px;
     }
   }
 
   ion-card-header {
-    border-top: 1px solid black;
+    border-top: 2px solid #e5e5e5;
   }
 
   ion-card-subtitle {
@@ -129,7 +143,7 @@ ion-card-content {
     font-weight: bold;
     text-transform: none;
     padding-top: 7px;
-    margin: 0 10px -10px 10px;
+    margin: 0 10px -10px;
   }
 
   .content-block {
