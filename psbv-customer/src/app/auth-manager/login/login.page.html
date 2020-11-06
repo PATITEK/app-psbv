@@ -6,19 +6,10 @@
     <ion-label class="header__label">WELCOME BACK</ion-label>
   </ion-item-group>
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-
     <input type="text" formControlEmail="email" class="inputname" placeholder="Email" required>
-    
-    <ion-item-group class ="content__wrapper-input">
-    <input type="password" class ="inputname inputname__noborder" placeholder="New Password" formControlName="password"required>
-    <ion-icon name="eye-outline" class="ion-eye" (click)="changeThrought()"></ion-icon>
-    <ion-icon name="eye-off-outline" class="icon-eye-throught"></ion-icon>
-  </ion-item-group>
-
-
+    <input type="password" formControlName="password" class="inputname" placeholder="Password" required>
     <ion-router-link class="forgot-password" (click)="resetPass()">Forgot Password?</ion-router-link>
     <ion-button class="btn-signin" type="submit" (click)="login()">Sign in My Account</ion-button>
-
   </form>
 
   <ion-item-group class="question__wrapper">
