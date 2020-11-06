@@ -17,12 +17,13 @@ ion-content {
     background-color: white;
     overflow-y: auto;
     z-index: 11;
-    max-height: 588px;
+    max-height: 614px;
     border-bottom: 0;
 }
    
 ion-grid {
     padding: 8px;
+    padding-bottom: 0;
     background-color: rgb(218, 216, 216);
 }
 .content {
@@ -116,9 +117,24 @@ ion-card {
      border-radius: none;
  }
 
+ @media screen and (max-height: 812px) {
+    ion-content {
+        max-height: 613px;
+    }
+    ion-col {
+        height: 240px;
+        .product__name-price {
+            bottom: 4%;
+        }
+        .product__name {
+            top: 185px;
+        }
+    }
+  
+}
 @media screen and (max-height: 736px) {
     ion-content {
-        max-height: 516px;
+        max-height: 552px;
     }
     ion-col {
         height: 240px;
@@ -133,7 +149,7 @@ ion-card {
 }
 @media screen and (max-height: 667px) {
     ion-content {
-        max-height: 447px;
+        max-height: 473px;
     }
     ion-col {
         height: 230px;
@@ -145,7 +161,7 @@ ion-card {
 }
 @media screen and (max-height: 653px) {
     ion-content {
-        max-height: 447px;
+        max-height: 473px;
     }
     ion-col {
         height: 150px;
@@ -154,7 +170,7 @@ ion-card {
 }
 @media screen and (max-height: 640px) {
     ion-content {
-        max-height: 407px;
+        max-height: 442px;
     }
     ion-col {
         height: 230px;
@@ -163,7 +179,7 @@ ion-card {
 }
 @media screen and (max-height: 569px) {
     ion-content {
-        max-height: 348px;
+        max-height: 374px;
     }
     ion-col {
         height: 169px;
