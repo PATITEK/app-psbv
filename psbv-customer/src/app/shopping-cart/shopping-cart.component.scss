@@ -1,0 +1,54 @@
+ion-content{
+    --background: #232323;
+}
+.ion-heading{
+    margin-top: 3rem;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    &__element__button{
+        
+    }
+    &__element__text{
+        margin-left: 2.3rem;
+        margin-right: 0.5rem;
+    }
+}
+
+.section__main{
+    --background:#EFEFEF;
+    top: 0%;
+    width: 100%;
+    height:100%;
+    margin: 0;
+}
+.section__sub{
+    font-size: 16px;
+    --background:#ffffff;
+    height: 13rem;
+    .item__header{
+        margin-left: 1.2rem;
+    }
+    .item__price-tag{
+        margin-left: -2.2rem;
+        font-size: 14px;
+        font-weight: 400;
+        color:515151, 100%;
+        padding: -0.7rem 0.5rem -0.7rem 0.5rem;
+        --border-radius: 2rem;
+        --background: #E52D27;
+    }
+    .detail__wrapper{
+        --border-radius: 2rem;
+        --background: #F9F9FB;
+        width: 80%;
+    }
+    .item__deliver-icon{
+        
+    }
+    .item__day-to-delive{
+        color: #232323;
+
+    }
+}
