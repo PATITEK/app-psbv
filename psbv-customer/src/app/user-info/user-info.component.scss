@@ -1,3 +1,6 @@
+.icon-back{
+    font-size: 22px;
+}
 .header__icon{
         width: 80px;
         height: 80px;
@@ -14,12 +17,16 @@
             top: 14px;
         }
         .icon-premium{
-            float:right;
+            width: 32px;
+            height: auto;
+            float: right;
         }
 }
 .user-name{
     text-align: center;
     color: #3F3F3F;
+    display: flex;
+    flex-direction: column;
     &__main{
         font-size: 23px;
         font-weight: 700;
@@ -50,7 +57,10 @@
         }
     }
     &__email, &__password{
-        margin-top: 3rem;
+        margin-top: 2rem;
+    }
+    &__content{
+        font-size: 16px;
     }
 }
 .btn-logout {
@@ -58,11 +68,11 @@
     position: absolute;
     left: 5%;
     border-radius: 4px;
-    --background: var(--ion-color-medium-tint);
+    --background: #CE091C;
     color: white;
     margin-top: 5rem;
     height: 40px;
     margin-inline-start: 0;
     margin-inline-end: 0;
-    --background-activated: var(--ion-color-medium-tint); 
+    --background-activated:#CE091C;
 }
