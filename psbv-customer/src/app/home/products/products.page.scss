@@ -106,6 +106,7 @@ ion-card-content {
 
   ion-list {
     margin-top: 16px;
+    background-color: #ffffff;
   }
 
   ion-item {
@@ -114,7 +115,7 @@ ion-card-content {
     overflow: hidden;
     display: flex;
     align-items: flex-end;
-
+    --inner-border-width: 0;
     &:not(:last-child) {
       margin-bottom: 13px;
     }
