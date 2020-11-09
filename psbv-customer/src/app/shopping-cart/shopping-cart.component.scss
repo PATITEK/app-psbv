@@ -1,6 +1,5 @@
 ion-header{
     background-color: #232323;
-    
 }
 ion-content{
     --background: #232323;
@@ -36,6 +35,9 @@ ion-content{
     --background:#ffffff;
     border-radius: 1rem;
     height: 13rem;
+    &:first-child{
+        margin-top: 1rem;
+    }
     .item__header{
         margin-left: 1.2rem;
     }
@@ -49,6 +51,7 @@ ion-content{
         --background: #F9F9FB;
         --padding-start: 0rem;
         --padding-end:0rem;
+        --border-radius: 2rem;
         margin-top: 2rem;
         left:3%;
         width: 95%;
@@ -56,13 +59,18 @@ ion-content{
             font-size: 14px;
             font-weight: 400;
             color:white;
-            right: 0%;
             padding: -0.7rem 0.5rem -0.7rem 0.5rem;
             --border-radius: 2rem;
             --padding-start: 1rem;
             --background: linear-gradient(to left, #B31217, #E52D27);
+            &__text{
+                display: flex;
+                --padding-end: -5rem;
+            }
             &__slash{
-                height: 1.5rem;
+                font-size: 14px;
+                margin-left: 1rem;
+                margin-right: 0.3rem;
             }
         }
     }
