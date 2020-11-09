@@ -1,90 +1,84 @@
-<!-- <ion-header> -->
-  <!-- <ion-toolbar> -->
-    <app-header-home></app-header-home>
-  <!-- </ion-toolbar> -->
-<!-- </ion-header> -->
 
- <ion-content >
+<app-header-home></app-header-home>
+<ion-content >
   <ion-item-group class ="content">
         <ion-grid >
           <ion-row>
-            <ion-col> 
-              <ion-card>
-                <img src="/assets/demo.jpg" class ="ion-card--image">
-                <ion-card-header>
-                  <ion-card-subtitle class="ion-card--title">PRODUCT NAME</ion-card-subtitle>
-                </ion-card-header>
-              <ion-label class = "ion-card-label">
-                $Price
+            <ion-col (click)="gotodetail()">
+              
+              <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
+              <ion-label class="product__name">
+                <ion-label class= "product__name-title"> 
+                  Product name
+                </ion-label>
               </ion-label>
-              </ion-card>
+              <ion-label  class= "product__name-price"> 
+                $23400
+              </ion-label>
             </ion-col>
-            <ion-col> 
-              <ion-card>
-                <img src="/assets/demo.jpg" class ="ion-card--image">
-                <ion-card-header>
-                  <ion-card-subtitle class="ion-card--title">PRODUCT NAME</ion-card-subtitle>
-                </ion-card-header>
-              <ion-label class = "ion-card-label">
-                $Price
+            <ion-col>
+              <img src="/assets/img/products/anh2.jpg" class ="ion-card--image">
+              <ion-label class="product__name">
+                <ion-label class= "product__name-title"> 
+                  Product name
+                </ion-label>
               </ion-label>
-              </ion-card>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col> 
-              <ion-card>
-                <img src="/assets/demo.jpg" class ="ion-card--image">
-                <ion-card-header>
-                  <ion-card-subtitle class="ion-card--title">PRODUCT NAME</ion-card-subtitle>
-                </ion-card-header>
-              <ion-label class = "ion-card-label">
-                $Price
+              <ion-label  class= "product__name-price"> 
+                $23400
               </ion-label>
-              </ion-card>
-            </ion-col>
-            <ion-col> 
-              <ion-card>
-                <img src="/assets/demo.jpg" class ="ion-card--image">
-                <ion-card-header>
-                  <ion-card-subtitle class="ion-card--title">PRODUCT NAME</ion-card-subtitle>
-                </ion-card-header>
-              <ion-label class = "ion-card-label">
-                $Price
-              </ion-label>
-              </ion-card>
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col> 
-              <ion-card>
-                <img src="/assets/demo.jpg" class ="ion-card--image">
-                <ion-card-header>
-                  <ion-card-subtitle class="ion-card--title">PRODUCT NAME</ion-card-subtitle>
-                </ion-card-header>
-              <ion-label class = "ion-card-label">
-                $Price
+            <ion-col>
+              <img src="/assets/img/products/anh3.jpg" class ="ion-card--image">
+              <ion-label class="product__name">
+                <ion-label class= "product__name-title"> 
+                  Product name
+                </ion-label>
               </ion-label>
-              </ion-card>
+              <ion-label  class= "product__name-price"> 
+                $23400
+              </ion-label>
             </ion-col>
-            <ion-col> 
-              <ion-card>
-                <img src="/assets/demo.jpg" class ="ion-card--image">
-                <ion-card-header>
-                  <ion-card-subtitle class="ion-card--title">PRODUCT NAME</ion-card-subtitle>
-                </ion-card-header>
-              <ion-label class = "ion-card-label">
-                $Price
+            <ion-col>
+              <img src="/assets/img/products/anh4.jpg" class ="ion-card--image">
+              <ion-label class="product__name">
+                <ion-label class= "product__name-title"> 
+                  Product name
+                </ion-label>
               </ion-label>
-              </ion-card>
+              <ion-label  class= "product__name-price"> 
+                $2300
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
+              <ion-label class="product__name">
+                <ion-label class= "product__name-title"> 
+                  Product name
+                </ion-label>
+              </ion-label>
+              <ion-label  class= "product__name-price"> 
+                $1340
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <img src="/assets/img/products/anh2.jpg" class ="ion-card--image">
+              <ion-label class="product__name">
+                <ion-label class= "product__name-title"> 
+                  Product name
+                </ion-label>
+              </ion-label>
+              <ion-label  class= "product__name-price"> 
+                $2340
+              </ion-label>
             </ion-col>
           </ion-row>
           </ion-grid>
     </ion-item-group>
 </ion-content>
-
-<!-- 
-  <ion-toolbar>
-    <app-footer-nav></app-footer-nav>
-  </ion-toolbar> -->
-
+<ion-footer>
+  <app-footer-nav></app-footer-nav>
+</ion-footer>

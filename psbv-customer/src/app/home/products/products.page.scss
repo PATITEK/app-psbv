@@ -25,7 +25,7 @@ ion-card-content {
 
 .product-info {
   --padding-top: 20px;
-  --height-top: 49%;
+  --height-top: 53%;
   height: var(--height-top);
   ion-card-header {
     position: relative;
@@ -106,6 +106,7 @@ ion-card-content {
 
   ion-list {
     margin-top: 16px;
+    background-color: #ffffff;
   }
 
   ion-item {
@@ -114,19 +115,22 @@ ion-card-content {
     overflow: hidden;
     display: flex;
     align-items: flex-end;
-
+    --inner-border-width: 0;
     &:not(:last-child) {
       margin-bottom: 13px;
     }
   }
 
   .product-img-block {
-    margin: 10px 0px 10px -10px;
-    margin-right: 15px;
+    margin: 10px 15px 10px -10px;
+    ion-img {
+      margin-left: -10px;
+    }
     height: 100px;
     width: 100px;
     border-radius: 10px;
     overflow: hidden;
+
   }
 
   ion-card-header {
@@ -159,13 +163,13 @@ ion-card-content {
 }
 @media screen and (max-height: 736px) {
   .product-info {
-    --height-top: 54%;
+    --height-top: 59%;
     height: var(--height-top);
   }
 }
 @media screen and (max-height: 667px) {
   .product-info {
-    --height-top: 59%;
+    --height-top: 67%;
     height: var(--height-top);
     
   }
@@ -178,14 +182,14 @@ ion-card-content {
 }
 @media screen and (max-height: 640px) {
   .product-info {
-    --height-top: 61%;
+    --height-top: 69%;
     height: var(--height-top);
   }
 
 }
 @media screen and (max-height: 568px) {
   .product-info {
-    --height-top: 61%;
+    --height-top: 69%;
     height: var(--height-top);
     ion-card-content {
       .img-block {
