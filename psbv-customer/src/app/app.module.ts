@@ -12,11 +12,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PageNotiService } from './@modular/page-noti/page-noti.service';
 import { FormsModule } from '@angular/forms';
+import { CoreModule } from './@app-core';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, HttpClientModule,FormsModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [
+    BrowserModule,
+    FormsModule, 
+    IonicModule.forRoot(), 
+    AppRoutingModule,
+    CoreModule.forRoot()
+  ],
   providers: [
     StatusBar,
     SplashScreen,

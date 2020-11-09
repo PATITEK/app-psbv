@@ -7,8 +7,7 @@
   </ion-item-group>
   <form [formGroup]="profileForm" (ngSubmit)="login()">
 
-    <input type="text" formControlEmail="email" class="inputname" required placeholder="Email">
-    
+    <input type="text" formControlName="email" class="inputname" placeholder="Email" required>
     <ion-item-group class ="content__wrapper-input">
     <input type="{{type}}" class ="inputname inputname__noborder" name ="password" formControlName="password" required placeholder="Password">
 

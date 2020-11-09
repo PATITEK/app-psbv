@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/@app-core/http';
 import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     private pageNotiService: PageNotiService,
+    private authService: AuthService
     ) { }
   profileForm = new FormGroup({
     email: new FormControl(''),
@@ -34,7 +36,12 @@ export class LoginPage implements OnInit {
        }
      }
   login(){
+    console.log();
+    
+    this.authService.login(this.profileForm.value).subscribe((data: any) => {
+      console.log(data, 'data');
     this.router.navigateByUrl('/main/home');
+    })
   }
   resetPass(){
     const data: IDataNoti = {
