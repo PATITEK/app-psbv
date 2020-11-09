@@ -29,7 +29,12 @@
         color: var(--title-color);
     }
 }
-
+.btn-change-type {
+    padding: 0;
+    border: 1px;
+    border-radius: 25px;
+    background-color: #f7f7f7;
+}
 .question {
     font-size: 13px;
     color: var(--title-color);
@@ -55,13 +60,13 @@
         margin: 10px 6px 8px 8px;
     }
     .ion-eye {
-        margin: 15px 10px 8px 10px;
+        margin: 10px 10px 8px 10px;
         color: #d1d1d1;
         font-size: 17px;
     }
     .icon-eye-throught {
-        margin: 15px 10px 8px 10px;
-            display: none;
+        margin: 10px 10px 8px 10px;
+          
             font-size: 17px;
     }
     .content__label-input {
