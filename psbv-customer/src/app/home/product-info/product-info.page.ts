@@ -10,14 +10,12 @@ export class ProductInfoPage implements OnInit {
 
   constructor(private router: Router) { }
 
+  itemBg: string = 'red';
+
   ngOnInit() {
   }
 
   goToHome(): void {
     this.router.navigateByUrl('/main/home');
-  }
-
-  toggleItem($event): void {
-    console.log(event.target);
   }
 }
