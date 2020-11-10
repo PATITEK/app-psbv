@@ -11,6 +11,7 @@ export class HomePage implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    
   }
   gotodetail(){
     this.router.navigateByUrl('/main/home/product-info')

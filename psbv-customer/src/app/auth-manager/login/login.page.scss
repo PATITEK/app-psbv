@@ -1,4 +1,6 @@
 
+@import "src/global.scss";
+
 .header__wrapper {
     display: block;
     text-align: center;
@@ -87,7 +89,6 @@
     }
 }
 }
-
 .inputname {
     width: 100%;
     height: 40px;
@@ -114,17 +115,7 @@
    margin-top: 22px;
    margin-bottom: 44px;
  }
- .btn-signin {
-   width: 100%;
-   border-radius: 4px;
-   --background: var(--main-color);
-   color: white;
-   margin-bottom: 44px;
-   height: 40px;
-   margin-inline-start: 0;
-   margin-inline-end: 0;
-   --background-activated: var(--main-color); 
- }
+
 //  Responsive 
  @media screen and (max-width: 320px) {
     .header__wrapper {
