@@ -13,6 +13,6 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
   gotodetail(){
-    this.router.navigateByUrl('/main/home/products')
+    this.router.navigateByUrl('/main/home/product-info')
   }
 }
