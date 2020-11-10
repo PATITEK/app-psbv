@@ -27,15 +27,18 @@ ion-card-content {
   --padding-top: 20px;
   --height-top: 53%;
   height: var(--height-top);
+  overflow: visible;
+
   ion-card-header {
     position: relative;
     text-align: center;
 
-    ion-button {
+    .back-button {
       position: absolute;
       top: -13px;
       left: 0;
       font-size: 19px;
+      z-index: 1000;
     }
 
     ion-card-title {
@@ -56,8 +59,6 @@ ion-card-content {
       margin-top: 10px;
       margin-bottom: 10px;
       height: 170px;
-
-   
     }
 
     ion-card-subtitle {
@@ -82,7 +83,7 @@ ion-card-content {
       }
     }
 
-    ion-button {
+    .detail-button {
       --background: linear-gradient(90deg, #e52d27 -0.01%, #b31217 100%);
       font-size: 13px;
     }
@@ -104,6 +105,27 @@ ion-card-content {
   height: calc(100% - var(--height-top));
   overflow-y: scroll;
 
+  .accessories-heading {
+    margin-right: -20px;
+    margin-bottom: 10px;
+  }
+
+  .main-label {
+    --color: #232323;
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .add-all-button {
+    font-size: 15px;
+    margin-block-end: 0;
+    text-transform: none;
+    --background: #91e29b;
+    --color: white;
+    --border-radius: 10px;
+  }
+
   ion-list {
     margin-top: 16px;
     background-color: #ffffff;
@@ -116,6 +138,7 @@ ion-card-content {
     display: flex;
     align-items: flex-end;
     --inner-border-width: 0;
+    position: relative;
     &:not(:last-child) {
       margin-bottom: 13px;
     }
@@ -130,11 +153,29 @@ ion-card-content {
     width: 100px;
     border-radius: 10px;
     overflow: hidden;
-
   }
 
   ion-card-header {
     border-top: 2px solid #e5e5e5;
+
+    ion-item {
+      --background: white;
+      height: 30px;
+      margin-bottom: -8px;
+    }
+  }
+
+  .accessories-item-icon {
+    --background: none;
+    color: #91e29b;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    border: 1px solid #cccccc;
+    position: absolute;
+    top: 0;
+    right: 0;
+    overflow: hidden;
   }
 
   ion-card-subtitle {
@@ -142,8 +183,6 @@ ion-card-content {
     font-size: 16px;
     font-weight: bold;
     text-transform: none;
-    padding-top: 7px;
-    margin: 0 10px -10px;
   }
 
   .content-block {
@@ -161,17 +200,52 @@ ion-card-content {
     }
   }
 }
+
+.add-product-button {
+  position: absolute;
+  top: calc(var(--height-top));
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  --background: white;
+  --color: #91e29b;
+}
+
+.cart-button {
+  z-index: 1002;
+  overflow: visible;
+  
+  ion-fab-button {
+    --background: linear-gradient(90deg, #e52d27 -0.01%, #b31217 100%);
+    border: 3px solid white;
+    border-radius: 999px;
+    overflow: visible;
+  }
+
+  ion-chip {
+    --background: white;
+    border: 1px solid #9d0000;
+    transform: scale(0.8);
+    position: absolute;
+    top: -19px;
+    right: -9px;
+
+    ion-label {
+      font-weight: 700;;
+    }
+  }
+}
+
 @media screen and (max-height: 736px) {
   .product-info {
     --height-top: 59%;
     height: var(--height-top);
   }
 }
-@media screen and (max-height: 667px) {
+@media screen and (max-height: 668px) {
   .product-info {
-    --height-top: 67%;
+    --height-top: 65%;
     height: var(--height-top);
-    
   }
 }
 @media screen and (max-height: 653px) {
@@ -185,7 +259,6 @@ ion-card-content {
     --height-top: 69%;
     height: var(--height-top);
   }
-
 }
 @media screen and (max-height: 568px) {
   .product-info {
@@ -193,10 +266,8 @@ ion-card-content {
     height: var(--height-top);
     ion-card-content {
       .img-block {
-        height: 119px;   
+        height: 119px;
       }
-    
+    }
   }
-
-}
 }
