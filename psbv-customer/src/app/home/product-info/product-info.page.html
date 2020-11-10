@@ -44,7 +44,7 @@
     </ion-card-header>
     <ion-card-content>
       <ion-list>
-        <ion-item>
+        <ion-item (click)="toggleItem()">
           <div class="product-img-block" slot="start">
             <img src="http://lorempixel.com/g/100/100/abstract">
           </div>
@@ -55,6 +55,10 @@
           <ion-button class="accessories-item-icon">
             <ion-icon name="add-outline"></ion-icon>
           </ion-button>
+          <ion-button class="accessories-item-icon">
+            <ion-icon name="remove-outline"></ion-icon>
+          </ion-button>
+
         </ion-item>
         <ion-item>
           <div class="product-img-block" slot="start">
@@ -96,10 +100,10 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="cart-button">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="cart-button" (click)="toggleItem()">
     <ion-fab-button>
       <ion-icon name="cart-outline"></ion-icon>
-      <ion-chip>
+      <ion-chip id="abc">
         <ion-label>1</ion-label>
       </ion-chip>
     </ion-fab-button>

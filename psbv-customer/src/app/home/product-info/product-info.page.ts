@@ -13,7 +13,11 @@ export class ProductInfoPage implements OnInit {
   ngOnInit() {
   }
 
-  goToHome() {
+  goToHome(): void {
     this.router.navigateByUrl('/main/home');
+  }
+
+  toggleItem($event): void {
+    console.log(event.target);
   }
 }
