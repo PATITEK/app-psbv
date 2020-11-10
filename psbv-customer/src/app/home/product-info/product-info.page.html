@@ -1,15 +1,15 @@
 <ion-content class="product-info">
   <ion-card>
-    <ion-card-header >
-        <ion-button fill="clear" size="small" class="ion-no-padding" >
-          <ion-icon name="chevron-back-outline"></ion-icon>
-        </ion-button>
-        <ion-card-title >Information product</ion-card-title>
+    <ion-card-header>
+      <ion-button fill="clear" size="small" class="ion-no-padding back-button" (click)="goToHome()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      <ion-card-title>Information product</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
       <div class="img-block">
-        <ion-img src="http://lorempixel.com/g/334/170/abstract" ></ion-img>
+        <ion-img src="http://lorempixel.com/g/334/170/abstract"></ion-img>
       </div>
 
       <ion-card-subtitle>Product name</ion-card-subtitle>
@@ -21,29 +21,44 @@
         <li>Lorem ipsum dolor, sit amet consectetur hfdjfdhff</li>
       </ul>
       <div class="ion-text-right">
-        <ion-button size="small">Detail <ion-icon name="chevron-forward-outline" slot="end"></ion-icon></ion-button>
+        <ion-button size="small" class="detail-button">Detail <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+        </ion-button>
       </div>
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="accessories">
+  <ion-fab-button class="add-product-button">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+
+  <ion-card class="accessories ion-text-center">
+    <ion-label class="main-label">Add product<br> with accessories below</ion-label>
     <ion-card-header class="ion-text-left">
-      <ion-card-subtitle>Accessories</ion-card-subtitle>
+      <ion-item class="accessories-heading">
+        <ion-card-subtitle>Accessories</ion-card-subtitle>
+        <ion-button class="add-all-button" slot="end">
+          Add all accessories
+          <ion-icon name="add-circle-outline" slot="end"></ion-icon>
+        </ion-button>
+      </ion-item>
     </ion-card-header>
+
     <ion-card-content>
       <ion-list>
         <ion-item>
           <div class="product-img-block" slot="start">
-
-            <ion-img src="http://lorempixel.com/g/100/100/abstract" class="product-img"></ion-img>
-
-            <ion-img src="http://lorempixel.com/g/100/100/abstract"></ion-img>
-
+            <img src="http://lorempixel.com/g/100/100/abstract">
           </div>
           <div class="content-block">
             <ion-label>Accessories</ion-label>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit?</p>
           </div>
+          <ion-button class="accessories-item-icon">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
+          <ion-button class="accessories-item-icon">
+            <ion-icon name="remove-outline"></ion-icon>
+          </ion-button>
         </ion-item>
         <ion-item>
           <div class="product-img-block" slot="start">
@@ -53,6 +68,9 @@
             <ion-label>Accessories</ion-label>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit?</p>
           </div>
+          <ion-button class="accessories-item-icon">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
         </ion-item>
         <ion-item>
           <div class="product-img-block" slot="start">
@@ -62,6 +80,9 @@
             <ion-label>Accessories</ion-label>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit?</p>
           </div>
+          <ion-button class="accessories-item-icon">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
         </ion-item>
         <ion-item>
           <div class="product-img-block" slot="start">
@@ -71,8 +92,21 @@
             <ion-label>Accessories</ion-label>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit?</p>
           </div>
+          <ion-button class="accessories-item-icon">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
         </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="cart-button">
+    <ion-fab-button>
+      <ion-icon name="cart-outline"></ion-icon>
+      <ion-chip id="abc">
+        <ion-label>1</ion-label>
+      </ion-chip>
+    </ion-fab-button>
+
+  </ion-fab>
 </ion-content>

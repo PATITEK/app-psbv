@@ -13,6 +13,7 @@ const routes: Routes = [
     path: 'product-info',
     loadChildren: () => import('./product-info/product-info.module').then(m => m.ProductInfoPageModule)
   },
+
 ];
 
 @NgModule({
