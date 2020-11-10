@@ -59,7 +59,6 @@ ion-content{
             font-size: 14px;
             font-weight: 400;
             color:white;
-            padding: -0.7rem 0.5rem -0.7rem 0.5rem;
             --border-radius: 2rem;
             --padding-start: 1rem;
             --background: linear-gradient(to left, #B31217, #E52D27);
@@ -83,7 +82,27 @@ ion-content{
         margin-right: 0;
         width: 40px;
     }
-    .item__detail{
-
+}
+.section__button{
+    width: 102px;
+    height: auto;
+    font-size: 19px;
+    padding-right: 0;
+    margin-left: 9rem;
+    margin-top: -3rem;
+    --background: red;
+    --padding-start: 0px;
+    --inner-padding-end: 0px;
+    --padding-top: -1rem;
+    --inner-padding-top: -1rem;
+    --border-radius: 2rem;
+    &__minus{
+        margin-right: 1rem;
+        width: 90px;
+        height: auto;
+    }
+    &__add{
+        margin-left: 1rem;
+        width: 90px;
     }
 }
