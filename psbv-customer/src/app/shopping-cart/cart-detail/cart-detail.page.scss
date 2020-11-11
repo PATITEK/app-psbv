@@ -3,6 +3,7 @@ ion-header{
 }
 ion-content{
     --background: #232323;
+    overflow-y: hidden;
 }
 .ion-heading{
     margin-top: 3rem;
@@ -25,11 +26,14 @@ ion-content{
 .section__main{
     --background:#EFEFEF;
     width: 100%;
-    height:100.5%;
-    margin-top: 0rem;
+    height:100%;
     border-top-left-radius: 1.5rem;
     border-top-right-radius: 1.5rem;
+    border-bottom-left-radius: 0rem;
+    border-bottom-right-radius: 0rem;
     right: 16px;
+
+    overflow-y: scroll;
 }
 .detail__wrapper{
     --background: #F9F9FB;
@@ -132,5 +136,33 @@ ion-content{
     &__add{
         margin-left: 1rem;
         width: 90px;
+    }
+}
+.footer{
+    height: 10%;
+    font-size: 20px;
+    --background: white;
+    &__item{
+        font-size: 9px;
+    }
+    &__delive-day{
+        font-size: 15px;
+        margin-top: 0%;
+        left: -5rem;
+        margin-left: 1rem;
+    }
+    &__price{
+        font-size: 24px;
+        color: #B31217;
+    }
+    &__export{
+        font-size: 15px;
+        width: 200px;
+        height: auto;
+        color: white;
+        margin-top: 1rem;
+        border-radius: 2rem;
+        --padding-start: 4rem;
+        --background: linear-gradient(to left, #B31217, #E52D27);
     }
 }
