@@ -13,10 +13,11 @@ import { AppComponent } from './app.component';
 import { PageNotiService } from './@modular/page-noti/page-noti.service';
 import { FormsModule } from '@angular/forms';
 import { CoreModule } from './@app-core';
-import { TabsService } from './core/tabs.service';
+
+import { HomePage } from './home/home.page';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HomePage],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -29,7 +30,6 @@ import { TabsService } from './core/tabs.service';
     StatusBar,
     SplashScreen,
     PageNotiService,
-    TabsService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

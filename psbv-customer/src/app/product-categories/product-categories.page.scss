@@ -1,0 +1,132 @@
+:host {
+    --padding-top: 0px;
+    --padding-bottom: 0px;
+    --padding-start: 0px;
+    --padding-end: 0px;
+    --min-height: 0px;
+}
+.header-md::after {
+    height: 0;
+}
+ion-content {
+    position: absolute;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    top: 135px;
+    overflow: hidden;
+    background-color: white;
+    overflow-y: auto;
+    z-index: 11;
+    max-height: 614px;
+    border-bottom: 0;
+}
+   
+ion-grid {
+    
+    padding-bottom: 0;
+    background-color:#F2EDED;
+}
+.content {
+    position: relative;
+}
+.ion-card--image {
+    width: 90%;
+    height: 62%;
+    border-radius: 12px;
+    background-size: cover;
+}
+
+ion-row {
+    margin: 0px -12px;
+    padding: 8px 12px 0px 12px;
+}
+ion-col {
+    // background-color: #e5e5e5;
+    height: 159.5px;
+    margin-left: 3.5px;
+    margin-right: 3.5px;
+    padding: 0px;
+    text-align: center;
+}
+
+.categories__name {
+    font-size: 13px;
+    width: 100%;
+    text-align: center;
+   
+}
+ion-card {
+    display: block;
+    justify-self: center;
+    margin-top: 0;
+    margin-bottom: 8px;
+    box-shadow: none;
+    border-radius: 8px;
+    background-color: #e5e5e5;
+    margin-left: 0;
+    margin-right: 0;
+ }
+
+ ion-item-group {
+     position: relative;
+ }
+ ion-card-header {
+    display: block;
+    justify-self: center;
+     padding: 0;
+     border-radius: none;
+ }
+
+ @media screen and (max-height: 812px) {
+    ion-content {
+        max-height: 613px;
+    }
+    ion-col {
+        height: 159.5px;     
+    }
+  
+}
+@media screen and (max-height: 736px) {
+    ion-content {
+        max-height: 552px;
+    }
+    ion-col {
+        height: 240px; 
+    }
+  
+}
+@media screen and (max-height: 667px) {
+    ion-content {
+        max-height: 473px;
+    }
+    ion-col {
+        height: 230px;
+    }
+  
+}
+@media screen and (max-height: 653px) {
+    ion-content {
+        max-height: 473px;
+    }
+    ion-col {
+        height: 150px;
+    }
+  
+}
+@media screen and (max-height: 640px) {
+    ion-content {
+        max-height: 442px;
+    }
+    ion-col {
+        height: 230px;
+    }
+}
+@media screen and (max-height: 569px) {
+    ion-content {
+        max-height: 374px;
+    }
+    ion-col {
+        height: 169px;
+    }
+  
+}
