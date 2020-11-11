@@ -1,0 +1,45 @@
+<ion-content class="product-info">
+  <ion-card class="product-info-inner">
+    <ion-card-header>
+      <ion-button fill="clear" size="small" class="ion-no-padding back-button" (click)="goBack()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      <ion-card-title>Detail product</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="img-container">
+        <div class="img-block"> 
+          <ion-img src="http://lorempixel.com/g/334/170/abstract"></ion-img>
+        </div>
+        <ion-button class="price" shape="round" size="small" disabled>$ 12.5</ion-button>
+      </div>
+
+      <ion-card-subtitle>Product name</ion-card-subtitle>
+      <ion-label>Description product</ion-label>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="product-noti">
+    <ion-card-subtitle>Info</ion-card-subtitle>
+    <p class="content">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, enim! Dolorum qui aliquam nobis neque laborum enim
+      magni consequatur at cum dignissimos mollitia reiciendis sequi, fuga doloribus ipsum ut nisi itaque eum recusandae
+      laboriosam repellat deserunt! Aliquid exercitationem sunt voluptate. Harum nobis tempore dolorem rerum. Quia
+      quasi, vero odio ullam asperiores inventore, mollitia cupiditate harum amet tempore, ducimus repudiandae aperiam.
+    </p>
+
+    <div class="download-block" [style.visibility]="checkPremiumPermission() ? 'visible' : 'hidden'">
+      <ion-card-subtitle>Technical drawings</ion-card-subtitle>
+      <a href="">https://docs.google.com/spreadsheets/d</a>
+      <ion-icon name="download-outline"></ion-icon>
+    </div>
+
+    <p class="noti ion-text-center ion-padding">
+      We will show detail accessories of product after you receive the item!<br>
+      Thank you!
+    </p>
+
+    <ion-button expand="block">Choose another accessories</ion-button>
+  </ion-card>
+</ion-content>
