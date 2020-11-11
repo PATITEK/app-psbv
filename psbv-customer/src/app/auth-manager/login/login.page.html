@@ -5,19 +5,24 @@
     </ion-avatar>
     <ion-label class="header__label">WELCOME BACK</ion-label>
   </ion-item-group>
-  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="profileForm" (ngSubmit)="login()">
 
-    <input type="text" formControlEmail="email" class="inputname" placeholder="Email" required>
-    
+    <input type="text" formControlName="email" class="inputname" placeholder="Email" required>
     <ion-item-group class ="content__wrapper-input">
-    <input type="password" class ="inputname inputname__noborder" placeholder="New Password" formControlName="password"required>
-    <ion-icon name="eye-outline" class="ion-eye" (click)="changeThrought()"></ion-icon>
-    <ion-icon name="eye-off-outline" class="icon-eye-throught"></ion-icon>
+    <input type="{{type}}" class ="inputname inputname__noborder" name ="password" formControlName="password" required placeholder="Password">
+
+    <button *ngIf="!showPass" type = "button" (click)="showPassword()" class="btn-change-type">
+      <ion-icon name="eye-outline" class="ion-eye"></ion-icon>
+    </button>
+    <button *ngIf="showPass" type="button" (click)="showPassword()" class="btn-change-type ">
+      <ion-icon name="eye-off-outline" class="icon-eye-throught"></ion-icon>
+    </button>
+   
+
   </ion-item-group>
 
-
     <ion-router-link class="forgot-password" (click)="resetPass()">Forgot Password?</ion-router-link>
-    <ion-button class="btn-signin" type="submit" (click)="login()">Sign in My Account</ion-button>
+    <ion-button class="btn-main" type="submit">Sign in My Account</ion-button>
 
   </form>
 

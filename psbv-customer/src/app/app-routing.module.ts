@@ -11,14 +11,6 @@ const routes: Routes = [
     loadChildren: () => import('./auth-manager/auth-manager.module').then( m => m.AuthManagerPageModule)
   },
   {
-    path: 'pages',
-    loadChildren: () => import('./pages/pages.module').then( m => m.PagesPageModule)
-  },
-  {
-    path: 'product-info',
-    loadChildren: () => import('./pages/products/products.module').then( m => m.ProductsPageModule)
-  },
-  {
     path: 'user-info',
     loadChildren: () => import('./user-info/user-info.module').then( m => m.UserInfoModule)
   },
@@ -31,7 +23,10 @@ const routes: Routes = [
     loadChildren: () => import('./@modular/page-noti/page-noti.module').then( m => m.PageNotiModule)
   },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth' },
+  {
+    path: 'product-categories',
+    loadChildren: () => import('./product-categories/product-categories.module').then( m => m.ProductCategoriesPageModule)
+  },
 ];
 @NgModule({
   imports: [

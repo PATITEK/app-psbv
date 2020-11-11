@@ -1,5 +1,3 @@
-
-
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
 
@@ -19,5 +17,16 @@
 :root {
     --main-color:#ce091c;
     --title-color:#1c1939;
+    --color-input: #F7F7F7;
 }
-
+ .btn-main {
+   width: 100%;
+   border-radius: 4px;
+   --background: var(--main-color);
+   color: white;
+   margin-bottom: 44px;
+   height: 40px;
+   margin-inline-start: 0;
+   margin-inline-end: 0;
+   --background-activated: var(--main-color); 
+ }
