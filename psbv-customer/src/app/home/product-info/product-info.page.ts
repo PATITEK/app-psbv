@@ -9,11 +9,6 @@ import { Router } from '@angular/router';
 export class ProductInfoPage implements OnInit {
 
   constructor(private router: Router) {
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'none';
-    });
-   
    }
   ngOnInit() {
     // const tabBar = document.getElementById('myTabBar');
