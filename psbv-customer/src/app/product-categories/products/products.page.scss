@@ -17,7 +17,7 @@ ion-item-group {
 }
 ion-content {
     background-color: #e5e5e5;
-    overflow-y: auto;
+   
     .title-category {
         display: block;
         text-align: center;
@@ -38,10 +38,11 @@ ion-content {
         }
     }
     ion-grid {
+        max-height: 544px;
         padding: 8px;
         padding-bottom: 0;
-        border-radius: 10px;
-        background-color: rgb(218, 216, 216);
+        overflow-y: auto;
+        background-color: #e5e5e5;
         ion-col {
             background-color: #e5e5e5;
             height: 228px;
