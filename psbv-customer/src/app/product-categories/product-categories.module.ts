@@ -4,10 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { HomePageRoutingModule } from './home-routing.module';
+import { ProductCategoriesPageRoutingModule } from './product-categories-routing.module';
 
-import { HomePage } from './home.page';
-import { FooterNavComponent } from './footer-nav/footer-nav.component';
+import { ProductCategoriesPage } from './product-categories.page';
 import { HeaderHomeModule } from '../@modular/header-home/header-home.module';
 
 @NgModule({
@@ -15,9 +14,10 @@ import { HeaderHomeModule } from '../@modular/header-home/header-home.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule,
+    ProductCategoriesPageRoutingModule,
     HeaderHomeModule
   ],
-  declarations: [HomePage, FooterNavComponent]
+   
+    declarations: [ProductCategoriesPage]
 })
-export class HomePageModule {}
+export class ProductCategoriesPageModule {}

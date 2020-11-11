@@ -1,0 +1,98 @@
+
+  <ion-header >
+    <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
+       
+        <ion-item-group>
+          <ion-icon name="notifications-outline" class="header__icon header__icon-noti" (click)="gotonoti()"></ion-icon>
+          <ion-icon name="person-outline" class="header__icon " (click)="gotouserinfo()"></ion-icon>
+        </ion-item-group>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+  
+    <ion-label class="title-category">NAME CATEGORY</ion-label>
+    <ion-label class="image-wrapper">
+      <img src="/assets/img/products/test.jpg" alt=""class="image-category">
+    </ion-label>
+    
+    <ion-grid>
+      <ion-row>
+        <ion-col (click)="gotodetail()">
+          <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
+          <ion-label class="product__name">
+            <ion-label class= "product__name-title"> 
+              Product name
+            </ion-label>
+          </ion-label>
+          <ion-label  class= "product__name-price"> 
+            $23400
+          </ion-label>
+        </ion-col>
+        <ion-col (click)="gotodetail()">
+          <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
+          <ion-label class="product__name">
+            <ion-label class= "product__name-title"> 
+              Product name
+            </ion-label>
+          </ion-label>
+          <ion-label  class= "product__name-price"> 
+            $23400
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col (click)="gotodetail()">
+          <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
+          <ion-label class="product__name">
+            <ion-label class= "product__name-title"> 
+              Product name
+            </ion-label>
+          </ion-label>
+          <ion-label  class= "product__name-price"> 
+            $23400
+          </ion-label>
+        </ion-col>
+        <ion-col (click)="gotodetail()">
+          <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
+          <ion-label class="product__name">
+            <ion-label class= "product__name-title"> 
+              Product name
+            </ion-label>
+          </ion-label>
+          <ion-label  class= "product__name-price"> 
+            $23400
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col (click)="gotodetail()">
+          <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
+          <ion-label class="product__name">
+            <ion-label class= "product__name-title"> 
+              Product name
+            </ion-label>
+          </ion-label>
+          <ion-label  class= "product__name-price"> 
+            $23400
+          </ion-label>
+        </ion-col>
+        <ion-col (click)="gotodetail()">
+          <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
+          <ion-label class="product__name">
+            <ion-label class= "product__name-title"> 
+              Product name
+            </ion-label>
+          </ion-label>
+          <ion-label  class= "product__name-price"> 
+            $23400
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+
+  
