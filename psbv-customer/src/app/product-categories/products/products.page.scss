@@ -3,24 +3,16 @@
       color: var(--main-color);
       margin: 0 4px;
       font-size: 22px;
+      float: right;
       margin-top: 4px;
     }
 }
-.button-inner {
-    color: black;
-}
-ion-header {
-    ion-toolbar{
-        --background: red;
-    }
-    // background-color: #EFEFEF;
-}
+
 ion-item-group {
     float: right;
 }
 ion-content {
     background-color: #e5e5e5;
-   
     .title-category {
         display: block;
         text-align: center;
@@ -42,7 +34,7 @@ ion-content {
     }
     ion-grid {
         max-height: 544px;
-        padding: 8px;
+        padding: 0px 8px 8px 8px;
         padding-bottom: 0;
         overflow-y: auto;
         background-color: #e5e5e5;
@@ -98,8 +90,7 @@ ion-content {
 } 
 
 ion-toolbar {
-    height: 50px;
-    background-color: #EFEFEF;
+    --background: #e5e5e5;
     --border-width: 0 !important;
     padding: 0;
     toolbar-container {

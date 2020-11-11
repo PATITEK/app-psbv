@@ -46,16 +46,12 @@ ion-col {
     padding: 0px;
     text-align: center;
 }
-
 .categories__name {
     font-size: 13px;
     width: 100%;
     text-align: center;
 }
 
- ion-item-group {
-     position: relative;
- }
  ion-card-header {
     display: block;
     justify-self: center;
@@ -88,7 +84,6 @@ ion-col {
     ion-col {
         height: 230px;
     }
-  
 }
 @media screen and (max-height: 653px) {
     ion-content {
