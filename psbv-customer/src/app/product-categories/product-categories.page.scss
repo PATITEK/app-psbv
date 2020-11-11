@@ -30,16 +30,10 @@ ion-grid {
     position: relative;
 }
 .ion-card--image {
-<<<<<<< HEAD
     width: 110px;
     height: 113px;
     border-radius: 12px;
     margin-bottom: 5px;
-=======
-    width: 90%;
-    height: 62%;
-    border-radius: 12px;
->>>>>>> b137da8560b48fcfadbbf54f4f091a6594a76fb3
     background-size: cover;
 }
 
@@ -48,14 +42,7 @@ ion-row {
     padding: 8px 12px 0px 12px;
 }
 ion-col {
-<<<<<<< HEAD
     height: 159.5px;
-=======
-    // background-color: #e5e5e5;
-    height: 159.5px;
-    margin-left: 3.5px;
-    margin-right: 3.5px;
->>>>>>> b137da8560b48fcfadbbf54f4f091a6594a76fb3
     padding: 0px;
     text-align: center;
 }
@@ -64,23 +51,7 @@ ion-col {
     font-size: 13px;
     width: 100%;
     text-align: center;
-<<<<<<< HEAD
 }
-=======
-   
-}
-ion-card {
-    display: block;
-    justify-self: center;
-    margin-top: 0;
-    margin-bottom: 8px;
-    box-shadow: none;
-    border-radius: 8px;
-    background-color: #e5e5e5;
-    margin-left: 0;
-    margin-right: 0;
- }
->>>>>>> b137da8560b48fcfadbbf54f4f091a6594a76fb3
 
  ion-item-group {
      position: relative;

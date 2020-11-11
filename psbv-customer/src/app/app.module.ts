@@ -9,14 +9,9 @@ import { AppComponent } from './app.component';
 import { PageNotiService } from './@modular/page-noti/page-noti.service';
 import { FormsModule } from '@angular/forms';
 import { CoreModule } from './@app-core';
-<<<<<<< HEAD
-=======
-
-import { HomePage } from './home/home.page';
->>>>>>> b137da8560b48fcfadbbf54f4f091a6594a76fb3
 
 @NgModule({
-  declarations: [AppComponent, HomePage],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
