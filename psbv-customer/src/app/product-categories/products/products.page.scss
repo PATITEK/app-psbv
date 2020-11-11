@@ -10,7 +10,10 @@
     color: black;
 }
 ion-header {
-    background-color: #EFEFEF;
+    ion-toolbar{
+        --background: red;
+    }
+    // background-color: #EFEFEF;
 }
 ion-item-group {
     float: right;
