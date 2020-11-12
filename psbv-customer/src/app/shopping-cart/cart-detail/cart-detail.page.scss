@@ -1,3 +1,4 @@
+@import 'function.scss';
 ion-header{
     background-color: #232323;
 }
@@ -6,17 +7,20 @@ ion-content{
     overflow-y: hidden;
 }
 .ion-heading{
-    margin-top: 3rem;
+    margin-top: 5vh;
     margin-bottom: 1.2rem;
     color: white;
     font-size: 20px;
     font-weight: 700;
     display: flex;
     &__element__text{
-        margin-left: 6rem;
+        position: absolute;
+        margin-left: 40vw;
         margin-right: 2rem;
     }
     &__element__shop-icon{
+        position: absolute;
+        margin-left: 70vw;
         width: 30px;
     }
     &__element__back{
@@ -59,6 +63,7 @@ ion-content{
         }
     }
     .item__deliver-icon{
+        font-size: 15px;
         height: 14px;
         width: auto;
         margin-left: 6rem;
@@ -87,9 +92,11 @@ ion-content{
     height: 205px;
     &__title{
         margin-bottom: 1rem;
+        overflow: visible;
     }
     &__cancel{
-        margin-left: 50%;
+        margin-left: 40vw;
+        width: 14px;
     }
     &__wrapper{
         --padding-start: 0rem;
@@ -100,26 +107,29 @@ ion-content{
             color: white;
             font-weight: 400;
             --border-radius: 2rem;
-            --padding-start: 1rem;
-            --padding-end: 0.5rem;
+            --padding-start: 1.8rem;
+            --padding-end: 1rem;
             --background: linear-gradient(to left, #B31217, #E52D27);
         }
     }
     &__deliver-icon{
-        margin-left: 57%;
+        margin-left: 10rem;
     }
     &__accessories{
         font-size: 12px;
-        --background: none;
-        --padding-start: 0rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 }
 .section__button{
     width: 115px;
+    position: absolute;
     height: auto;
     font-size: 19px;
     padding-right: 0;
-    margin-left: 8rem;
+    margin-left: 35%;
     margin-top: -3rem;
     margin-bottom: 1.3rem;
     --padding-start: 3px;
@@ -156,13 +166,40 @@ ion-content{
         margin-left: 5vw;
     }
     &__export{
+       
         font-size: 15px;
-        width: 200px;
-        height: auto;
+        width: 191px;
+        height: 50px;
         color: white;
         margin-top: 1rem;
-        border-radius: 2rem;
-        --padding-start: 4rem;
+        text-align: center;
+        border: 1px solid;
+        --border-radius: 31px;
         --background: linear-gradient(to left, #B31217, #E52D27);
     }
+}
+
+@media only screen and (max-width: 322px){
+    .detail__wrapper{
+        .item__deliver-icon{
+            height: 14px;
+            width: auto;
+            margin-left: 3rem;
+        }
+    }
+    .product{
+        .product__cancel{
+            margin-left: 30vw;
+        }
+    }
+    .product__wrapper{
+        .product__deliver-icon{
+            margin-left: 6rem;
+        }
+        .product__day-to-delive{
+            margin-right: 0;
+        }
+    }
+
+
 }
