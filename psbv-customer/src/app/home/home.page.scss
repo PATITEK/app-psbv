@@ -19,6 +19,7 @@ ion-content {
     z-index: 11;
     max-height: 614px;
     border-bottom: 0;
+    --offset-top: 5px !important;
 }
    
 ion-grid {
