@@ -25,14 +25,11 @@ ion-content{
 }
 .section__main{
     --background:#EFEFEF;
-    width: 100%;
-    height:100%;
+    margin: 0 0 0 0;
     border-top-left-radius: 1.5rem;
     border-top-right-radius: 1.5rem;
     border-bottom-left-radius: 0rem;
     border-bottom-right-radius: 0rem;
-    right: 16px;
-
     overflow-y: scroll;
 }
 .detail__wrapper{
@@ -144,16 +141,17 @@ ion-content{
     --background: white;
     &__item{
         font-size: 9px;
+        margin-left: 5vw;
     }
     &__delive-day{
         font-size: 15px;
         margin-top: 0%;
-        left: -5rem;
-        margin-left: 1rem;
+        margin-left: 5vw;
     }
     &__price{
         font-size: 24px;
         color: #B31217;
+        margin-left: 5vw;
     }
     &__export{
         font-size: 15px;
