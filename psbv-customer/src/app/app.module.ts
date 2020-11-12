@@ -14,10 +14,10 @@ import { PageNotiService } from './@modular/page-noti/page-noti.service';
 import { FormsModule } from '@angular/forms';
 import { CoreModule } from './@app-core';
 import { TabsService } from './core/tabs.service';
-import { HomePage } from './home/home.page';
+
 
 @NgModule({
-  declarations: [AppComponent, HomePage],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
