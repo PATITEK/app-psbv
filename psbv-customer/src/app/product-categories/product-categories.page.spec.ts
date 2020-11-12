@@ -1,8 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
-<<<<<<< HEAD
-<<<<<<< HEAD:psbv-customer/src/app/product-categories/product-categories.page.spec.ts
 import { ProductCategoriesPage } from './product-categories.page';
 
 describe('ProductCategoriesPage', () => {
