@@ -22,11 +22,6 @@ ion-content {
 }
    
 ion-grid {
-<<<<<<< HEAD
-    padding: 8px;
-=======
-    
->>>>>>> FEmimi
     padding-bottom: 0;
     background-color:#F2EDED;
 }
@@ -34,52 +29,14 @@ ion-grid {
     position: relative;
 }
 .ion-card--image {
-<<<<<<< HEAD
-    width: 100%;
-    height: 113.3px;
-    border-radius: 12px;
-=======
     width: 110px;
     height: 113px;
     border-radius: 12px;
     margin-bottom: 5px;
->>>>>>> FEmimi
     background-size: cover;
 }
 
 ion-row {
-<<<<<<< HEAD
-    margin: 0 -6px;
-}
-ion-col {
-    background-color: #e5e5e5;
-    height: 124.5px;
-    margin-left: 5.5px;
-    margin-right: 5.5px;
-    padding-bottom: 10px;
-    // margin-bottom: 10px;
-   
-}
-
-.product-name {
-    height: 33px;
-}
-ion-card {
-    display: block;
-    justify-self: center;
-    margin-top: 0;
-    margin-bottom: 8px;
-    box-shadow: none;
-    border-radius: 8px;
-    background-color: #e5e5e5;
-    margin-left: 0;
-    margin-right: 0;
- }
-
- ion-item-group {
-     position: relative;
- }
-=======
     margin: 0px -12px;
     padding: 8px 12px 0px 12px;
 }
@@ -94,7 +51,6 @@ ion-col {
     text-align: center;
 }
 
->>>>>>> FEmimi
  ion-card-header {
     display: block;
     justify-self: center;
@@ -107,11 +63,7 @@ ion-col {
         max-height: 613px;
     }
     ion-col {
-<<<<<<< HEAD
-        height: 124.5px;     
-=======
         height: 159.5px;     
->>>>>>> FEmimi
     }
   
 }
@@ -131,10 +83,6 @@ ion-col {
     ion-col {
         height: 230px;
     }
-<<<<<<< HEAD
-  
-=======
->>>>>>> FEmimi
 }
 @media screen and (max-height: 653px) {
     ion-content {
@@ -159,11 +107,6 @@ ion-col {
     }
     ion-col {
         height: 169px;
-<<<<<<< HEAD
-       
-
-=======
->>>>>>> FEmimi
     }
   
 }
