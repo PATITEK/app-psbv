@@ -25,16 +25,22 @@
     <ion-card class="product">
       <ion-row class="product__title">
         PRODUCT NAME 1
-        <ion-img class="product__cancel" src="../../assets/x-icon.svg"></ion-img>
+        <ion-col>
+          <ion-img class="product__cancel" src="../../assets/x-icon.svg"></ion-img>
+        </ion-col>
       </ion-row>
       <ion-item class="product__wrapper" lines="none">
         <ion-item class="product__wrapper__price" lines="none">150$</ion-item>
         <ion-img class="product__deliver-icon" src="../../assets/delive.svg" end></ion-img>
         <ion-label class="product__day-to-delive">1 day</ion-label>        
       </ion-item>
-      <ion-item class="product__accessories" lines="none">
-        Accessories Accessories, Accessories Accessories,......
-      </ion-item>
+      <ul class="product__accessories" lines="none">
+        <li>Accessories Accessories, Accessories Accessories</li>
+        <li>Accessories Accessories, Accessories Accessories</li>
+        <li>Accessories Accessories, Accessories Accessories</li>
+        <li>Accessories Accessories, Accessories Accessories</li>
+        <li>Accessories Accessories, Accessories Accessories</li>
+      </ul>
     </ion-card>
     <ion-item class="section__button" no-padding lines="none" position="fixed">
       <ion-img src="../../assets/minus.svg" class="section__button__minus"></ion-img>
@@ -52,9 +58,13 @@
         <ion-img class="product__deliver-icon" src="../../assets/delive.svg" end></ion-img>
         <ion-label class="product__day-to-delive">1 day</ion-label>        
       </ion-item>
-      <ion-item class="product__accessories" lines="none">
-        Accessories Accessories, Accessories Accessories, ... 
-      </ion-item>
+      <ul class="product__accessories" lines="none">
+        <li>Accessories Accessories, Accessories Accessories</li>
+        <li>Accessories Accessories, Accessories Accessories</li>
+        <li>Accessories Accessories, Accessories Accessories</li>
+        <li>Accessories Accessories, Accessories Accessories</li>
+        <li>Accessories Accessories, Accessories Accessories</li>
+      </ul>
     </ion-card>
     <ion-item class="section__button" no-padding lines="none" position="fixed">
       <ion-img src="../../assets/minus.svg" class="section__button__minus"></ion-img>
@@ -64,7 +74,7 @@
 
     <ion-card class="product">
       <ion-row class="product__title">
-        PRODUCT NAME 1
+        PRODUCT NAME
         <ion-img class="product__cancel" src="../../assets/x-icon.svg"></ion-img>
       </ion-row>
       <ion-item class="product__wrapper" lines="none">
@@ -72,9 +82,13 @@
         <ion-img class="product__deliver-icon" src="../../assets/delive.svg" end></ion-img>
         <ion-label class="product__day-to-delive">1 day</ion-label>        
       </ion-item>
-      <ion-item class="product__accessories" lines="none">
-        Accessories Accessories, Accessories Accessories, ... 
-      </ion-item>
+      <ul class="product__accessories" lines="none">
+        <li>Accessories Accessories, Accessories Accessories</li>
+        <li>Accessories Accessories, Accessories Accessories</li>
+        <li>Accessories Accessories, Accessories Accessories</li>
+        <li>Accessories Accessories, Accessories Accessories</li>
+        <li>Accessories Accessories, Accessories Accessories</li>
+      </ul>
     </ion-card>
     <ion-item class="section__button" no-padding lines="none" position="fixed">
       <ion-img src="../../assets/minus.svg" class="section__button__minus"></ion-img>
@@ -85,7 +99,18 @@
 </ion-content>
 
 <ion-footer class="footer">
-  <ion-grid>
+
+  <ion-item lines="none">
+    <ion-item-group>
+      <ion-label class="footer__item">3 item</ion-label>
+      <img src="../../assets/delive.svg" alt=""class="footer__delive-day">
+      
+      <ion-label class="footer__price">$450</ion-label>
+    </ion-item-group>
+
+    <ion-button slot="end" class="footer__export ion-text-center" >Export Exel </ion-button>
+  </ion-item>
+  <!-- <ion-grid>
     <ion-row>
       <ion-col>
         <ion-label class="footer__item">3 item</ion-label>
@@ -99,5 +124,5 @@
         <ion-item class="footer__export">Export Exel </ion-item>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 </ion-footer>
