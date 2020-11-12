@@ -30,11 +30,12 @@ ion-card-content {
 ion-header {
   background: #232323;
   text-align: center;
-  padding-block-start: 50px;
+  padding-block-start: 40px;
+  margin-bottom: -1px;
 
   .back-button {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 0;
     font-size: 19px;
     z-index: 1000;
