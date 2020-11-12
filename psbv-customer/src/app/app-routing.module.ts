@@ -21,7 +21,6 @@ const routes: Routes = [
     loadChildren: () => import('./product-categories/product-categories.module').then( m => m.ProductCategoriesPageModule)
   },
 
- 
 
 
 ];
