@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductCategoriesPage } from './product-categories.page';
+import { ProductsPage } from './products/products.page';
 
 const routes: Routes = [
   {
