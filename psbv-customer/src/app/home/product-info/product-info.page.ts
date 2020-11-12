@@ -11,8 +11,6 @@ export class ProductInfoPage implements OnInit {
   constructor(private router: Router) {
    }
   ngOnInit() {
-    // const tabBar = document.getElementById('myTabBar');
-    // tabBar.style.display = 'none';
     const tabs = document.querySelectorAll('ion-tab-bar');
      Object.keys(tabs).map((key) => {
     tabs[key].style.display = 'none';

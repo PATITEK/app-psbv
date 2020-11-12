@@ -16,10 +16,6 @@ const routes: Routes = [
   },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
   { path: '**', redirectTo: 'auth' },
-  {
-    path: 'product-categories',
-    loadChildren: () => import('./product-categories/product-categories.module').then( m => m.ProductCategoriesPageModule)
-  },
 
  
 

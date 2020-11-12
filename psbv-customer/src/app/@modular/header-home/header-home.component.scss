@@ -36,6 +36,7 @@ ion-item-group {
   margin-top: -23px;
   justify-content: space-between;
 }
+
 :host{
     ion-header{
         background: var(--main-color);
@@ -43,13 +44,16 @@ ion-item-group {
       --padding-end: 0px !important;
       padding: 0 !important;
       ion-toolbar {
-        
+      
         display: flex;
         justify-content: space-between;
         --padding-start: 0;
           height: 158px;
         --border-width: 0 !important;
         padding: 0 16px;
+        --padding-bottom:0;
+        --padding-end:0; 
+        --padding-top: 0;
         background: transparent;
         --background: transparent;
       }

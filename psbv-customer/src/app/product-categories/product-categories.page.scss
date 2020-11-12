@@ -22,7 +22,11 @@ ion-content {
 }
    
 ion-grid {
+<<<<<<< HEAD
     padding: 8px;
+=======
+    
+>>>>>>> FEmimi
     padding-bottom: 0;
     background-color:#F2EDED;
 }
@@ -30,13 +34,21 @@ ion-grid {
     position: relative;
 }
 .ion-card--image {
+<<<<<<< HEAD
     width: 100%;
     height: 113.3px;
     border-radius: 12px;
+=======
+    width: 110px;
+    height: 113px;
+    border-radius: 12px;
+    margin-bottom: 5px;
+>>>>>>> FEmimi
     background-size: cover;
 }
 
 ion-row {
+<<<<<<< HEAD
     margin: 0 -6px;
 }
 ion-col {
@@ -67,6 +79,22 @@ ion-card {
  ion-item-group {
      position: relative;
  }
+=======
+    margin: 0px -12px;
+    padding: 8px 12px 0px 12px;
+}
+ion-col {
+    height: 159.5px;
+    padding: 0px;
+    text-align: center;
+}
+.categories__name {
+    font-size: 13px;
+    width: 100%;
+    text-align: center;
+}
+
+>>>>>>> FEmimi
  ion-card-header {
     display: block;
     justify-self: center;
@@ -79,7 +107,11 @@ ion-card {
         max-height: 613px;
     }
     ion-col {
+<<<<<<< HEAD
         height: 124.5px;     
+=======
+        height: 159.5px;     
+>>>>>>> FEmimi
     }
   
 }
@@ -99,7 +131,10 @@ ion-card {
     ion-col {
         height: 230px;
     }
+<<<<<<< HEAD
   
+=======
+>>>>>>> FEmimi
 }
 @media screen and (max-height: 653px) {
     ion-content {
@@ -124,8 +159,11 @@ ion-card {
     }
     ion-col {
         height: 169px;
+<<<<<<< HEAD
        
 
+=======
+>>>>>>> FEmimi
     }
   
 }

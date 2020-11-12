@@ -8,6 +8,7 @@ import { TabsPageRoutingModule } from './tabs-routing.module';
 import { TabsPage } from './tabs.page';
 import { HeaderHomeComponent } from '../home/header-home/header-home.component';
 
+
 @NgModule({
   imports: [
     IonicModule,
