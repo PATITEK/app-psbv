@@ -23,6 +23,7 @@ const routes: Routes = [
     path: 'shopping-cart',
     loadChildren: () => import('./shopping-cart/shopping-cart.module').then( m => m.ShoppingCartModule)
   },
+
   {
     path: 'statusNoti',
     loadChildren: () => import('./@modular/page-noti/page-noti.module').then( m => m.PageNotiModule)

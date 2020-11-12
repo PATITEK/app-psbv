@@ -13,7 +13,7 @@ export class HeaderHomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {}
-  gotouserinfo(){
-    this.router.navigateByUrl('/pages');
+  onGoUserInfo(){
+    this.router.navigateByUrl('main/home/user-info');
   }
 }
