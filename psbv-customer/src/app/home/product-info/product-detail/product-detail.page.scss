@@ -15,7 +15,7 @@
 
 .product-info-inner {
   margin: 0;
-  padding: 10px;
+  padding: 10px 16px;
 }
 
 ion-card {
@@ -77,7 +77,7 @@ ion-header {
       .price {
         position: absolute;
         bottom: -3px;
-        right: -22px;
+        right: -35px;
         transform: translateY(50%);
         --background: linear-gradient(90deg, #e52d27 -0.01%, #b31217 100%);
         --padding-start: 35px;
