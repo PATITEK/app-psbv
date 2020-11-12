@@ -75,9 +75,11 @@ ion-content{
     color: 232323, 100%;
     text-align: center;
     padding-top: 1rem;
+    box-shadow: none;
 }
 .product{
     --background:#D3D3D3;
+    box-shadow: none;
     padding-top: 1rem;
     padding-left: 1rem;
     padding-right: 0.5rem;
@@ -117,7 +119,7 @@ ion-content{
     height: auto;
     font-size: 19px;
     padding-right: 0;
-    margin-left: 9rem;
+    margin-left: 8rem;
     margin-top: -3rem;
     margin-bottom: 1.3rem;
     --padding-start: 3px;
