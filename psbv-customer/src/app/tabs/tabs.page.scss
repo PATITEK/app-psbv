@@ -1,7 +1,7 @@
+
 :host {
     background-color: white;
-    ion-tabs {
-        
+    ion-tabs {        
         ion-tab-bar {
             height: 61px;
             border-top-right-radius: 0px;
@@ -14,11 +14,14 @@
                 svg{
                     width: 21px;
                 }
-                .admin:active{
-                    fill: red;
+                :active{
+                color: red;
                 }
             }
        
         }
+    }
+    .tab-selected {
+        color: var(--main-color);
     }
 }
