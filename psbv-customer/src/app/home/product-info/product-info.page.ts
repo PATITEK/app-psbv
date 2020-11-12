@@ -56,7 +56,12 @@ export class ProductInfoPage implements OnInit {
       tabs[key].style.display = 'none';
     });
   }
-
+  ionViewWillEnter(){
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
+  }
   goToHome(): void {
     this.location.back();
   }
