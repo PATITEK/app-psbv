@@ -20,10 +20,7 @@ const routes: Routes = [
     path: 'new-password',
     loadChildren: () => import('./new-password/new-password.module').then( m => m.NewPasswordPageModule)
   },
-  {
-    path: 'password-change',
-    loadChildren: () => import('./password-changed/password-changed.module').then( m => m.PasswordChangedPageModule)
-  },
+
   {
     path: 'forgot-password',
     loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
