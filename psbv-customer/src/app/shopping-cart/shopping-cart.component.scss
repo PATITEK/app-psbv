@@ -6,6 +6,7 @@ ion-content{
 }
 .ion-heading{
     margin-top: 3rem;
+    margin-bottom: 1.2rem;
     color: white;
     font-size: 20px;
     font-weight: 700;
@@ -16,9 +17,12 @@ ion-content{
     }
     &__element__shop-icon{
         width: 30px;
+        height: auto;
+        margin-top: -0.3rem;
     }
     &__element__back{
         margin-left: 26px;
+        margin-top: -0.5rem;
     }
 }
 
@@ -28,7 +32,12 @@ ion-content{
     width: 100%;
     height:100%;
     margin: 0;
-    border-radius: 1.5rem;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+    border-bottom-left-radius: 0rem;
+    border-bottom-right-radius: 0rem;
+    
+    overflow-y: scroll;
 }
 .section__sub{
     font-size: 16px;
@@ -41,12 +50,14 @@ ion-content{
     }
     .item__header{
         margin-left: 1.2rem;
+        margin-top: 0.8rem;
     }
     .item__cancel{
         width: 14px;
         height: auto;
+        margin-top: 0.8rem;
         position: relative;
-        left: 54%;
+        left: 52%;
     }
     .detail__wrapper{
         --background: #F9F9FB;
@@ -58,8 +69,8 @@ ion-content{
         width: 95%;
         .item__price-tag{
             font-size: 14px;
+            color: white;
             font-weight: 400;
-            color:white;
             --border-radius: 2rem;
             --padding-start: 1rem;
             --background: linear-gradient(to left, #B31217, #E52D27);
@@ -85,13 +96,13 @@ ion-content{
     }
 }
 .section__button{
-    width: 102px;
+    width: 115px;
     height: auto;
     font-size: 19px;
     padding-right: 0;
     margin-left: 9rem;
     margin-top: -3rem;
-    --background: red;
+    margin-bottom: 1.3rem;
     --padding-start: 3px;
     --inner-padding-end: 3px;
     --padding-top: -1rem;

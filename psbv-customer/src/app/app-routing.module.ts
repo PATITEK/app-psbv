@@ -13,7 +13,7 @@ const routes: Routes = [
  
   {
     path: 'user-info',
-    loadChildren: () => import('./user-info/user-info.module').then( m => m.UserInfoModule)
+    loadChildren: () => import('./account//user-info/user-info.module').then( m => m.UserInfoModule)
   },
   {
     path: 'shopping-cart',

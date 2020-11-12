@@ -1,0 +1,168 @@
+ion-header{
+    background-color: #232323;
+}
+ion-content{
+    --background: #232323;
+    overflow-y: hidden;
+}
+.ion-heading{
+    margin-top: 3rem;
+    margin-bottom: 1.2rem;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    &__element__text{
+        margin-left: 6rem;
+        margin-right: 2rem;
+    }
+    &__element__shop-icon{
+        width: 30px;
+    }
+    &__element__back{
+        margin-left: 26px;
+    }
+}
+.section__main{
+    --background:#EFEFEF;
+    margin: 0 0 0 0;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+    border-bottom-left-radius: 0rem;
+    border-bottom-right-radius: 0rem;
+    overflow-y: scroll;
+}
+.detail__wrapper{
+    --background: #F9F9FB;
+    --padding-start: 0rem;
+    --padding-end:0rem;
+    --border-radius: 2rem;
+    margin-top: 2rem;
+    padding-bottom: 1rem;
+    left:3%;
+    width: 95%;
+    .item__price-tag{
+        font-size: 14px;
+        color: white;
+        font-weight: 400;
+        --border-radius: 2rem;
+        --padding-start: 1rem;
+        --background: linear-gradient(to left, #B31217, #E52D27);
+        &__text{
+            display: flex;
+            --padding-end: -5rem;
+        }
+        &__slash{
+            font-size: 14px;
+            margin-left: 1rem;
+            margin-right: 0.3rem;
+        }
+    }
+    .item__deliver-icon{
+        height: 14px;
+        width: auto;
+        margin-left: 6rem;
+    }
+    .item__day-to-delive{
+        margin-right: 0;
+        font-weight: 400;
+        width: 40px;
+    }
+}
+.order__main{
+    font-size: 18px;
+    font-weight: 700;
+    color: 232323, 100%;
+    text-align: center;
+    padding-top: 1rem;
+    box-shadow: none;
+}
+.product{
+    --background:#D3D3D3;
+    box-shadow: none;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+    font-size: 16px;
+    height: 205px;
+    &__title{
+        margin-bottom: 1rem;
+    }
+    &__cancel{
+        margin-left: 50%;
+    }
+    &__wrapper{
+        --padding-start: 0rem;
+        margin-left: -0.5rem;
+        border-radius: 2rem;    
+        &__price{
+            font-size: 14px;
+            color: white;
+            font-weight: 400;
+            --border-radius: 2rem;
+            --padding-start: 1rem;
+            --padding-end: 0.5rem;
+            --background: linear-gradient(to left, #B31217, #E52D27);
+        }
+    }
+    &__deliver-icon{
+        margin-left: 57%;
+    }
+    &__accessories{
+        font-size: 12px;
+        --background: none;
+        --padding-start: 0rem;
+    }
+}
+.section__button{
+    width: 115px;
+    height: auto;
+    font-size: 19px;
+    padding-right: 0;
+    margin-left: 8rem;
+    margin-top: -3rem;
+    margin-bottom: 1.3rem;
+    --padding-start: 3px;
+    --inner-padding-end: 3px;
+    --padding-top: -1rem;
+    --inner-padding-top: -1rem;
+    --border-radius: 2rem;
+    &__minus{
+        margin-right: 1rem;
+        width: 90px;
+        height: auto;
+    }
+    &__add{
+        margin-left: 1rem;
+        width: 90px;
+    }
+}
+.footer{
+    height: 10%;
+    font-size: 20px;
+    --background: white;
+    &__item{
+        font-size: 9px;
+        margin-left: 5vw;
+    }
+    &__delive-day{
+        font-size: 15px;
+        margin-top: 0%;
+        margin-left: 5vw;
+    }
+    &__price{
+        font-size: 24px;
+        color: #B31217;
+        margin-left: 5vw;
+    }
+    &__export{
+        font-size: 15px;
+        width: 200px;
+        height: auto;
+        color: white;
+        margin-top: 1rem;
+        border-radius: 2rem;
+        --padding-start: 4rem;
+        --background: linear-gradient(to left, #B31217, #E52D27);
+    }
+}
