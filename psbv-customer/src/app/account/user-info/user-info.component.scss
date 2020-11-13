@@ -1,5 +1,9 @@
 .icon-back{
     font-size: 22px;
+    color: black;
+}
+.header-md::after {
+    background-image: none;
 }
 .header__icon{
         width: 80px;

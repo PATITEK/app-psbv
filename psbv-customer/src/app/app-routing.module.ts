@@ -20,8 +20,8 @@ const routes: Routes = [
     loadChildren: () => import('./account/password-changed/password-changed.module').then( m =>m.PasswordChangedPageModule )
   },
   {
-    path: 'shopping-cart',
-    loadChildren: () => import('./shopping-cart/shopping-cart.module').then( m => m.ShoppingCartModule)
+    path: 'order-history',
+    loadChildren: () => import('./order/order-history/order-history.module').then( m => m.OrderHistoryPageModule)
   },
   {
     path: 'statusNoti',

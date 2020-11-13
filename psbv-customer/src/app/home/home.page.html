@@ -2,79 +2,32 @@
 <app-header-home></app-header-home>
 <ion-content >
   <ion-item-group class ="content">
-      <ion-grid >
-        <ion-row>
-          <ion-col (click)="gotodetail()">
-            <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
+      <ion-grid  >
+        <ion-row *ngFor="let item of products; let i = index" >
+          <ion-col (click)="gotodetail()" *ngIf="i%2==0">
+            <img [src]="products[i].src" class ="ion-card--image">
             <ion-label class="product__name">
               <ion-label class= "product__name-title"> 
-                Product name
+               {{products[i].name}}
               </ion-label>
             </ion-label>
             <ion-label  class= "product__name-price"> 
-              $23400
+              {{products[i].price}}
             </ion-label>
           </ion-col>
-          <ion-col>
-            <img src="/assets/img/products/anh2.jpg" class ="ion-card--image">
+          <ion-col (click)="gotodetail()"*ngIf="i%2==0">
+            <img [src]="products[i+1].src" class ="ion-card--image">
             <ion-label class="product__name">
               <ion-label class= "product__name-title"> 
-                Product name
+                {{products[i+1].name}}
               </ion-label>
             </ion-label>
             <ion-label  class= "product__name-price"> 
-              $23400
-            </ion-label>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <img src="/assets/img/products/anh3.jpg" class ="ion-card--image">
-            <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-                Product name
-              </ion-label>
-            </ion-label>
-            <ion-label  class= "product__name-price"> 
-              $23400
-            </ion-label>
-          </ion-col>
-          <ion-col>
-            <img src="/assets/img/products/anh4.jpg" class ="ion-card--image">
-            <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-                Product name
-              </ion-label>
-            </ion-label>
-            <ion-label  class= "product__name-price"> 
-              $2300
+              {{products[i+1].price}}
             </ion-label>
           </ion-col>
         </ion-row>
-        <ion-row>
-          <ion-col>
-            <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
-            <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-                Product name
-              </ion-label>
-            </ion-label>
-            <ion-label  class= "product__name-price"> 
-              $1340
-            </ion-label>
-          </ion-col>
-          <ion-col>
-            <img src="/assets/img/products/anh2.jpg" class ="ion-card--image">
-            <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-                Product name
-              </ion-label>
-            </ion-label>
-            <ion-label  class= "product__name-price"> 
-              $2340
-            </ion-label>
-          </ion-col>
-        </ion-row>
+       
       </ion-grid>
     </ion-item-group>
 </ion-content>

@@ -1,0 +1,90 @@
+ion-header{
+    background-color: #232323;
+}
+ion-content{
+    --background: #232323;
+}
+.ion-heading{
+    margin-top: 3rem;
+    margin-bottom: 1.2rem;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    &__element__text{
+        margin-left: 2.3rem;
+        margin-right: 0.5rem;
+    }
+    &__element__back{
+        margin-left: 26px;
+        margin-top: -0.5rem;
+    }
+}
+
+.section__main{
+    --background:#EFEFEF;
+    top: 0%;
+    width: 100%;
+    height:100%;
+    margin: 0;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+    border-bottom-left-radius: 0rem;
+    border-bottom-right-radius: 0rem;
+    
+    overflow-y: scroll;
+}
+.section__sub{
+    font-size: 16px;
+    --background:#ffffff;
+    border-radius: 1rem;
+    height: 13rem;
+    margin-top: -10px;
+    &:first-child{
+        margin-top: 1rem;
+    }
+    .item__header{
+        margin-left: 1.2rem;
+        margin-top: 0.8rem;
+    }
+
+    .detail__wrapper{
+        --background: #F9F9FB;
+        --padding-start: 0rem;
+        --padding-end:0rem;
+        --border-radius: 2rem;
+        margin-top: 2rem;
+        left:3%;
+        width: 95%;
+        .item__price-tag{
+            font-size: 14px;
+            color: white;
+            font-weight: 400;
+            --border-radius: 2rem;
+            --padding-start: 1rem;
+            --background: linear-gradient(to left, #B31217, #E52D27);
+            &__slash{
+                font-size: 14px;
+                margin-left: 1rem;
+                margin-right: 0.3rem;
+            }
+        }
+    }
+    .item__deliver-icon{
+        height: 14px;
+        width: auto;
+        margin-left: 3rem;
+    }
+    .item__day-to-delive{
+        margin-right: 0;
+        font-size: 14px;
+        width: 40px;
+    }
+    .item__detail{
+        font-size: 12px;
+    }
+    .item__order-status{
+        margin-right: -2rem;
+        margin-left: 1rem;
+    }
+}

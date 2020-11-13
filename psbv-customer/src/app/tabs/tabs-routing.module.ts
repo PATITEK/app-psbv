@@ -19,7 +19,10 @@ const routes: Routes = [
         path: 'shopping-cart',
         loadChildren: () => import('../shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule)
       },
-    
+      {
+        path: 'user-info',
+        loadChildren: () => import('../account//user-info/user-info.module').then(m => m.UserInfoModule)
+      },
       {
         path: '',
         redirectTo: '/main',

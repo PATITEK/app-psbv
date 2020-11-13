@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-product-categories',
   templateUrl: './product-categories.page.html',
@@ -13,6 +14,6 @@ export class ProductCategoriesPage implements OnInit {
   ngOnInit() {
   }
   gotodetail(){
-    this.router.navigateByUrl('/products');
+    this.router.navigateByUrl('main/product-categories/products');
   }
 }
