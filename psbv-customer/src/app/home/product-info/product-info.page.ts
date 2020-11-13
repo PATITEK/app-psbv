@@ -23,9 +23,10 @@ export enum PERMISSION {
 
 export class ProductInfoPage implements OnInit {
 
-  constructor(private router: Router, private location: Location) {
-   
-  }
+  constructor(
+    private router: Router,
+    private location: Location,
+  ) {}
 
   counter: number = 0;
   permission: PERMISSION = PERMISSION.STANDARD;
@@ -57,6 +58,7 @@ export class ProductInfoPage implements OnInit {
       tabs[key].style.display = 'none';
     });
   }
+
   goToHome(): void {
     this.location.back();
     const tabs = document.querySelectorAll('ion-tab-bar');
@@ -71,6 +73,10 @@ export class ProductInfoPage implements OnInit {
     } else {
       this.router.navigateByUrl('/main/home/product-info/product-detail')
     }
+  }
+
+  goToCart(): void {
+    this.router.navigateByUrl('main/shopping-cart');
   }
 
   getBg(accessory: IAccessory): string {
@@ -98,7 +104,7 @@ export class ProductInfoPage implements OnInit {
 
     // reset selected item
     this.accessories.forEach(accessory => accessory.isAdded = false);
-    
+
     // inc counter
     this.counter++;
   }

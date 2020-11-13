@@ -45,7 +45,7 @@
 
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let accessory of accessories" [style.--background]="getBg(accessory)">
+        <ion-item *ngFor="let accessory of accessories" [style.--background]="getBg(accessory)" (click)="toggleItem(accessory)">
           <div class="product-img-block" slot="start">
             <img [src]="accessory.src">
           </div>
@@ -53,7 +53,7 @@
             <ion-label>{{ accessory.name }}</ion-label>
             <p>{{ accessory.desc }}</p>
           </div>
-          <ion-button class="accessories-item-icon" *ngIf="!checkGuestPermission()" (click)="toggleItem(accessory)">
+          <ion-button class="accessories-item-icon" disabled *ngIf="!checkGuestPermission()">
             <ion-icon name="{{ getIcon(accessory) }}"></ion-icon>
           </ion-button>
         </ion-item>
@@ -61,7 +61,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="cart-button" *ngIf="!checkGuestPermission()">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="cart-button" *ngIf="!checkGuestPermission()" (click)="goToCart()">
     <ion-fab-button>
       <ion-icon name="cart-outline"></ion-icon>
     </ion-fab-button>
