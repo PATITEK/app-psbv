@@ -2,7 +2,7 @@
   <ion-header >
     <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button defaultHref="/"></ion-back-button>
+          <ion-back-button defaultHref="/" (click)="goToHome()"></ion-back-button>
         </ion-buttons>
         <ion-icon name="notifications-outline" class="header__icon header__icon-noti" (click)="gotonoti()"></ion-icon>
       <ion-icon name="person-outline" class="header__icon " (click)="gotouserinfo()"></ion-icon>
