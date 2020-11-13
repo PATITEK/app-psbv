@@ -1,0 +1,17 @@
+<ion-header lines="no">
+  <ion-button fill="clear" size="small" class="ion-no-padding back-button" (click)="goBack()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-card-title>Order status</ion-card-title>
+</ion-header>
+
+<ion-content>
+  <ion-button class="heading">Item 12/12/1212</ion-button>
+  <ion-list>
+    <ion-item *ngFor="let status of statuses">
+      <ion-button>
+        <ion-icon name="{{ status.iconName }}"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -20,10 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./account/password-changed/password-changed.module').then( m =>m.PasswordChangedPageModule )
   },
   {
-    path: 'order-history',
-    loadChildren: () => import('./order/order-history/order-history.module').then( m => m.OrderHistoryPageModule)
-  },
-  {
     path: 'statusNoti',
     loadChildren: () => import('./@modular/page-noti/page-noti.module').then( m => m.PageNotiModule)
   },
