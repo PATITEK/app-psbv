@@ -76,10 +76,17 @@ export class ProductInfoPage implements OnInit {
   }
 
   goToCart(): void {
-    this.router.navigateByUrl('main/shopping-cart');
+    const data = {
+      checkBack: true
+    }
+    this.router.navigate(['main/shopping-cart'],{
+      queryParams:{
+        data: JSON.stringify(data)
+      }
+    });
   }
 
-  getBg(accessory: IAccessory): string {
+  getBg(accessory: IAccessory): string {  
     return accessory.isAdded ? '#494949' : '#eaeaea';
   }
 
