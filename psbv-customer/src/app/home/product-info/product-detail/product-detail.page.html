@@ -31,8 +31,8 @@
 
     <div class="download-block" [style.visibility]="checkPremiumPermission() ? 'visible' : 'hidden'">
       <ion-card-subtitle>Technical drawings</ion-card-subtitle>
-      <a href="">https://docs.google.com/spreadsheets/d</a>
-      <ion-icon name="download-outline"></ion-icon>
+      <a href="" (click)="download()">https://docs.google.com/spreadsheets/d</a>
+      <ion-icon name="download-outline" (click)="download()"></ion-icon>
     </div>
 
     <p class="noti ion-text-center ion-padding">
