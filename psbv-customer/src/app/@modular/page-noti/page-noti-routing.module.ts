@@ -8,10 +8,6 @@ const routes: Routes = [
     path: '',
     component: PageNotiComponent
   },
-  {
-    path: 'main',
-    loadChildren: () => import('../../tabs/tabs.module').then(m => m.TabsPageModule)
-  },
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 <ion-header>
     <ion-row no-lines>
         <ion-col class="ion-heading">
-            <ion-img class="ion-heading__element__back" src="../../assets/back.svg"></ion-img>
+            <ion-img class="ion-heading__element__back" src="../../assets/back.svg" [style.visibility]="checkHasBackButton() ? 'visible' : 'hidden'" (click)="goBack()"></ion-img>
             <ion-label class="ion-heading__element__text">SHOPPING CART</ion-label>
             <ion-img class="ion-heading__element__shop-icon" src="../../assets/shopping.svg"></ion-img>
         </ion-col>
