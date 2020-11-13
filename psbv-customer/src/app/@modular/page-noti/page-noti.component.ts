@@ -10,7 +10,7 @@ import { IDataNoti, PageNotiService } from './page-noti.service';
 export class PageNotiComponent implements OnInit {
   public title = "PASSWORD CHANGED !";
   public des  = "Dear user your password has been changeed, Continue to start using app";
-  public routerLink = ''
+  public routerLink = '/main/home'
   constructor(
     private pageNotiService: PageNotiService,
     private router: Router 
@@ -25,7 +25,12 @@ export class PageNotiComponent implements OnInit {
   }
 
   linkRouter() {
-    this.router.navigate([this.routerLink]);
+    console.log("main",this.routerLink);
+    this.router.navigateByUrl('this.routerLink');
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
   }
 
 }

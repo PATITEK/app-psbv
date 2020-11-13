@@ -118,6 +118,21 @@ ion-card {
      border-radius: none;
  }
 
+ @media screen and (max-height: 824px) {
+    ion-content {
+        max-height: 625px;
+    }
+    ion-col {
+        height: 240px;
+        .product__name-price {
+            bottom: 4%;
+        }
+        .product__name {
+            top: 185px;
+        }
+    }
+  
+}
  @media screen and (max-height: 812px) {
     ion-content {
         max-height: 613px;
@@ -135,7 +150,7 @@ ion-card {
 }
 @media screen and (max-height: 736px) {
     ion-content {
-        max-height: 552px;
+        max-height: 534px;
     }
     ion-col {
         height: 240px;
@@ -143,6 +158,7 @@ ion-card {
             bottom: 4%;
         }
         .product__name {
+            
             top: 185px;
         }
     }
@@ -150,7 +166,7 @@ ion-card {
 }
 @media screen and (max-height: 667px) {
     ion-content {
-        max-height: 473px;
+        max-height: 472px;
     }
     ion-col {
         height: 230px;

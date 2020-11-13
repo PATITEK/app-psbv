@@ -23,9 +23,6 @@ export class LoginPage implements OnInit {
   });
   ngOnInit() {
   }
-  // resetPass(){
-  //   this.router.navigateByUrl('auth/reset-password');
-  // }
   showPassword(){
        this.showPass = !this.showPass;
        if(this.showPass){
@@ -36,10 +33,7 @@ export class LoginPage implements OnInit {
        }
      }
   login(){
-    console.log();
-    
     this.authService.login(this.profileForm.value).subscribe((data: any) => {
-      console.log(data, 'data');
     this.router.navigateByUrl('/main/product-categories');
     })
   }

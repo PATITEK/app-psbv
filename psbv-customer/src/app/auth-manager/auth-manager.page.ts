@@ -16,6 +16,6 @@ export class AuthManagerPage implements OnInit {
     }, 2000)
   }
   gotoLogin(){
-    this.router.navigateByUrl('/auth/login');
+    this.router.navigateByUrl('/main/home');
   }
 }
