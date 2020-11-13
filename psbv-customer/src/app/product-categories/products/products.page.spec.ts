@@ -1,40 +1,19 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-<<<<<<< HEAD:psbv-customer/src/app/product-categories/product-categories.page.spec.ts
-import { ProductCategoriesPage } from './product-categories.page';
 
-describe('ProductCategoriesPage', () => {
-  let component: ProductCategoriesPage;
-  let fixture: ComponentFixture<ProductCategoriesPage>;
+@Component({
+  selector: 'app-app-products',
+  templateUrl: './app-products.page.html',
+  styleUrls: ['./app-products.page.scss'],
+})
+export class ProductsPage implements OnInit {
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ProductCategoriesPage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+  constructor(private router: Router) { }
 
-    fixture = TestBed.createComponent(ProductCategoriesPage);
-=======
-import { ProductsPage } from './products.page';
-
-describe('ProductsPage', () => {
-  let component: ProductsPage;
-  let fixture: ComponentFixture<ProductsPage>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ProductsPage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(ProductsPage);
->>>>>>> FEmimi:psbv-customer/src/app/product-categories/products/products.page.spec.ts
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  ngOnInit() {
+  }
+  gotodetail(){
+    this.router.navigateByUrl('main/app-products/products');
+  }
+}

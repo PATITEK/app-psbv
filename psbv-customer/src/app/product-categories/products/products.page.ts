@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-products',
@@ -6,13 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./products.page.scss'],
 })
 export class ProductsPage implements OnInit {
-
-  constructor() { }
-
+  constructor(private location: Location) { }
   ngOnInit() {
     const tabs = document.querySelectorAll('ion-tab-bar');
      Object.keys(tabs).map((key) => {
     tabs[key].style.display = 'none';
+    });
+  }
+  goToHome(): void {
+    this.location.back();
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
     });
   }
 
