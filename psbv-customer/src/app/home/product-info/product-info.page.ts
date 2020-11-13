@@ -24,6 +24,7 @@ export enum PERMISSION {
 export class ProductInfoPage implements OnInit {
 
   constructor(private router: Router, private location: Location) {
+   
   }
 
   counter: number = 0;
@@ -56,14 +57,12 @@ export class ProductInfoPage implements OnInit {
       tabs[key].style.display = 'none';
     });
   }
-  ionViewWillEnter(){
+  goToHome(): void {
+    this.location.back();
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'flex';
     });
-  }
-  goToHome(): void {
-    this.location.back();
   }
 
   goToDetail(): void {

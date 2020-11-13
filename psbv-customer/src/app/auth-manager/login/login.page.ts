@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
     
     this.authService.login(this.profileForm.value).subscribe((data: any) => {
       console.log(data, 'data');
-    this.router.navigateByUrl('/main/home');
+    this.router.navigateByUrl('/main/product-categories');
     })
   }
   resetPass(){
