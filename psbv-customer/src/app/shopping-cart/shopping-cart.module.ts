@@ -11,4 +11,14 @@ import { ShoppingCartRoutingModule } from './shopping-cart-routing.module';
     ShoppingCartRoutingModule
   ]
 })
-export class ShoppingCartModule { }
+export class ShoppingCartModule {
+  constructor() {}
+
+  ngOnInit() {}
+
+  hasBackButton: boolean = false;
+
+  toggleHasBackButton(): void {
+    this.hasBackButton = !this.hasBackButton;
+  }
+ }
