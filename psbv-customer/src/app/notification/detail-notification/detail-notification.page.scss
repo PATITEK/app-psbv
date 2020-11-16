@@ -1,6 +1,10 @@
 ion-header{
     background-color: #232323;
     height: 117px;
+    .noti-bell {
+        color: white;
+        font-size: 26px;
+    }
 }
 .ion-heading{
     margin-top: 3rem;
@@ -13,6 +17,7 @@ ion-header{
     &__element__text{
         margin-left: 4.3rem;
         margin-right: 0.5rem;
+        width: 143px;
     }
     &__element__shop-icon{
         width: 30px;
@@ -29,77 +34,34 @@ ion-content {
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     top: 93px;
-    --background: #EFEFEF;
+    --background: #F6F6F6;
     z-index: 11;
     overflow: hidden;
     border-bottom: 0;
     --overflow: hidden;
     --offset-top: 5px !important;
-    .item__promotion{
-        background-color: white;
-        height: 84px;
-        width: 354px;
-        margin: 10px auto 0px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        &-icon {
-            padding: 6px 7px;
-            color: var(--main-color);
-            border-radius: 50%;
-            border: 1px solid #ccc;
-            margin-right: 9px;
-            &--delivery {
-                padding: 13px 10px;
-            }
-            &--highlight {
-                padding: 10px 10px;
-            }
-        }
-       &-title {
-        font-weight: bold;
-       }
-        &-text {
-            width: 235px;
-            color: #636363;
-          
-            margin:0;
-            font-size: 16px;
-            &--des{
-                font-size: 14px;
-            }
-        }
-        &-amount {
-            margin: 0;
-            font-size: 12px;
-            padding: 7px 4px;
-            border-radius: 50%;
-            background-color: var(--main-color);
-            color: white;
-        }
-        &-highlight {
-            background-color: white;
-            color: var(--main-color);
-        }
-
-    }
+   
     .wrapper__noti {
-        height: calc(100% - 479px);
+       
+        height: calc(100% - 100px);
         overflow-y: scroll;
        .item__new-noti {
         height: 150px;
-        width: 354px;
-        margin: 4px auto 0px;
+        width: 100%;
+        margin-left: -14px;
+        margin: 0 auto;
+      
         position: relative;
        --background: #F6F6F6;
        .item__wrapper {
            height: 150px;
            --background: #F6F6F6;
            margin-left: -16px;
+           border-bottom: 3.7px solid #EFEFEF;
        }
        &--image {
-        height: 54px;
-        width: 54px;
+        height: 58px;
+        width: 58px;
         border: 1px solid #F6F6F6;
         border-radius: 13px;
         margin-top: -14px;
@@ -111,7 +73,7 @@ ion-content {
         top: -2px;
         left: 22px;
         border-radius: 50%;
-        background-color: #5dda5d;
+        background-color: #FF6E6E;
 
        }
        &--text {
@@ -121,6 +83,7 @@ ion-content {
        }
        &--title {
         font-size: 16px;
+        margin-bottom: 5px;
        }
        &--des {
         font-size: 14px;
@@ -137,6 +100,9 @@ ion-content {
     }
     }
     
+}
+.wrapper__noti:first-child {
+    margin-top: 18px;
 }
 ion-item {
     --min-height: 0;

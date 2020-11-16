@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { NotificationPage } from './notification.page';
+import { DetailNotificationPage } from './detail-notification.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: NotificationPage
+    component: DetailNotificationPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class NotificationPageRoutingModule {}
+export class DetailNotificationPageRoutingModule {}

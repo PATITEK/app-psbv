@@ -29,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'notification',
-    loadChildren: () => import('./noti/notification/notification.module').then( m => m.NotificationPageModule)
+    loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)
   },
   {
     path: 'statusNoti',
@@ -37,6 +37,8 @@ const routes: Routes = [
   },
   { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
   { path: '**', redirectTo: 'auth' },
+  
+
  
 
  
