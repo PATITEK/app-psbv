@@ -8,9 +8,9 @@ import { IDataNoti, PageNotiService } from './page-noti.service';
   styleUrls: ['./page-noti.component.scss'],
 })
 export class PageNotiComponent implements OnInit {
-  public title = "PASSWORD CHANGED !";
-  public des  = "Dear user your password has been changeed, Continue to start using app";
-  public routerLink = '/main/home'
+  public title = "";
+  public des  = "";
+  public routerLink = ''
   constructor(
     private pageNotiService: PageNotiService,
     private router: Router 
