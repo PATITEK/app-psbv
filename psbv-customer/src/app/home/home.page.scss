@@ -15,7 +15,7 @@ ion-content {
     top: 135px;
     overflow: hidden;
     background-color: white;
-    overflow-y: auto;
+    --scroll-y: false;
     z-index: 11;
     max-height: 614px;
     border-bottom: 0;

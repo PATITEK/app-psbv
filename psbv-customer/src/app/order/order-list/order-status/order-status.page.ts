@@ -49,17 +49,25 @@ export class OrderStatusPage implements OnInit {
     {
       name: 'Received',
       didPassed: false,
-      iconName: 'thumb-up-outline'
+      iconName: 'thumbs-up-outline'
     },
   ]
 
   constructor(private location: Location) { }
   
   ngOnInit() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'none';
+    });
   }
 
   goBack(): void {
     this.location.back();
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
   }
 
   countPassedItem(): number {

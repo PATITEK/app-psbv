@@ -7,7 +7,7 @@
   </ion-item-group>
   <form [formGroup]="profileForm" (ngSubmit)="login()">
 
-    <input type="text" formControlName="email" class="inputname" placeholder="Email" required>
+    <input type="text" formControlName="email" class="inputname" required  placeholder="Email">
     <ion-item-group class ="content__wrapper-input">
     <input type="{{type}}" class ="inputname inputname__noborder" name ="password" formControlName="password" required placeholder="Password">
 
@@ -17,13 +17,9 @@
     <button *ngIf="showPass" type="button" (click)="showPassword()" class="btn-change-type ">
       <ion-icon name="eye-off-outline" class="icon-eye-throught"></ion-icon>
     </button>
-   
-
   </ion-item-group>
-
     <ion-router-link class="forgot-password" (click)="resetPass()">Forgot Password?</ion-router-link>
-    <ion-button class="btn-main" type="submit">Sign in My Account</ion-button>
-
+    <ion-button class="btn-main" type="submit" [disabled]="profileForm.invalid">Sign in My Account</ion-button>
   </form>
 
   <ion-item-group class="question__wrapper">

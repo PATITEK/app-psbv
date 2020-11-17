@@ -20,11 +20,29 @@ const routes: Routes = [
     loadChildren: () => import('./account/password-changed/password-changed.module').then( m =>m.PasswordChangedPageModule )
   },
   {
+    path: 'order-history',
+    loadChildren: () => import('./order/order-history/order-history.module').then( m => m.OrderHistoryPageModule)
+  },
+  {
+    path: 'shopping-cart',
+    loadChildren: () => import('./shopping-cart/shopping-cart.module').then( m => m.ShoppingCartModule)
+  },
+  {
+    path: 'notification',
+    loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)
+  },
+  {
     path: 'statusNoti',
     loadChildren: () => import('./@modular/page-noti/page-noti.module').then( m => m.PageNotiModule)
   },
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
   { path: '**', redirectTo: 'auth' },
+  
+
+ 
+
+ 
+
 ];
 @NgModule({
   imports: [

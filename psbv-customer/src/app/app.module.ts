@@ -7,7 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PageNotiService } from './@modular/page-noti/page-noti.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { CoreModule } from './@app-core';
 
 @NgModule({
@@ -16,6 +16,8 @@ import { CoreModule } from './@app-core';
   imports: [
     BrowserModule,
     FormsModule, 
+    
+    ReactiveFormsModule,
     IonicModule.forRoot(), 
     AppRoutingModule,
     CoreModule.forRoot()

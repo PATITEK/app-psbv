@@ -9,7 +9,6 @@ export interface IProducts {
 
 }
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
