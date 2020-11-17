@@ -17,7 +17,16 @@ export class AuthService {
     private storage: StorageService,
   ) { }
 
-
+  public forgotPassword(req){
+        return this.http.post(`${APICONFIG.AUTH.RESET_PASSWORD}`, req).pipe(
+          map((result)=> {
+            return result;
+          }),
+          catchError((errorRes: any) => {
+            throw errorRes.error;
+          }));
+        
+  }
   public login(req) {
     return this.http.post(`${APICONFIG.AUTH.LOGIN}`, req).pipe(
       map((result) => {

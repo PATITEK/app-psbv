@@ -37,8 +37,7 @@ export class LoginPage implements OnInit {
     })
   }
   resetPass(){
-    console.log('hihi');
-      this.router.navigateByUrl('/auth/forgot-password')
+    this.router.navigateByUrl('/auth/forgot-password')
   }
     
   
