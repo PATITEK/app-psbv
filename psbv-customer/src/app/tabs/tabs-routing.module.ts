@@ -25,7 +25,7 @@ const routes: Routes = [
       },
       {
         path: 'order',
-        loadChildren: () => import('../order//order-history/order-history.module').then(m => m.OrderHistoryPageModule)
+        loadChildren: () => import('../order//order-list/order-list.module').then(m => m.OrderListPageModule)
       },
       {
         path: '',
