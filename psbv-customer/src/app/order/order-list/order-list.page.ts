@@ -18,4 +18,8 @@ export class OrderListPage implements OnInit {
   gotoOrderStatus(){
     this.router.navigateByUrl('/main/shopping-cart')
   }
+
+  gotoHistory(){
+    this.router.navigateByUrl('/order/order-history')
+  }
 }

@@ -1,29 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 
-export interface Item{
+export class Item {
     count: number;
+    constructor(count?: number){
+        this.count = count;
+    }
+    add() {
+        this.count++;
+    }
+    minus() {
+        this.count--;
+    }
 }
 
 @Component({
-  selector: 'app-cart-item',
-  templateUrl: './cart-item.component.html',
-  styleUrls: ['./cart-item.component.scss'],
+    selector: 'app-cart-item',
+    templateUrl: './cart-item.component.html',
+    styleUrls: ['./cart-item.component.scss'],
 })
 export class CartItemComponent implements OnInit {
     items: Array<Item> = [
-        {
-            count: 1
-        },
-        {
-            count: 1
-        },
-        {
-            count: 1
-        },
-    ]
+        
+    ];
 
-  constructor() { }
+    constructor() { }
 
-  ngOnInit() {}
+    ngOnInit() { }
 
 }

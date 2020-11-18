@@ -5,9 +5,12 @@
         </ion-col>
     </ion-row>
     <ion-row no-lines class="heading__option">
-        <ion-col class="heading__option__selected">Order status</ion-col>
-        <ion-col>History</ion-col>
+        <ion-col class="heading__option__selected">
+            Order status
+        </ion-col>
+        <ion-col (click)="gotoHistory()">History</ion-col>
     </ion-row>
+    <ion-progress-bar class="selector" value="0.4" ></ion-progress-bar>
 </ion-header>
 <ion-content>
   <ion-card class="section__main">
