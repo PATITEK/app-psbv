@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { IStatus } from '../order-status/order-status.page';
 
 @Component({
@@ -45,7 +44,6 @@ export class ShippingPage implements OnInit {
   ];
 
   constructor(
-    private location: Location,
     private router: Router,
     public sanitizer: DomSanitizer
   ) { }
@@ -59,7 +57,11 @@ export class ShippingPage implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+    this.router.navigateByUrl('/main/order/order-status');
+  }
+
+  goToDetailOrder(): void {
+    this.router.navigateByUrl('/main/order/detail-order');
   }
 
   countPassedItem(): number {

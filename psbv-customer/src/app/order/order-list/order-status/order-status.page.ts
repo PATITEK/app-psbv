@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -57,7 +56,6 @@ export class OrderStatusPage implements OnInit {
   ];
 
   constructor(
-    private location: Location,
     private router: Router,
     public sanitizer: DomSanitizer
   ) { }
@@ -71,7 +69,7 @@ export class OrderStatusPage implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+    this.router.navigateByUrl('/main/order');
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'flex';
@@ -82,6 +80,10 @@ export class OrderStatusPage implements OnInit {
     if (status.childSrc && status.didPassed) {
       this.router.navigateByUrl(status.childSrc);
     }
+  }
+
+  goToDetailOrder(): void {
+    this.router.navigateByUrl('/main/order/detail-order');
   }
 
   countPassedItem(): number {

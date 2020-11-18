@@ -1,0 +1,131 @@
+ion-content {
+  --background: #efefef;
+}
+
+.list-ios,
+.list-md {
+  background: #efefef;
+}
+
+ion-content {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow: hidden;
+  z-index: 11;
+  position: absolute;
+  top: 80px;
+}
+
+ion-header {
+  background: #232323;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+  .back-button {
+    position: absolute;
+    top: 25%;
+    left: 10px;
+    font-size: 19px;
+    z-index: 1000;
+    color: white;
+  }
+
+  ion-card-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+
+    @media screen and (max-width: 320px) {
+      font-size: 16px;
+    }
+  }
+}
+
+.card-title {
+  background: white;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  border-radius: 20px;
+
+  ion-card-header,
+  ion-card-content {
+    padding: 12px;
+  }
+
+  ion-item {
+    --color: #636363;
+  }
+  
+  .title {
+    --color: #515151;
+    font-size: 24px;
+    font-weight: 700;
+    padding-bottom: 8px;
+  }
+
+  .status-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .circle {
+      width: 22px;
+      height: 22px;
+      background-color: #91e29b;
+      display: inline-block;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+
+    .status-name {
+      font-size: 12px;
+      color: #515151;
+    }
+  }
+
+
+}
+
+
+// .heading {
+//   margin: 5px 30px 35px;
+//   --background: white;
+//   --color: #515151;
+//   opacity: 1;
+//   --box-shadow: 0;
+//   font-size: 24px;
+//   font-weight: 700;
+//   text-transform: none;
+//   --border-radius: 14px;
+// }
+
+// ion-list {
+//   height: 65%;
+//   position: relative;
+//   padding-left: 70px;
+
+//   @media screen and (max-height: 568px) {
+//     height: 60%;
+//     padding-left: 50px;
+//   }
+// }
+
+// ion-item {
+//   height: calc(100% / 6);
+//   align-items: flex-start;
+//   position: relative;
+
+//   ion-card-subtitle {
+//     text-transform: none;
+//     --color: #636363;
+//     font-weight: 700;
+//     font-size: 16px;
+//   }
+
+//   ion-label {
+//     --color: #515151;
+//     font-size: 15px;
+//   }
+// }
