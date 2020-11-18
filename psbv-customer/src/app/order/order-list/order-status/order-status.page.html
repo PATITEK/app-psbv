@@ -7,7 +7,7 @@
 
 <ion-content class="ion-padding">
   <ion-button class="heading" expand="block" size="small" disabled>Item 12/12/1212</ion-button>
-  <ion-list #myDiv>
+  <ion-list>
     <ion-item lines="none" *ngFor="let status of statuses" (click)="goToChild(status)">
       <ion-icon name="{{ status.iconName }}" class="icon"></ion-icon>
       <ion-item-group>
