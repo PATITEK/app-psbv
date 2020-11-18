@@ -27,7 +27,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-fab-button class="add-product-button" (click)="addProduct()" *ngIf="!checkGuestPermission()">
+  <ion-fab-button class="add-product-button" (click)="presentToast()" *ngIf="!checkGuestPermission()">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 

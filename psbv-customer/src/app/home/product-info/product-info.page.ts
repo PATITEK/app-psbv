@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ToastController } from '@ionic/angular';
 
 export interface IAccessory {
   src: string;
@@ -26,6 +27,7 @@ export class ProductInfoPage implements OnInit {
   constructor(
     private router: Router,
     private location: Location,
+    private toastController: ToastController
   ) {}
 
   counter: number = 0;
@@ -120,4 +122,14 @@ export class ProductInfoPage implements OnInit {
     return this.permission === PERMISSION.GUEST;
   }
 
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Added product',
+      duration: 1000,
+      position: 'top',
+    });
+    toast.present();
+
+    this.addProduct();
+  }
 }

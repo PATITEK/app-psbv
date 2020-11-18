@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 export interface IStatus {
   name: string;
@@ -18,6 +20,7 @@ export interface IStatus {
 })
 export class OrderStatusPage implements OnInit {
 
+  text: string;
   statuses: IStatus[] = [
     {
       name: 'Sent Request',
@@ -38,7 +41,7 @@ export class OrderStatusPage implements OnInit {
       time: '09.05am',
       date: '12/12/1212',
       didPassed: true,
-      childSrc: '/main/order/order-status/shipping',
+      childSrc: '/main/order/shipping',
       iconName: 'airplane-outline'
     },
     {
@@ -51,15 +54,20 @@ export class OrderStatusPage implements OnInit {
       didPassed: false,
       iconName: 'thumbs-up-outline'
     },
-  ]
+  ];
 
-  constructor(private location: Location) { }
-  
+  constructor(
+    private location: Location,
+    private router: Router,
+    public sanitizer: DomSanitizer
+  ) { }
+
   ngOnInit() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+    this.text = `calc(${this.countPassedItem()}% + 5px)`;
   }
 
   goBack(): void {
@@ -70,7 +78,14 @@ export class OrderStatusPage implements OnInit {
     });
   }
 
+  goToChild(status: IStatus) {
+    if (status.childSrc && status.didPassed) {
+      this.router.navigateByUrl(status.childSrc);
+    }
+  }
+
   countPassedItem(): number {
-    return this.statuses.filter(a => a.didPassed).length;
+    let num: number = this.statuses.filter(status => status.didPassed).length;
+    return num * 2 * 10 - 20;
   }
 }

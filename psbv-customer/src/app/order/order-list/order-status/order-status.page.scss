@@ -9,16 +9,25 @@ ion-item {
   background: #efefef;
 }
 
+ion-content {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow: hidden;
+  z-index: 11;
+  position: absolute;
+  top: 80px;
+}
+
 ion-header {
   background: #232323;
   text-align: center;
-  padding-block-start: 40px;
-  margin-bottom: -1px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 
   .back-button {
     position: absolute;
-    top: 40%;
-    left: 0;
+    top: 25%;
+    left: 10px;
     font-size: 19px;
     z-index: 1000;
     color: white;
@@ -49,10 +58,13 @@ ion-header {
 }
 
 ion-list {
-  height: 74%;
+  height: 65%;
+  position: relative;
+  padding-left: 35px;
 
-  @media screen and (max-width: 320px) {
-    height: 70%;
+  @media screen and (max-height: 568px) {
+    height: 60%;
+    padding-left: 8px;
   }
 }
 
@@ -101,6 +113,10 @@ ion-item {
     margin-left: 20px;
     margin-right: 20px;
     border-radius: 15px;
+
+    @media screen and (max-width: 320px) {
+      padding: 10px;
+    }
   }
 
   ion-card-subtitle {
@@ -130,4 +146,51 @@ ion-item {
   float: right;
   padding-block-start: 12px;
   text-transform: none;
+}
+
+.line-bottom,
+.line-top {
+  width: 4px;
+  position: absolute;
+  top: 25px;
+  left: 35px;
+  bottom: 0;
+  z-index: 1;
+  background-color: #dededf;
+
+  @media screen and (max-width: 320px) {
+    left: 20px;
+  }
+
+  span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    position: absolute;
+    left: -4px;
+
+    &:first-child {
+      top: -4px;
+    }
+
+    &:nth-child(2) {
+      top: calc(20% + 4px);
+    }
+
+    &:nth-child(3) {
+      top: calc(40% + 6px);
+    }
+
+    &:nth-child(4) {
+      top: calc(60% + 10px);
+    }
+
+    &:nth-child(5) {
+      top: calc(80% + 16px);
+    }
+  }
+}
+
+.line-top {
+  background-color: #93e29d;
 }

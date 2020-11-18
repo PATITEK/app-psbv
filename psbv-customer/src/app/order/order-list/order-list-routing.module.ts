@@ -7,7 +7,8 @@ const routes: Routes = [
   {
     path: '',
     component: OrderListPage
-  },  {
+  },
+  {
     path: 'order-status',
     loadChildren: () => import('./order-status/order-status.module').then( m => m.OrderStatusPageModule)
   },
@@ -15,7 +16,6 @@ const routes: Routes = [
     path: 'shipping',
     loadChildren: () => import('./shipping/shipping.module').then( m => m.ShippingPageModule)
   }
-
 ];
 
 @NgModule({
