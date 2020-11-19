@@ -45,16 +45,16 @@
 
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let accessory of accessories" [style.--background]="getBg(accessory)" (click)="toggleItem(accessory)">
+        <ion-item *ngFor="let accessory of accessories" [style.--background]="getItem(accessory).background" (click)="toggleItem(accessory)">
           <div class="product-img-block" slot="start">
             <img [src]="accessory.src">
           </div>
-          <div class="content-block" [style.color]="getColor(accessory)">
+          <div class="content-block" [style.color]="getItem(accessory).color">
             <ion-label>{{ accessory.name }}</ion-label>
             <p>{{ accessory.desc }}</p>
           </div>
           <ion-button class="accessories-item-icon" disabled *ngIf="!checkGuestPermission()">
-            <ion-icon name="{{ getIcon(accessory) }}"></ion-icon>
+            <ion-icon name="{{ getItem(accessory).iconName }}"></ion-icon>
           </ion-button>
         </ion-item>
       </ion-list>
