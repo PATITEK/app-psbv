@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
 export enum STATUS {
@@ -96,10 +95,11 @@ export class DetailOrderPage implements OnInit {
       accessories: []
     },
   ]
+  data: number = 1;
 
   constructor(
-    private location: Location,
     private router: Router,
+    private route: ActivatedRoute,
     private sanitizer: DomSanitizer
   ) { }
 
@@ -111,8 +111,18 @@ export class DetailOrderPage implements OnInit {
     this.text = '20px 0';
   }
 
+  ionViewWillEnter(){
+    this.route.queryParams.subscribe((params) => {
+      this.data = JSON.parse(params['data']);
+    })
+  }
+
   goBack(): void {
-    this.location.back();
+    if (this.data == 1) {
+      this.router.navigateByUrl('/main/order/order-status');
+    } else {
+      this.router.navigateByUrl('/main/order/shipping');
+    }
   }
 
   goToDetailComponent(): void {
