@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/@app-core/http';
+import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
 
 
 @Component({
@@ -18,11 +19,12 @@ export class NewPasswordPage implements OnInit {
   public showPass = false;
   public showPassConf = false;
   formNewPass = new FormGroup({
-    password: new FormControl('',[])
+    password: new FormControl('')
   })
  
 
-  constructor(private authService: AuthService,private router: Router ) { }
+  constructor(private authService: AuthService,private router: Router,
+     private pageNotiService: PageNotiService ) { }
   showPassword(){
     this.showPass = !this.showPass;
     if(this.showPass){
@@ -42,17 +44,24 @@ export class NewPasswordPage implements OnInit {
     }
   }
   onSubmit(){
-
-    console.log(this.formNewPass.value);
+    const datapasing: IDataNoti = {
+      title: 'PASSWORD CHANGED!',
+      description: 'Dear user your password has been changed, Continue to start using app',
+      routerLink: '/auth/login'
+    }
+    var result = this.formNewPass.value;
+    console.log(result);
     this.authService.resetPassword(this.formNewPass.value).subscribe((data:any) => {
       console.log(data);
-      // this.router.navigateByUrl("/statusNoti");
+     
+      this.pageNotiService.setdataStatusNoti(datapasing);
+       this.router.navigate(['/statusNoti']);
+
      
   });
 
   }
   ngOnInit() {
-  
   }
  
 
