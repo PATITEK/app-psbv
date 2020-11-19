@@ -20,7 +20,7 @@ export class OrderListPage implements OnInit {
   }
 
   gotoOrderStatus(){
-    this.router.navigateByUrl('/main/shopping-cart')
+    this.router.navigateByUrl('/main/order/order-status');
   }
 
   gotoHistory(){

@@ -1,37 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {FormControl, FormGroup, Validators } from '@angular/forms';
-import { PATTERN} from '../../@app-core/http/@http-config/pattern';
+import { AuthService } from 'src/app/@app-core/http';
+import { Router } from '@angular/router';
 
-import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.page.html',
   styleUrls: ['./forgot-password.page.scss'],
+ 
 })
 export class ForgotPasswordPage implements OnInit {
- 
-  constructor( ) {
-   
+
+  message: string ;
+
+  constructor(private router: Router,private authService: AuthService) {
    }
-   onSubmit(data){
-     console.log(data);
-   }
+
    inputEmail = new FormGroup({
     email: new FormControl('',[
       Validators.required,
       Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
   },);
-  
-
-  sendcode() {
-    
-
-
+  onSubmit(){
+   this.message = this.inputEmail.value;
+    this.authService.forgotPassword(this.inputEmail.value).subscribe((data:any) => {
+        this.router.navigateByUrl("/auth/reset-password");
+        this.authService.setEmailForgot(this.message);
+    });
   }
-
   ngOnInit() {
-   
-  
+
   }
+ 
 
 }

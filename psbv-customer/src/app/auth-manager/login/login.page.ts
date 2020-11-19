@@ -31,14 +31,19 @@ export class LoginPage implements OnInit {
          this.type ='password';
        }
   }
-  login(){
+  onSubmit(){
+    console.log("hihi");
     this.authService.login(this.profileForm.value).subscribe((data: any) => {
+      console.log("hihi");
     this.router.navigateByUrl('/main/product-categories');
     })
   }
+  test() {
+    console.log("abcdef");
+    
+  }
   resetPass(){
-    console.log('hihi');
-      this.router.navigateByUrl('/auth/forgot-password')
+    this.router.navigateByUrl('/auth/forgot-password')
   }
     
   

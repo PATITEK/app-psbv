@@ -6,9 +6,11 @@ import { catchError, map } from 'rxjs/operators';
 import { SUCCESS } from '../@http-config/messages';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/@app-core/storage.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService {
+  private emailForgot: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   constructor(
     private http: HttpClient,
@@ -17,12 +19,57 @@ export class AuthService {
     private storage: StorageService,
   ) { }
 
+  public get getEmailForgot(): Observable<any> {
+    return this.emailForgot.asObservable();
+}
 
+public setEmailForgot(value: any) {
+    this.emailForgot.next(value);
+}
+  public forgotPassword(req){
+        return this.http.post(`${APICONFIG.AUTH.RESET_PASSWORD_EMAIL}`, req).pipe(
+          map((result)=> {
+            return result;
+          }),
+          catchError((errorRes: any) => {
+            throw errorRes.error;
+          }));
+        
+  }
+  public checkcodePassword(req) {
+    return this.http.post(`${APICONFIG.AUTH.CHECK_CODE_RESET}`, req).pipe(
+      map((result) => { 
+        return result;
+      }),
+      catchError((errorRes: any)=>{
+        throw errorRes.error;
+      }
+    ));
+  }
+  public newPassword(req){
+    return this.http.post(`${APICONFIG.AUTH.RESET_PASSWORD}`, req).pipe(
+      map((result) => { 
+        return result;
+      }),
+      catchError((errorRes: any)=>{
+        throw errorRes.error;
+      }
+    ));
+  }
+  public resetPassword(req){
+    return this.http.post(`${APICONFIG.AUTH.RESET_PASSWORD}`, req).pipe(
+      map((result) => { 
+        return result;
+      }),
+      catchError((errorRes: any)=>{
+        throw errorRes.error;
+      }
+    ));
+  }
   public login(req) {
     return this.http.post(`${APICONFIG.AUTH.LOGIN}`, req).pipe(
       map((result) => {
         // this.toastr.success(SUCCESS.AUTH.LOGIN);
-        this.setLocalStore(result);
         return result;
       }),
       catchError((errorRes: any) => {
@@ -31,13 +78,11 @@ export class AuthService {
         throw errorRes.error;
       }));
   }
-
   logout() {
     localStorage.clear();
     this.storage.clear();
     this.router.navigateByUrl('/auth/login');
   }
-
   checkLogin() {
     const token = localStorage.getItem('Authorization');
     if (!token) {
@@ -46,7 +91,6 @@ export class AuthService {
       return true;
     }
   }
-
   private setLocalStore(data) {
     localStorage.setItem('Authorization', data.token);
     localStorage.setItem('fullname', data.fullname);
