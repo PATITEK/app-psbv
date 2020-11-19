@@ -15,7 +15,8 @@ ion-content {
   overflow: hidden;
   z-index: 11;
   position: absolute;
-  top: 80px;
+  height: calc(100% - 80px);
+  bottom: 0;
 }
 
 ion-header {
@@ -58,12 +59,11 @@ ion-header {
 }
 
 ion-list {
-  height: 65%;
+  height: 68%;
   position: relative;
   padding-left: 70px;
 
   @media screen and (max-height: 568px) {
-    height: 60%;
     padding-left: 50px;
   }
 }
