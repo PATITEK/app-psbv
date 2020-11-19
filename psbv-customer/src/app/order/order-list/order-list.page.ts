@@ -13,6 +13,10 @@ export class OrderListPage implements OnInit {
    }
 
   ngOnInit() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
   }
 
   gotoOrderStatus(){
@@ -20,6 +24,6 @@ export class OrderListPage implements OnInit {
   }
 
   gotoHistory(){
-    this.router.navigateByUrl('/order/order-history')
+    this.router.navigateByUrl('/main/history')
   }
 }

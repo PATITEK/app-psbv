@@ -14,6 +14,6 @@ export class OrderHistoryPage implements OnInit {
   }
 
   gotoStatus() {
-    this.router.navigateByUrl('/order/order-list');
+    this.router.navigateByUrl('/main/order');
   }
 }

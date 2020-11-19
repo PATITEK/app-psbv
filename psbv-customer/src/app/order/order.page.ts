@@ -10,6 +10,10 @@ export class OrderPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
   }
 
 }
