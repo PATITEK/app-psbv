@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: DetailOrderPage
+  },  {
+    path: 'detail-component',
+    loadChildren: () => import('./detail-component/detail-component.module').then( m => m.DetailComponentPageModule)
   }
+
 ];
 
 @NgModule({
