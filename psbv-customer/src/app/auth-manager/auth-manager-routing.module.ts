@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthManagerPage } from './auth-manager.page';
+import { LoginPage } from './login/login.page';
 
 const routes: Routes = [
   {
@@ -10,7 +11,8 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('../auth-manager/login/login.module').then( m => m.LoginPageModule)
+    component: LoginPage
+    // loadChildren: () => import('../auth-manager/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'reset-password',
