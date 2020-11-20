@@ -21,7 +21,6 @@ export class NewPasswordPage implements OnInit {
   formNewPass = new FormGroup({
     password: new FormControl('')
   })
- 
 
   constructor(private authService: AuthService,private router: Router,
      private pageNotiService: PageNotiService ) { }
