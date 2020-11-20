@@ -7,19 +7,21 @@
   </ion-item-group>
   <form [formGroup]="profileForm" >
 
-    <input type="text" formControlName="email" class="inputname" required  placeholder="Email">
     <ion-item-group class ="content__wrapper-input">
-    <input type="{{type}}" class ="inputname inputname__noborder" formControlName="password" required placeholder="Password">
+      <input type="text" class ="inputname inputname__noborder" formControlName="email" required placeholder="Email">
+    </ion-item-group>
+    <ion-item-group class ="content__wrapper-input">
+    <input type="{{type2}}" class ="inputname inputname__noborder" formControlName="password" required placeholder="Password">
 
-    <!-- <button *ngIf]="!showPass" type = "button" (click)="showPassword()" class="btn-change-type">
+    <button *ngIf="!showPass2" type = "button" (click)="showPassword2()" class="btn-change-type">
       <ion-icon name="eye-outline" class="ion-eye"></ion-icon>
     </button>
-    <button *ngIf="showPass" type="button" (click)="showPassword()" class="btn-change-type ">
+    <button *ngIf="showPass2" type="button" (click)="showPassword2()" class="btn-change-type ">
       <ion-icon name="eye-off-outline" class="icon-eye-throught"></ion-icon>
-    </button> -->
+    </button>
   </ion-item-group>
     <ion-router-link class="forgot-password" (click)="resetPass()">Forgot Password?</ion-router-link>
-    <ion-button class="btn-main" type="button" (click)="onSubmit()">Sign in My Account</ion-button>
+    <ion-button class="btn-main" type="button" (click)="onSubmit()" [disabled]="!profileForm.valid">Sign in My Account</ion-button>
   </form>
 
   <ion-item-group class="question__wrapper">
