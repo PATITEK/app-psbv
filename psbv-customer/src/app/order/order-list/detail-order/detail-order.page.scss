@@ -2,9 +2,13 @@ ion-content {
   --background: #efefef;
 }
 
-.list-ios,
-.list-md {
+ion-list {
   background: #ffffff;
+}
+
+ion-img {
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 ion-content {
@@ -20,13 +24,12 @@ ion-content {
 ion-header {
   background: #232323;
   text-align: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding: 40px 0;
 
   .back-button {
     position: absolute;
-    top: 25%;
-    left: 10px;
+    top: 25px;
+    left: 0;
     font-size: 19px;
     z-index: 1000;
     color: white;
@@ -111,11 +114,6 @@ ion-item {
 
     &:not(:last-child) {
       margin-bottom: 20px;
-    }
-
-    ion-img {
-      border-radius: 12px;
-      overflow: hidden;
     }
 
     .heading-box {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { PERMISSION } from '../product-info.page';
 import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
 
@@ -12,7 +11,7 @@ import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti
 export class ProductDetailPage implements OnInit {
 
 
-  constructor(private router: Router, private location: Location,  private pageNotiService: PageNotiService,) {
+  constructor(private router: Router, private pageNotiService: PageNotiService,) {
   }
 
   permission: PERMISSION = PERMISSION.PREMIUM;
@@ -25,7 +24,7 @@ export class ProductDetailPage implements OnInit {
   }
 
   goBack() {
-    this.location.back();
+    this.router.navigateByUrl('/main/home/product-info');
   }
   
   download() {

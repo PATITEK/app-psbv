@@ -1,17 +1,16 @@
-<ion-header class="ion-no-border">
-  <ion-button fill="clear" size="small" class="ion-no-padding back-button" (click)="goToHome()">
+<ion-header>
+  <ion-button fill="clear" size="small" class="back-button" (click)="goBack()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
   <ion-card-title>Information product</ion-card-title>
 </ion-header>
 
-<ion-content class="product-info">
-  <ion-card style="margin-top: -15px">
+<ion-content>
+  <ion-card class="product">
     <ion-card-content>
-      <div class="img-block">
+      <div class="img-box">
         <ion-img src="http://lorempixel.com/g/334/170/abstract"></ion-img>
       </div>
-
       <ion-card-subtitle>Product name</ion-card-subtitle>
       <ul>
         <li>Lorem ipsum dolor, sit amet consectetur hfdjfdhff</li>
@@ -20,53 +19,54 @@
         <li>Lorem ipsum dolor, sit amet consectetur hfdjfdhff</li>
         <li>Lorem ipsum dolor, sit amet consectetur hfdjfdhff</li>
       </ul>
-      <div class="ion-text-right">
-        <ion-button size="small" class="detail-button" (click)="goToDetail()">Detail <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
-        </ion-button>
-      </div>
+      <ion-button size="small" class="detail-button" (click)="goToDetail()">
+        Detail
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-button>
     </ion-card-content>
+    <ion-fab-button class="add-product-button" (click)="presentToast()" *ngIf="!checkGuestPermission()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
   </ion-card>
 
-  <ion-fab-button class="add-product-button" (click)="presentToast()" *ngIf="!checkGuestPermission()">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
+  <ion-card class="accessories">
+    <ion-card-header class="ion-text-center">
+      <span *ngIf="!checkGuestPermission()">Add product<br> with accessories below</span>
+    </ion-card-header>
 
-  <ion-card class="accessories ion-text-center">
-    <ion-label class="main-label" *ngIf="!checkGuestPermission()">Add product<br> with accessories below</ion-label>
-    <ion-card-header class="ion-text-left">
+    <ion-card-content>
       <ion-item class="accessories-heading">
-        <ion-card-subtitle>Accessories</ion-card-subtitle>
+        <span>Accessories</span>
         <ion-button class="add-all-button" slot="end" (click)="selectAllItem()" *ngIf="!checkGuestPermission()">
           Add all accessories
           <ion-icon name="add-circle-outline" slot="end"></ion-icon>
         </ion-button>
       </ion-item>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let accessory of accessories" [style.--background]="getItem(accessory).background" (click)="toggleItem(accessory)">
-          <div class="product-img-block" slot="start">
-            <img [src]="accessory.src">
-          </div>
-          <div class="content-block" [style.color]="getItem(accessory).color">
-            <ion-label>{{ accessory.name }}</ion-label>
-            <p>{{ accessory.desc }}</p>
-          </div>
-          <ion-button class="accessories-item-icon" disabled *ngIf="!checkGuestPermission()">
+      <ion-grid>
+        <ion-row *ngFor="let accessory of accessories" [style.background]="getItem(accessory).background"
+          (click)="toggleItem(accessory)">
+          <ion-col size="4">
+            <ion-img [src]="accessory.src"></ion-img>
+          </ion-col>
+          <ion-col size="8">
+            <div class="content-block" [style.color]="getItem(accessory).color">
+              <ion-label>{{ accessory.name }}</ion-label>
+              <p>{{ accessory.desc }}</p>
+            </div>
+          </ion-col>
+          <span class="accessories-item-icon" *ngIf="!checkGuestPermission()">
             <ion-icon name="{{ getItem(accessory).iconName }}"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-list>
+          </span>
+        </ion-row>
+      </ion-grid>
     </ion-card-content>
   </ion-card>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="cart-button" *ngIf="!checkGuestPermission()" (click)="goToCart()">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="cart-button" *ngIf="!checkGuestPermission()"
+    (click)="goToCart()">
     <ion-fab-button>
       <ion-icon name="cart-outline"></ion-icon>
     </ion-fab-button>
-    <ion-chip>
-      <ion-label>{{ counter }}</ion-label>
-    </ion-chip>
+    <span>{{ counter }}</span>
   </ion-fab>
 </ion-content>

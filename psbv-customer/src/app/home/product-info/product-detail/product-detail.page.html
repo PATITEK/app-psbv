@@ -1,17 +1,21 @@
 <ion-header>
-  <ion-button fill="clear" size="small" class="ion-no-padding back-button" (click)="goBack()">
+  <ion-button fill="clear" size="small" class="back-button" (click)="goBack()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
   <ion-card-title>Detail product</ion-card-title>
 </ion-header>
 
-<ion-content class="product-info">
-  <ion-card class="product-info-inner" style="margin-top: -28px">
+<ion-content>
+  <ion-card class="product">
     <ion-card-content>
-      <div class="img-container">
+      <!-- <div class="img-container">
         <div class="img-block">
           <ion-img src="http://lorempixel.com/g/334/170/abstract"></ion-img>
         </div>
+        <ion-button class="price" shape="round" size="small" disabled>$ 12.5</ion-button>
+      </div> -->
+      <div class="img-box">
+        <ion-img src="http://lorempixel.com/g/334/170/abstract"></ion-img>
         <ion-button class="price" shape="round" size="small" disabled>$ 12.5</ion-button>
       </div>
 
@@ -20,7 +24,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="product-noti">
+  <ion-card class="info">
     <ion-card-subtitle>Info</ion-card-subtitle>
     <p class="content">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, enim! Dolorum qui aliquam nobis neque laborum enim

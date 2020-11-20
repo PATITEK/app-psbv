@@ -51,6 +51,12 @@ export class ProductInfoPage implements OnInit {
       name: 'Accessory 3',
       desc: 'Info 3 Info 3 Info 3 Info 3',
       isAdded: false
+    },
+    {
+      src: 'http://lorempixel.com/g/100/100/abstract',
+      name: 'Accessory 3',
+      desc: 'Info 3 Info 3 Info 3 Info 3',
+      isAdded: false
     }
   ];
 
@@ -61,8 +67,8 @@ export class ProductInfoPage implements OnInit {
     });
   }
 
-  goToHome(): void {
-    this.location.back();
+  goBack(): void {
+    this.router.navigateByUrl('/main/home');
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'flex';
