@@ -9,8 +9,8 @@ import { AuthService } from 'src/app/@app-core/http';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  public type = 'password';
-  public showPass = false;
+  public type2 = 'password';
+  public showPass2 = false;
   
   constructor(
     private router: Router,
@@ -22,15 +22,16 @@ export class LoginPage implements OnInit {
   });
   ngOnInit() {
   }
-  showPassword(){
-       this.showPass = !this.showPass;
-       if(this.showPass){
-         this.type = 'text';
-       }
-       else {
-         this.type ='password';
-       }
-  }
+ 
+  showPassword2(){
+    this.showPass2 = !this.showPass2;
+    if(this.showPass2){
+      this.type2 = 'text';
+    }
+    else {
+      this.type2 ='password';
+    }
+}
   onSubmit(){
     this.authService.login(this.profileForm.value).subscribe((data: any) => {
     this.router.navigateByUrl('/main/product-categories');
