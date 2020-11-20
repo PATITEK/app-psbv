@@ -50,7 +50,8 @@ ion-content{
     --background:#ffffff;
     border-radius: 1rem;
     height: 13rem;
-    margin-top: -10px;
+    margin-top: 0px;
+    margin-bottom: 1rem;
     &:first-child{
         margin-top: 1rem;
     }
@@ -101,7 +102,7 @@ ion-content{
     .re-order{
         float: right;
         width: 40%;
-        margin-top: -1.5rem;
+        margin-top: -1.2rem;
         --background: #91E29B;
         --color-activated: #91E29B;
         --border-radius: 1rem;
@@ -109,5 +110,21 @@ ion-content{
         font-size: 20px;
 
         padding-block-end: 0.5rem;
+    }
+}
+@media screen and (min-width: 400px){
+    .section__sub{
+        .re-order{
+            margin-top: 0;
+        }
+    }
+}
+@media screen and (max-height: 570px){
+    .section__sub{
+        .detail__wrapper{
+            .item__price-tag{
+                font-size: 12px;
+            }
+        }
     }
 }
