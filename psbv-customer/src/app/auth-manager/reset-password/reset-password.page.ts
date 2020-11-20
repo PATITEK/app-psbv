@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/@app-core/http';
   selector: 'app-reset-password',
   templateUrl: './reset-password.page.html',
   styleUrls: ['./reset-password.page.scss'],
-  // template: ``
 })
 export class ResetPasswordPage implements OnInit {
   data;
@@ -56,7 +55,6 @@ export class ResetPasswordPage implements OnInit {
         "email": this.data.email,
         "code": inputstring
       }
-      console.log(tem_object);
       this.authService.checkcodePassword(tem_object).subscribe((data:any) => {
         localStorage.setItem('Authorization', data.token);
        
