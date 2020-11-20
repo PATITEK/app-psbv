@@ -34,6 +34,7 @@ export class LoginPage implements OnInit {
 }
   onSubmit(){
     this.authService.login(this.profileForm.value).subscribe((data: any) => {
+      
     this.router.navigateByUrl('/main/product-categories');
     })
   }

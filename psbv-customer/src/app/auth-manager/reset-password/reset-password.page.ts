@@ -13,37 +13,64 @@ export class ResetPasswordPage implements OnInit {
   data;
   inputCode = new FormGroup(
     {
-    code1: new FormControl('',[
-      Validators.required,
-      Validators.minLength(1), Validators.maxLength(1)
-     ]),
-     code2: new FormControl('',[
-      Validators.required,
-      Validators.maxLength(1),
-     ]),
-     code3: new FormControl('',[
-      Validators.required,
-      Validators.maxLength(1),
-     ]),
-     code4: new FormControl('',[
-      Validators.required,
-      Validators.maxLength(1),
-     ]),
-     code5: new FormControl('',[
-      Validators.required,
-      Validators.maxLength(1),
-     ]),
-     code6: new FormControl('',[
-      Validators.required,
-      Validators.maxLength(1),
-     ])
-
-  },
+      code1: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(1),
+      ]),
+      code2: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(1),
+      ]),
+      code3: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(1),
+      ]),
+      code4: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(1),
+      ]),
+      code5: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(1),
+      ]),
+      code6: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(1),
+      ])
+    },
   );
- 
-  constructor(private router: Router,private authService: AuthService
-   ) { }
-  onSubmit(){
+
+  constructor(private router: Router, private authService: AuthService
+  ) { }
+  keytab(event) {
+    // let allInputs = document.getElementsByTagName('input');
+    // let index = 0;
+    // for(i=0;i<allInputs.length;i++) {
+    // allInputs[i].onkeydown =trackInputandChangeFocus;
+    // }
+    
+    // function trackInputandChangeFocus() {
+    // let allInputsArr = Array.from(allInputs); 
+    // let presentInput = allInputsArr.indexOf(this)
+    // if(this.value.length == parseInt(this.getAttribute('maxlength'))) {
+    //       let next;
+    //       if(presentInput != 2) next = allInputsArr[presentInput+1]
+    //       else next = allInputsArr[0]
+    //       next.focus();
+    //     }
+    // }
+    let nextInput = event.srcElement.nextElementSibling;
+
+    if (nextInput == null)
+      return;
+    else
+      nextInput.focus();
+  }
+  resendCode(){
+    console.log("hihi");
+    
+  }
+  onSubmit() {
       var  c1 = this.inputCode.get('code1').value;
       var c2 = this.inputCode.get('code2').value;
       var c3 = this.inputCode.get('code3').value;
@@ -57,16 +84,18 @@ export class ResetPasswordPage implements OnInit {
       }
       this.authService.checkcodePassword(tem_object).subscribe((data:any) => {
         localStorage.setItem('Authorization', data.token);
-       
         this.router.navigateByUrl("/auth/new-password");
     })
   }
-  backLogin(){
+  backLogin() {
     this.router.navigateByUrl('/login');
   }
-  ngOnInit() {   
-    this.authService.getEmailForgot.subscribe((data:any) => {
-     this.data = data;
-      })}
+  ngOnInit() {
+    this.authService.getEmailForgot.subscribe((data: any) => {
+      this.data = data;
+    })
+  }
+
+
 
 }
