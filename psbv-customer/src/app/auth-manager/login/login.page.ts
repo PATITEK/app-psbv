@@ -32,16 +32,11 @@ export class LoginPage implements OnInit {
        }
   }
   onSubmit(){
-    console.log("hihi");
-    console.log(this.profileForm.value);
     this.authService.login(this.profileForm.value).subscribe((data: any) => {
-      console.log("hihi");
     this.router.navigateByUrl('/main/product-categories');
     })
   }
   test() {
-    console.log("abcdef");
-    
   }
   resetPass(){
     this.router.navigateByUrl('/auth/forgot-password')

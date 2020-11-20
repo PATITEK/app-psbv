@@ -49,14 +49,9 @@ export class NewPasswordPage implements OnInit {
       routerLink: '/auth/login'
     }
     var result = this.formNewPass.value;
-    console.log(result);
     this.authService.resetPassword(this.formNewPass.value).subscribe((data:any) => {
-      console.log(data);
-     
       this.pageNotiService.setdataStatusNoti(datapasing);
        this.router.navigate(['/statusNoti']);
-
-     
   });
 
   }
