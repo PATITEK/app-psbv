@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderListPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) {
+    
+   }
 
   ngOnInit() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
   }
 
+  gotoOrderStatus(){
+    this.router.navigateByUrl('/main/order/order-status');
+  }
+
+  gotoHistory(){
+    this.router.navigateByUrl('/main/history')
+  }
 }

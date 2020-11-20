@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ShoppingCartComponent } from './shopping-cart.component';
+import { ShoppingCartPage } from './shopping-cart.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ShoppingCartComponent,
+    component: ShoppingCartPage,
   },
   {
     path: 'cart-detail',

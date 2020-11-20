@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('../order/order-list/order-list.module').then(m => m.OrderListPageModule)
       },
       {
+        path: 'history',
+        loadChildren: () => import('../order/order-history/order-history.module').then(m => m.OrderHistoryPageModule)
+      },
+      {
         path: '',
         redirectTo: '/main',
         pathMatch: 'full'
