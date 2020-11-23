@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl,  FormGroup,  Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/@app-core/http';
 import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
@@ -18,12 +18,50 @@ export class NewPasswordPage implements OnInit {
 
   public showPass = false;
   public showPassConf = false;
-  formNewPass = new FormGroup({
-    password: new FormControl('')
-  })
+  formNewPass: FormGroup;
 
-  constructor(private authService: AuthService,private router: Router,
-     private pageNotiService: PageNotiService ) { }
+  error_messages = {
+    'password': [
+      { type: 'required', message: 'password is required.' },
+      { type: 'minlength', message: 'min password length is 6' },
+      { type: 'maxlength', message: 'max password length is 16' }
+    ],
+    'confirmpassword': [
+      { type: 'required', message: 'password is required.' },
+      { type: 'minlength', message:'min password length is 6' },
+      { type: 'maxlength', message: 'max password length is 16' }
+    ],
+  }
+
+  constructor(
+    public formBuilder: FormBuilder, private authService: AuthService,private router: Router,
+    private pageNotiService: PageNotiService
+  )
+   {
+    this.formNewPass = this.formBuilder.group({
+     
+      password: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(16)
+      ])),
+      confirmpassword: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(16)
+      ])),
+    }, { 
+      validators: this.password.bind(this)
+    });
+  }
+
+  password(formGroup: FormGroup) {
+    const np = formGroup.get('password').value;
+    const cp = formGroup.get('confirmpassword').value;
+    if(np === cp)
+    return ""
+    else return {"Password not match": true}
+  }
   showPassword(){
     this.showPass = !this.showPass;
     if(this.showPass){
@@ -45,11 +83,16 @@ export class NewPasswordPage implements OnInit {
   onSubmit(){
     const datapasing: IDataNoti = {
       title: 'PASSWORD CHANGED!',
-      description: 'Dear user your password has been changed, Continue to start using app',
+      description: 'Your password has been changed, Continue using app',
       routerLink: '/auth/login'
     }
-    var result = this.formNewPass.value;
-    this.authService.resetPassword(this.formNewPass.value).subscribe((data:any) => {
+    var result_object = {
+      "password": this.formNewPass.get('confirmpassword').value
+      
+    }
+    console.log(result_object);
+    this.authService.resetPassword(result_object).subscribe((data:any) => {
+      console.log(data)
       this.pageNotiService.setdataStatusNoti(datapasing);
        this.router.navigate(['/statusNoti']);
   });

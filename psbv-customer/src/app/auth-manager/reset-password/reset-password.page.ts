@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { stringify } from 'querystring';
 import { AuthService } from 'src/app/@app-core/http';
@@ -10,68 +10,114 @@ import { AuthService } from 'src/app/@app-core/http';
   styleUrls: ['./reset-password.page.scss'],
 })
 export class ResetPasswordPage implements OnInit {
-  data;
-  inputCode = new FormGroup(
+  dataEmail;
+  error: boolean = false;
+ 
+  @Input() input: any;
+  
+  inputCode: FormGroup;
+
+  error_messages = {
+    'code1': [
+      { type: 'required', message: 'password is required.' },
+    ],
+    'code2': [
+      { type: 'required', message: 'password is required.' },
+    ],
+    'code3': [
+      { type: 'required', message: 'password is required.' },
+    ],
+    'code4': [
+      { type: 'required', message: 'password is required.' },
+    ],
+    'code5': [
+      { type: 'required', message: 'password is required.' },
+    ],
+    'code6': [
+      { type: 'required', message: 'password is required.' },
+    ],
+  }
+  constructor(public formBuilder: FormBuilder,private router: Router, private authService: AuthService
+  ) 
     {
-      code1: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(1),
-      ]),
-      code2: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(1),
-      ]),
-      code3: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(1),
-      ]),
-      code4: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(1),
-      ]),
-      code5: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(1),
-      ]),
-      code6: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(1),
-      ])
-    },
-  );
+      this.inputCode = this.formBuilder.group({
+        code1: ['',[Validators.required]],
+        code2: ['',[Validators.required]],
+        code3: ['',[Validators.required]],
+        code4: ['',[Validators.required]],
+        code5: ['',[Validators.required]],
+        code6: ['',[Validators.required]]
 
-  constructor(private router: Router, private authService: AuthService
-  ) { }
-  keytab(event) {
-    // let allInputs = document.getElementsByTagName('input');
-    // let index = 0;
-    // for(i=0;i<allInputs.length;i++) {
-    // allInputs[i].onkeydown =trackInputandChangeFocus;
-    // }
+      },);
+  }
+
+  // keytab(event, fieldInput) {
+  
+  //   let nextInput = event.srcElement.nextElementSibling;
+
+  //   if (nextInput == null || (nextInput != null && (event.keyCode == 8)))
+  //   {
+  //     return;
+  //   
+  //   else
+  //     nextInput.focus();
+  // }
+
+  keytab(event, prevInput, fieldInput, nextInput) {
+    console.log(this.inputCode.value[fieldInput] );
+
+    if(this.inputCode.value[fieldInput] !== null && this.inputCode.value[fieldInput] !== '' && this.inputCode.value[fieldInput].toString().length > 1) {
+      const strSplit = this.inputCode.value[fieldInput].toString();
+      this.inputCode.controls[fieldInput].setValue(strSplit[0]);
+      this.inputCode.controls[nextInput].setValue(strSplit[1]);
+     
+      document.getElementById(nextInput).focus()
+    } 
+
+    if(this.inputCode.value[fieldInput] !== null && this.inputCode.value[fieldInput] !== '' && this.inputCode.value[fieldInput].toString().length === 1) {
+      document.getElementById(nextInput).focus()
+    }
+
+    if (this.inputCode.value[fieldInput] === null || this.inputCode.value[fieldInput] === '') {
+      document.getElementById(prevInput).focus()
+    }
+
+    // let nextInput = event.srcElement.nextElementSibling;
+    // let prevInput = event.srcElement.nextElementSibling;
+    // console.log(this.inputCode.value[fieldInput].toString().length , 'this.inputCode.value[fieldInput].length ');
+    // console.log(nextInput, 'nextInput');
+    // nextInput.focus();
+    // console.log(fieldInput, 'fieldInput');
     
-    // function trackInputandChangeFocus() {
-    // let allInputsArr = Array.from(allInputs); 
-    // let presentInput = allInputsArr.indexOf(this)
-    // if(this.value.length == parseInt(this.getAttribute('maxlength'))) {
-    //       let next;
-    //       if(presentInput != 2) next = allInputsArr[presentInput+1]
-    //       else next = allInputsArr[0]
-    //       next.focus();
-    //     }
+    // if(this.inputCode.value[fieldInput] !== '' && this.inputCode.value[fieldInput].toString().length === 1) {
+    //   document.getElementById(nextInput).focus()
     // }
-    let nextInput = event.srcElement.nextElementSibling;
+    // console.log(this.inputCode.value[fieldInput], 'this.inputCode.value[fieldInput]');
+    
+    // if (this.inputCode.value[fieldInput] === '' || (this.inputCode.value[fieldInput] !== null && this.inputCode.value[fieldInput].toString().length === 0)) {
+    //   document.getElementById(prevInput).focus()
+    // }
+  
+    // let nextInput = event.srcElement.nextElementSibling;
 
-    if (nextInput == null)
-      return;
-    else
-      nextInput.focus();
+    // if (nextInput == null || (nextInput != null && (event.keyCode == 8)))
+    // {
+    //   return;
+    // }
+    // else
+    //   nextInput.focus();
   }
   resendCode(){
-    console.log("hihi");
+    this.authService.forgotPassword(this.dataEmail).subscribe(
+      (data:any) => {
+      console.log(data);
+      this.router.navigateByUrl("/auth/reset-password");
+  });
     
   }
   onSubmit() {
-      var  c1 = this.inputCode.get('code1').value;
+    
+      var c1 = this.inputCode.get('code1').value;
       var c2 = this.inputCode.get('code2').value;
       var c3 = this.inputCode.get('code3').value;
       var c4 = this.inputCode.get('code4').value;
@@ -79,23 +125,27 @@ export class ResetPasswordPage implements OnInit {
       var c6 = this.inputCode.get('code6').value;
       var inputstring = `${c1}${c2}${c3}${c4}${c5}${c6}`;
       var tem_object = {
-        "email": this.data.email,
+        "email": this.dataEmail.email,
         "code": inputstring
       }
-      this.authService.checkcodePassword(tem_object).subscribe((data:any) => {
+      this.authService.checkcodePassword(tem_object).subscribe(
+        (data:any) => {
         localStorage.setItem('Authorization', data.token);
         this.router.navigateByUrl("/auth/new-password");
-    })
+      },
+      (data:any)=> {
+        if(data.errors) {
+         this.error = true;
+        }
+      }
+    )
   }
   backLogin() {
     this.router.navigateByUrl('/login');
   }
   ngOnInit() {
     this.authService.getEmailForgot.subscribe((data: any) => {
-      this.data = data;
+      this.dataEmail = data;
     })
   }
-
-
-
 }

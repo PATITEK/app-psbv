@@ -70,6 +70,7 @@ public setEmailForgot(value: any) {
     return this.http.post(`${APICONFIG.AUTH.LOGIN}`, req).pipe(
       map((result) => {
         // this.toastr.success(SUCCESS.AUTH.LOGIN);
+       
         return result;
       }),
       catchError((errorRes: any) => {
