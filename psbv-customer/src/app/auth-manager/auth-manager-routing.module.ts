@@ -11,8 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginPage
-    // loadChildren: () => import('../auth-manager/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'reset-password',
@@ -27,6 +26,11 @@ const routes: Routes = [
     path: 'forgot-password',
     loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
+  {
+    path: 'sign-up',
+    loadChildren: () => import('./sign-up/sign-up.module').then( m => m.SignUpPageModule)
+  },
+
 
 ];
 
