@@ -130,7 +130,9 @@ export class ResetPasswordPage implements OnInit {
       }
       this.authService.checkcodePassword(tem_object).subscribe(
         (data:any) => {
+          
         localStorage.setItem('Authorization', data.token);
+        console.log(data.token);
         this.router.navigateByUrl("/auth/new-password");
       },
       (data:any)=> {
