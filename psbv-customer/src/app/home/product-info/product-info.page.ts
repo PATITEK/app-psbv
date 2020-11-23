@@ -88,16 +88,19 @@ export class ProductInfoPage implements OnInit {
     });
   }
 
-  getBg(accessory: IAccessory): string {  
-    return accessory.isAdded ? '#494949' : '#eaeaea';
-  }
-
-  getColor(accessory: IAccessory): string {
-    return accessory.isAdded ? 'white' : ' #636363';
-  }
-
-  getIcon(accessory: IAccessory): string {
-    return accessory.isAdded ? 'remove-outline' : 'add-outline';
+  getItem(accessory: IAccessory): any {
+    return accessory.isAdded ?
+    {
+      background: '#494949',
+      color: 'white',
+      iconName: 'remove-outline'
+    }
+    :
+    {
+      background: '#eaeaea',
+      color: '#636363',
+      iconName: 'add-outline'
+    }
   }
 
   toggleItem(accessory: IAccessory): void {
