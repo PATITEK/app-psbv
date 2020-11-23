@@ -2,13 +2,11 @@ ion-content {
   --background: #ffffff;
 }
 
-.list-ios,
-.list-md {
+ion-list {
   background: #ffffff;
 }
 
 ion-content {
-  overflow: hidden;
   z-index: 11;
   position: absolute;
   height: calc(100% - 80px);
@@ -18,13 +16,12 @@ ion-content {
 ion-header {
   background: #ffffff;
   text-align: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding: 40px 0;
 
   .back-button {
     position: absolute;
-    top: 25%;
-    left: 10px;
+    top: 25px;
+    left: 0;
     font-size: 19px;
     z-index: 1000;
     color: #232323;
@@ -32,7 +29,7 @@ ion-header {
 
   ion-card-title {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 700;
     text-transform: uppercase;
     color: #232323;
 
@@ -45,11 +42,11 @@ ion-header {
 ion-row {
   height: 100px;
   overflow-x: scroll;
-  margin: 30px 12px;
+  margin: 30px 0;
 
   ion-col {
     background: #EFEFEF;
-    margin-right: 12px;
+    margin-left: 12px;
     border-radius: 11px;
     overflow: auto;
     color: #515151;

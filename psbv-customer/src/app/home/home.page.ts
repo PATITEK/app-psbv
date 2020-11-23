@@ -1,13 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
-
-export interface IProducts {
-   src: string;
-   name: string;
-   price: number;
-
-}
+import { IonInfiniteScroll } from '@ionic/angular';
+import { IPageRequest, ProductsService } from '../@app-core/http';
 
 @Component({
   selector: 'app-home',
@@ -15,55 +9,52 @@ export interface IProducts {
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
 
-  constructor(private router: Router) { }
-
-  products : IProducts[] = [
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 1",
-      price: 75834 
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 2",
-      price: 202048 
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 3",
-      price: 948743
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 4",
-      price: 144325 
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 5",
-      price: 144325 
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 6",
-      price: 10000
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 7",
-      price: 12008
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 8",
-      price: 11100
-    },
-  ];
-  ngOnInit() {
-    
+  pageRequest: IPageRequest = {
+    page: 1,
+    per_page: 6,
+    total_objects: 20
   }
-  gotodetail(){
-    this.router.navigateByUrl('/main/home/product-info')
+  data = [];
+
+  constructor(
+    private router: Router,
+    private productService: ProductsService
+  ) { }
+
+  goToDetail(item) {
+    this.router.navigate(['/main/home/product-info'], {
+      queryParams: {
+        data: JSON.stringify(item.id)
+      }
+    });
+  }
+
+  ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
+    setTimeout(() => {
+      this.productService.getProducts(this.pageRequest).subscribe(data => {
+        for (let item of data.products) {
+          this.data.push(item);
+        }
+        this.infinityScroll.complete();
+        this.pageRequest.page++;
+
+        // check max data
+        if (this.data.length >= data.meta.pagination.total_objects) {
+          this.infinityScroll.disabled = true;
+        }
+
+        // cal left per_page
+        const temp = data.meta.pagination.total_objects - this.data.length;
+        if (temp <= this.pageRequest.per_page) {
+          this.pageRequest.per_page = temp;
+        }
+      })
+    }, 500);
   }
 }

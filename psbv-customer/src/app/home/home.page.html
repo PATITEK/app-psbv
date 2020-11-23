@@ -1,36 +1,35 @@
-
 <app-header-home></app-header-home>
-<ion-content >
-  <ion-item-group class ="content">
-      <ion-grid  >
-        <ion-row *ngFor="let item of products; let i = index" >
-          <ion-col (click)="gotodetail()" *ngIf="i%2==0">
-            <img [src]="products[i].src" class ="ion-card--image">
+<ion-content>
+    <ion-grid>
+      <ion-row *ngFor="let item of data; let i = index">
+        <ion-col size="6" (click)="goToDetail(data[i])" *ngIf="i % 2 == 0">
+          <img [src]="data[i].thumb_image.url" class="ion-card--image">
+          <ion-item-group>
             <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-               {{products[i].name}}
-              </ion-label>
+              {{ data[i].name }}
             </ion-label>
-            <ion-label  class= "product__name-price"> 
-              {{products[i].price}}
+            <ion-label class="product__name-price">
+              {{ 0 }}
             </ion-label>
-          </ion-col>
-          <ion-col (click)="gotodetail()"*ngIf="i%2==0">
-            <img [src]="products[i+1].src" class ="ion-card--image">
+          </ion-item-group>
+        </ion-col>
+        <ion-col size="6" (click)="goToDetail(data[i + 1])" *ngIf="i % 2 == 0 && i !== data.length - 1">
+          <img [src]="data[i + 1].thumb_image.url" class="ion-card--image">
+          <ion-item-group>
             <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-                {{products[i+1].name}}
-              </ion-label>
+              {{ data[i + 1].name }}
             </ion-label>
-            <ion-label  class= "product__name-price"> 
-              {{products[i+1].price}}
+            <ion-label class="product__name-price">
+              {{ 1 }}
             </ion-label>
-          </ion-col>
-        </ion-row>
-       
-      </ion-grid>
-    </ion-item-group>
+          </ion-item-group>
+        </ion-col>
+      </ion-row>
+      <ion-infinite-scroll #infinityScroll (ionInfinite)="loadData()">
+        <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-grid>
 </ion-content>
 <ion-footer>
-  <app-footer-nav ></app-footer-nav>
+  <app-footer-nav></app-footer-nav>
 </ion-footer>
