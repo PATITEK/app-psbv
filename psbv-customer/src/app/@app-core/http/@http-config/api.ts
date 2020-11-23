@@ -20,7 +20,7 @@ export const APICONFIG = {
     UPDATE_PREMIUM: (id) => `/app/users/${id}/request_upgrade`
   },
   PRODUCT_GROUP: {
-    GET: `/app/product_groups/list_group`,
+    GET: `/app/product_groups`,
     GETDETAIL: (id) => `/app/product_groups/${id}`,
     CREATE: `/app/product_groups`,
     EDIT: (id) => `/app/product_groups/${id}`,

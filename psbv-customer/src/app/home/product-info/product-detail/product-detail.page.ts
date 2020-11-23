@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PERMISSION } from '../product-info.page';
 import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
+import { ProductsService } from 'src/app/@app-core/http';
 
 @Component({
   selector: 'app-product-detail',
@@ -10,11 +11,24 @@ import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti
 })
 export class ProductDetailPage implements OnInit {
 
-
-  constructor(private router: Router, private pageNotiService: PageNotiService,) {
+  product = {
+    id: '',
+    name: ' ',
+    short_description: '',
+    description: ' ',
+    thumb_image: {
+      url: ''
+    }
   }
-
   permission: PERMISSION = PERMISSION.PREMIUM;
+
+  constructor(
+    private router: Router,
+    private pageNotiService: PageNotiService,
+    private route: ActivatedRoute,
+    private productService: ProductsService
+  ) {
+  }
 
   ngOnInit() {
     const tabs = document.querySelectorAll('ion-tab-bar');
@@ -23,10 +37,20 @@ export class ProductDetailPage implements OnInit {
     });
   }
 
+  ionViewWillEnter() {
+    this.route.queryParams.subscribe((params) => {
+      this.productService.getProductDetail(JSON.parse(params['data']))
+        .subscribe(data => {
+          this.product = data.product;
+        });
+      this.permission = JSON.parse(params['permission']);
+    });
+  }
+
   goBack() {
     this.router.navigateByUrl('/main/home/product-info');
   }
-  
+
   download() {
     event.preventDefault();
     const data: IDataNoti = {
@@ -36,7 +60,7 @@ export class ProductDetailPage implements OnInit {
     }
     this.pageNotiService.setdataStatusNoti(data);
     this.router.navigate(['/statusNoti']);
-  
+
   }
 
   checkPremiumPermission(): boolean {

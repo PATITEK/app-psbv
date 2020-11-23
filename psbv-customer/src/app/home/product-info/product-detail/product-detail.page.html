@@ -8,30 +8,19 @@
 <ion-content>
   <ion-card class="product">
     <ion-card-content>
-      <!-- <div class="img-container">
-        <div class="img-block">
-          <ion-img src="http://lorempixel.com/g/334/170/abstract"></ion-img>
-        </div>
-        <ion-button class="price" shape="round" size="small" disabled>$ 12.5</ion-button>
-      </div> -->
       <div class="img-box">
-        <ion-img src="http://lorempixel.com/g/334/170/abstract"></ion-img>
+        <ion-img [src]="product.thumb_image.url"></ion-img>
         <ion-button class="price" shape="round" size="small" disabled>$ 12.5</ion-button>
       </div>
 
-      <ion-card-subtitle>Product name</ion-card-subtitle>
-      <ion-label>Description product</ion-label>
+      <ion-card-subtitle>{{ product.name }}</ion-card-subtitle>
+      <ion-label>{{ product.short_description }}</ion-label>
     </ion-card-content>
   </ion-card>
 
   <ion-card class="info">
     <ion-card-subtitle>Info</ion-card-subtitle>
-    <p class="content">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, enim! Dolorum qui aliquam nobis neque laborum enim
-      magni consequatur at cum dignissimos mollitia reiciendis sequi, fuga doloribus ipsum ut nisi itaque eum recusandae
-      laboriosam repellat deserunt! Aliquid exercitationem sunt voluptate. Harum nobis tempore dolorem rerum. Quia
-      quasi, vero odio ullam asperiores inventore, mollitia cupiditate harum amet tempore, ducimus repudiandae aperiam.
-    </p>
+    <p class="content">{{ product.description }}</p>
 
     <div class="download-block" [style.visibility]="checkPremiumPermission() ? 'visible' : 'hidden'">
       <ion-card-subtitle>Technical drawings</ion-card-subtitle>

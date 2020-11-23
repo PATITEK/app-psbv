@@ -20,6 +20,7 @@ ion-content {
   max-height: 614px;
   border-bottom: 0;
   --offset-top: 5px !important;
+  --background: #dad8d8;
 }
 
 .content {
@@ -45,7 +46,6 @@ ion-content {
 
 ion-grid {
   padding: 4px 8px;
-  background-color: rgb(218, 216, 216);
 
   ion-row {
     margin: 0 -5px;

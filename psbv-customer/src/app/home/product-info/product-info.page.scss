@@ -65,29 +65,31 @@ ion-content {
   ion-card-content {
     padding-top: 0;
 
+    ion-img {
+      background: white;
+      height: 150px;
+
+      @media screen and (max-height: 568px) {
+        height: 130px;
+      }
+    }
+
     ion-card-subtitle {
       font-size: 16px;
       text-transform: none;
-      margin-left: 20px;
-      margin-top: 10px;
+      margin-top: 12px;
       color: white;
     }
 
-    ul {
-      padding-left: 13px;
-      margin: 0 10px;
+    p {
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
       color: white;
-
-      li {
-        font-size: 13px;
-        line-height: 22px;
-        margin-left: 10px;
-        padding-right: 10px;
-      }
+      font-size: 13px;
+      padding: 0px 12px;
+      line-height: 1.5;
     }
 
     .detail-button {
@@ -230,29 +232,3 @@ ion-content {
     right: 0;
   }
 }
-
-// @media screen and (max-height: 736px) {
-//   .product-info {
-//     --height-top: 55%;
-//   }
-// }
-// @media screen and (max-height: 668px) {
-//   .product-info {
-//     --height-top: 60%;
-//   }
-// }
-// @media screen and (max-height: 640px) {
-//   .product-info {
-//     --height-top: 63%;
-//   }
-// }
-// @media screen and (max-height: 568px) {
-//   .product-info {
-//     --height-top: 60%;
-//     ion-card-content {
-//       .img-block {
-//         height: 119px;
-//       }
-//     }
-//   }
-// }

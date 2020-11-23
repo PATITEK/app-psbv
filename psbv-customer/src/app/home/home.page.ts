@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { IonInfiniteScroll } from '@ionic/angular';
 import { IPageRequest, ProductsService } from '../@app-core/http';
 
 @Component({
@@ -8,24 +9,52 @@ import { IPageRequest, ProductsService } from '../@app-core/http';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
 
-  data; 
-  
-  constructor(private router: Router, private productService: ProductsService) { }
+  pageRequest: IPageRequest = {
+    page: 1,
+    per_page: 6,
+    total_objects: 20
+  }
+  data = [];
 
-  ngOnInit() {
-    const page: IPageRequest = {
-      page: 1,
-      per_page: 11,
-      total_objects: 2
-    }
-    this.productService.getProducts(page).subscribe(data => {
-      this.data = data.products;
-      console.log(this.data);
-    })
+  constructor(
+    private router: Router,
+    private productService: ProductsService
+  ) { }
+
+  goToDetail(item) {
+    this.router.navigate(['/main/home/product-info'], {
+      queryParams: {
+        data: JSON.stringify(item.id)
+      }
+    });
   }
 
-  goToDetail() {
-    this.router.navigateByUrl('/main/home/product-info')
+  ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
+    setTimeout(() => {
+      this.productService.getProducts(this.pageRequest).subscribe(data => {
+        for (let item of data.products) {
+          this.data.push(item);
+        }
+        this.infinityScroll.complete();
+        this.pageRequest.page++;
+
+        // check max data
+        if (this.data.length >= data.meta.pagination.total_objects) {
+          this.infinityScroll.disabled = true;
+        }
+
+        // cal left per_page
+        const temp = data.meta.pagination.total_objects - this.data.length;
+        if (temp <= this.pageRequest.per_page) {
+          this.pageRequest.per_page = temp;
+        }
+      })
+    }, 500);
   }
 }

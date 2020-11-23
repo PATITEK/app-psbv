@@ -83,8 +83,6 @@ export class OrderStatusPage implements OnInit {
   }
 
   goToDetailOrder(): void {
-    // this.router.navigateByUrl('/main/order/detail-order');
-
     this.router.navigate(['main/order/detail-order'],{
       queryParams:{
         data: JSON.stringify(1)

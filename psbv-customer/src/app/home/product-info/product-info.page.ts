@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { ProductsService } from 'src/app/@app-core/http';
 
 export interface IAccessory {
   src: string;
@@ -23,15 +23,17 @@ export enum PERMISSION {
 })
 
 export class ProductInfoPage implements OnInit {
-
-  constructor(
-    private router: Router,
-    private location: Location,
-    private toastController: ToastController
-  ) {}
-
+  
+  product = {
+    id: '',
+    name: ' ',
+    description: ' ',
+    thumb_image: {
+      url: ''
+    }
+  }
   counter: number = 0;
-  permission: PERMISSION = PERMISSION.STANDARD;
+  permission: PERMISSION = PERMISSION.PREMIUM;
 
   accessories: IAccessory[] = [
     {
@@ -60,10 +62,26 @@ export class ProductInfoPage implements OnInit {
     }
   ];
 
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private toastController: ToastController,
+    private productService: ProductsService
+  ) {}
+
   ngOnInit() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
+    });
+  }
+
+  ionViewWillEnter() {
+    this.route.queryParams.subscribe((params) => {
+      this.productService.getProductDetail(JSON.parse(params['data']))
+      .subscribe(data => {
+        this.product = data.product;
+      });
     });
   }
 
@@ -79,7 +97,12 @@ export class ProductInfoPage implements OnInit {
     if (this.checkGuestPermission()) {
       this.router.navigateByUrl('/auth/login');
     } else {
-      this.router.navigateByUrl('/main/home/product-info/product-detail')
+      this.router.navigate(['/main/home/product-info/product-detail'],{
+        queryParams:{
+          data: JSON.stringify(this.product.id),
+          permission: JSON.stringify(this.permission)
+        }
+      });
     }
   }
 

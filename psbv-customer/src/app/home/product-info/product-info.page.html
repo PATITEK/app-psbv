@@ -9,16 +9,10 @@
   <ion-card class="product">
     <ion-card-content>
       <div class="img-box">
-        <ion-img src="http://lorempixel.com/g/334/170/abstract"></ion-img>
+        <ion-img [src]="product.thumb_image.url"></ion-img>
       </div>
-      <ion-card-subtitle>Product name</ion-card-subtitle>
-      <ul>
-        <li>Lorem ipsum dolor, sit amet consectetur hfdjfdhff</li>
-        <li>Lorem ipsum dolor, sit amet consectetur hfdjfdhff</li>
-        <li>Lorem ipsum dolor, sit amet consectetur hfdjfdhff</li>
-        <li>Lorem ipsum dolor, sit amet consectetur hfdjfdhff</li>
-        <li>Lorem ipsum dolor, sit amet consectetur hfdjfdhff</li>
-      </ul>
+      <ion-card-subtitle>{{ product.name }}</ion-card-subtitle>
+      <p>{{ product.description }}</p>
       <ion-button size="small" class="detail-button" (click)="goToDetail()">
         Detail
         <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
