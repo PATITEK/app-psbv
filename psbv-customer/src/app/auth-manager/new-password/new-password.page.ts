@@ -23,12 +23,12 @@ export class NewPasswordPage implements OnInit {
   error_messages = {
     'password': [
       { type: 'required', message: 'password is required.' },
-      { type: 'minlength', message: 'min password length is 6' },
+      { type: 'minlength', message: 'min password length is ' },
       { type: 'maxlength', message: 'max password length is 16' }
     ],
     'confirmpassword': [
       { type: 'required', message: 'password is required.' },
-      { type: 'minlength', message:'min password length is 6' },
+      { type: 'minlength', message:'min password length is 8' },
       { type: 'maxlength', message: 'max password length is 16' }
     ],
   }
@@ -42,12 +42,12 @@ export class NewPasswordPage implements OnInit {
      
       password: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
         Validators.maxLength(16)
       ])),
       confirmpassword: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
         Validators.maxLength(16)
       ])),
     }, { 
@@ -60,8 +60,9 @@ export class NewPasswordPage implements OnInit {
     const cp = formGroup.get('confirmpassword').value;
     if(np === cp)
     return ""
-    else return {"Password not match": true}
+    else return {error: "Password not match"}
   }
+  
   showPassword(){
     this.showPass = !this.showPass;
     if(this.showPass){
