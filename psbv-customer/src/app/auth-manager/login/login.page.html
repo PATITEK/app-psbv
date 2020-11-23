@@ -26,7 +26,9 @@
 
   <ion-item-group class="question__wrapper">
     <ion-router-link class="question">Don't have an account?</ion-router-link><br />
-    <ion-router-link class="question">Sign up now</ion-router-link>
+    <ion-router-link class="question" (click)="gotoSignUp()">
+      <u>Sign up now</u>
+    </ion-router-link>
   </ion-item-group>
 
 </ion-content>

@@ -1,0 +1,28 @@
+ion-header {
+    .icon-back{
+        font-size: 25px;
+        margin-top: 50px;
+        margin-left: 10px;
+    }
+    .title{
+        display: block;
+        font-size: 22px;
+        font-weight: 700;
+        margin-top: 1rem;
+        text-align: center;
+    }
+}
+ion-content{
+    .have-account{
+        display: block;
+        margin-top: 50px;
+        
+        text-align: center;
+    }
+    .goto-sign-in{
+        display: block;
+        margin-top: none;
+        text-align: center;
+        
+    }
+}
