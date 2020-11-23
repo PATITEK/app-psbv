@@ -1,13 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-
-export interface IProducts {
-   src: string;
-   name: string;
-   price: number;
-
-}
+import { IPageRequest, ProductsService } from '../@app-core/http';
 
 @Component({
   selector: 'app-home',
@@ -16,54 +9,23 @@ export interface IProducts {
 })
 export class HomePage implements OnInit {
 
-  constructor(private router: Router) { }
+  data; 
+  
+  constructor(private router: Router, private productService: ProductsService) { }
 
-  products : IProducts[] = [
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 1",
-      price: 75834 
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 2",
-      price: 202048 
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 3",
-      price: 948743
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 4",
-      price: 144325 
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 5",
-      price: 144325 
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 6",
-      price: 10000
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 7",
-      price: 12008
-    },
-    {
-      src: "/assets/img/products/anh1.jpg",
-      name:  "Product name 8",
-      price: 11100
-    },
-  ];
   ngOnInit() {
-    
+    const page: IPageRequest = {
+      page: 1,
+      per_page: 11,
+      total_objects: 2
+    }
+    this.productService.getProducts(page).subscribe(data => {
+      this.data = data.products;
+      console.log(this.data);
+    })
   }
-  gotodetail(){
+
+  goToDetail() {
     this.router.navigateByUrl('/main/home/product-info')
   }
 }
