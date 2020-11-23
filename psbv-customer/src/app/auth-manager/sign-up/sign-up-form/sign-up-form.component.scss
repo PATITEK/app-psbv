@@ -7,25 +7,37 @@
     margin-left: 5%;
 }
 .input-description{
-    color: A0A0A0, 100%;
+    color: #A0A0A0;
     font-size: 11px;
     margin-left: 5%;
     margin-top: 1 rem;
 }
 .input{
     background-color: #F7F7F7;
+    height: 50px;
     width: 90%;
     display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    --padding-start: 0.5rem;
 
     border-radius: 10px;
 
     .input:focus {
         background-color: white;
         border: solid 1px;
+    }
+}
+.input-group{
+    .input{
+        margin-left: 5%;
+    }
+    .show-password{
+        float: left;
+        width: 10%;
+        top: -2rem;
     }
 }
 .button-sign-up{
@@ -35,4 +47,15 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 2rem;
+}
+.btn-change-type {
+    border: 1px;
+    size: 2rem;
+    color: #CECECE, 100%;
+    top: 370px;
+    right: 25px;
+    position: absolute;
+    border-radius: 25px;
+    background-color: #f7f7f7;
+    z-index: 2;
 }

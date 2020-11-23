@@ -14,6 +14,10 @@ export class SignUpFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
   ) { }
+  
+  public type2 = 'password';
+  public showPass2 = false;
+  
 
   ngOnInit() {
     this.addForm();
@@ -34,5 +38,15 @@ export class SignUpFormComponent implements OnInit {
       console.log(this.form.value)
     }
     else console.log("Confirm your password");
+  }
+
+  showPassword2(){
+    this.showPass2 = !this.showPass2;
+    if(this.showPass2){
+      this.type2 = 'text';
+    }
+    else {
+      this.type2 ='password';
+    }
   }
 }
