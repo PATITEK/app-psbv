@@ -1,119 +1,43 @@
+<ion-header lines="no">
+  <ion-button fill="clear" size="small" class="back-button" (click)="goBack()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-card-title>Name category</ion-card-title>
 
-  <ion-header >
-    <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-back-button defaultHref="/" (click)="goToHome()"></ion-back-button>
-        </ion-buttons>
-        <ion-icon name="notifications-outline" class="header__icon header__icon-noti" (click)="gotonoti()"></ion-icon>
-      <ion-icon name="person-outline" class="header__icon " (click)="gotouserinfo()"></ion-icon>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-label class="title-category">NAME CATEGORY</ion-label>
-    <ion-label class="image-wrapper">
-      <img src="/assets/img/products/test.jpg" alt=""class="image-category">
-    </ion-label>
-   
-      <ion-grid>
-        <ion-row>
-          <ion-col (click)="gotodetail()">
-            <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
-            <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-                Product name
-              </ion-label>
-            </ion-label>
-            <ion-label  class= "product__name-price"> 
-              $23400
-            </ion-label>
-          </ion-col>
-          <ion-col (click)="gotodetail()">
-            <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
-            <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-                Product name
-              </ion-label>
-            </ion-label>
-            <ion-label  class= "product__name-price"> 
-              $23400
-            </ion-label>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col (click)="gotodetail()">
-            <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
-            <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-                Product name
-              </ion-label>
-            </ion-label>
-            <ion-label  class= "product__name-price"> 
-              $23400
-            </ion-label>
-          </ion-col>
-          <ion-col (click)="gotodetail()">
-            <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
-            <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-                Product name
-              </ion-label>
-            </ion-label>
-            <ion-label  class= "product__name-price"> 
-              $23400
-            </ion-label>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col (click)="gotodetail()">
-            <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
-            <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-                Product name
-              </ion-label>
-            </ion-label>
-            <ion-label  class= "product__name-price"> 
-              $23400
-            </ion-label>
-          </ion-col>
-          <ion-col (click)="gotodetail()">
-            <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
-            <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-                Product name
-              </ion-label>
-            </ion-label>
-            <ion-label  class= "product__name-price"> 
-              $23400
-            </ion-label>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col (click)="gotodetail()">
-            <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
-            <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-                Product name
-              </ion-label>
-            </ion-label>
-            <ion-label  class= "product__name-price"> 
-              $23400
-            </ion-label>
-          </ion-col>
-          <ion-col (click)="gotodetail()">
-            <img src="/assets/img/products/anh1.jpg" class ="ion-card--image">
-            <ion-label class="product__name">
-              <ion-label class= "product__name-title"> 
-                Product name
-              </ion-label>
-            </ion-label>
-            <ion-label  class= "product__name-price"> 
-              $23400
-            </ion-label>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-  
-   
-  </ion-content>
+  <ion-item-group>
+    <ion-icon name="notifications-outline" class="header__icon header__icon-noti" (click)="goToNoti()"></ion-icon>
+    <ion-icon name="person-outline" class="header__icon " (click)="goToUserInfo()"></ion-icon>
+  </ion-item-group>
+</ion-header>
 
-  
+<ion-content>
+  <ion-grid>
+    <ion-row *ngFor="let item of data; let i = index">
+      <ion-col size="6" (click)="goToDetail(data[i])" *ngIf="i % 2 == 0">
+        <img [src]="data[i].thumb_image.url" class="ion-card--image">
+        <ion-item-group>
+          <ion-label class="product__name">
+            {{ data[i].name }}
+          </ion-label>
+          <ion-label class="product__name-price">
+            {{ 0 }}
+          </ion-label>
+        </ion-item-group>
+      </ion-col>
+      <ion-col size="6" (click)="goToDetail(data[i + 1])" *ngIf="i % 2 == 0 && i !== data.length - 1">
+        <img [src]="data[i + 1].thumb_image.url" class="ion-card--image">
+        <ion-item-group>
+          <ion-label class="product__name">
+            {{ data[i + 1].name }}
+          </ion-label>
+          <ion-label class="product__name-price">
+            {{ 1 }}
+          </ion-label>
+        </ion-item-group>
+      </ion-col>
+    </ion-row>
+    <ion-infinite-scroll #infinityScroll (ionInfinite)="loadData()">
+      <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-grid>
+</ion-content>
