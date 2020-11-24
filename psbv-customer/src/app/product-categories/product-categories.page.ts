@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { IonInfiniteScroll } from '@ionic/angular';
 import { IPageRequest, ProductGroupsService } from '../@app-core/http';
 
 
@@ -9,7 +10,9 @@ import { IPageRequest, ProductGroupsService } from '../@app-core/http';
   styleUrls: ['./product-categories.page.scss'],
 })
 export class ProductCategoriesPage implements OnInit {
-  data: [];
+  @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
+
+  data = [];
   
   pageRequest: IPageRequest = {
     page: 1,
@@ -23,11 +26,24 @@ export class ProductCategoriesPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.productGroupService.getProductGroups(this.pageRequest)
-      .subscribe(data => {
-        this.data = data.product_groups;
-        console.log(this.data);
+    this.loadData();
+  }
+
+  loadData() {
+    setTimeout(() => {
+      this.productGroupService.getProductGroups(this.pageRequest).subscribe(data => {
+        for (let item of data.product_groups) {
+          this.data.push(item);
+        }
+        this.infinityScroll.complete();
+        this.pageRequest.page++;
+
+        // check max data
+        if (this.data.length >= data.meta.pagination.total_objects) {
+          this.infinityScroll.disabled = true;
+        }
       })
+    }, 500);
   }
 
   goToDetail(item) {
