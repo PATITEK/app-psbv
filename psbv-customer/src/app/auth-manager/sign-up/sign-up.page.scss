@@ -1,7 +1,7 @@
 ion-header {
     .icon-back{
         font-size: 25px;
-        margin-top: 50px;
+        margin-top: 30px;
         margin-left: 10px;
     }
     .title{
@@ -23,6 +23,79 @@ ion-content{
         display: block;
         margin-top: none;
         text-align: center;
-        
     }
+}
+*{
+    font-size: 16px;
+}
+.input-title{
+    color: #6B6C6D;
+    font-size: 13px;
+    margin-left: 5%;
+}
+.input-description{
+    color: #A0A0A0;
+    font-size: 11px;
+    margin-left: 5%;
+    margin-top: 1rem;
+}
+.input{
+    background-color: #F7F7F7;
+    height: 50px;
+    width: 100%;
+    display: block;
+    margin-top: 1rem;
+    display: flex;
+    margin-bottom: 1rem;
+    padding: 10px;
+    --padding-start: 1.2rem;
+    border-radius: 10px;
+    border: 1px solid white;
+}
+
+.show-password{
+    float: left;
+    width: 10%;
+    top: -2rem;
+}
+.button-sign-up{
+    --background:#CE091C;
+    width: 100%;
+    display: block;
+    margin-top: 2rem;
+}
+.btn-change-type {
+    color: #CECECE;
+    top: 32px;
+    right: 7px;
+    position: absolute;
+    border-radius: 25px;
+    background-color: #f7f7f7;
+    z-index: 2;
+}
+.header-md::after {
+    background-image: none;
+}
+.input:focus {
+    outline: none;
+    background-color: white;
+    border: 1px solid #5E656F;
+    .btn-change-type {
+        background-color: white;
+    }
+}
+
+.error-messages, .not-match {
+    color: var(--main-color);
+    margin-left: 10px;
+    font-size: 14px;
+}
+.not-match-pass {
+    margin-top: -20px;
+    margin-left: -20px;
+    font-family: sans-serif;
+}
+.group-password {
+    display: flex;
+    position: relative;
 }

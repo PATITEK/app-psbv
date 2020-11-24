@@ -8,7 +8,6 @@ import { SignUpPageRoutingModule } from './sign-up-routing.module';
 
 import { SignUpPage } from './sign-up.page';
 
-import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
 
 @NgModule({
   imports: [
@@ -20,7 +19,6 @@ import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
   ],
   declarations: [
     SignUpPage, 
-    SignUpFormComponent,
   ]
 })
 export class SignUpPageModule {}
