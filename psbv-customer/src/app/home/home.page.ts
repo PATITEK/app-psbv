@@ -51,12 +51,6 @@ export class HomePage implements OnInit {
         if (this.data.length >= data.meta.pagination.total_objects) {
           this.infinityScroll.disabled = true;
         }
-
-        // cal left per_page
-        const temp = data.meta.pagination.total_objects - this.data.length;
-        if (temp <= this.pageRequest.per_page) {
-          this.pageRequest.per_page = temp;
-        }
       })
     }, 500);
   }

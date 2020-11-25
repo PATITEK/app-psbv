@@ -91,11 +91,10 @@ export class NewPasswordPage implements OnInit {
       "password": this.formNewPass.get('confirmpassword').value
       
     }
-    console.log(result_object);
+  
     this.authService.resetPassword(result_object).subscribe((data:any) => {
-      console.log(data)
       this.pageNotiService.setdataStatusNoti(datapasing);
-       this.router.navigate(['/statusNoti']);
+      //  this.router.navigate(['/statusNoti']);
   });
 
   }
