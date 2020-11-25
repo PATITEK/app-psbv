@@ -1,9 +1,17 @@
 <ion-header class="ion-padding">
   <ion-icon name="chevron-back-outline" class="icon-back" routerLink="/main/home">
   </ion-icon>
+
+  <div class="icon-more" (click) = "clicked()">
+      <ion-img src="../../assets/more.svg"></ion-img>
+      <div class="more-content"  *ngIf="btn? " >
+        <span id="span1">Support</span>
+        <span id="span2">About</span>
+      </div>
+  </div>
 </ion-header>
 
-<ion-content>
+<ion-content (click)="setFalse()">
   <ion-avatar class="header__icon">
 
     <ion-img class="icon-premium" src="../../assets/premium.svg"></ion-img>
