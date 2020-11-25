@@ -37,11 +37,9 @@ export class ProductsPage implements OnInit {
       this.route.queryParams.subscribe((params) => {
         this.productGroupService.getProductGroupDetail(JSON.parse(params['data']))
         .subscribe(data => {
-          console.log(data);
           for (let item of data.product_group.products) {
             this.data.push(item);
           }
-          console.log(this.data);
   
           this.infinityScroll.complete();
           this.pageRequest.page++;
@@ -68,7 +66,7 @@ export class ProductsPage implements OnInit {
   }
 
   goToUserInfo() {
-    this.router.navigateByUrl('main/home/user-info');
+    this.router.navigateByUrl('account/user-info');
   }
 
   goToDetail(item) {
