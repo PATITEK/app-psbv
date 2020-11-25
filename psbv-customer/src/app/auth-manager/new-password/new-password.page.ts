@@ -93,7 +93,6 @@ export class NewPasswordPage implements OnInit {
     }
   
     this.authService.resetPassword(result_object).subscribe((data:any) => {
-      console.log(data)
       this.pageNotiService.setdataStatusNoti(datapasing);
       //  this.router.navigate(['/statusNoti']);
   });

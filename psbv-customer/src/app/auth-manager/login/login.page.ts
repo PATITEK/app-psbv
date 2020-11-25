@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/@app-core/http';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -11,10 +12,11 @@ import { AuthService } from 'src/app/@app-core/http';
 export class LoginPage implements OnInit {
   public type2 = 'password';
   public showPass2 = false;
-
+  public showSpinner = false;
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    public alertCtrl: AlertController,
   ) { }
   profileForm = new FormGroup({
     email: new FormControl(''),
@@ -32,8 +34,28 @@ export class LoginPage implements OnInit {
       this.type2 = 'password';
     }
   }
-  onSubmit() {
+  async presentAlert(text: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Warning',
+      message: text,
+      buttons: [{
+        text:'Agree',
+        role:'ok'
+      }]
+    });
+    await alert.present();
+  }
+   async onSubmit() {
+    this.showSpinner = true;
+    if(this.profileForm.value.email === ''){
+      this.showSpinner = false;
+      this.presentAlert('Please enter your email');
+    }else if(this.profileForm.value.password === ''){
+      this.showSpinner = false;
+      this.presentAlert('Please enter your password');
+    }
     this.authService.login(this.profileForm.value).subscribe((data: any) => {
+    this.showSpinner = false;
     localStorage.setItem('Authorization', data.token);
     this.router.navigateByUrl('/main/product-categories');
     })

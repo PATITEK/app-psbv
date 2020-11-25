@@ -31,6 +31,7 @@ export class SignUpPage implements OnInit {
 
   ],
   }
+  public showSpinner = false;
 
   constructor(private router: Router, public formBuilder: FormBuilder,  private authService: AuthService
     ) { 
@@ -70,6 +71,7 @@ export class SignUpPage implements OnInit {
     ngOnInit() {
     }
     onSignUp(){
+      this.showSpinner = true;
       var tem_obj = {
         "email": this.formSignup.get('email').value,
         "password": this.formSignup.get('password').value,
@@ -77,7 +79,7 @@ export class SignUpPage implements OnInit {
       }
      
       this.authService.signup(tem_obj).subscribe((data:any) => {
-        console.log(data);
+        this.showSpinner = false;
         this.router.navigateByUrl("auth/login");
       })
     }
@@ -91,7 +93,6 @@ export class SignUpPage implements OnInit {
       }
     }
   gotoLogin(){
-    console.log('check');
     this.router.navigate(['/auth/login']);
   }
 }

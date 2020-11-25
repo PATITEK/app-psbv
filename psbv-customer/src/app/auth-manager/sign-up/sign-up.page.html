@@ -55,7 +55,8 @@
       
       {{formNewPass.errors.error |json}}
      </pre>
-    <ion-button class="button-sign-up" type="submit" [disabled] ="!formSignup.valid">Sign up My Account</ion-button>
+    <ion-button class="button-sign-up" type="submit" [disabled] ="!formSignup.valid || showSpinner">
+      <ion-spinner *ngIf="showSpinner"></ion-spinner>Sign up My Account</ion-button>
 </form>
   <ion-label class="have-account">You already have an account?</ion-label>
   <br>

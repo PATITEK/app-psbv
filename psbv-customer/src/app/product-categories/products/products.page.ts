@@ -40,8 +40,6 @@ export class ProductsPage implements OnInit {
           for (let item of data.products) {
             this.data.push(item);
           }
-          console.log(this.data);
-  
           this.infinityScroll.complete();
           this.pageRequest.page++;
   

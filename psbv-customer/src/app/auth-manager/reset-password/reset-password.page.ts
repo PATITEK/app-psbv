@@ -64,8 +64,6 @@ export class ResetPasswordPage implements OnInit {
   // }
 
   keytab(event, prevInput, fieldInput, nextInput) {
-    console.log(this.inputCode.value[fieldInput] );
-
     if(this.inputCode.value[fieldInput] !== null && this.inputCode.value[fieldInput] !== '' && this.inputCode.value[fieldInput].toString().length > 1) {
       const strSplit = this.inputCode.value[fieldInput].toString();
       this.inputCode.controls[fieldInput].setValue(strSplit[0]);
@@ -110,7 +108,6 @@ export class ResetPasswordPage implements OnInit {
   resendCode(){
     this.authService.forgotPassword(this.dataEmail).subscribe(
       (data:any) => {
-      console.log(data);
       this.router.navigateByUrl("/auth/reset-password");
   });
     
@@ -130,9 +127,7 @@ export class ResetPasswordPage implements OnInit {
       }
       this.authService.checkcodePassword(tem_object).subscribe(
         (data:any) => {
-          
         localStorage.setItem('Authorization', data.token);
-        console.log(data.token);
         this.router.navigateByUrl("/auth/new-password");
       },
       (data:any)=> {
