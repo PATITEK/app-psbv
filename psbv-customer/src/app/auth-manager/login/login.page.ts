@@ -36,7 +36,6 @@ export class LoginPage implements OnInit {
     this.authService.login(this.profileForm.value).subscribe((data: any) => {
     localStorage.setItem('Authorization', data.token);
     this.router.navigateByUrl('/main/product-categories');
-
     })
   }
   test() {

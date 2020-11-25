@@ -70,12 +70,21 @@ public setEmailForgot(value: any) {
     return this.http.post(`${APICONFIG.AUTH.LOGIN}`, req).pipe(
       map((result) => {
         // this.toastr.success(SUCCESS.AUTH.LOGIN);
-       
         return result;
       }),
       catchError((errorRes: any) => {
         localStorage.clear();
         this.storage.clear();
+        throw errorRes.error;
+      }));
+  }
+  public signup(req) {
+    return this.http.post(`${APICONFIG.AUTH.SIGNUP}`, req).pipe(
+      map((result) => {
+        // this.toastr.success(SUCCESS.AUTH.LOGIN);
+        return result;
+      }),
+      catchError((errorRes: any) => {
         throw errorRes.error;
       }));
   }
