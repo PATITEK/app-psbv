@@ -30,21 +30,18 @@ export class UserInfoPage implements OnInit {
   goToPasswordChanged(): void {
     this.router.navigateByUrl('account/password-changed')
   }
+  notOn:boolean = true;
   clicked(){
-   
-    if(this.btn == false){
-      this.btn = true;
-    }
-    else {
-      this.btn = false;
-    }
+    console.log("clicked");
+    this.btn = true;
+    this.notOn = false;
   }
   setFalse(){
-    this.btn = false;
-  }
-  anotherFalse(){
-    if(this.btn == true){
+    if(this.btn == true && this.notOn == true){
       this.btn = false;
     }
+    else this.notOn = true;
+    
+    console.log("checked");
   }
 }

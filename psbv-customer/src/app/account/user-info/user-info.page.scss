@@ -3,14 +3,15 @@
   color: black;
 }
 .icon-more{
-  width: 22px;
+  height: 20px;
   display: flex;
   float: right;
-  margin-top: 10px;
+  margin-top: 0px;
   position: relative;
-  // :focus .more-content{
-  //   display: block;
-  // }
+
+  ion-img{
+    width: 22px;
+  }
   .more-content{
     position: absolute;
     padding: 2px;
