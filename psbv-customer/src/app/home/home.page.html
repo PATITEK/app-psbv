@@ -8,8 +8,8 @@
             <ion-label class="product__name">
               {{ data[i].name }}
             </ion-label>
-            <ion-label class="product__name-price">
-              {{ 0 }}
+            <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
+              {{ checkStandardPermission() ? data[i].pricing_services[0].price : data[i].pricing_services[1].price }}
             </ion-label>
           </ion-item-group>
         </ion-col>
@@ -19,8 +19,8 @@
             <ion-label class="product__name">
               {{ data[i + 1].name }}
             </ion-label>
-            <ion-label class="product__name-price">
-              {{ 1 }}
+            <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
+              {{ checkStandardPermission() ? data[i].pricing_services[0].price : data[i].pricing_services[1].price }}
             </ion-label>
           </ion-item-group>
         </ion-col>

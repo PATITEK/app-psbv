@@ -8,6 +8,7 @@ import { IPageRequest, ProductGroupsService } from '../@app-core/http';
   templateUrl: './product-categories.page.html',
   styleUrls: ['./product-categories.page.scss'],
 })
+
 export class ProductCategoriesPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
 
