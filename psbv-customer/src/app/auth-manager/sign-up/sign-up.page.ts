@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/@app-core/http';
 
 @Component({
   selector: 'app-sign-up',
@@ -31,7 +32,7 @@ export class SignUpPage implements OnInit {
   ],
   }
 
-  constructor(private router: Router, public formBuilder: FormBuilder,
+  constructor(private router: Router, public formBuilder: FormBuilder,  private authService: AuthService
     ) { 
         this.formSignup = this.formBuilder.group(
           {
@@ -69,6 +70,18 @@ export class SignUpPage implements OnInit {
     ngOnInit() {
     }
     onSignUp(){
+      var tem_obj = {
+        "email": this.formSignup.get('email').value,
+        "password": this.formSignup.get('password').value,
+        "fullname": this.formSignup.get('name').value
+      }
+     
+      this.authService.signup(tem_obj).subscribe((data:any) => {
+        console.log(data);
+        this.router.navigateByUrl("auth/login");
+        
+      })
+      
     }
     showPassword2(){
       this.showPass2 = !this.showPass2;
