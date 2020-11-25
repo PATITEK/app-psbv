@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'user-info',
-    loadChildren: () => import('./user-info/user-info.module').then( m => m.UserInfoPageModule)
+    loadChildren: () => import('./user-info/user-info.module').then( m =>m.UserInfoPageModule )
   },
   {
     path: 'password-changed',
