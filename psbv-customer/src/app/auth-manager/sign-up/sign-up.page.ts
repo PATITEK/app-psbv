@@ -79,9 +79,7 @@ export class SignUpPage implements OnInit {
       this.authService.signup(tem_obj).subscribe((data:any) => {
         console.log(data);
         this.router.navigateByUrl("auth/login");
-        
       })
-      
     }
     showPassword2(){
       this.showPass2 = !this.showPass2;
