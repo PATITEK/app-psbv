@@ -10,7 +10,9 @@
     <ion-card-content>
       <div class="img-box">
         <ion-img [src]="product.thumb_image.url"></ion-img>
-        <ion-button class="price" shape="round" size="small" disabled>$ 12.5</ion-button>
+        <ion-button class="price" shape="round" size="small" disabled>
+          {{ checkStandardPermission() ? product.pricing_services[0].price : product.pricing_services[1].price }}
+        </ion-button>
       </div>
 
       <ion-card-subtitle>{{ product.name }}</ion-card-subtitle>
@@ -22,7 +24,7 @@
     <ion-card-subtitle>Info</ion-card-subtitle>
     <p class="content">{{ product.description }}</p>
 
-    <div class="download-block" [style.visibility]="checkPremiumPermission() ? 'visible' : 'hidden'">
+    <div class="download-block" [style.visibility]="checkStandardPermission() ? 'hidden' : 'visible'">
       <ion-card-subtitle>Technical drawings</ion-card-subtitle>
       <a href="" (click)="download()">https://docs.google.com/spreadsheets/d</a>
       <ion-icon name="download-outline" (click)="download()"></ion-icon>
@@ -33,6 +35,6 @@
       Thank you!
     </p>
 
-    <ion-button expand="block">Choose another accessories</ion-button>
+    <ion-button expand="block" (click)="goBack()">Choose another accessories</ion-button>
   </ion-card>
 </ion-content>

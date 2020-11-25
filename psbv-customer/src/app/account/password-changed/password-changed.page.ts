@@ -45,4 +45,8 @@ export class PasswordChangedPage implements OnInit {
       this.type3 ='password';
     }
   }
+
+  openModal() {
+    
+  }
 }

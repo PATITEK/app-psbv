@@ -1,0 +1,99 @@
+.icon-back{
+  font-size: 22px;
+  color: black;
+}
+.header-md::after {
+  background-image: none;
+}
+.header__icon{
+      width: 80px;
+      height: 80px;
+      color: var(--main-color);
+      margin-left: 40%;
+      margin-right: auto;
+      border-radius: 50%;
+      border: 1px solid var(--main-color);
+      position: relative;
+      .header__iperson {
+          position: absolute;
+          left: 18px;
+          font-size: 43px;
+          top: 14px;
+      }
+      .icon-premium{
+          width: 32px;
+          height: auto;
+          float: right;
+      }
+}
+.user-name{
+  text-align: center;
+  color: #3F3F3F;
+  display: flex;
+  flex-direction: column;
+  &__main{
+      font-size: 23px;
+      font-weight: 700;
+  }
+  &__sub{
+      font-size: 14px;
+      font-weight: normal;
+  }
+}
+
+.upgrade-btn {
+  span {
+      color: white;
+      font-size: 10px;
+      background: #3f3f3f;
+      border-radius: 14px;
+      padding: 2px 8px;
+      display: inline-flex;
+      align-items: center;
+      
+      ion-icon {
+          margin-left: 3px;
+      }
+  }
+}
+
+.user-info{
+  font-size: 13px;
+  font-weight: 400;
+  margin-left: 0.7rem;
+  margin-top: 2.5rem;
+  color: #808284;
+
+  &__change{
+      font-size: 16px;
+      color: #1274DB;
+      float: right;
+      margin-right: 1.5rem;
+  }
+  &__user-name{
+      &__content{
+          font-size: 16px;
+          margin-top: 5rem;
+          
+      }
+  }
+  &__email, &__password{
+      margin-top: 2rem;
+  }
+  &__content{
+      font-size: 16px;
+  }
+}
+.btn-logout {
+  width: 90%;
+  position: absolute;
+  left: 5%;
+  border-radius: 4px;
+  --background: #CE091C;
+  color: white;
+  margin-top: 5rem;
+  height: 40px;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  --background-activated:#CE091C;
+}

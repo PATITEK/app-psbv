@@ -17,19 +17,11 @@ const routes: Routes = [
       },
       {
         path: 'shopping-cart',
-        loadChildren: () => import('../shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule)
-      },
-      {
-        path: 'user-info',
-        loadChildren: () => import('../account//user-info/user-info.module').then(m => m.UserInfoModule)
+        loadChildren: () => import('../shopping-cart/shopping-cart.module').then(m => m.ShoppingCartPageModule)
       },
       {
         path: 'order',
         loadChildren: () => import('../order/order-list/order-list.module').then(m => m.OrderListPageModule)
-      },
-      {
-        path: 'history',
-        loadChildren: () => import('../order/order-history/order-history.module').then(m => m.OrderHistoryPageModule)
       },
       {
         path: '',
