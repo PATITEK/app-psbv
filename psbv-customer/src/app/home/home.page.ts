@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { IPageRequest, ProductsService } from '../@app-core/http';
+import { PERMISSION } from './product-info/product-info.page';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ export class HomePage implements OnInit {
     total_objects: 20
   }
   data = [];
+  permission: PERMISSION = PERMISSION.STANDARD;
 
   constructor(
     private router: Router,
@@ -26,7 +28,8 @@ export class HomePage implements OnInit {
   goToDetail(item) {
     this.router.navigate(['/main/home/product-info'], {
       queryParams: {
-        data: JSON.stringify(item.id)
+        data: JSON.stringify(item.id),
+        permission: JSON.stringify(this.permission)
       }
     });
   }
@@ -56,5 +59,13 @@ export class HomePage implements OnInit {
         }
       })
     }, 500);
+  }
+
+  checkGuestPermission(): boolean {
+    return this.permission === PERMISSION.GUEST;
+  }
+
+  checkStandardPermission(): boolean {
+    return this.permission === PERMISSION.STANDARD;
   }
 }

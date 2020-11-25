@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common'
+import { Location } from '@angular/common';
 
 export interface ShoppingCartItem{
   name: string;
@@ -11,6 +11,7 @@ export interface ShoppingCartItem{
   description: string;
   counter: number;
 }
+
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.page.html',
@@ -58,30 +59,31 @@ export class ShoppingCartPage implements OnInit {
   hasBackButton: boolean = false;
   data;
 
-  constructor(private location: Location, private route: ActivatedRoute) {
-    
-  }
+  constructor(
+    private location: Location,
+    private route: ActivatedRoute
+    ) {}
 
-  add(item){
+  add(item) {
     item.counter++;
   }
 
-  ionViewWillEnter(){
-    
-    console.log('has',this.hasBackButton);
+  ionViewWillEnter() {
+
+    console.log('has', this.hasBackButton);
     this.route.queryParams.subscribe((params) => {
       this.data = JSON.parse(params['data']);
-      console.log('data',this.data);
-      if(this.data.checkBack === true){
+      console.log('data', this.data);
+      if (this.data.checkBack === true) {
         this.hasBackButton = true;
-        console.log('vao true',this.hasBackButton);
-      }else{
+        console.log('vao true', this.hasBackButton);
+      } else {
         this.hasBackButton = false;
       }
     })
   }
   ngOnInit() {
-  
+
   }
 
   checkHasBackButton(): boolean {
@@ -91,9 +93,8 @@ export class ShoppingCartPage implements OnInit {
   goBack() {
     this.hasBackButton = false;
 
-    console.log('check',this.hasBackButton);
-    
+    console.log('check', this.hasBackButton);
+
     this.location.back();
   }
-
 }

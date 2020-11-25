@@ -67,7 +67,7 @@ ion-list {
 }
 
 ion-item {
-  height: calc(100% / 6);
+  height: calc(100% / 4);
   align-items: flex-start;
   position: relative;
 
@@ -119,23 +119,15 @@ ion-item {
     }
 
     &:nth-child(2) {
-      top: calc(16.67% - 3px);
+      top: calc(25% - 3px);
     }
 
     &:nth-child(3) {
-      top: calc(33.33% - 3px);
+      top: calc(50% - 3px);
     }
 
     &:nth-child(4) {
-      top: calc(50%);
-    }
-
-    &:nth-child(5) {
-      top: calc(67.67% - 4px);
-    }
-
-    &:nth-child(6) {
-      top: calc(83.33% + 1px);
+      top: calc(75%);
     }
   }
 }

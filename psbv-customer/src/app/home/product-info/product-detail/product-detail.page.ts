@@ -18,9 +18,17 @@ export class ProductDetailPage implements OnInit {
     description: ' ',
     thumb_image: {
       url: ''
-    }
+    },
+    pricing_services: [
+      {
+        price: 0,
+      },
+      {
+        price: 0
+      }
+    ]
   }
-  permission: PERMISSION = PERMISSION.PREMIUM;
+  permission: PERMISSION;
 
   constructor(
     private router: Router,
@@ -63,8 +71,8 @@ export class ProductDetailPage implements OnInit {
 
   }
 
-  checkPremiumPermission(): boolean {
-    return this.permission === PERMISSION.PREMIUM;
+  checkStandardPermission(): boolean {
+    return this.permission === PERMISSION.STANDARD;
   }
 
 }

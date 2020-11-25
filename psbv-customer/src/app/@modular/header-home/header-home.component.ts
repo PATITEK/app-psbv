@@ -12,8 +12,9 @@ export class HeaderHomeComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {}
-  onGoUserInfo(){
-    this.router.navigateByUrl('main/home/user-info');
+  ngOnInit() { }
+
+  onGoUserInfo() {
+    this.router.navigateByUrl('account/user-info');
   }
 }

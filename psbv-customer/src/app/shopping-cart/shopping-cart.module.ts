@@ -1,13 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import { ShoppingCartRoutingModule } from './shopping-cart-routing.module';
+import { IonicModule } from '@ionic/angular';
+
+import { ShoppingCartPageRoutingModule } from './shopping-cart-routing.module';
+
+import { ShoppingCartPage } from './shopping-cart.page';
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
-    ShoppingCartRoutingModule,
-  ]
+    FormsModule,
+    IonicModule,
+    ShoppingCartPageRoutingModule
+  ],
+  declarations: [ShoppingCartPage]
 })
-export class ShoppingCartModule {}
+export class ShoppingCartPageModule {}

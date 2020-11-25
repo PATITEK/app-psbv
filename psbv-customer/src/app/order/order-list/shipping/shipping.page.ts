@@ -32,14 +32,6 @@ export class ShippingPage implements OnInit {
     {
       name: 'Done',
       didPassed: false
-    },
-    {
-      name: 'Received request 1',
-      didPassed: false
-    },
-    {
-      name: 'Received request 2',
-      didPassed: false
     }
   ];
 
@@ -61,10 +53,8 @@ export class ShippingPage implements OnInit {
   }
 
   goToDetailOrder(): void {
-    // this.router.navigateByUrl('/main/order/detail-order');
-
-    this.router.navigate(['main/order/detail-order'],{
-      queryParams:{
+    this.router.navigate(['main/order/detail-order'], {
+      queryParams: {
         data: JSON.stringify(0)
       }
     });
@@ -72,7 +62,6 @@ export class ShippingPage implements OnInit {
 
   countPassedItem(): number {
     let num: number = this.statuses.filter(status => status.didPassed).length;
-    console.log(num);
-    return num * 1.667 * 10 - 16.67;
+    return num * 2.5 * 10 - 25;
   }
 }

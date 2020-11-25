@@ -33,7 +33,7 @@ export class ProductInfoPage implements OnInit {
     }
   }
   counter: number = 0;
-  permission: PERMISSION = PERMISSION.PREMIUM;
+  permission: PERMISSION;
 
   accessories: IAccessory[] = [
     {
@@ -74,6 +74,10 @@ export class ProductInfoPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+
+    this.route.queryParams.subscribe(params => {
+      this.permission = JSON.parse(params['permission']);
+    })
   }
 
   ionViewWillEnter() {
@@ -133,7 +137,9 @@ export class ProductInfoPage implements OnInit {
   }
 
   toggleItem(accessory: IAccessory): void {
-    accessory.isAdded = !accessory.isAdded;
+    if (this.permission !== PERMISSION.GUEST) {
+      accessory.isAdded = !accessory.isAdded;
+    }
   }
 
   selectAllItem(): void {
