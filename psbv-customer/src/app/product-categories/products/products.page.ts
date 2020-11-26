@@ -65,6 +65,7 @@ export class ProductsPage implements OnInit {
   }
 
   goToUserInfo() {
+    this.router.navigateByUrl('account/user-info');
   }
 
   goToDetail(item) {

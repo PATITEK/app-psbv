@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { ProductsService } from 'src/app/@app-core/http';
+import { LoadingService } from 'src/app/@app-core/loading.service';
 
 export interface IAccessory {
   src: string;
@@ -23,7 +24,7 @@ export enum PERMISSION {
 })
 
 export class ProductInfoPage implements OnInit {
-  
+
   product = {
     id: '',
     name: ' ',
@@ -66,27 +67,25 @@ export class ProductInfoPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastController: ToastController,
-    private productService: ProductsService
-  ) {}
+    private productService: ProductsService,
+    private loading: LoadingService
+  ) { }
 
   ngOnInit() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+    this.loading.present();
 
     this.route.queryParams.subscribe(params => {
       this.permission = JSON.parse(params['permission']);
-    })
-  }
-
-  ionViewWillEnter() {
-    this.route.queryParams.subscribe((params) => {
       this.productService.getProductDetail(JSON.parse(params['data']))
-      .subscribe(data => {
-        this.product = data.product;
-      });
-    });
+        .subscribe(data => {
+          this.product = data.product;
+          this.loading.dismiss();
+        });
+    })
   }
 
   goBack(): void {
@@ -101,8 +100,8 @@ export class ProductInfoPage implements OnInit {
     if (this.checkGuestPermission()) {
       this.router.navigateByUrl('/auth/login');
     } else {
-      this.router.navigate(['/main/home/product-info/product-detail'],{
-        queryParams:{
+      this.router.navigate(['/main/home/product-info/product-detail'], {
+        queryParams: {
           data: JSON.stringify(this.product.id),
           permission: JSON.stringify(this.permission)
         }
@@ -114,8 +113,8 @@ export class ProductInfoPage implements OnInit {
     const data = {
       checkBack: true
     }
-    this.router.navigate(['main/shopping-cart'],{
-      queryParams:{
+    this.router.navigate(['main/shopping-cart'], {
+      queryParams: {
         data: JSON.stringify(data)
       }
     });
@@ -123,17 +122,17 @@ export class ProductInfoPage implements OnInit {
 
   getItem(accessory: IAccessory): any {
     return accessory.isAdded ?
-    {
-      background: '#494949',
-      color: 'white',
-      iconName: 'remove-outline'
-    }
-    :
-    {
-      background: '#eaeaea',
-      color: '#636363',
-      iconName: 'add-outline'
-    }
+      {
+        background: '#494949',
+        color: 'white',
+        iconName: 'remove-outline'
+      }
+      :
+      {
+        background: '#eaeaea',
+        color: '#636363',
+        iconName: 'add-outline'
+      }
   }
 
   toggleItem(accessory: IAccessory): void {
