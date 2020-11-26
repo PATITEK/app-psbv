@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
-
-export interface ShoppingCartItem{
+import { AlertController } from '@ionic/angular';
+import { filter } from 'rxjs/operators';
+export interface ShoppingCartItem {
   name: string;
   date: string;
   price: number;
@@ -18,6 +19,8 @@ export interface ShoppingCartItem{
   styleUrls: ['./shopping-cart.page.scss'],
 })
 export class ShoppingCartPage implements OnInit {
+  hasTF = false;
+  hasBackButton: boolean = false;
   items: ShoppingCartItem[] = [
     {
       name: "Item 1",
@@ -56,35 +59,89 @@ export class ShoppingCartPage implements OnInit {
       counter: 1
     },
   ];
-  hasBackButton: boolean = false;
-  hasTF: boolean = true;
-
+ 
+  public showSpinner = false;
   constructor(
+    private router: Router,
     private location: Location,
-    private route: ActivatedRoute
-    ) {}
+    private route: ActivatedRoute,
+    private alertCrtl: AlertController
+  ) { }
 
   add(item) {
     item.counter++;
   }
-  minus(item){
-    if(item.counter > 0)
+  minus(item) {
+    if (item.counter > 0)
       item.counter--;
   }
   ngOnInit() {
+    this.route.queryParams.subscribe(params =>{
+      // const tabs = document.querySelectorAll('ion-tab-bar');
+      // Object.keys(tabs).map((key) => {
+      //   tabs[key].style.display = 'none';
+      // });
+     this.hasTF = JSON.parse(params['data']);
+      console.log('kq', this.hasTF);
+    })
+    
+   
+    // this.loading.present();
+
+    // this.route.queryParams.subscribe(params => {
+    //   this.permission = JSON.parse(params['permission']);
+    //   this.productService.getProductDetail(JSON.parse(params['data']))
+    //     .subscribe(data => {
+    //       this.product = data.product;
+    //       this.loading.dismiss();
+    //     });
+    // })
+   
   }
-  checkHasBackButton(): boolean {
-    return this.hasBackButton;
-  }
-  onCancel() {
-    // this.hasTF = false;
-    return this.items.pop();
+  goCheck(){
+    this.route.queryParams.subscribe(params =>{
+      // const tabs = document.querySelectorAll('ion-tab-bar');
+      // Object.keys(tabs).map((key) => {
+      //   tabs[key].style.display = 'none';
+      // });
+     return JSON.parse(params['data']);
+      
+    })
   }
   goBack() {
-    this.hasBackButton = false;
-
-    console.log('check', this.hasBackButton);
-
-    this.location.back();
+    // const tabs = document.querySelectorAll('ion-tab-bar');
+    // Object.keys(tabs).map((key) => {
+    //   tabs[key].style.display = 'none';
+    // });
+    this.router.navigateByUrl('main/home/product-info');
   }
+
+
+  async presentAlert(text: string) {
+    const alert = await this.alertCrtl.create({
+      header: 'Warning',
+      message: text,
+      buttons: [
+        {
+          text: 'Disagree',
+          handler: () => {
+            return;
+          }
+        },
+        {
+          text: 'Agree',
+          handler: (  ) => {
+            return this.items.pop();
+          }
+        },
+
+      ]
+    });
+    await alert.present();
+  }
+  async onCancel() {
+    this.showSpinner = true;
+    this.presentAlert('Are you sure to delete this item?');
+  }
+ 
 }

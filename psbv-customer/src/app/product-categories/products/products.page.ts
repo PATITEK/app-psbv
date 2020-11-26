@@ -61,13 +61,11 @@ export class ProductsPage implements OnInit {
   }
 
   goToNoti() {
-
   }
 
   goToUserInfo() {
     this.router.navigateByUrl('account/user-info');
   }
-
   goToDetail(item) {
     this.router.navigate(['/main/home/product-info'], {
       queryParams: {
