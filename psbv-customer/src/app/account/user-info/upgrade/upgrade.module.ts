@@ -4,19 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { UserInfoPageRoutingModule } from './user-info-routing.module';
+import { UpgradePageRoutingModule } from './upgrade-routing.module';
 
-import { UserInfoPage } from './user-info.page';
+import { UpgradePage } from './upgrade.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    UserInfoPageRoutingModule
+    UpgradePageRoutingModule
   ],
-  declarations: [UserInfoPage]
+  declarations: [UpgradePage]
 })
-export class UserInfoPageModule {
-
-}
+export class UpgradePageModule {}

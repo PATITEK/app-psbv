@@ -1,0 +1,40 @@
+<ion-header class="ion-padding" (click)="setFalse()">
+  <ion-icon name="chevron-back-outline" class="icon-back" routerLink="/main/home">
+  </ion-icon>
+
+  <div class="icon-more" (click) = "clicked()">
+      <ion-img src="../../assets/more.svg"></ion-img>
+      <div class="more-content"  *ngIf="btn" >
+        <span id="span1">Support</span>
+        <span id="span2">About</span>
+      </div>
+  </div>
+</ion-header>
+<ion-content>
+  <ion-avatar class="header__icon">
+
+    <ion-img class="icon-premium" src="../../../assets/premium.svg"></ion-img>
+
+    <ion-icon name="person" class="header__iperson"></ion-icon>
+  </ion-avatar>
+
+  <ion-grid>
+    <ion-row class="user-name">
+      <ion-label class="user-name__main">Hi buyer</ion-label>
+      <ion-label class="user-name__sub">Standard</ion-label>
+    </ion-row>
+  </ion-grid>
+
+  <ion-label class="policy-title">Policy for upgrade PREMIUM account</ion-label>
+  <ion-label class="policy-detail">There are many variations of passages of Lorem</ion-label>
+  <ion-label class="policy-detail">There are many variations of passages of Lorem</ion-label>
+  <ion-label class="policy-detail">There are many variations of passages of Lorem</ion-label>
+  <ion-label class="policy-detail">There are many variations of passages of Lorem</ion-label>
+  <ion-label class="policy-detail">There are many variations of passages of Lorem</ion-label>
+  <ion-label class="policy-detail">There are many variations of passages of Lorem</ion-label>
+  <ion-label class="policy-detail">There are many variations of passages of Lorem</ion-label>
+  <ion-label class="policy-detail">There are many variations of passages of Lorem</ion-label>
+  <ion-label class="policy-detail">There are many variations of passages of Lorem</ion-label>
+
+  <ion-button class="btn-logout">Sent mail request upgrade</ion-button>
+</ion-content>
