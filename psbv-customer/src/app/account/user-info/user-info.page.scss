@@ -2,6 +2,34 @@
   font-size: 22px;
   color: black;
 }
+.icon-more{
+  width: 22px;
+  display: flex;
+  float: right;
+  margin-top: 10px;
+  position: relative;
+  // :focus .more-content{
+  //   display: block;
+  // }
+  .more-content{
+    position: absolute;
+    padding: 2px;
+    border-radius: 4px;
+    top: calc(100% + 20px);
+    right: 0;
+    background-color: #c9c9c9;
+   
+    span{
+      display: block;
+      text-align: center;
+      padding: 4px 11px;
+      border-radius: 4px;
+    }
+    #span2 {
+      background: #fff;
+    }
+  }
+}
 .header-md::after {
   background-image: none;
 }

@@ -67,6 +67,10 @@ export class ShoppingCartPage implements OnInit {
   add(item) {
     item.counter++;
   }
+  minus(item){
+    if(item.counter > 0)
+      item.counter--;
+  }
 
   ionViewWillEnter() {
 

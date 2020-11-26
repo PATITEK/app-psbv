@@ -8,9 +8,9 @@ import { PERMISSION } from 'src/app/home/product-info/product-info.page';
   styleUrls: ['./user-info.page.scss'],
 })
 export class UserInfoPage implements OnInit {
-
   permission: PERMISSION = PERMISSION.STANDARD;
 
+  btn: boolean = false;
   constructor(
     private router: Router
   ) {}
@@ -30,5 +30,21 @@ export class UserInfoPage implements OnInit {
   goToPasswordChanged(): void {
     this.router.navigateByUrl('account/password-changed')
   }
-
+  clicked(){
+   
+    if(this.btn == false){
+      this.btn = true;
+    }
+    else {
+      this.btn = false;
+    }
+  }
+  setFalse(){
+    this.btn = false;
+  }
+  anotherFalse(){
+    if(this.btn == true){
+      this.btn = false;
+    }
+  }
 }

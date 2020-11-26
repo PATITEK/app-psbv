@@ -15,5 +15,4 @@ export class OrderPage implements OnInit {
       tabs[key].style.display = 'flex';
     });
   }
-
 }
