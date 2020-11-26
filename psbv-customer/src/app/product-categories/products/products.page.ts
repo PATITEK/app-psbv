@@ -42,8 +42,6 @@ export class ProductsPage implements OnInit {
           }
           this.infinityScroll.complete();
           this.pageRequest.page++;
-  
-          // check max data
           if (this.data.length >= data.meta.pagination.total_objects) {
             this.infinityScroll.disabled = true;
           }

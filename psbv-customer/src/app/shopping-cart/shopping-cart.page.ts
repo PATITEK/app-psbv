@@ -19,7 +19,7 @@ export interface ShoppingCartItem {
   styleUrls: ['./shopping-cart.page.scss'],
 })
 export class ShoppingCartPage implements OnInit {
-  hasTF = false;
+  hasTF:any = false;
   hasBackButton: boolean = false;
   items: ShoppingCartItem[] = [
     {
@@ -77,45 +77,30 @@ export class ShoppingCartPage implements OnInit {
   }
   ngOnInit() {
     this.route.queryParams.subscribe(params =>{
-      // const tabs = document.querySelectorAll('ion-tab-bar');
-      // Object.keys(tabs).map((key) => {
-      //   tabs[key].style.display = 'none';
-      // });
      this.hasTF = JSON.parse(params['data']);
-      console.log('kq', this.hasTF);
+      if(this.hasTF.checkBack === true){
+        this.hasTF = true;
+      }else{
+        this.hasTF = false;
+      }
     })
-    
-   
-    // this.loading.present();
-
-    // this.route.queryParams.subscribe(params => {
-    //   this.permission = JSON.parse(params['permission']);
-    //   this.productService.getProductDetail(JSON.parse(params['data']))
-    //     .subscribe(data => {
-    //       this.product = data.product;
-    //       this.loading.dismiss();
-    //     });
-    // })
-   
   }
   goCheck(){
     this.route.queryParams.subscribe(params =>{
-      // const tabs = document.querySelectorAll('ion-tab-bar');
-      // Object.keys(tabs).map((key) => {
-      //   tabs[key].style.display = 'none';
-      // });
+      const tabs = document.querySelectorAll('ion-tab-bar');
+      Object.keys(tabs).map((key) => {
+        tabs[key].style.display = 'none';
+      });
      return JSON.parse(params['data']);
       
     })
   }
   goBack() {
-    // const tabs = document.querySelectorAll('ion-tab-bar');
-    // Object.keys(tabs).map((key) => {
-    //   tabs[key].style.display = 'none';
-    // });
     this.router.navigateByUrl('main/home/product-info');
   }
-
+  ngOnDestroy(){
+    this.hasTF = false;
+  }
 
   async presentAlert(text: string) {
     const alert = await this.alertCrtl.create({

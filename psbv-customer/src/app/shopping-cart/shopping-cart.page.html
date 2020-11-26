@@ -2,8 +2,8 @@
   <ion-row no-lines>
     <ion-col class="ion-heading">
       <ion-img class="ion-heading__element__back" src="assets/shopping-cart/back.svg"
-        [style.visibility]="hasTF? 'visible' : 'hidden'" (click)="goBack()"></ion-img>
-      <ion-label class="ion-heading__element__text">SHOPPING CART</ion-label>
+        *ngIf="hasTF" (click)="goBack()"></ion-img>
+      <ion-label class="ion-heading__element__text" >SHOPPING CART</ion-label>
       <ion-icon name="cart-outline"class="ion-heading__element__shop-icon"></ion-icon>
     
     </ion-col>
