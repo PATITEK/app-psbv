@@ -25,7 +25,7 @@ export class ForgotPasswordPage implements OnInit {
    this.message = this.inputEmail.value;
     this.authService.forgotPassword(this.inputEmail.value).subscribe((data:any) => {
         this.router.navigateByUrl("/auth/reset-password");
-        this.authService.setEmailForgot(this.message);
+        this.authService.sendData(this.message);
     });
   }
   ngOnInit() {

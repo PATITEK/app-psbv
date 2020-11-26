@@ -2,13 +2,35 @@ ion-header {
   background-color: #232323;
 }
 ion-content {
-  --background: #232323;
+  position: absolute;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  top: 99px;
+  overflow: hidden;
+  background-color: #e52d27;
+
+  --scroll-y: false;
+  z-index: 11;
+  max-height: 651px;
+  border-bottom: 0;
+  --offset-top: 5px !important;
+  --background: #efefef;
+}
+ion-grid {
+  padding: 0;
+}
+ion-item-group {
+  display: flex;
+}
+ion-item {
+  --inner-border-width: 0 0 0 0 !important;
 }
 .ion-heading {
   margin-top: 3rem;
   margin-bottom: 1.2rem;
   color: white;
   font-size: 20px;
+  height: 54px;
   font-weight: 700;
   display: flex;
   &__element__text {
@@ -18,7 +40,7 @@ ion-content {
   &__element__shop-icon {
     width: 30px;
     height: auto;
-    margin-top: -0.3rem;
+    margin-top: -1rem;
   }
   &__element__back {
     margin-left: 26px;
@@ -64,13 +86,16 @@ ion-content {
     --padding-start: 0rem;
     --padding-end: 0rem;
     --border-radius: 2rem;
+    --min-height: 38px;
     margin-top: 2rem;
     left: 3%;
     width: 95%;
     .item__price-tag {
       font-size: 14px;
       color: white;
+      width: 156px;
       font-weight: 400;
+      --min-height: 38px;
       --border-radius: 2rem;
       --padding-start: 1rem;
       --background: linear-gradient(to left, #b31217, #e52d27);
@@ -95,12 +120,16 @@ ion-content {
     width: 40px;
   }
 }
+ion-card {
+  margin: 18px 13px;
+}
+
 .section__button {
   width: 115px;
   height: auto;
   font-size: 19px;
   padding-right: 0;
-  margin-left: 9rem;
+  margin-left: 8rem;
   margin-top: -3rem;
   margin-bottom: 1.3rem;
   --padding-start: 3px;
@@ -116,5 +145,92 @@ ion-content {
   &__add {
     margin-left: 1rem;
     width: 90px;
+  }
+  &-count {
+    width: 10px;
+  }
+}
+
+@media screen and (max-height: 824px) {
+  ion-content {
+    max-height: 662px;
+  }
+  .section__button {
+    margin-left: 9.5rem;
+  }
+  .section__sub {
+    .item__cancel {
+      width: 11px;
+      left: 56%;
+    }
+  }
+}
+@media screen and (max-height: 812px) {
+  .section__button {
+    margin-left: 8.5rem;  
+  }
+  .section__sub {
+    .item__cancel {
+      width: 10px;
+      left: 52%;
+    }
+  }
+}
+
+@media screen and (max-height: 736px) {
+  ion-content {
+    max-height: 574px;
+  }
+  .section__button {
+    margin-left: 9.6rem;
+  }
+  .section__sub {
+    .item__cancel {
+      width: 11px;
+      left: 56.5%;
+    }
+  }
+}
+@media screen and (max-height: 732px) {
+  .section__button {
+    margin-left: 9.6rem;
+  }
+}
+@media screen and (max-height: 667px) {
+  ion-content {
+    max-height: 506px;
+  }
+  .section__button {
+    margin-left: 8.5rem;
+  }
+  .section__sub {
+    .item__cancel {
+      width: 11px;
+      left: 52.5%;
+    }
+  }
+}
+@media screen and (max-height: 653px) {
+}
+@media screen and (max-height: 640px) {
+  ion-content {
+    max-height: 479px;
+  }
+  .section__button {
+    margin-left: 7.9rem;
+  }
+}
+@media screen and (max-height: 569px) {
+  ion-content {
+    max-height: 408px;
+  }
+  .section__button {
+    margin-left: 6.6rem;
+  }
+  .section__sub {
+    .item__cancel {
+      width: 10px;
+      left: 45%;
+    }
   }
 }

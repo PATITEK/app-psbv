@@ -1,41 +1,44 @@
 <ion-header>
   <ion-row no-lines>
     <ion-col class="ion-heading">
-      <ion-img class="ion-heading__element__back" src="../../assets/back.svg"
+      <ion-img class="ion-heading__element__back" src="assets/shopping-cart/back.svg"
         [style.visibility]="checkHasBackButton() ? 'visible' : 'hidden'" (click)="goBack()"></ion-img>
       <ion-label class="ion-heading__element__text">SHOPPING CART</ion-label>
-      <ion-img class="ion-heading__element__shop-icon" src="../../assets/shopping.svg"></ion-img>
+      <ion-icon name="cart-outline"class="ion-heading__element__shop-icon"></ion-icon>
+    
     </ion-col>
   </ion-row>
 </ion-header>
 <ion-content>
-  <ion-card class="section__main">
-    <div *ngFor="let item of items">
-      <ion-card class="section__sub">
-        <ion-grid>
+  <ion-grid>
+    <div *ngFor="let item of items ;let indexOfelement = index;">
+      <ion-card class="section__sub" >
+        <ion-grid >
           <ion-row>
             <ion-label class="item__header">{{ item.name + " " + item.date }}</ion-label>
-            <ion-img class="item__cancel" src="../../assets/x-icon.svg"></ion-img>
+            <ion-img class="item__cancel" src="/assets/shopping-cart/x-icon.svg" (click)="onCancel(indexOfelement)"></ion-img>
           </ion-row>
         </ion-grid>
         <ion-item class="detail__wrapper" lines="none">
           <ion-item class="item__price-tag">
             {{ item.price + "$" }}
-            <ion-img class="item__price-tag__slash" src="../../assets/slash.svg"></ion-img>
+            <ion-img class="item__price-tag__slash" src="assets/shopping-cart/slash.svg"></ion-img>
             {{ item.numberProduct + "Product"}}
           </ion-item>
-          <ion-img class="item__deliver-icon" src="../../assets/delive.svg" end></ion-img>
-          <ion-label class="item__day-to-delive">{{ item.dayToDelivery + "day" }}</ion-label>
+          <ion-item-group slot="end">
+            <ion-img src="assets/shopping-cart/deliver.svg" ></ion-img>
+            <ion-label class="item__day-to-delive">{{ item.dayToDelivery + "day" }}</ion-label>
+          </ion-item-group>
+         
         </ion-item>
         <ion-card-content class="item__detail">{{ item.description }}</ion-card-content>
       </ion-card>
-      
       <ion-item class="section__button" no-padding lines="none" position="fixed">
-        <ion-img src="../../assets/minus.svg" class="section__button__minus" (click)="minus(item)"></ion-img>
-        {{ item.counter }}
-        <ion-img src="../../assets/add.svg" class="section__button__add" (click)="add(item)"></ion-img>
+        <ion-img src="assets/shopping-cart/minus.svg" class="section__button__minus" (click)="minus(item)"></ion-img>
+          {{ item.counter }}
+        <ion-img src="assets/shopping-cart/add.svg" class="section__button__add" (click)="add(item)"></ion-img>
       </ion-item>
     </div>
-
-  </ion-card>
+  </ion-grid>
+  
 </ion-content>

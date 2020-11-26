@@ -20,7 +20,7 @@ export interface ShoppingCartItem{
 export class ShoppingCartPage implements OnInit {
   items: ShoppingCartItem[] = [
     {
-      name: "Item",
+      name: "Item 1",
       date: "12/12/1212",
       price: 450,
       numberProduct: 3,
@@ -29,7 +29,7 @@ export class ShoppingCartPage implements OnInit {
       counter: 1
     },
     {
-      name: "Item",
+      name: "Item 2",
       date: "12/12/1212",
       price: 450,
       numberProduct: 3,
@@ -38,7 +38,7 @@ export class ShoppingCartPage implements OnInit {
       counter: 1
     },
     {
-      name: "Item",
+      name: "Item 3",
       date: "12/12/1212",
       price: 450,
       numberProduct: 3,
@@ -47,7 +47,7 @@ export class ShoppingCartPage implements OnInit {
       counter: 1
     },
     {
-      name: "Item",
+      name: "Item 4",
       date: "12/12/1212",
       price: 450,
       numberProduct: 3,
@@ -57,7 +57,7 @@ export class ShoppingCartPage implements OnInit {
     },
   ];
   hasBackButton: boolean = false;
-  data;
+  hasTF: boolean = true;
 
   constructor(
     private location: Location,
@@ -71,29 +71,15 @@ export class ShoppingCartPage implements OnInit {
     if(item.counter > 0)
       item.counter--;
   }
-
-  ionViewWillEnter() {
-
-    console.log('has', this.hasBackButton);
-    this.route.queryParams.subscribe((params) => {
-      this.data = JSON.parse(params['data']);
-      console.log('data', this.data);
-      if (this.data.checkBack === true) {
-        this.hasBackButton = true;
-        console.log('vao true', this.hasBackButton);
-      } else {
-        this.hasBackButton = false;
-      }
-    })
-  }
   ngOnInit() {
-
   }
-
   checkHasBackButton(): boolean {
     return this.hasBackButton;
   }
-
+  onCancel() {
+    // this.hasTF = false;
+    return this.items.pop();
+  }
   goBack() {
     this.hasBackButton = false;
 
