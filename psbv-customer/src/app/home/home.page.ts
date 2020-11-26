@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonInfiniteScroll, LoadingController } from '@ionic/angular';
+import { IonInfiniteScroll } from '@ionic/angular';
 import { IPageRequest, ProductsService } from '../@app-core/http';
+import { LoadingService } from '../@app-core/loading.service';
 import { PERMISSION } from './product-info/product-info.page';
 
 @Component({
@@ -25,7 +26,7 @@ export class HomePage implements OnInit {
   constructor(
     private router: Router,
     private productService: ProductsService,
-    private loadingController: LoadingController
+    private loading: LoadingService
   ) { }
 
   goToDetail(item) {
@@ -38,7 +39,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.present();
+    this.loading.present();
     this.loadData();
   }
 
@@ -49,7 +50,7 @@ export class HomePage implements OnInit {
           this.data.push(item);
         }
         this.infinityScroll.complete();
-        this.dismiss();
+        this.loading.dismiss();
         this.pageRequest.page++;
 
         // check max data
@@ -66,22 +67,5 @@ export class HomePage implements OnInit {
 
   checkStandardPermission(): boolean {
     return this.permission === PERMISSION.STANDARD;
-  }
-
-  async present() {
-    this.isLoading = true;
-    return await this.loadingController.create().then(a => {
-      a.present().then(() => {
-        console.log('presented');
-        if (!this.isLoading) {
-          a.dismiss().then(() => console.log('abort presenting'));
-        }
-      });
-    });
-  }
-
-  async dismiss() {
-    this.isLoading = false;
-    return await this.loadingController.dismiss().then(() => console.log('dismissed'));
   }
 }

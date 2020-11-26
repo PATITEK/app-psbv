@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PERMISSION } from '../product-info.page';
 import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
 import { ProductsService } from 'src/app/@app-core/http';
+import { LoadingService } from 'src/app/@app-core/loading.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -34,7 +35,8 @@ export class ProductDetailPage implements OnInit {
     private router: Router,
     private pageNotiService: PageNotiService,
     private route: ActivatedRoute,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private loading: LoadingService
   ) {
   }
 
@@ -43,15 +45,15 @@ export class ProductDetailPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
-  }
 
-  ionViewWillEnter() {
+    this.loading.present();
     this.route.queryParams.subscribe((params) => {
+      this.permission = JSON.parse(params['permission']);
       this.productService.getProductDetail(JSON.parse(params['data']))
         .subscribe(data => {
           this.product = data.product;
+          this.loading.dismiss();
         });
-      this.permission = JSON.parse(params['permission']);
     });
   }
 

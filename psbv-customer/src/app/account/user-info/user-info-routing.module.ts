@@ -11,7 +11,12 @@ const routes: Routes = [
   {
     path: 'upgrade',
     loadChildren: () => import('./upgrade/upgrade.module').then( m => m.UpgradePageModule)
+  },
+  {
+    path: 'support',
+    loadChildren: () => import('./support/support.module').then( m => m.SupportPageModule)
   }
+
 ];
 
 @NgModule({
