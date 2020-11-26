@@ -16,9 +16,19 @@
     position: absolute;
     padding: 2px;
     border-radius: 4px;
-    top: calc(100% + 20px);
+    top: calc(100% + 5px);
     right: 0;
     background-color: #c9c9c9;
+
+    &::before{
+      content: " ";
+      position: absolute;
+      border-width: 8px 6px;
+      border-style: solid;
+      border-color: transparent transparent #c9c9c9 transparent;
+      top: -16px;
+      right: 5px;
+    }
    
     span{
       display: block;
@@ -26,8 +36,8 @@
       padding: 4px 11px;
       border-radius: 4px;
     }
-    #span2 {
-      background: #fff;
+    span:active{
+      background-color: #fff;
     }
   }
 }
@@ -125,4 +135,20 @@
   margin-inline-start: 0;
   margin-inline-end: 0;
   --background-activated:#CE091C;
+}
+@media(max-width: 321px){
+  .btn-logout{
+    margin-top: 1.5rem;
+  }
+  .user-info{
+    &__user-name{
+      margin-top: 1rem;
+    }
+    &__email{
+      margin-top: 1rem;
+    }
+    &__passwoed{
+      margin-top: 1rem;
+    }
+  }
 }

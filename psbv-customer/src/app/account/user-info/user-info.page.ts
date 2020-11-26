@@ -24,7 +24,8 @@ export class UserInfoPage implements OnInit {
   }
 
   upgradePremium(): void {
-
+    this.router.navigateByUrl('account/user-info/upgrade');
+    console.log("checked");
   }
 
   goToPasswordChanged(): void {
