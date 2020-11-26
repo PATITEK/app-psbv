@@ -10,29 +10,32 @@
 </ion-header>
 <ion-content>
   <ion-card class="section__main">
-    <ion-card class="section__sub" *ngFor="let item of items">
-      <ion-grid>
-        <ion-row>
-          <ion-label class="item__header">{{ item.name + " " + item.date }}</ion-label>
-          <ion-img class="item__cancel" src="../../assets/x-icon.svg"></ion-img>
-        </ion-row>
-      </ion-grid>
-      <ion-item class="detail__wrapper" lines="none">
-        <ion-item class="item__price-tag">
-          {{ item.price + "$" }}
-          <ion-img class="item__price-tag__slash" src="../../assets/slash.svg"></ion-img>
-          {{ item.numberProduct + "Product"}}
+    <div *ngFor="let item of items">
+      <ion-card class="section__sub">
+        <ion-grid>
+          <ion-row>
+            <ion-label class="item__header">{{ item.name + " " + item.date }}</ion-label>
+            <ion-img class="item__cancel" src="../../assets/x-icon.svg"></ion-img>
+          </ion-row>
+        </ion-grid>
+        <ion-item class="detail__wrapper" lines="none">
+          <ion-item class="item__price-tag">
+            {{ item.price + "$" }}
+            <ion-img class="item__price-tag__slash" src="../../assets/slash.svg"></ion-img>
+            {{ item.numberProduct + "Product"}}
+          </ion-item>
+          <ion-img class="item__deliver-icon" src="../../assets/delive.svg" end></ion-img>
+          <ion-label class="item__day-to-delive">{{ item.dayToDelivery + "day" }}</ion-label>
         </ion-item>
-        <ion-img class="item__deliver-icon" src="../../assets/delive.svg" end></ion-img>
-        <ion-label class="item__day-to-delive">{{ item.dayToDelivery + "day" }}</ion-label>
+        <ion-card-content class="item__detail">{{ item.description }}</ion-card-content>
+      </ion-card>
+      
+      <ion-item class="section__button" no-padding lines="none" position="fixed">
+        <ion-img src="../../assets/minus.svg" class="section__button__minus" (click)="minus(item)"></ion-img>
+        {{ item.counter }}
+        <ion-img src="../../assets/add.svg" class="section__button__add" (click)="add(item)"></ion-img>
       </ion-item>
-      <ion-card-content class="item__detail">{{ item.description }}</ion-card-content>
-    </ion-card>
-    <ion-item class="section__button" no-padding lines="none" position="fixed">
-      <ion-img src="../../assets/minus.svg" class="section__button__minus"></ion-img>
-      {{ counter }}
-      <ion-img src="../../assets/add.svg" class="section__button__add"></ion-img>
-  </ion-item>
+    </div>
 
   </ion-card>
 </ion-content>
