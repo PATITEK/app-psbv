@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { ProductsService } from 'src/app/@app-core/http';
@@ -79,8 +79,8 @@ export class ProductInfoPage implements OnInit {
     this.loading.present();
 
     this.route.queryParams.subscribe(params => {
-      this.permission = JSON.parse(params['permission']);
-      this.productService.getProductDetail(JSON.parse(params['data']))
+      this.permission = params['permission'];
+      this.productService.getProductDetail(JSON.parse(params['id']))
         .subscribe(data => {
           this.product = data.product;
           this.loading.dismiss();

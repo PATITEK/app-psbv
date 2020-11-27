@@ -25,11 +25,11 @@ export class LoadingService {
   async dismiss() {
     this.isLoading = false;
     let topLoader = await this.loadingController.getTop();
-      while (topLoader) {
-        if (!(await topLoader.dismiss())) {
-          break
-        }
-        topLoader = await this.loadingController.getTop();
+    while (topLoader) {
+      if (!(await topLoader.dismiss())) {
+        break;
       }
+      topLoader = await this.loadingController.getTop();
+    }
   }
 }
