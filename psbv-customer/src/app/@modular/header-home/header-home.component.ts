@@ -17,4 +17,7 @@ export class HeaderHomeComponent implements OnInit {
   onGoUserInfo() {
     this.router.navigateByUrl('account/user-info');
   }
+  gotoNoti(){
+    this.router.navigateByUrl('notification');
+  }
 }

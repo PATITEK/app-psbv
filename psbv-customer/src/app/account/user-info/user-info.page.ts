@@ -73,4 +73,7 @@ export class UserInfoPage implements OnInit {
   showAlert() {
     this.presentAlert();
   }
+  gotoSupport(){
+    this.router.navigateByUrl('account/support');
+  }
 }
