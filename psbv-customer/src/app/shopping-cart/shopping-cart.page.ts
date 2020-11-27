@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
-
-export interface ShoppingCartItem{
+import { AlertController } from '@ionic/angular';
+import { filter } from 'rxjs/operators';
+export interface ShoppingCartItem {
   name: string;
   date: string;
   price: number;
@@ -18,9 +19,11 @@ export interface ShoppingCartItem{
   styleUrls: ['./shopping-cart.page.scss'],
 })
 export class ShoppingCartPage implements OnInit {
+  hasTF:any = false;
+  hasBackButton: boolean = false;
   items: ShoppingCartItem[] = [
     {
-      name: "Item",
+      name: "Item 1",
       date: "12/12/1212",
       price: 450,
       numberProduct: 3,
@@ -29,7 +32,7 @@ export class ShoppingCartPage implements OnInit {
       counter: 1
     },
     {
-      name: "Item",
+      name: "Item 2",
       date: "12/12/1212",
       price: 450,
       numberProduct: 3,
@@ -38,7 +41,7 @@ export class ShoppingCartPage implements OnInit {
       counter: 1
     },
     {
-      name: "Item",
+      name: "Item 3",
       date: "12/12/1212",
       price: 450,
       numberProduct: 3,
@@ -47,7 +50,7 @@ export class ShoppingCartPage implements OnInit {
       counter: 1
     },
     {
-      name: "Item",
+      name: "Item 4",
       date: "12/12/1212",
       price: 450,
       numberProduct: 3,
@@ -56,49 +59,74 @@ export class ShoppingCartPage implements OnInit {
       counter: 1
     },
   ];
-  hasBackButton: boolean = false;
-  data;
-
+ 
+  public showSpinner = false;
   constructor(
+    private router: Router,
     private location: Location,
-    private route: ActivatedRoute
-    ) {}
+    private route: ActivatedRoute,
+    private alertCrtl: AlertController
+  ) { }
 
   add(item) {
     item.counter++;
   }
-  minus(item){
-    if(item.counter > 0)
+  minus(item) {
+    if (item.counter > 0)
       item.counter--;
   }
-
-  ionViewWillEnter() {
-
-    console.log('has', this.hasBackButton);
-    this.route.queryParams.subscribe((params) => {
-      this.data = JSON.parse(params['data']);
-      console.log('data', this.data);
-      if (this.data.checkBack === true) {
-        this.hasBackButton = true;
-        console.log('vao true', this.hasBackButton);
-      } else {
-        this.hasBackButton = false;
+  ngOnInit() {
+    this.route.queryParams.subscribe(params =>{
+     this.hasTF = JSON.parse(params['data']);
+      if(this.hasTF.checkBack === true){
+        this.hasTF = true;
+      }else{
+        this.hasTF = false;
       }
     })
   }
-  ngOnInit() {
-
+  goCheck(){
+    this.route.queryParams.subscribe(params =>{
+      const tabs = document.querySelectorAll('ion-tab-bar');
+      Object.keys(tabs).map((key) => {
+        tabs[key].style.display = 'none';
+      });
+     return JSON.parse(params['data']);
+      
+    })
   }
-
-  checkHasBackButton(): boolean {
-    return this.hasBackButton;
-  }
-
   goBack() {
-    this.hasBackButton = false;
-
-    console.log('check', this.hasBackButton);
-
-    this.location.back();
+    this.router.navigateByUrl('main/home/product-info');
   }
+  ngOnDestroy(){
+    this.hasTF = false;
+  }
+
+  async presentAlert(text: string) {
+    const alert = await this.alertCrtl.create({
+      header: 'Warning',
+      message: text,
+      buttons: [
+        {
+          text: 'Disagree',
+          handler: () => {
+            return;
+          }
+        },
+        {
+          text: 'Agree',
+          handler: (  ) => {
+            return this.items.pop();
+          }
+        },
+
+      ]
+    });
+    await alert.present();
+  }
+  async onCancel() {
+    this.showSpinner = true;
+    this.presentAlert('Are you sure to delete this item?');
+  }
+ 
 }

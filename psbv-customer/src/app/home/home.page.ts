@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { IPageRequest, ProductsService } from '../@app-core/http';
+import { AuthService, IPageRequest, ProductsService } from '../@app-core/http';
+import { LoadingService } from '../@app-core/loading.service';
 import { PERMISSION } from './product-info/product-info.page';
 
 @Component({
@@ -14,27 +15,32 @@ export class HomePage implements OnInit {
 
   pageRequest: IPageRequest = {
     page: 1,
-    per_page: 6,
+    per_page: 10,
     total_objects: 20
   }
   data = [];
   permission: PERMISSION = PERMISSION.STANDARD;
+  isLoading = false;
+
 
   constructor(
     private router: Router,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private loading: LoadingService,
+    private auth: AuthService
   ) { }
 
   goToDetail(item) {
     this.router.navigate(['/main/home/product-info'], {
       queryParams: {
-        data: JSON.stringify(item.id),
+        id: JSON.stringify(item.id),
         permission: JSON.stringify(this.permission)
       }
     });
   }
 
   ngOnInit() {
+    this.loading.present();
     this.loadData();
   }
 
@@ -45,6 +51,7 @@ export class HomePage implements OnInit {
           this.data.push(item);
         }
         this.infinityScroll.complete();
+        this.loading.dismiss();
         this.pageRequest.page++;
 
         // check max data
@@ -52,7 +59,7 @@ export class HomePage implements OnInit {
           this.infinityScroll.disabled = true;
         }
       })
-    }, 500);
+    }, 50);
   }
 
   checkGuestPermission(): boolean {

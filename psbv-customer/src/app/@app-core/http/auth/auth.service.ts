@@ -10,7 +10,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService {
-  private emailForgot: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private data: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   constructor(
     private http: HttpClient,
@@ -19,52 +19,52 @@ export class AuthService {
     private storage: StorageService,
   ) { }
 
-  public get getEmailForgot(): Observable<any> {
-    return this.emailForgot.asObservable();
-}
+  public get receiveData(): Observable<any> {
+    return this.data.asObservable();
+  }
 
-public setEmailForgot(value: any) {
-    this.emailForgot.next(value);
-}
-  public forgotPassword(req){
-        return this.http.post(`${APICONFIG.AUTH.RESET_PASSWORD_EMAIL}`, req).pipe(
-          map((result)=> {
-            return result;
-          }),
-          catchError((errorRes: any) => {
-            throw errorRes.error;
-          }));
-        
+  public sendData(value: any) {
+    this.data.next(value);
+  }
+  public forgotPassword(req) {
+    return this.http.post(`${APICONFIG.AUTH.RESET_PASSWORD_EMAIL}`, req).pipe(
+      map((result) => {
+        return result;
+      }),
+      catchError((errorRes: any) => {
+        throw errorRes.error;
+      }));
+
   }
   public checkcodePassword(req) {
     return this.http.post(`${APICONFIG.AUTH.CHECK_CODE_RESET}`, req).pipe(
-      map((result) => { 
+      map((result) => {
         return result;
       }),
-      catchError((errorRes: any)=>{
+      catchError((errorRes: any) => {
         throw errorRes.error;
       }
-    ));
+      ));
   }
-  public newPassword(req){
+  public newPassword(req) {
     return this.http.post(`${APICONFIG.AUTH.RESET_PASSWORD}`, req).pipe(
-      map((result) => { 
+      map((result) => {
         return result;
       }),
-      catchError((errorRes: any)=>{
+      catchError((errorRes: any) => {
         throw errorRes.error;
       }
-    ));
+      ));
   }
-  public resetPassword(req){
+  public resetPassword(req) {
     return this.http.post(`${APICONFIG.AUTH.RESET_PASSWORD}`, req).pipe(
-      map((result) => { 
+      map((result) => {
         return result;
       }),
-      catchError((errorRes: any)=>{
+      catchError((errorRes: any) => {
         throw errorRes.error;
       }
-    ));
+      ));
   }
   public login(req) {
     return this.http.post(`${APICONFIG.AUTH.LOGIN}`, req).pipe(

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { IPageRequest, ProductGroupsService } from '../@app-core/http';
+import { LoadingService } from '../@app-core/loading.service';
 
 @Component({
   selector: 'app-product-categories',
@@ -22,10 +23,12 @@ export class ProductCategoriesPage implements OnInit {
 
   constructor(
     private router: Router,
-    private productGroupService: ProductGroupsService
+    private productGroupService: ProductGroupsService,
+    private loading: LoadingService
   ) { }
 
   ngOnInit() {
+    this.loading.present();
     this.loadData();
   }
 
@@ -36,14 +39,21 @@ export class ProductCategoriesPage implements OnInit {
           this.data.push(item);
         }
         this.infinityScroll.complete();
+        this.loading.dismiss();
         this.pageRequest.page++;
 
         // check max data
         if (this.data.length >= data.meta.pagination.total_objects) {
           this.infinityScroll.disabled = true;
         }
+
+        // cal left per_page
+        const temp = data.meta.pagination.total_objects - this.data.length;
+        if (temp <= this.pageRequest.per_page) {
+          this.pageRequest.per_page = temp;
+        }
       })
-    }, 500);
+    }, 50);
   }
 
   goToDetail(item) {

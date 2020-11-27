@@ -17,7 +17,6 @@ export class AuthGuard implements CanActivate {
   ) { }
 
   canActivate(): Observable<boolean> {
-    // return of(true);
     if (localStorage.getItem('Authorization')) {
       this.storage.setInfoAccount(localStorage.getItem('Authorization'));
       return of(true);
@@ -25,7 +24,6 @@ export class AuthGuard implements CanActivate {
       this.router.navigateByUrl('/auth/login', { queryParams: { returnUrl: window.location.pathname } });
       return of(false);
     }
-
     // const tempToken = (localStorage.getItem('token') == null) ? '' : localStorage.getItem('token').replace('Bearer ', '');
     // const objCheckToken: any = {
     //     clientTime:  new Date().getTime(),
