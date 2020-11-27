@@ -1,13 +1,12 @@
-:host {
-  --padding-top: 0px;
-  --padding-bottom: 0px;
-  --padding-start: 0px;
-  --padding-end: 0px;
-  --min-height: 0px;
+ion-content,
+ion-item {
+  --background: #efefef;
 }
-.header-md::after {
-  height: 0;
+
+ion-list {
+  background: #efefef;
 }
+
 ion-content {
   position: absolute;
   border-top-left-radius: 25px;
@@ -15,15 +14,9 @@ ion-content {
   top: 135px;
   overflow: hidden;
   background-color: white;
-  overflow-y: auto;
   z-index: 11;
   max-height: 614px;
   border-bottom: 0;
-}
-
-ion-img {
-  border-radius: 16px;
-  overflow: hidden;
 }
 
 ion-grid {
@@ -31,6 +24,14 @@ ion-grid {
 
   ion-col {
     text-align: center;
+
+    ion-img {
+      border-radius: 16px;
+      overflow: hidden;
+      height: 120px;
+      object-fit: cover;
+    }
+    
 
     span {
       overflow: hidden;

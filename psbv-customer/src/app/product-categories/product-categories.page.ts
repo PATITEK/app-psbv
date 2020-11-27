@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { IPageRequest, ProductGroupsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
+import { PERMISSION } from '../home/product-info/product-info.page';
 
 @Component({
   selector: 'app-product-categories',
@@ -20,6 +21,7 @@ export class ProductCategoriesPage implements OnInit {
     per_page: 12,
     total_objects: 1
   }
+  permission: PERMISSION = PERMISSION.GUEST;
 
   constructor(
     private router: Router,
@@ -59,8 +61,9 @@ export class ProductCategoriesPage implements OnInit {
   goToDetail(item) {
     this.router.navigate(['main/product-categories/products'], {
       queryParams: {
-        data: JSON.stringify(item.id)
+        id: JSON.stringify(item.id),
+        permission: JSON.stringify(this.permission)
       }
-    })
+    });
   }
 }

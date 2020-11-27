@@ -19,15 +19,12 @@ export class HomePage implements OnInit {
     total_objects: 20
   }
   data = [];
-  permission: PERMISSION = PERMISSION.STANDARD;
-  isLoading = false;
-
+  permission: PERMISSION = PERMISSION.GUEST;
 
   constructor(
     private router: Router,
     private productService: ProductsService,
-    private loading: LoadingService,
-    private auth: AuthService
+    private loading: LoadingService
   ) { }
 
   goToDetail(item) {

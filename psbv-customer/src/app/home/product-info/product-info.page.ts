@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { ProductsService } from 'src/app/@app-core/http';
@@ -73,24 +73,26 @@ export class ProductInfoPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'none';
-    });
-    this.loading.present();
-
     this.route.queryParams.subscribe(params => {
-      this.permission = params['permission'];
+      this.permission = JSON.parse(params['permission']);
       this.productService.getProductDetail(JSON.parse(params['id']))
         .subscribe(data => {
           this.product = data.product;
           this.loading.dismiss();
         });
     })
+    this.loading.present();
+  }
+
+  ionViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'none';
+    });
   }
 
   goBack(): void {
-    this.router.navigateByUrl('/main/home');
+    this.router.navigateByUrl('main/product-categories');
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'flex';
@@ -103,7 +105,7 @@ export class ProductInfoPage implements OnInit {
     } else {
       this.router.navigate(['/main/home/product-info/product-detail'], {
         queryParams: {
-          data: JSON.stringify(this.product.id),
+          id: JSON.stringify(this.product.id),
           permission: JSON.stringify(this.permission)
         }
       });
