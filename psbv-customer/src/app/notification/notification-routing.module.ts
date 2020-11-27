@@ -12,6 +12,14 @@ const routes: Routes = [
     path: 'detail-notification',
     loadChildren: () => import('./detail-notification/detail-notification.module').then( m => m.DetailNotificationPageModule)
   },
+  {
+    path: 'noti-order-status',
+    loadChildren: () => import('./noti-order-status/noti-order-status.module').then( m => m.NotiOrderStatusPageModule)
+  },
+  {
+    path: 'noti-tracking',
+    loadChildren: () => import('./noti-tracking/noti-tracking.module').then( m => m.NotiTrackingPageModule)
+  },
 ];
 
 @NgModule({
