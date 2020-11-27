@@ -2,8 +2,8 @@
   <ion-row no-lines>
     <ion-col class="ion-heading">
       <ion-img class="ion-heading__element__back" src="assets/shopping-cart/back.svg"
-        [style.visibility]="checkHasBackButton() ? 'visible' : 'hidden'" (click)="goBack()"></ion-img>
-      <ion-label class="ion-heading__element__text">SHOPPING CART</ion-label>
+        *ngIf="hasTF" (click)="goBack()"></ion-img>
+      <ion-label class="ion-heading__element__text" >SHOPPING CART</ion-label>
       <ion-icon name="cart-outline"class="ion-heading__element__shop-icon"></ion-icon>
     
     </ion-col>
@@ -16,7 +16,7 @@
         <ion-grid >
           <ion-row>
             <ion-label class="item__header">{{ item.name + " " + item.date }}</ion-label>
-            <ion-img class="item__cancel" src="/assets/shopping-cart/x-icon.svg" (click)="onCancel(indexOfelement)"></ion-img>
+            <ion-img class="item__cancel" src="/assets/shopping-cart/x-icon.svg" (click)="onCancel(item)"></ion-img>
           </ion-row>
         </ion-grid>
         <ion-item class="detail__wrapper" lines="none">

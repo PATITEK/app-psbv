@@ -24,6 +24,7 @@ export enum PERMISSION {
 })
 
 export class ProductInfoPage implements OnInit {
+ 
 
   product = {
     id: '',

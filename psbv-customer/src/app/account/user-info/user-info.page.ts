@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PERMISSION } from 'src/app/home/product-info/product-info.page';
+import { AlertController } from '@ionic/angular'
 
 @Component({
   selector: 'app-user-info',
@@ -12,7 +13,8 @@ export class UserInfoPage implements OnInit {
 
   btn: boolean = false;
   constructor(
-    private router: Router
+    private router: Router,
+    public alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -42,7 +44,22 @@ export class UserInfoPage implements OnInit {
       this.btn = false;
     }
     else this.notOn = true;
-    
-    console.log("checked");
+  }
+  gotoUpgrade(){
+    console.log("gotoUpgrade");
+    this.router.navigateByUrl('account/user-info/upgrade');
+  }
+  // alert
+  async presentAlert(){
+    const alert = await this.alertController.create({
+      cssClass: 'logout-alert',
+      message: 'Do you want to log out account?',
+      buttons: ['yes', 'no']
+    });
+    await alert.present();
+  }
+
+  showAlert(){
+    this.presentAlert();
   }
 }

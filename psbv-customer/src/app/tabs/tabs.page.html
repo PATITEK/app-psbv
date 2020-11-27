@@ -1,16 +1,16 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="home">
+    <ion-tab-button tab="product-categories">
       <ion-icon name="home-outline"></ion-icon>
-      <ion-label>Product</ion-label>
+      <ion-label>Categories</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="product-categories">
+    <ion-tab-button tab="home">
       <ion-icon name="file-tray-outline"></ion-icon>
       <ion-label>Recommend</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="shopping-cart">
+    <ion-tab-button tab="shopping-cart" (click)="onGoToSpc()">
       <ion-icon name="cart-outline"></ion-icon>
       <ion-label>Cart</ion-label>
     </ion-tab-button>
