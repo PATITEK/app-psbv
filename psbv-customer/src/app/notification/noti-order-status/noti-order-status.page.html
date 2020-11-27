@@ -14,13 +14,13 @@
       <ion-item class="item__new-noti" lines="none" *ngFor="let item of Details">
         <ion-item class="item__wrapper" lines="none">
             <ion-label class="item__new-noti--cricle"></ion-label>
-            <img [src]="item.src" class="item__new-noti--image" [style.display]="{{ show }}" lines="none">
+            <img [src]="item.src" class="item__new-noti--image" lines="none">
             <span class="item__new-noti--text">
               <ion-label class="item__new-noti--title">{{item.title}}</ion-label>
               <span class="item__new-noti--des">{{item.des}}</span>
               <ion-label class="item__new-noti--time">
                   <ion-icon name="time-outline" class="item__new-noti--oclock"></ion-icon>
-                  {{item.day}}
+                  {{ item.day }}
                 </ion-label>
           </span>        
         </ion-item>
