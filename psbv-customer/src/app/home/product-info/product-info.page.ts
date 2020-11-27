@@ -24,6 +24,7 @@ export enum PERMISSION {
 })
 
 export class ProductInfoPage implements OnInit {
+ 
 
   product = {
     id: '',
@@ -34,7 +35,7 @@ export class ProductInfoPage implements OnInit {
     }
   }
   counter: number = 0;
-  permission: PERMISSION;
+  permission: PERMISSION = PERMISSION.GUEST;
 
   accessories: IAccessory[] = [
     {
@@ -156,7 +157,7 @@ export class ProductInfoPage implements OnInit {
   }
 
   checkGuestPermission(): boolean {
-    return this.permission === PERMISSION.GUEST;
+    return this.permission == PERMISSION.GUEST;
   }
 
   async presentToast() {

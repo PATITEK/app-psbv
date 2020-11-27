@@ -45,8 +45,10 @@ export class ProductDetailPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
-
     this.loading.present();
+  }
+
+  ionViewWillEnter() {
     this.route.queryParams.subscribe((params) => {
       this.permission = JSON.parse(params['permission']);
       this.productService.getProductDetail(JSON.parse(params['data']))
@@ -58,7 +60,12 @@ export class ProductDetailPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigateByUrl('/main/home/product-info');
+    this.router.navigate(['/main/home/product-info'], {
+      queryParams: {
+        data: JSON.stringify(this.product.id),
+        permission: JSON.stringify(this.permission)
+      }
+    });
   }
 
   download() {
@@ -74,7 +81,7 @@ export class ProductDetailPage implements OnInit {
   }
 
   checkStandardPermission(): boolean {
-    return this.permission === PERMISSION.STANDARD;
+    return this.permission == PERMISSION.STANDARD;
   }
 
 }

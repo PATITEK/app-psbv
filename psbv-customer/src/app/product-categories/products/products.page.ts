@@ -37,16 +37,15 @@ export class ProductsPage implements OnInit {
       this.route.queryParams.subscribe((params) => {
         this.productGroupService.getProductGroupDetail(JSON.parse(params['data']))
         .subscribe(data => {
-          for (let item of data.products) {
+          for (let item of data.product_group.products) {
             this.data.push(item);
           }
+          console.log(this.data);
           this.infinityScroll.complete();
           this.pageRequest.page++;
-  
-          // check max data
-          if (this.data.length >= data.meta.pagination.total_objects) {
-            this.infinityScroll.disabled = true;
-          }
+          // if (this.data.length >= data.meta.pagination.total_objects) {
+          //   this.infinityScroll.disabled = true;
+          // }
         });
       });
     }, 500);
@@ -61,13 +60,11 @@ export class ProductsPage implements OnInit {
   }
 
   goToNoti() {
-
   }
 
   goToUserInfo() {
     this.router.navigateByUrl('account/user-info');
   }
-
   goToDetail(item) {
     this.router.navigate(['/main/home/product-info'], {
       queryParams: {

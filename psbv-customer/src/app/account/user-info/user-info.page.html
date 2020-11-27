@@ -1,12 +1,12 @@
 <ion-header class="ion-padding" (click)="setFalse()">
-  <ion-icon name="chevron-back-outline" class="icon-back" routerLink="/main/home">
+  <ion-icon name="chevron-back-outline" class="icon-back" routerLink="/main/product-categories">
   </ion-icon>
 
   <div class="icon-more" (click) = "clicked()">
       <ion-img src="../../assets/more.svg"></ion-img>
       <div class="more-content"  *ngIf="btn" >
-        <span id="span1">Support</span>
-        <span id="span2">About</span>
+        <span id="span1" (click)="goToSupport()">Support</span>
+        <span id="span2" (click)="goToAbout()">About</span>
       </div>
   </div>
 </ion-header>
@@ -24,7 +24,7 @@
       <ion-label class="user-name__main">Hi buyer</ion-label>
       <ion-label class="user-name__sub">{{ checkStandardPermission() ? 'Standard' : 'Premium' }}</ion-label>
       <ion-label class="upgrade-btn" *ngIf="checkStandardPermission()">
-        <span (click)="upgradePremium()">Upgrade <ion-icon name="chevron-forward-outline"></ion-icon></span>
+        <span (click)="gotoUpgrade()">Upgrade <ion-icon name="chevron-forward-outline"></ion-icon></span>
       </ion-label>
     </ion-row>
   </ion-grid>
@@ -87,5 +87,5 @@
 
   </ion-header>
 
-  <ion-button class="btn-logout">Log Out</ion-button>
+  <ion-button class="btn-logout" (click)="showAlert()">Log Out</ion-button>
 </ion-content>

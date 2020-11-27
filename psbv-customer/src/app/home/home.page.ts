@@ -63,10 +63,10 @@ export class HomePage implements OnInit {
   }
 
   checkGuestPermission(): boolean {
-    return this.permission === PERMISSION.GUEST;
+    return this.permission == PERMISSION.GUEST;
   }
 
   checkStandardPermission(): boolean {
-    return this.permission === PERMISSION.STANDARD;
+    return this.permission == PERMISSION.STANDARD;
   }
 }
