@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/@app-core/http';
 
 @Component({
   selector: 'app-password-changed',
@@ -13,9 +16,60 @@ export class PasswordChangedPage implements OnInit {
   public showPassCurrent = false;
   public showPassNew = false;
   public showPassNewAgain = false;
+  formNewPass: FormGroup;
 
-  constructor() { }
+  error_messages = {
+    'newpassword': [
+      { type: 'required', message: 'password is required.' },
+      { type: 'minlength', message: 'min password length is ' },
+      { type: 'maxlength', message: 'max password length is 16' }
+    ],
+    'confirmpassword': [
+      { type: 'required', message: 'password is required.' },
+      { type: 'minlength', message:'min password length is 8' },
+      { type: 'maxlength', message: 'max password length is 16' }
+    ],
+    'currentpassword': [
+      { type: 'required', message: 'password is required.' },
+      
+    ],
+  }
 
+  constructor(
+    public formBuilder: FormBuilder, private authService: AuthService,private router: Router,
+  )
+   {
+    this.formNewPass = this.formBuilder.group({
+     
+      newpassword: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(16)
+      ])),
+      currentpassword: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(16)
+      ])),
+      confirmpassword: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(16)
+      ])),
+    }, { 
+      validators: this.password.bind(this)
+    });
+  }
+
+  password(formGroup: FormGroup) {
+    const np = formGroup.get('newpassword').value;
+    const cp = formGroup.get('confirmpassword').value;
+    if(np === cp)
+    return ""
+    else return {error: "Password not match"}
+  }
+ 
+  
   ngOnInit() {
   }
   showPasswordCurent(){
@@ -44,9 +98,5 @@ export class PasswordChangedPage implements OnInit {
     else {
       this.type3 ='password';
     }
-  }
-
-  openModal() {
-    
   }
 }

@@ -17,11 +17,22 @@ export class IntercepterService implements HttpInterceptor {
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const request = req.clone({
-      url: this.prepareUrl(req.url),
-      // withCredentials: false,
-      headers: req.headers.set('Authorization', localStorage.getItem('Authorization') || '').set('Accept', 'multipart/form-data'),
+    
+    var request = req.clone({
+      url: this.prepareUrl(req.url)
+
     });
+    if(localStorage.getItem('Authorization') !== null){
+      request = req.clone({
+        url: this.prepareUrl(req.url),
+        // withCredentials: false,
+        headers: req.headers.set('Authorization', localStorage.getItem('Authorization') || '').set('Accept', 'multipart/form-data'),
+      });
+    }
+    else {
+
+    }
+    console.log((request))
     return next.handle(request)
     .pipe(
       catchError((err) => {

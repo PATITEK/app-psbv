@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PERMISSION } from 'src/app/home/product-info/product-info.page';
 import { AlertController } from '@ionic/angular'
+import { AuthService } from 'src/app/@app-core/http';
 
 @Component({
   selector: 'app-user-info',
@@ -10,15 +11,16 @@ import { AlertController } from '@ionic/angular'
 })
 export class UserInfoPage implements OnInit {
   permission: PERMISSION = PERMISSION.STANDARD;
-
+  message: string;
   btn: boolean = false;
   constructor(
     private router: Router,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-
+     this.message = localStorage.getItem('fullname');
   }
 
   checkStandardPermission(): boolean {
@@ -28,10 +30,6 @@ export class UserInfoPage implements OnInit {
   upgradePremium(): void {
     this.router.navigateByUrl('account/user-info/upgrade');
     console.log("checked");
-  }
-
-  goToPasswordChanged(): void {
-    this.router.navigateByUrl('account/password-changed')
   }
   notOn:boolean = true;
   clicked(){
@@ -46,15 +44,35 @@ export class UserInfoPage implements OnInit {
     else this.notOn = true;
   }
   gotoUpgrade(){
-    console.log("gotoUpgrade");
     this.router.navigateByUrl('account/user-info/upgrade');
   }
+  gotoChangeName(){
+    this.router.navigateByUrl('account/change-name');
+  }
+  gotoPasswordChange() {
+    this.router.navigateByUrl('account/password-changed');
+  }
+  
   // alert
   async presentAlert(){
     const alert = await this.alertController.create({
       cssClass: 'logout-alert',
       message: 'Do you want to log out account?',
-      buttons: ['yes', 'no']
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+           this.authService.logout();
+          }
+        },
+        {
+          text: 'No',
+          handler: (  ) => {
+            return;
+          }
+        },
+
+      ]
     });
     await alert.present();
   }
