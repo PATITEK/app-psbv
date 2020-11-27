@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { NotiOrderStatusPageRoutingModule } from './noti-order-status-routing.module';
 
 import { NotiOrderStatusPage } from './noti-order-status.page';
+import { NotiDirective } from './noti.directive';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { NotiOrderStatusPage } from './noti-order-status.page';
     IonicModule,
     NotiOrderStatusPageRoutingModule
   ],
-  declarations: [NotiOrderStatusPage]
+  declarations: [NotiOrderStatusPage, NotiDirective]
 })
 export class NotiOrderStatusPageModule {}

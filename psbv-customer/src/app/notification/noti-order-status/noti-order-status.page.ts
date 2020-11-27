@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Directive, ElementRef } from '@angular/core';
 
 export interface IDetails {
   title: string;
@@ -11,10 +11,12 @@ export interface IDetails {
   templateUrl: './noti-order-status.page.html',
   styleUrls: ['./noti-order-status.page.scss'],
 })
-
+@Directive({
+  selector: 'appNoti'
+})
 export class NotiOrderStatusPage implements OnInit {
 
-  constructor() { }
+  constructor(private el: ElementRef) { }
 
   Details: IDetails[] = [
     {
@@ -64,5 +66,5 @@ export class NotiOrderStatusPage implements OnInit {
 
   ngOnInit() {
   }
-
+  
 }
