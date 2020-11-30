@@ -26,7 +26,7 @@ export class ProductsPage implements OnInit {
     private route: ActivatedRoute,
     private productGroupService: ProductGroupsService,
     private loading: LoadingService
-  ) { }
+  ) {}
 
   ngOnInit() {
     const tabs = document.querySelectorAll('ion-tab-bar');
@@ -90,7 +90,7 @@ export class ProductsPage implements OnInit {
   }
 
   goToDetail(item) {
-    this.router.navigate(['/main/home/product-info'], {
+    this.router.navigate(['main/product-categories/products/product-info'], {
       queryParams: {
         id: JSON.stringify(item.id),
         permission: JSON.stringify(this.permission)

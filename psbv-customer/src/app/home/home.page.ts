@@ -20,18 +20,22 @@ export class HomePage implements OnInit {
   }
   data = [];
   permission: PERMISSION = PERMISSION.GUEST;
+  url;
 
   constructor(
     private router: Router,
     private productService: ProductsService,
     private loading: LoadingService
-  ) { }
+  ) { 
+    this.url = this.router.url;
+  }
 
   goToDetail(item) {
     this.router.navigate(['/main/home/product-info'], {
       queryParams: {
         id: JSON.stringify(item.id),
-        permission: JSON.stringify(this.permission)
+        permission: JSON.stringify(this.permission),
+        url: JSON.stringify(2)
       }
     });
   }

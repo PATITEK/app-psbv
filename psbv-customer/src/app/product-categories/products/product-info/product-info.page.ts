@@ -36,7 +36,6 @@ export class ProductInfoPage implements OnInit {
   }
   counter: number = 0;
   permission: PERMISSION = PERMISSION.GUEST;
-  backUrl;
 
   accessories: IAccessory[] = [
     {
@@ -76,7 +75,6 @@ export class ProductInfoPage implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.permission = JSON.parse(params['permission']);
-      this.backUrl = JSON.parse(params['url']);
       this.productService.getProductDetail(JSON.parse(params['id']))
         .subscribe(data => {
           this.product = data.product;
@@ -94,14 +92,10 @@ export class ProductInfoPage implements OnInit {
   }
 
   goBack(): void {
-    if (this.backUrl == 1) {
-      this.router.navigateByUrl('main/product-categories/products');
-    } else {
-      this.router.navigateByUrl('main/home');
-    }
+    this.router.navigateByUrl('main/product-categories/products');
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'flex';
+      tabs[key].style.display = 'none';
     });
   }
 

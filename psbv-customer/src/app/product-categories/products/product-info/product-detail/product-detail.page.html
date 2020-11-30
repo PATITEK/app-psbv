@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-button fill="clear" size="small" class="back-button" (click)="goBack()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-card-title>Detail product</ion-card-title>
+</ion-header>
+
+<ion-content>
+  <ion-card class="product">
+    <ion-card-content>
+      <div class="img-box">
+        <ion-img [src]="product.thumb_image.url"></ion-img>
+        <ion-button class="price" shape="round" size="small" disabled *ngIf="product.id != ''">
+          <!-- {{ checkStandardPermission() ? product.pricing_services[0].price : product.pricing_services[1].price }} -->
+          5
+        </ion-button>
+      </div>
+
+      <ion-card-subtitle>{{ product.name }}</ion-card-subtitle>
+      <ion-label>{{ product.short_description }}</ion-label>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="info">
+    <ion-card-subtitle>Info</ion-card-subtitle>
+    <p class="content">{{ product.description }}</p>
+
+    <div class="download-block" [style.visibility]="checkStandardPermission() ? 'hidden' : 'visible'">
+      <ion-card-subtitle>Technical drawings</ion-card-subtitle>
+      <a href="" (click)="download()">https://docs.google.com/spreadsheets/d</a>
+      <ion-icon name="download-outline" (click)="download()"></ion-icon>
+    </div>
+
+    <p class="noti ion-text-center ion-padding">
+      We will show detail accessories of product after you receive the item!<br>
+      Thank you!
+    </p>
+
+    <ion-button expand="block" (click)="goBack()">Choose another accessories</ion-button>
+  </ion-card>
+</ion-content>
