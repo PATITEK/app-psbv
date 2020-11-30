@@ -14,6 +14,11 @@ const routes: Routes = [
   {
     path: 'order-history',
     loadChildren: () => import('./order-history/order-history.module').then(m => m.OrderHistoryPageModule)
+  },
+  {
+    path: '',
+    redirectTo: '/order/order-list',
+    pathMatch: 'full'
   }
 ]
 

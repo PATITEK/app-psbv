@@ -4,10 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { AccountPage } from './account.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: AccountPage
-  },
+  // {
+  //   path: '',
+  //   component: AccountPage
+  // },
   {
     path: 'user-info',
     loadChildren: () => import('./user-info/user-info.module').then( m =>m.UserInfoPageModule )
@@ -15,7 +15,8 @@ const routes: Routes = [
   {
     path: 'password-changed',
     loadChildren: () => import('./password-changed/password-changed.module').then( m => m.PasswordChangedPageModule)
-  },  {
+  },
+  {
     path: 'change-name',
     loadChildren: () => import('./change-name/change-name.module').then( m => m.ChangeNamePageModule)
   },

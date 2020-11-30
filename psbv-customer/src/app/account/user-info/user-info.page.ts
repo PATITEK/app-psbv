@@ -13,6 +13,8 @@ export class UserInfoPage implements OnInit {
   permission: PERMISSION = PERMISSION.STANDARD;
   message: string;
   btn: boolean = false;
+  notOn: boolean = true;
+
   constructor(
     private router: Router,
     public alertController: AlertController,
@@ -24,28 +26,31 @@ export class UserInfoPage implements OnInit {
   }
 
   checkStandardPermission(): boolean {
-    return this.permission === PERMISSION.STANDARD;
+    return this.permission == PERMISSION.STANDARD;
   }
 
   upgradePremium(): void {
     this.router.navigateByUrl('account/user-info/upgrade');
     console.log("checked");
   }
-  notOn:boolean = true;
-  clicked(){
+
+  goToPasswordChanged(): void {
+    this.router.navigateByUrl('account/password-changed')
+  }
+
+  clicked() {
     console.log("clicked");
     this.btn = true;
     this.notOn = false;
   }
-  setFalse(){
-    if(this.btn == true && this.notOn == true){
+
+  setFalse() {
+    if (this.btn == true && this.notOn == true) {
       this.btn = false;
     }
     else this.notOn = true;
   }
-  gotoUpgrade(){
-    this.router.navigateByUrl('account/user-info/upgrade');
-  }
+
   gotoChangeName(){
     this.router.navigateByUrl('account/change-name');
   }
@@ -53,8 +58,21 @@ export class UserInfoPage implements OnInit {
     this.router.navigateByUrl('account/password-changed');
   }
   
+
+  gotoUpgrade() {
+    this.router.navigateByUrl('account/user-info/upgrade');
+  }
+
+  goToSupport() {
+    this.router.navigateByUrl('account/user-info/support');
+  }
+
+  goToAbout() {
+    
+  }
+
   // alert
-  async presentAlert(){
+  async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'logout-alert',
       message: 'Do you want to log out account?',
@@ -77,7 +95,10 @@ export class UserInfoPage implements OnInit {
     await alert.present();
   }
 
-  showAlert(){
+  showAlert() {
     this.presentAlert();
+  }
+  gotoSupport(){
+    this.router.navigateByUrl('account/support');
   }
 }

@@ -36,29 +36,29 @@ export class LoginPage implements OnInit {
       this.type2 = 'password';
     }
   }
-  // async presentAlert(text: string) {
-  //   const alert = await this.alertCtrl.create({
-  //     header: 'Warning',
-  //     message: text,
-  //     buttons: [{
-  //       text:'Agree',
-  //       role:'ok'
-  //     }]
-  //   });
-  //   await alert.present();
-  // }
+  async presentAlert(text: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Warning',
+      message: text,
+      buttons: [{
+        text:'Agree',
+        role:'ok'
+      }]
+    });
+    await alert.present();
+  }
    async onSubmit() {
-    // this.showSpinner = true;
-    // if(this.profileForm.value.email === ''){
-    //   this.showSpinner = false;
-    //   this.presentAlert('Please enter your email');
-    // }else if(this.profileForm.value.password === ''){
-    //   this.showSpinner = false;
-    //   this.presentAlert('Please enter your password');
-    // }
-   
+    this.showSpinner = true;
+    if(this.profileForm.value.email === ''){
+      this.showSpinner = false;
+      this.presentAlert('Please enter your email');
+    }else if(this.profileForm.value.password === ''){
+      this.showSpinner = false;
+      this.presentAlert('Please enter your password');
+    }
     this.authService.login(this.profileForm.value).subscribe((data: any) => {
     this.showSpinner = false;
+    console.log(data);
     localStorage.setItem('Authorization', data.token);
     localStorage.setItem('fullname', data.fullname);
     

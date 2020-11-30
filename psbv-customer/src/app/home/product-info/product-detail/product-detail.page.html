@@ -11,7 +11,8 @@
       <div class="img-box">
         <ion-img [src]="product.thumb_image.url"></ion-img>
         <ion-button class="price" shape="round" size="small" disabled *ngIf="product.id != ''">
-          {{ checkStandardPermission() ? product.pricing_services[0].price : product.pricing_services[1].price }}
+          <!-- {{ checkStandardPermission() ? product.pricing_services[0].price : product.pricing_services[1].price }} -->
+          5
         </ion-button>
       </div>
 

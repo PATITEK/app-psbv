@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/@app-core/http';
 
 @Component({
@@ -15,13 +16,17 @@ export class ChangeNamePage implements OnInit {
   formchangename = new FormGroup({
     rename: new FormControl('',[Validators.required], ),
   });
-  constructor(private authService: AuthService ) { }
+  public showSpinner = false;
+  constructor(private authService: AuthService,  public alertCtrl: AlertController ) { }
  
   ngOnInit() {
  
   }
   onSubmit(f: NgForm) {
+    this.showSpinner = true;
+    
     console.log(f.value); 
     console.log(f.valid); 
+
   }
 }

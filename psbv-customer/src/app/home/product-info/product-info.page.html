@@ -23,7 +23,7 @@
     </ion-fab-button>
   </ion-card>
 
-  <ion-card class="accessories" *ngIf>
+  <ion-card class="accessories" *ngIf="!checkGuestPermission()">
     <ion-card-header class="ion-text-center">
       <span *ngIf="!checkGuestPermission()">Add product<br> with accessories below</span>
     </ion-card-header>

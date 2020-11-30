@@ -1,12 +1,12 @@
 <ion-header class="ion-padding" (click)="setFalse()">
-  <ion-icon name="chevron-back-outline" class="icon-back" routerLink="/main/home">
+  <ion-icon name="chevron-back-outline" class="icon-back" routerLink="/main/product-categories">
   </ion-icon>
 
   <div class="icon-more" (click) = "clicked()">
       <ion-img src="../../assets/more.svg"></ion-img>
       <div class="more-content"  *ngIf="btn" >
-        <span id="span1">Support</span>
-        <span id="span2">About</span>
+        <span id="span1" (click)="goToSupport()">Support</span>
+        <span id="span2" (click)="goToAbout()">About</span>
       </div>
   </div>
 </ion-header>

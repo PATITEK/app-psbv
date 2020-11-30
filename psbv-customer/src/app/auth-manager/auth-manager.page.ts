@@ -12,10 +12,7 @@ export class AuthManagerPage implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.gotoLogin();
+      this.router.navigateByUrl('/main/product-categories');
     }, 2000)
-  }
-  gotoLogin(){
-    this.router.navigateByUrl('/main/product-categories');
   }
 }

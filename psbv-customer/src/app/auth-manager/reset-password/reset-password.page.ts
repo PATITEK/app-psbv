@@ -19,22 +19,22 @@ export class ResetPasswordPage implements OnInit {
 
   error_messages = {
     'code1': [
-      { type: 'required', message: 'password is required.' },
+      { type: 'required', message: 'Password is required.' },
     ],
     'code2': [
-      { type: 'required', message: 'password is required.' },
+      { type: 'required', message: 'Password is required.' },
     ],
     'code3': [
-      { type: 'required', message: 'password is required.' },
+      { type: 'required', message: 'Password is required.' },
     ],
     'code4': [
-      { type: 'required', message: 'password is required.' },
+      { type: 'required', message: 'Password is required.' },
     ],
     'code5': [
-      { type: 'required', message: 'password is required.' },
+      { type: 'required', message: 'Password is required.' },
     ],
     'code6': [
-      { type: 'required', message: 'password is required.' },
+      { type: 'required', message: 'Password is required.' },
     ],
   }
   constructor(public formBuilder: FormBuilder,private router: Router, private authService: AuthService

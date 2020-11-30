@@ -20,27 +20,25 @@ export class PasswordChangedPage implements OnInit {
 
   error_messages = {
     'newpassword': [
-      { type: 'required', message: 'password is required.' },
-      { type: 'minlength', message: 'min password length is ' },
-      { type: 'maxlength', message: 'max password length is 16' }
+      { type: 'required', message: '  Password is required.' },
+      { type: 'minlength', message: 'Min password length is ' },
+      { type: 'maxlength', message: 'Max password length is 16' }
     ],
     'confirmpassword': [
-      { type: 'required', message: 'password is required.' },
-      { type: 'minlength', message:'min password length is 8' },
-      { type: 'maxlength', message: 'max password length is 16' }
+      { type: 'required', message: 'Password is required.' },
+      { type: 'minlength', message: 'Min password length is 8' },
+      { type: 'maxlength', message: 'Max password length is 16' }
     ],
     'currentpassword': [
-      { type: 'required', message: 'password is required.' },
-      
+      { type: 'required', message: 'Password is required.' },
+
     ],
   }
-
   constructor(
-    public formBuilder: FormBuilder, private authService: AuthService,private router: Router,
-  )
-   {
+    public formBuilder: FormBuilder, private authService: AuthService, private router: Router,
+  ) {
     this.formNewPass = this.formBuilder.group({
-     
+
       newpassword: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(8),
@@ -56,7 +54,7 @@ export class PasswordChangedPage implements OnInit {
         Validators.minLength(8),
         Validators.maxLength(16)
       ])),
-    }, { 
+    }, {
       validators: this.password.bind(this)
     });
   }
@@ -64,39 +62,38 @@ export class PasswordChangedPage implements OnInit {
   password(formGroup: FormGroup) {
     const np = formGroup.get('newpassword').value;
     const cp = formGroup.get('confirmpassword').value;
-    if(np === cp)
-    return ""
-    else return {error: "Password not match"}
+    if (np === cp)
+      return ""
+    else return { error: "Password not match" }
   }
- 
-  
   ngOnInit() {
+    // if((this.formNewPass.get('currentpassword').hasError(error.type) && (this.formNewPass.get('currentpassword').dirty || this.formNewPass.get('currentpassword').touched))
   }
-  showPasswordCurent(){
+  showPasswordCurent() {
     this.showPassCurrent = !this.showPassCurrent;
-    if(this.showPassCurrent){
+    if (this.showPassCurrent) {
       this.type = 'text';
     }
     else {
-      this.type ='password';
+      this.type = 'password';
     }
   }
-  showPasswordNew(){
+  showPasswordNew() {
     this.showPassNew = !this.showPassNew;
-    if(this.showPassNew){
+    if (this.showPassNew) {
       this.type2 = 'text';
     }
     else {
-      this.type2 ='password';
+      this.type2 = 'password';
     }
   }
-  showPasswordNewAgain(){
+  showPasswordNewAgain() {
     this.showPassNewAgain = !this.showPassNewAgain;
-    if(this.showPassNewAgain){
+    if (this.showPassNewAgain) {
       this.type3 = 'text';
     }
     else {
-      this.type3 ='password';
+      this.type3 = 'password';
     }
   }
 }

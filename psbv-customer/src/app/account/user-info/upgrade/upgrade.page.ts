@@ -11,4 +11,12 @@ export class UpgradePage implements OnInit {
 
   ngOnInit() {
   }
+
+  setFalse() {
+
+  }
+
+  showAlert() {
+    
+  }
 }

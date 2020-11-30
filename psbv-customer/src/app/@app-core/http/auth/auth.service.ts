@@ -92,7 +92,7 @@ export class AuthService {
     localStorage.clear();
     this.storage.clear();
     
-    this.router.navigateByUrl('/auth/login');
+    this.router.navigateByUrl('/main/home');
   }
   checkLogin() {
     const token = localStorage.getItem('Authorization');

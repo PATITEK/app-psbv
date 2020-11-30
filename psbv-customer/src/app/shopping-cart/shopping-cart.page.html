@@ -35,7 +35,7 @@
       </ion-card>
       <ion-item class="section__button" no-padding lines="none" position="fixed">
         <ion-img src="assets/shopping-cart/minus.svg" class="section__button__minus" (click)="minus(item)"></ion-img>
-          {{ item.counter }}
+        <span class="item-counter"> {{ item.counter }} </span>
         <ion-img src="assets/shopping-cart/add.svg" class="section__button__add" (click)="add(item)"></ion-img>
       </ion-item>
     </div>

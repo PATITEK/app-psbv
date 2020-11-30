@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { IPageRequest, ProductGroupsService } from 'src/app/@app-core/http';
+import { LoadingService } from 'src/app/@app-core/loading.service';
+import { PERMISSION } from 'src/app/home/product-info/product-info.page';
 
 @Component({
   selector: 'app-products',
@@ -13,15 +15,17 @@ export class ProductsPage implements OnInit {
 
   pageRequest: IPageRequest = {
     page: 1,
-    per_page: 6,
+    per_page: 10,
     total_objects: 20
   }
   data = [];
+  permission: PERMISSION = PERMISSION.GUEST;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private productGroupService: ProductGroupsService
+    private productGroupService: ProductGroupsService,
+    private loading: LoadingService
   ) { }
 
   ngOnInit() {
@@ -29,25 +33,45 @@ export class ProductsPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+    this.loading.present();
     this.loadData();
+  }
+
+  ngViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'none';
+    });
   }
 
   loadData() {
     setTimeout(() => {
-      this.route.queryParams.subscribe((params) => {
-        this.productGroupService.getProductGroupDetail(JSON.parse(params['data']))
-        .subscribe(data => {
-          for (let item of data.products) {
-            this.data.push(item);
-          }
-          this.infinityScroll.complete();
-          this.pageRequest.page++;
-          if (this.data.length >= data.meta.pagination.total_objects) {
-            this.infinityScroll.disabled = true;
-          }
-        });
-      });
-    }, 500);
+      this.route.queryParams.subscribe(params => {
+        this.permission = JSON.parse(params['permission']);
+        this.productGroupService.getProductGroupDetail(JSON.parse(params['id']))
+          .subscribe(data => {
+            for (let item of data.products) {
+              this.data.push(item);
+            }
+
+            this.infinityScroll.complete();
+            this.loading.dismiss();
+            this.pageRequest.page++;
+
+            if (this.data.length >= data.meta.pagination.total_objects) {
+              this.infinityScroll.disabled = true;
+            }
+          })
+      })
+    }, 50)
+  }
+
+  checkGuestPermission(): boolean {
+    return this.permission == PERMISSION.GUEST;
+  }
+
+  checkStandardPermission(): boolean {
+    return this.permission == PERMISSION.STANDARD;
   }
 
   goBack(): void {
@@ -64,10 +88,12 @@ export class ProductsPage implements OnInit {
   goToUserInfo() {
     this.router.navigateByUrl('account/user-info');
   }
+
   goToDetail(item) {
     this.router.navigate(['/main/home/product-info'], {
       queryParams: {
-        data: JSON.stringify(item.id)
+        id: JSON.stringify(item.id),
+        permission: JSON.stringify(this.permission)
       }
     });
   }

@@ -19,15 +19,12 @@ export class HomePage implements OnInit {
     total_objects: 20
   }
   data = [];
-  permission: PERMISSION = PERMISSION.STANDARD;
-  isLoading = false;
-
+  permission: PERMISSION = PERMISSION.GUEST;
 
   constructor(
     private router: Router,
     private productService: ProductsService,
-    private loading: LoadingService,
-    private auth: AuthService
+    private loading: LoadingService
   ) { }
 
   goToDetail(item) {
@@ -63,10 +60,10 @@ export class HomePage implements OnInit {
   }
 
   checkGuestPermission(): boolean {
-    return this.permission === PERMISSION.GUEST;
+    return this.permission == PERMISSION.GUEST;
   }
 
   checkStandardPermission(): boolean {
-    return this.permission === PERMISSION.STANDARD;
+    return this.permission == PERMISSION.STANDARD;
   }
 }

@@ -29,7 +29,7 @@ export class ProductDetailPage implements OnInit {
       }
     ]
   }
-  permission: PERMISSION;
+  permission: PERMISSION = PERMISSION.GUEST;
 
   constructor(
     private router: Router,
@@ -45,13 +45,16 @@ export class ProductDetailPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
-
     this.loading.present();
+  }
+
+  ionViewWillEnter() {
     this.route.queryParams.subscribe((params) => {
       this.permission = JSON.parse(params['permission']);
-      this.productService.getProductDetail(JSON.parse(params['data']))
+      this.productService.getProductDetail(JSON.parse(params['id']))
         .subscribe(data => {
           this.product = data.product;
+          console.log('load data');
           this.loading.dismiss();
         });
     });
@@ -74,7 +77,7 @@ export class ProductDetailPage implements OnInit {
   }
 
   checkStandardPermission(): boolean {
-    return this.permission === PERMISSION.STANDARD;
+    return this.permission == PERMISSION.STANDARD;
   }
 
 }
