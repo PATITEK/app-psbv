@@ -20,13 +20,14 @@ export class ProductsPage implements OnInit {
   }
   data = [];
   permission: PERMISSION = PERMISSION.GUEST;
+  title = '';
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private productGroupService: ProductGroupsService,
     private loading: LoadingService
-  ) {}
+  ) { }
 
   ngOnInit() {
     const tabs = document.querySelectorAll('ion-tab-bar');
@@ -48,7 +49,8 @@ export class ProductsPage implements OnInit {
     setTimeout(() => {
       this.route.queryParams.subscribe(params => {
         this.permission = JSON.parse(params['permission']);
-        this.productGroupService.getProductGroupDetail(JSON.parse(params['id']))
+        this.title = JSON.parse(params['name']);
+        this.productGroupService.getProductGroupDetail(JSON.parse(params['id']), this.pageRequest)
           .subscribe(data => {
             for (let item of data.products) {
               this.data.push(item);
@@ -83,6 +85,7 @@ export class ProductsPage implements OnInit {
   }
 
   goToNoti() {
+    this.router.navigateByUrl('notification');
   }
 
   goToUserInfo() {

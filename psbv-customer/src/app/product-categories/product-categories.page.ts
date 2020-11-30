@@ -62,7 +62,8 @@ export class ProductCategoriesPage implements OnInit {
     this.router.navigate(['main/product-categories/products'], {
       queryParams: {
         id: JSON.stringify(item.id),
-        permission: JSON.stringify(this.permission)
+        permission: JSON.stringify(this.permission),
+        name: JSON.stringify(item.name)
       }
     });
   }

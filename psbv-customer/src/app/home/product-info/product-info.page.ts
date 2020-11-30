@@ -132,9 +132,13 @@ export class ProductInfoPage implements OnInit {
 
   addProduct(): void {
     // add product to cart
+    const data = {
+      checkBack: true
+    }
+
     this.router.navigate(['main/shopping-cart'], {
       queryParams: {
-        data: JSON.stringify(true),
+        data: JSON.stringify(data),
         accessoryIds: JSON.stringify(
           this.accessoryIds.reduce((acc, cur) => {
             if (cur.added) {

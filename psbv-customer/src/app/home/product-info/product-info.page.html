@@ -40,7 +40,7 @@
         <ion-row *ngFor="let accessory of accessories" [style.background]="getItem(accessory).background"
           (click)="toggleItem(accessory)">
           <ion-col size="4">
-            <ion-img src="https://dummyimage.com/600x700.jpg"></ion-img>
+            <ion-img [src]="accessory.thumb_image.url"></ion-img>
           </ion-col>
           <ion-col size="8">
             <div class="content-block" [style.color]="getItem(accessory).color">

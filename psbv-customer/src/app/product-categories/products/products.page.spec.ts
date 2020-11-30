@@ -1,19 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
 
+import { ProductsPage } from './products.page';
 
-@Component({
-  selector: 'app-app-products',
-  templateUrl: './app-products.page.html',
-  styleUrls: ['./app-products.page.scss'],
-})
-export class ProductsPage implements OnInit {
+describe('ShoppingCartPage', () => {
+  let component: ProductsPage;
+  let fixture: ComponentFixture<ProductsPage>;
 
-  constructor(private router: Router) { }
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ ProductsPage ],
+      imports: [IonicModule.forRoot()]
+    }).compileComponents();
 
-  ngOnInit() {
-  }
-  gotodetail(){
-    this.router.navigateByUrl('main/app-products/products');
-  }
-}
+    fixture = TestBed.createComponent(ProductsPage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

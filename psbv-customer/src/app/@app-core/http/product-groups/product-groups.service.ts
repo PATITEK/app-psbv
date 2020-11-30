@@ -22,8 +22,8 @@ export class ProductGroupsService {
       catchError((errorRes) => { throw errorRes.error; }));
   }
 
-  public getProductGroupDetail(id: string) {
-    return this.http.get<any>(`${APICONFIG.PRODUCT_GROUP.GETDETAIL(id)}`).pipe(
+  public getProductGroupDetail(id: string, request: IPageRequest) {
+    return this.http.get<any>(`${APICONFIG.PRODUCT_GROUP.GETDETAIL(id)}?${(requestQuery(request))}`).pipe(
       map((result) => {
         return result;
       }),

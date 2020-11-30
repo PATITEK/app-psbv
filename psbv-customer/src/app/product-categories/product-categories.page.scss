@@ -15,8 +15,8 @@ ion-content {
   overflow: hidden;
   background-color: white;
   z-index: 11;
-  max-height: 614px;
   border-bottom: 0;
+  height: calc(100% - 135px);
 }
 
 ion-grid {

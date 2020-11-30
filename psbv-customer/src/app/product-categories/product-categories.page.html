@@ -4,15 +4,15 @@
   <ion-grid>
     <ion-row *ngFor="let item of data; let i = index">
       <ion-col size="4" (click)="goToDetail(data[i])" *ngIf="i % 3 == 0">
-        <ion-img src="https://dummyimage.com/600x600.jpg"></ion-img>
+        <ion-img [src]="data[i].thumb_image.url"></ion-img>
         <span>{{ data[i].name }}</span>
       </ion-col>
       <ion-col size="4" (click)="goToDetail(data[i + 1])" *ngIf="i % 3 == 0 && i < data.length - 1">
-        <ion-img src="https://dummyimage.com/600x600.jpg"></ion-img>
+        <ion-img [src]="data[i + 1].thumb_image.url"></ion-img>
         <span>{{ data[i + 1].name }}</span>
       </ion-col>
       <ion-col size="4" (click)="goToDetail(data[i + 2])" *ngIf="i % 3 == 0 && i < data.length - 2">
-        <ion-img src="https://dummyimage.com/600x600.jpg"></ion-img>
+        <ion-img [src]="data[i + 2].thumb_image.url"></ion-img>
         <span>{{ data[i + 2].name }}</span>
       </ion-col>
     </ion-row>

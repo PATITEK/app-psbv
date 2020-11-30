@@ -65,10 +65,15 @@ export class ProductInfoPage implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigateByUrl('main/home');
+    this.router.navigate(['main/product-categories/products'], {
+      queryParams: {
+        id: JSON.stringify(this.product.id),
+        permission: JSON.stringify(this.permission)
+      }
+    })
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'flex';
+      tabs[key].style.display = 'none';
     });
   }
 
@@ -76,10 +81,9 @@ export class ProductInfoPage implements OnInit {
     if (this.checkGuestPermission()) {
       this.router.navigateByUrl('/auth/login');
     } else {
-      this.router.navigate(['/main/home/product-info/product-detail'], {
+      this.router.navigate(['main/product-categories/products/product-info/product-detail'], {
         queryParams: {
-          id: JSON.stringify(this.product.id),
-          permission: JSON.stringify(this.permission)
+          id: JSON.stringify(this.product.id)
         }
       });
     }
@@ -132,9 +136,12 @@ export class ProductInfoPage implements OnInit {
 
   addProduct(): void {
     // add product to cart
+    const data = {
+      checkBack: true
+    }
     this.router.navigate(['main/shopping-cart'], {
       queryParams: {
-        data: JSON.stringify(true),
+        data: JSON.stringify(data),
         accessoryIds: JSON.stringify(
           this.accessoryIds.reduce((acc, cur) => {
             if (cur.added) {
