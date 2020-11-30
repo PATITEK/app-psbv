@@ -47,13 +47,14 @@ export class ProductDetailPage implements OnInit {
       this.productService.getProductDetail(JSON.parse(params['id']))
         .subscribe(data => {
           this.product = data.product;
+          console.log('load data');
           this.loading.dismiss();
         });
     });
   }
 
   goBack() {
-    this.router.navigateByUrl('/main/home/product-info');
+    this.router.navigateByUrl('main/product-categories/products/product-info');
   }
 
   download() {

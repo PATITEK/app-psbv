@@ -2,7 +2,7 @@
   <ion-button fill="clear" size="small" class="back-button" (click)="goBack()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-card-title>Name category</ion-card-title>
+  <ion-card-title>{{ title }}</ion-card-title>
 
   <ion-item-group>
     <ion-icon name="notifications-outline" class="header__icon header__icon-noti" (click)="goToNoti()"></ion-icon>
@@ -20,7 +20,7 @@
             {{ data[i].name }}
           </ion-label>
           <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-            {{ checkStandardPermission() ? data[i].pricing_services[0].price : data[i].pricing_services[1].price }}
+            {{ data[i].price }}
           </ion-label>
         </ion-item-group>
       </ion-col>
@@ -31,7 +31,7 @@
             {{ data[i + 1].name }}
           </ion-label>
           <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-            {{ checkStandardPermission() ? data[i].pricing_services[0].price : data[i].pricing_services[1].price }}
+            {{ data[i + 1].name }}
           </ion-label>
         </ion-item-group>
       </ion-col>

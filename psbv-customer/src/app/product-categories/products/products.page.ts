@@ -20,6 +20,7 @@ export class ProductsPage implements OnInit {
   }
   data = [];
   permission: PERMISSION = PERMISSION.GUEST;
+  title = '';
 
   constructor(
     private router: Router,
@@ -48,7 +49,8 @@ export class ProductsPage implements OnInit {
     setTimeout(() => {
       this.route.queryParams.subscribe(params => {
         this.permission = JSON.parse(params['permission']);
-        this.productGroupService.getProductGroupDetail(JSON.parse(params['id']))
+        this.title = JSON.parse(params['name']);
+        this.productGroupService.getProductGroupDetail(JSON.parse(params['id']), this.pageRequest)
           .subscribe(data => {
             for (let item of data.products) {
               this.data.push(item);
@@ -83,6 +85,7 @@ export class ProductsPage implements OnInit {
   }
 
   goToNoti() {
+    this.router.navigateByUrl('notification');
   }
 
   goToUserInfo() {
@@ -90,7 +93,7 @@ export class ProductsPage implements OnInit {
   }
 
   goToDetail(item) {
-    this.router.navigate(['/main/home/product-info'], {
+    this.router.navigate(['main/product-categories/products/product-info'], {
       queryParams: {
         id: JSON.stringify(item.id),
         permission: JSON.stringify(this.permission)

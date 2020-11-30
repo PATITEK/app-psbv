@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { AuthService, IPageRequest, ProductsService } from '../@app-core/http';
+import { IPageRequest, ProductsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 import { PERMISSION } from './product-info/product-info.page';
 
@@ -19,13 +19,13 @@ export class HomePage implements OnInit {
     total_objects: 20
   }
   data = [];
-  permission: PERMISSION = PERMISSION.GUEST;
+  permission: PERMISSION = PERMISSION.STANDARD;
 
   constructor(
     private router: Router,
     private productService: ProductsService,
     private loading: LoadingService
-  ) { }
+  ) {}
 
   goToDetail(item) {
     this.router.navigate(['/main/home/product-info'], {

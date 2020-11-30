@@ -26,12 +26,19 @@ export const APICONFIG = {
     EDIT: (id) => `/app/product_groups/${id}`,
     DELETE: (id) => `/app/product_groups/${id}`,
   },
-PRODUCTS: {
+  PRODUCTS: {
     GET: `/app/products`,
     GETDETAIL: (id) => `/app/products/${id}`,
     CREATE: `/app/products`,
     EDIT: (id) => `/app/products/${id}`,
     DELETE: (id) => `/app/products/${id}`,
+  },
+  ACCESSORIES: {
+    GET: `/app/accessories`,
+    GET_DETAIL: (id) => `/app/accessories/${id}`,
+    CREATE: '/app/accessories',
+    EDIT: (id) => `/app/accessories${id}`,
+    DELETE: (id) => `/app/accessories${id}`
   }
 };
 
