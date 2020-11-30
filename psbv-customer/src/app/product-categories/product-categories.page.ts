@@ -21,7 +21,7 @@ export class ProductCategoriesPage implements OnInit {
     per_page: 12,
     total_objects: 1
   }
-  permission: PERMISSION = PERMISSION.GUEST;
+  permission: PERMISSION = PERMISSION.STANDARD;
 
   constructor(
     private router: Router,

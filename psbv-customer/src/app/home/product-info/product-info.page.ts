@@ -1,15 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
-import { ProductsService } from 'src/app/@app-core/http';
+import { IonInfiniteScroll } from '@ionic/angular';
+import { AccessoriesService, IPageRequest, ProductsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
-
-export interface IAccessory {
-  src: string;
-  name: string;
-  desc: string;
-  isAdded: boolean;
-}
 
 export enum PERMISSION {
   GUEST,
@@ -24,8 +17,16 @@ export enum PERMISSION {
 })
 
 export class ProductInfoPage implements OnInit {
- 
+  @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
 
+  pageRequest: IPageRequest = {
+    page: 1,
+    per_page: 6,
+    total_objects: 20
+  }
+  counter: number = 0;
+  permission: PERMISSION = PERMISSION.GUEST;
+  accessories = [];
   product = {
     id: '',
     name: ' ',
@@ -34,56 +35,26 @@ export class ProductInfoPage implements OnInit {
       url: ''
     }
   }
-  counter: number = 0;
-  permission: PERMISSION = PERMISSION.GUEST;
-  backUrl;
-
-  accessories: IAccessory[] = [
-    {
-      src: 'http://lorempixel.com/g/100/100/abstract',
-      name: 'Accessory 1',
-      desc: 'Info 1 Info 1 Info 1 Info 1',
-      isAdded: false
-    },
-    {
-      src: 'http://lorempixel.com/g/100/100/abstract',
-      name: 'Accessory 2',
-      desc: 'Info 2 Info 2 Info 2 Info 2 Info 2 Info 2 Info 2 Info 2',
-      isAdded: false
-    },
-    {
-      src: 'http://lorempixel.com/g/100/100/abstract',
-      name: 'Accessory 3',
-      desc: 'Info 3 Info 3 Info 3 Info 3',
-      isAdded: false
-    },
-    {
-      src: 'http://lorempixel.com/g/100/100/abstract',
-      name: 'Accessory 3',
-      desc: 'Info 3 Info 3 Info 3 Info 3',
-      isAdded: false
-    }
-  ];
+  accessoryIds = [];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private toastController: ToastController,
     private productService: ProductsService,
-    private loading: LoadingService
+    private loading: LoadingService,
+    private accessoriesService: AccessoriesService
   ) { }
 
   ngOnInit() {
+    this.loading.present();
     this.route.queryParams.subscribe(params => {
       this.permission = JSON.parse(params['permission']);
-      this.backUrl = JSON.parse(params['url']);
       this.productService.getProductDetail(JSON.parse(params['id']))
         .subscribe(data => {
           this.product = data.product;
-          this.loading.dismiss();
         });
     })
-    this.loading.present();
+    this.loadData();
   }
 
   ionViewWillEnter() {
@@ -94,11 +65,7 @@ export class ProductInfoPage implements OnInit {
   }
 
   goBack(): void {
-    if (this.backUrl == 1) {
-      this.router.navigateByUrl('main/product-categories/products');
-    } else {
-      this.router.navigateByUrl('main/home');
-    }
+    this.router.navigateByUrl('main/home');
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'flex';
@@ -129,36 +96,58 @@ export class ProductInfoPage implements OnInit {
     });
   }
 
-  getItem(accessory: IAccessory): any {
-    return accessory.isAdded ?
-      {
-        background: '#494949',
-        color: 'white',
-        iconName: 'remove-outline'
+  getItem(accessory): any {
+    for (let i of this.accessoryIds) {
+      if (i.id == accessory.id) {
+        return i.added ?
+        {
+          background: '#494949',
+          color: 'white',
+          iconName: 'remove-outline'
+        }
+        :
+        {
+          background: '#eaeaea',
+          color: '#636363',
+          iconName: 'add-outline'
+        }
       }
-      :
-      {
-        background: '#eaeaea',
-        color: '#636363',
-        iconName: 'add-outline'
-      }
+    }
   }
 
-  toggleItem(accessory: IAccessory): void {
+  toggleItem(accessory): void {
     if (this.permission !== PERMISSION.GUEST) {
-      accessory.isAdded = !accessory.isAdded;
+      for (let i of this.accessoryIds) {
+        if (i.id == accessory.id) {
+          i.added = !i.added;
+          break;
+        }
+      }
     }
   }
 
   selectAllItem(): void {
-    this.accessories.forEach(accessory => accessory.isAdded = true);
+    this.accessoryIds.forEach(accessory => accessory.added = true);
   }
 
   addProduct(): void {
     // add product to cart
+    this.router.navigate(['main/shopping-cart'], {
+      queryParams: {
+        data: JSON.stringify(true),
+        accessoryIds: JSON.stringify(
+          this.accessoryIds.reduce((acc, cur) => {
+            if (cur.added) {
+              acc.push(cur.id);
+            }
+            return acc;
+          }, [])
+        )
+      }
+    })
 
     // reset selected item
-    this.accessories.forEach(accessory => accessory.isAdded = false);
+    this.accessoryIds.forEach(accessory => accessory.added = false);
 
     // inc counter
     this.counter++;
@@ -168,14 +157,26 @@ export class ProductInfoPage implements OnInit {
     return this.permission == PERMISSION.GUEST;
   }
 
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Added product',
-      duration: 1000,
-      position: 'top',
-    });
-    toast.present();
-
-    this.addProduct();
+  loadData() {
+    setTimeout(() => {
+      this.accessoriesService.getAccessories(this.pageRequest).subscribe(data => {
+        for (let item of data.accessories) {
+          this.accessories.push(item);
+          this.accessoryIds.push({
+            id: item.id,
+            added: false
+          })
+        }
+        
+        this.infinityScroll.complete();
+        this.loading.dismiss();
+        this.pageRequest.page++;
+  
+        // check max data
+        if (this.accessories.length >= data.meta.pagination.total_objects) {
+          this.infinityScroll.disabled = true;
+        }
+      })
+    }, 50);
   }
 }

@@ -18,7 +18,7 @@
         <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
       </ion-button>
     </ion-card-content>
-    <ion-fab-button class="add-product-button" (click)="presentToast()" *ngIf="!checkGuestPermission()">
+    <ion-fab-button class="add-product-button" (click)="addProduct()" *ngIf="!checkGuestPermission()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-card>
@@ -40,18 +40,22 @@
         <ion-row *ngFor="let accessory of accessories" [style.background]="getItem(accessory).background"
           (click)="toggleItem(accessory)">
           <ion-col size="4">
-            <ion-img [src]="accessory.src"></ion-img>
+            <ion-img src="https://dummyimage.com/600x700.jpg"></ion-img>
           </ion-col>
           <ion-col size="8">
             <div class="content-block" [style.color]="getItem(accessory).color">
               <ion-label>{{ accessory.name }}</ion-label>
-              <p>{{ accessory.desc }}</p>
+              <p>{{ accessory.description }}</p>
             </div>
           </ion-col>
           <span class="accessories-item-icon" *ngIf="!checkGuestPermission()">
             <ion-icon name="{{ getItem(accessory).iconName }}"></ion-icon>
           </span>
         </ion-row>
+        
+        <ion-infinite-scroll #infinityScroll (ionInfinite)="loadData()">
+          <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
       </ion-grid>
     </ion-card-content>
   </ion-card>

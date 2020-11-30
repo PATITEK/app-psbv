@@ -20,14 +20,7 @@ export class ProductDetailPage implements OnInit {
     thumb_image: {
       url: ''
     },
-    pricing_services: [
-      {
-        price: 0,
-      },
-      {
-        price: 0
-      }
-    ]
+    price: 0
   }
   permission: PERMISSION = PERMISSION.GUEST;
 
@@ -61,7 +54,7 @@ export class ProductDetailPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigateByUrl('/main/home/product-info');
+    this.router.navigateByUrl('main/product-categories/products/product-info');
   }
 
   download() {
