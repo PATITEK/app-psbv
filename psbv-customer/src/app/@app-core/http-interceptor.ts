@@ -32,7 +32,7 @@ export class IntercepterService implements HttpInterceptor {
     else {
 
     }
-    console.log((request))
+   
     return next.handle(request)
     .pipe(
       catchError((err) => {
