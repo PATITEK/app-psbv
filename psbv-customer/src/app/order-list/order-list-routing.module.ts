@@ -5,23 +5,16 @@ import { OrderListPage } from './order-list.page';
 
 const routes: Routes = [
   {
-    path: '',
-    component: OrderListPage,
-    children: [
-      {
-        path: 'order-status',
-        loadChildren: () => import('./order-status/order-status.module').then(m => m.OrderStatusPageModule)
-      },
-      {
-        path: 'history',
-        loadChildren: () => import('./history/history.module').then(m => m.HistoryPageModule)
-      },
-      {
-        path: '',
-        redirectTo: '/main/order-list/order-status',
-        pathMatch: 'full'
-      }
-    ]
+    path: 'tabs',
+    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
+  },
+  {
+    path: 'order-status',
+    loadChildren: () => import('./order-status/order-status.module').then( m => m.OrderStatusPageModule)
+  },
+  {
+    path: 'history',
+    loadChildren: () => import('./history/history.module').then( m => m.HistoryPageModule)
   },
 ];
 

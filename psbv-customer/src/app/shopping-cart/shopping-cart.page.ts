@@ -19,8 +19,10 @@ export interface ShoppingCartItem {
   styleUrls: ['./shopping-cart.page.scss'],
 })
 export class ShoppingCartPage implements OnInit {
-  hasTF:any = false;
+  hasTF: any = false;
   hasBackButton: boolean = false;
+  urlBack;
+  idBack;
   items: ShoppingCartItem[] = [
     {
       name: "Item 1",
@@ -59,7 +61,7 @@ export class ShoppingCartPage implements OnInit {
       counter: 1
     },
   ];
- 
+
   public showSpinner = false;
   constructor(
     private router: Router,
@@ -76,30 +78,37 @@ export class ShoppingCartPage implements OnInit {
       item.counter--;
   }
   ngOnInit() {
-    this.route.queryParams.subscribe(params =>{
-     this.hasTF = JSON.parse(params['data']);
-      if(this.hasTF.checkBack === true){
+    this.route.queryParams.subscribe(params => {
+      this.hasTF = JSON.parse(params['data']);
+      this.urlBack = JSON.parse(params['data']).urlBack;
+      this.idBack = JSON.parse(params['data']).id;
+        if(this.hasTF.checkBack === true){
         this.hasTF = true;
-      }else{
+      }else {
         this.hasTF = false;
       }
     })
   }
-  goCheck(){
-    this.route.queryParams.subscribe(params =>{
+  goCheck() {
+    this.route.queryParams.subscribe(params => {
       const tabs = document.querySelectorAll('ion-tab-bar');
       Object.keys(tabs).map((key) => {
         tabs[key].style.display = 'none';
       });
-     return JSON.parse(params['data']);
-      
+      return JSON.parse(params['data']);
+
     })
   }
   goBack() {
-    this.router.navigateByUrl('main/home/product-info');
+    this.router.navigate([this.urlBack], {
+      queryParams: {
+        id: JSON.stringify(this.idBack)
+      }
+    });
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.hasTF = false;
+    this.urlBack = '';
   }
 
   async presentAlert(text: string) {
@@ -115,7 +124,7 @@ export class ShoppingCartPage implements OnInit {
         },
         {
           text: 'Agree',
-          handler: (  ) => {
+          handler: () => {
             return this.items.pop();
           }
         },
@@ -128,5 +137,5 @@ export class ShoppingCartPage implements OnInit {
     this.showSpinner = true;
     this.presentAlert('Are you sure to delete this item?');
   }
- 
+
 }
