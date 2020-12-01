@@ -5,12 +5,13 @@
       </ion-col>
   </ion-row>
   <ion-row no-lines class="heading__option">
-      <ion-col class="heading__option__selected">
-          Order status
+      <ion-col (click)="gotoStatus()">Order status
       </ion-col>
-      <ion-col (click)="gotoHistory()">History</ion-col>
+      <ion-col>
+        History
+      </ion-col>
   </ion-row>
-  <ion-progress-bar class="selector" value="0.4" lines="none"></ion-progress-bar>
+  <ion-progress-bar class="selector" value="0.4" reversed="true"></ion-progress-bar>
 </ion-header>
 <ion-content>
 <ion-card class="section__main">
@@ -26,10 +27,7 @@
                       Sent Request
                       <ion-img class="item__price-tag__slash" src="../../assets/slash.svg"></ion-img>
                       3 Products
-              </ion-item>
-              <ion-img class="item__order-status" src="../../assets/order-status.svg"></ion-img>
-              <ion-img class="item__deliver-icon" src="../../assets/delive.svg"></ion-img>
-              <ion-label class="item__day-to-delive">1 day</ion-label>              
+              </ion-item>             
           </ion-item> 
           <ion-card-content class="item__detail">Product Product Product, Product Product, Product, Product ...</ion-card-content>
           <ion-button lines="none" class="re-order" size="small">Re-order</ion-button>

@@ -9,12 +9,12 @@ const routes: Routes = [
     component: OrderListPage,
     children: [
       {
-        path: 'order-status',
-        loadChildren: () => import('./order-status/order-status.module').then(m => m.OrderStatusPageModule)
+        path: 'history',
+        loadChildren: () => import('../order-list/order-history/order-history.module').then(m => m.OrderHistoryPageModule)
       },
       {
-        path: 'history',
-        loadChildren: () => import('./history/history.module').then(m => m.HistoryPageModule)
+        path: 'order-status',
+        loadChildren: () => import('../order-list/order-status/order-status.module').then(m => m.OrderStatusPageModule)
       },
       {
         path: '',
