@@ -12,7 +12,7 @@ export class TabsPage {
   constructor(private router: Router,
     private route: ActivatedRoute,) {}
   onGoToSpc() {
-    console.log('hihi');
+  
     const data = {
       checkBack: false
     }

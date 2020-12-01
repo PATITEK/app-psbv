@@ -21,4 +21,7 @@ export class HeaderHomeComponent implements OnInit {
   gotoNoti() {
     this.router.navigateByUrl('notification');
   }
+  gotoHome() {
+    this.router.navigateByUrl('/main/product-categories');
+  }
 }
