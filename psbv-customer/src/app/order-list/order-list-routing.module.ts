@@ -5,24 +5,14 @@ import { OrderListPage } from './order-list.page';
 
 const routes: Routes = [
   {
-    path: '',
-    component: OrderListPage,
-    children: [
-      {
-        path: 'history',
-        loadChildren: () => import('../order-list/order-history/order-history.module').then(m => m.OrderHistoryPageModule)
-      },
-      {
-        path: 'order-status',
-        loadChildren: () => import('../order-list/order-status/order-status.module').then(m => m.OrderStatusPageModule)
-      },
-      {
-        path: '',
-        redirectTo: '/main/order-list/order-status',
-        pathMatch: 'full'
-      }
-    ]
+    path: 'tabs',
+    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
   },
+  {
+    path: 'order-status',
+    loadChildren: () => import('./order-status/order-status.module').then( m => m.OrderStatusPageModule)
+  },
+ 
 ];
 
 @NgModule({

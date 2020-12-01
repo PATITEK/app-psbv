@@ -36,6 +36,7 @@ export class ProductInfoPage implements OnInit {
     }
   }
   accessoryIds = [];
+  products = [];
 
   constructor(
     private router: Router,
@@ -99,11 +100,14 @@ export class ProductInfoPage implements OnInit {
 
   goToCart(): void {
     const data = {
-      checkBack: true
+      checkBack: true,
+      urlBack: 'main/product-categories/products/product-info',
+      id: this.product.id
     }
     this.router.navigate(['main/shopping-cart'], {
       queryParams: {
-        data: JSON.stringify(data)
+        data: JSON.stringify(data),
+        products: JSON.stringify(this.products)
       }
     });
   }
@@ -144,21 +148,15 @@ export class ProductInfoPage implements OnInit {
 
   addProduct(): void {
     // add product to cart
-    const data = {
-      checkBack: true
-    }
-    this.router.navigate(['main/shopping-cart'], {
-      queryParams: {
-        data: JSON.stringify(data),
-        accessoryIds: JSON.stringify(
-          this.accessoryIds.reduce((acc, cur) => {
-            if (cur.added) {
-              acc.push(cur.id);
-            }
-            return acc;
-          }, [])
-        )
-      }
+    // add product to cart
+    this.products.push({
+      productId: this.product.id,
+      accessoryIds: this.accessoryIds.reduce((acc, cur) => {
+        if (cur.added) {
+          acc.push(cur.id);
+        }
+        return acc;
+      }, [])
     })
 
     // reset selected item
