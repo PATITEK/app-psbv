@@ -5,7 +5,6 @@
         *ngIf="hasTF" (click)="goBack()"></ion-img>
       <ion-label class="ion-heading__element__text" >SHOPPING CART</ion-label>
       <ion-icon name="cart-outline"class="ion-heading__element__shop-icon"></ion-icon>
-    
     </ion-col>
   </ion-row>
 </ion-header>
@@ -29,7 +28,6 @@
             <ion-img src="assets/shopping-cart/deliver.svg" ></ion-img>
             <ion-label class="item__day-to-delive">{{ item.dayToDelivery + "day" }}</ion-label>
           </ion-item-group>
-         
         </ion-item>
         <ion-card-content class="item__detail">{{ item.description }}</ion-card-content>
       </ion-card>
@@ -40,5 +38,4 @@
       </ion-item>
     </div>
   </ion-grid>
-  
 </ion-content>

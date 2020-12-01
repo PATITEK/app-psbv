@@ -25,11 +25,12 @@ const routes: Routes = [
     loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule),
     canActivate: [AuthGuard]
   },
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth' },  {
+  {
     path: 'order-list',
     loadChildren: () => import('./order-list/order-list.module').then( m => m.OrderListPageModule)
-  }
+  },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '**', redirectTo: 'auth' }
 
 
 ];
