@@ -26,7 +26,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth' }
+  { path: '**', redirectTo: 'auth' },  {
+    path: 'order-list',
+    loadChildren: () => import('./order-list/order-list.module').then( m => m.OrderListPageModule)
+  }
+
 
 ];
 @NgModule({

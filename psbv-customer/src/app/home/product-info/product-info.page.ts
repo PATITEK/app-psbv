@@ -21,7 +21,7 @@ export class ProductInfoPage implements OnInit {
 
   pageRequest: IPageRequest = {
     page: 1,
-    per_page: 6,
+    per_page: 5,
     total_objects: 20
   }
   counter: number = 0;
@@ -48,11 +48,15 @@ export class ProductInfoPage implements OnInit {
   ngOnInit() {
     this.loading.present();
     this.route.queryParams.subscribe(params => {
-      this.permission = JSON.parse(params['permission']);
-      this.productService.getProductDetail(JSON.parse(params['id']))
+      if (params.permission !== undefined) {
+        this.permission = JSON.parse(params['permission']);
+      }
+      if (params.id !== undefined) {
+        this.productService.getProductDetail(JSON.parse(params['id']))
         .subscribe(data => {
           this.product = data.product;
         });
+      }
     })
     this.loadData();
   }
@@ -100,17 +104,17 @@ export class ProductInfoPage implements OnInit {
     for (let i of this.accessoryIds) {
       if (i.id == accessory.id) {
         return i.added ?
-        {
-          background: '#494949',
-          color: 'white',
-          iconName: 'remove-outline'
-        }
-        :
-        {
-          background: '#eaeaea',
-          color: '#636363',
-          iconName: 'add-outline'
-        }
+          {
+            background: '#494949',
+            color: 'white',
+            iconName: 'remove-outline'
+          }
+          :
+          {
+            background: '#eaeaea',
+            color: '#636363',
+            iconName: 'add-outline'
+          }
       }
     }
   }
@@ -139,6 +143,7 @@ export class ProductInfoPage implements OnInit {
     this.router.navigate(['main/shopping-cart'], {
       queryParams: {
         data: JSON.stringify(data),
+        productId: this.product.id,
         accessoryIds: JSON.stringify(
           this.accessoryIds.reduce((acc, cur) => {
             if (cur.added) {
@@ -171,16 +176,16 @@ export class ProductInfoPage implements OnInit {
             added: false
           })
         }
-        
+
         this.infinityScroll.complete();
         this.loading.dismiss();
         this.pageRequest.page++;
-  
+
         // check max data
         if (this.accessories.length >= data.meta.pagination.total_objects) {
           this.infinityScroll.disabled = true;
         }
       })
-    }, 50);
+    }, 500);
   }
 }

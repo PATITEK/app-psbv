@@ -19,7 +19,7 @@ export class HomePage implements OnInit {
     total_objects: 20
   }
   data = [];
-  permission: PERMISSION = PERMISSION.GUEST;
+  permission: PERMISSION = PERMISSION.STANDARD;
 
   constructor(
     private router: Router,

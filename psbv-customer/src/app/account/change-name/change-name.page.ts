@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { AuthService } from 'src/app/@app-core/http';
+
 
 @Component({
   selector: 'app-change-name',
@@ -18,7 +18,7 @@ export class ChangeNamePage implements OnInit {
     rename: new FormControl('',[Validators.required], ),
   });
   public showSpinner = false;
-  constructor(private authService: AuthService,  public alertCtrl: AlertController, private router: Router,) { }
+  constructor( public alertCtrl: AlertController, private router:Router ) { }
  
   ngOnInit() {
  
