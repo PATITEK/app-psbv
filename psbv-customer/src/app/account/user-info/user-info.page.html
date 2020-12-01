@@ -41,32 +41,13 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-label class="user-info__content">Buyer</ion-label>
+          <ion-label class="user-info__content">{{message}}</ion-label>
         </ion-col>
         <ion-col>
-          <ion-label class="user-info__change">Change</ion-label>
+          <ion-label class="user-info__change" (click)="gotoChangeName()" >Change</ion-label>
         </ion-col>
       </ion-row>
     </ion-grid>
-
-    <ion-grid class="user-info__email">
-      <ion-row>
-        <ion-col>
-          <ion-label class="user-info__title">
-            Email
-          </ion-label>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-label class="user-info__content">Buyer@gmail.com</ion-label>
-        </ion-col>
-        <ion-col>
-          <ion-label class="user-info__change">Change</ion-label>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
     <ion-grid class="user-info__password">
       <ion-row>
         <ion-col>
@@ -80,7 +61,7 @@
           <ion-label class="user-info__content">••••••••••</ion-label>
         </ion-col>
         <ion-col>
-          <ion-label class="user-info__change" (click)="goToPasswordChanged()">Change</ion-label>
+          <ion-label class="user-info__change" (click)="gotoPasswordChange()">Change</ion-label>
         </ion-col>
       </ion-row>
     </ion-grid>

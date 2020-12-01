@@ -14,7 +14,7 @@ export class StorageService {
         return this.userSub.asObservable();
     }
     public setInfoAccount(value: any) {
-        this.userSub.next(this.detokenUser(value));
+        // this.userSub.next(this.detokenUser(value));
     }
     public detokenUser(value) {
         //   const data = jwt_decode(value);

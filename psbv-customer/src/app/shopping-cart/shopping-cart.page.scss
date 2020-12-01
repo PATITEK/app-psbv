@@ -8,10 +8,9 @@ ion-content {
   top: 99px;
   overflow: hidden;
   background-color: #e52d27;
-
+  height: calc(100% - 100px);
   --scroll-y: false;
   z-index: 11;
-  // max-height: 651px;
   border-bottom: 0;
   --offset-top: 5px !important;
   --background: #efefef;
@@ -25,6 +24,7 @@ ion-item-group {
 ion-item {
   --inner-border-width: 0 0 0 0 !important;
 }
+
 .ion-heading {
   margin-top: 2.8rem;
   margin-bottom: 1.2rem;
@@ -67,6 +67,7 @@ ion-item {
   border-radius: 1rem;
   height: 13rem;
   margin-top: -10px;
+  position: relative;
   &:first-child {
     margin-top: 1rem;
   }
@@ -78,8 +79,8 @@ ion-item {
     width: 14px;
     height: auto;
     margin-top: 0.8rem;
-    position: relative;
-    left: 52%;
+    position: absolute;
+    right: 10px;
   }
   .detail__wrapper {
     --background: #f9f9fb;
@@ -127,6 +128,7 @@ ion-card {
 .section__button {
   width: 120px;
   height: auto;
+  position: relative;
   font-size: 19px;
   padding-right: 0;
   margin-left: 8rem;
@@ -140,14 +142,12 @@ ion-card {
   &__minus {
     display: block;
     float: left;
-    // margin-right: 1rem;
     width: 120px;
     height: auto;
   }
   &__add {
     display: block;
     float: right;
-    // margin-left: 1rem;
     width: 120px;
   }
   &-count {
@@ -160,43 +160,19 @@ ion-card {
 }
 
 @media screen and (max-height: 824px) {
-  // ion-content {
-  //   max-height: 662px;
-  // }
   .section__button {
     margin-left: 9.5rem;
-  }
-  .section__sub {
-    .item__cancel {
-      width: 11px;
-      left: 56%;
-    }
   }
 }
 @media screen and (max-height: 812px) {
   .section__button {
     margin-left: 8.5rem;  
   }
-  .section__sub {
-    .item__cancel {
-      width: 10px;
-      left: 52%;
-    }
-  }
 }
 
 @media screen and (max-height: 736px) {
-  // ion-content {
-  //   max-height: 574px;
-  // }
   .section__button {
     margin-left: 9.6rem;
-  }
-  .section__sub {
-    .item__cancel {
-      width: 11px;
-      left: 56.5%;
-    }
   }
 }
 @media screen and (max-height: 732px) {
@@ -205,40 +181,18 @@ ion-card {
   }
 }
 @media screen and (max-height: 667px) {
-  // ion-content {
-  //   max-height: 506px;
-  // }
   .section__button {
     margin-left: 8.5rem;
   }
-  .section__sub {
-    .item__cancel {
-      width: 11px;
-      left: 52.5%;
-    }
-  }
 }
-@media screen and (max-height: 653px) {
-}
+
 @media screen and (max-height: 640px) {
-  // ion-content {
-  //   max-height: 479px;
-  // }
   .section__button {
     margin-left: 7.9rem;
   }
 }
 @media screen and (max-height: 569px) {
-  // ion-content {
-  //   max-height: 408px;
-  // }
   .section__button {
     margin-left: 6.6rem;
-  }
-  .section__sub {
-    .item__cancel {
-      width: 10px;
-      left: 45%;
-    }
   }
 }

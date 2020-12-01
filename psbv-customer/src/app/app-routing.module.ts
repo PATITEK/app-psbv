@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './@app-core/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -12,7 +13,8 @@ const routes: Routes = [
   },
   {
     path: 'notification',
-    loadChildren: () => import('./notification/notification.module').then(m => m.NotificationPageModule)
+    loadChildren: () => import('./notification/notification.module').then(m => m.NotificationPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'statusNoti',
@@ -20,10 +22,15 @@ const routes: Routes = [
   },
   {
     path: 'account',
-    loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule)
+    loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule),
+    canActivate: [AuthGuard]
   },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth' }
+  { path: '**', redirectTo: 'auth' },  {
+    path: 'order-list',
+    loadChildren: () => import('./order-list/order-list.module').then( m => m.OrderListPageModule)
+  }
+
 
 ];
 @NgModule({

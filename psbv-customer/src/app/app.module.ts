@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { PageNotiService } from './@modular/page-noti/page-noti.service';
 import { FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { CoreModule } from './@app-core';
+import { AuthGuard } from './@app-core/auth-guard.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { CoreModule } from './@app-core';
   providers: [
     StatusBar,
     SplashScreen,
+    AuthGuard,
     PageNotiService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

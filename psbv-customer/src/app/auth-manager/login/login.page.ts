@@ -13,6 +13,8 @@ export class LoginPage implements OnInit {
   public type2 = 'password';
   public showPass2 = false;
   public showSpinner = false;
+  message: string ;
+
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -56,8 +58,12 @@ export class LoginPage implements OnInit {
     }
     this.authService.login(this.profileForm.value).subscribe((data: any) => {
     this.showSpinner = false;
+    console.log(data);
     localStorage.setItem('Authorization', data.token);
+    localStorage.setItem('fullname', data.fullname);
+    
     this.router.navigateByUrl('/main/product-categories');
+    this.authService.sendData(this.message);
     })
   }
   resetPass() {

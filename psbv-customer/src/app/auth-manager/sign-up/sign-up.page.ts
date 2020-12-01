@@ -13,21 +13,21 @@ export class SignUpPage implements OnInit {
 
   error_messages = {
     'password': [
-      { type: 'required', message: 'password is required.' },
-      { type: 'minlength', message: 'min password length is 8 ' },
-      { type: 'maxlength', message: 'max password length is 16' }
+      { type: 'required', message: 'Password is required.' },
+      { type: 'minlength', message: 'Min password length is 8 ' },
+      { type: 'maxlength', message: 'Max password length is 16' }
     ],
     'confirmpassword': [
-      { type: 'required', message: 'password is required.' },
-      { type: 'minlength', message:'min password length is 8' },
-      { type: 'maxlength', message: 'max password length is 16' }
+      { type: 'required', message: 'Password is required.' },
+      { type: 'minlength', message:'Min password length is 8' },
+      { type: 'maxlength', message: 'Max password length is 16' }
     ],
     'name': [
-        { type: 'required', message: 'name is required.' },
+        { type: 'required', message: 'Name is required.' },
     ],
     'email': [
-      { type: 'required', message: 'email is required.' },
-      { type: 'email', message: 'email invalid.' },
+      { type: 'required', message: 'Email is required.' },
+      { type: 'email', message: 'Email invalid.' },
 
   ],
   }

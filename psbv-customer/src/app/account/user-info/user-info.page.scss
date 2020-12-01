@@ -18,14 +18,14 @@
     border-radius: 4px;
     top: calc(100% + 5px);
     right: 0;
-    background-color: #c9c9c9;
+    background-color: #f0ecec;
 
     &::before{
       content: " ";
       position: absolute;
       border-width: 8px 6px;
       border-style: solid;
-      border-color: transparent transparent #c9c9c9 transparent;
+      border-color: transparent transparent #f0ecec transparent;
       top: -16px;
       right: 5px;
     }
