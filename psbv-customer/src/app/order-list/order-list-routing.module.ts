@@ -19,7 +19,7 @@ const routes: Routes = [
     },
     {
       path: '',
-      redirectTo: 'order-status',
+      redirectTo: '/main/order-list/order-status',
       pathMatch: 'full'
     }
   ]
