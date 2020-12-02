@@ -33,10 +33,15 @@ export class ProductInfoPage implements OnInit {
     description: ' ',
     thumb_image: {
       url: ''
-    }
+    },
+    price: 0
   }
   accessoryIds = [];
   products = [];
+  cart = {
+    name: 'Cart 1',
+    items: []
+  }
 
   constructor(
     private router: Router,
@@ -44,7 +49,12 @@ export class ProductInfoPage implements OnInit {
     private productService: ProductsService,
     private loading: LoadingService,
     private accessoriesService: AccessoriesService
-  ) { }
+  ) { 
+    this.cart = JSON.parse(localStorage.getItem('cart')) || {
+      name: 'Cart 1',
+      items: []
+    }
+  }
 
   ngOnInit() {
     this.loading.present();
@@ -92,13 +102,11 @@ export class ProductInfoPage implements OnInit {
 
   goToCart(): void {
     const data = {
-      checkBack: true,
       urlBack: 'main/home/product-info'
     }
-    this.router.navigate(['main/shopping-cart'], {
+    this.router.navigate(['main/cart-detail'], {
       queryParams: {
-        data: JSON.stringify(data),
-        products: JSON.stringify(this.products)
+        data: JSON.stringify(data)
       }
     });
   }
@@ -139,21 +147,48 @@ export class ProductInfoPage implements OnInit {
 
   addProduct(): void {
     // add product to cart
-    this.products.push({
-      productId: this.product.id,
-      accessoryIds: this.accessoryIds.reduce((acc, cur) => {
+    const product = {
+      id: this.product.id,
+      name: this.product.name,
+      quantity: 1, // default = 1
+      price: this.product.price,
+      accessories: this.accessoryIds.reduce((acc, cur) => {
         if (cur.added) {
-          acc.push(cur.id);
+          let name;
+          for (let i of this.accessories) {
+            if (cur.id == i.id) {
+              name = i.name;
+              break;
+            }
+          }
+          acc.push({
+            id: cur.id,
+            name: name,
+            quantity: 1, // default = 1,
+            price: 100 // default = 100
+          });
         }
         return acc;
       }, [])
-    })
+    }
+
+    let duplicate = false;
+    for (let j of this.cart.items) {
+      if (product.id == j.id && this.isEqual(product.accessories, j.accessories)) {
+        j.quantity++;
+        duplicate = true;
+        break;
+      }
+    }
+    if (!duplicate) {
+      this.cart.items.push(product);
+    }
+
+    // update data
+    this.setLocalStorage();
 
     // reset selected item
     this.accessoryIds.forEach(accessory => accessory.added = false);
-
-    // inc counter
-    this.counter++;
   }
 
   checkGuestPermission(): boolean {
@@ -181,5 +216,26 @@ export class ProductInfoPage implements OnInit {
         }
       })
     }, 500);
+  }
+
+  isEqual(a, b) {
+    // if length is not equal 
+    if (a.length != b.length)
+      return false;
+    else {
+      // comapring each element of array 
+      for (var i = 0; i < a.length; i++)
+        if (a[i].id != b[i].id)
+          return false;
+      return true;
+    }
+  }
+
+  setLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(this.cart))
+  }
+
+  calTotalItems() {
+    return this.cart.items.reduce((acc, cur) => acc + cur.quantity, 0);
   }
 }

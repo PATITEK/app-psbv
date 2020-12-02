@@ -1,0 +1,61 @@
+<ion-header lines="no">
+  <ion-button fill="clear" size="small" class="back-button" (click)="goBack()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-card-title>
+    Detail
+    <ion-icon name="cart-outline"></ion-icon>
+  </ion-card-title>
+</ion-header>
+
+<ion-content>
+  <ion-card class="cart-heading">
+    <ion-card-title>{{ cart.name}}</ion-card-title>
+    <ion-item class="cart-heading-body">
+      <ion-item class="group_left">
+        <span class="price">{{ calTotalPrice(cart.items) | number: '1.0-2'}}</span>
+        <span class="quantity">{{ cart.items.length }} products</span>
+      </ion-item>
+      <ion-item class="group-right" slot="end">
+        <ion-img src="../../../assets/shopping-cart/deliver-black.svg"></ion-img>
+        <span>1 day</span>
+      </ion-item>
+    </ion-item>
+  </ion-card>
+
+  <ion-card class="cart-body" *ngFor="let item of cart.items">
+    <ion-label>{{ item.name }}</ion-label>
+    <ion-item class="cart-heading-body">
+      <ion-item class="group_left">
+        <span class="price">{{ calPrice(item) | number: '1.0-2' }}</span>
+      </ion-item>
+      <ion-item class="group-right" slot="end">
+        <ion-img src="../../../assets/shopping-cart/deliver-black.svg"></ion-img>
+        <span>1 day</span>
+      </ion-item>
+    </ion-item>
+    <p>{{ listAccessoriesName(item) }}</p>
+
+    <div class="modifier">
+      <span class="modifier-btn" (click)="decreaseQuantity(item)">-</span>
+      <span class="counter">{{ item.quantity }}</span>
+      <span class="modifier-btn" (click)="increaseQuantity(item)">+</span>
+    </div>
+
+    <ion-icon name="close-outline" class="remove-btn" (click)="onRemove(item)"></ion-icon>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-item class="footer-inner">
+    <ion-item-group>
+      <span class="quantity">{{ cart.items.length }} items</span>
+      <ion-item class="group-right">
+        <ion-img src="../../../assets/shopping-cart/deliver-black.svg"></ion-img>
+        <span>1 day</span>
+      </ion-item>
+      <span class="price">{{ calTotalPrice(cart.items) | number: '1.0-2'}}</span>
+    </ion-item-group>
+    <ion-button slot="end">Export Exel</ion-button>
+  </ion-item>
+</ion-footer>
