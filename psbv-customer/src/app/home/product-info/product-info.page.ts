@@ -3,12 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { AccessoriesService, IPageRequest, ProductsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
+import { PERMISSION } from 'src/app/product-categories/products/product-info/product-info.page';
 
-export enum PERMISSION {
-  GUEST,
-  STANDARD,
-  PREMIUM
-};
+
 
 @Component({
   selector: 'app-product-info',

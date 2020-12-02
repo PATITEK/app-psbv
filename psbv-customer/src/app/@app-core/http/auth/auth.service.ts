@@ -22,7 +22,7 @@ export class AuthService {
   public get receiveData(): Observable<any> {
     return this.data.asObservable();
   }
-
+  
   public sendData(value: any) {
     this.data.next(value);
   }

@@ -4,14 +4,19 @@
           ORDER LIST
       </ion-col>
   </ion-row>
-  <ion-row no-lines class="heading__option">
-      <ion-col class="heading__option__selected">
-          Order status
-      </ion-col>
-      <ion-col (click)="gotoHistory()">History</ion-col>
-  </ion-row>
-  <ion-progress-bar class="selector" value="0.4" lines="none"></ion-progress-bar>
+  <ion-segment value="orderStatus">
+        <ion-segment-button  class="" (click)="changeTabs('orderStatus')" [ngClass]="{'segment-btn-active':activeTab === 'orderStatus'}" value="orderStatus"> 
+           Order status
+        </ion-segment-button>
+        <ion-segment-button class="" (click)="changeTabs('orderHistory')" [ngClass]="{'segment-btn-active':activeTab === 'orderHistory'}" value ="orderHistory"> 
+            History
+        </ion-segment-button>
+   
+  </ion-segment>
+
+
 </ion-header>
+
 <ion-content>
 <ion-card class="section__main">
     <ion-list style="background-color: #EFEFEF">

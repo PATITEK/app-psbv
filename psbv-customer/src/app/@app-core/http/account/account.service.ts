@@ -5,7 +5,7 @@ import { APICONFIG, SUCCESS, STATUS } from '../@http-config';
 import { catchError, map } from 'rxjs/operators';
 import { requestQuery } from 'src/app/@app-core/utils';
 import { IPageRequest } from '../global';
-import { IAccount, IPageAccount } from './account.DTO';
+import { IAccount, IGetAccounts, IPageAccount } from './account.DTO';
 
 @Injectable()
 export class AccountService {
@@ -14,13 +14,29 @@ export class AccountService {
     private http: HttpClient,
     // private toastr: ToastrService,
   ) { }
-
-  public getAccounts(request: IPageAccount) {
-    return this.http.get<IPageAccount>(`${APICONFIG.ACCOUNT.GET}?${(requestQuery(request))}`).pipe(
+  permission: string;
+  userProfile;
+  public getAccounts(request: IGetAccounts) {
+    return this.http.get<IGetAccounts>(`${APICONFIG.ACCOUNT.PROFILE_USER}?${(requestQuery(request))}`).pipe(
       map((result) => {
         return result;
       }),
       catchError((errorRes) => { throw errorRes.error; }));
+  }
+  public checkRole() {
+    if(localStorage.getItem('Authorization') === null)
+    {
+        this.permission = 'GUEST';
+    }
+    else {
+     this.getAccounts(this.userProfile).subscribe((data) => {
+        this.userProfile = {
+            role: data.user.role,
+        }
+        console.log(this.userProfile.role);
+     })
+    }
+    
   }
 
   public getAccountDetail(id: string) {

@@ -1,5 +1,31 @@
+
+  
+
+.button-native {
+    background: green!important;
+}
+
 ion-header{
     background-color: var(--main-color);
+   
+    .group {
+        display: block;
+    }
+    .group-label {
+        display: flex;
+        justify-content: space-around;
+
+    }
+    ion-segment {
+        --background: var(--main-color);
+       
+        .segment-btn-active {
+            color: white;
+            background-color: var(--main-color);
+        }
+       
+    }
+   
 }
 ion-content{
     --background: var(--main-color);

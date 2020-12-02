@@ -6,8 +6,15 @@ export interface IAccount {
 }
 
 export interface IGetAccounts {
-    data: IAccount[];
+    user: {
+        fullname: string,
+        email: string,
+        role: string,
+        phone_number: string,
+    }
+  
 }
+
 
 export interface Role {
     valueView: string;

@@ -19,9 +19,10 @@ const routes: Routes = [
         path: 'shopping-cart',
         loadChildren: () => import('../shopping-cart/shopping-cart.module').then(m => m.ShoppingCartPageModule)
       },
+     
       {
-        path: 'order-list',
-        loadChildren: () => import('../order-list/order-list.module').then(m => m.OrderListPageModule)
+        path: 'order-status',
+        loadChildren: () => import('../order-list/order-status/order-status.module').then( m => m.OrderStatusPageModule)
       },
       {
         path: '',
