@@ -17,6 +17,8 @@ export class OrderStatusPage implements OnInit {
    this.activeTab = name;
    console.log(name);
   }
-
+  async segmentChanged(event) {
+    this.activeTab = event.target.value;
+  }
 
 }

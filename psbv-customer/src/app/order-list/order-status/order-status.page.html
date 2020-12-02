@@ -1,46 +1,46 @@
 <ion-header>
-  <ion-row no-lines>
-      <ion-col class="heading">
-          ORDER LIST
-      </ion-col>
-  </ion-row>
-  <ion-segment value="orderStatus">
-        <ion-segment-button  class="" (click)="changeTabs('orderStatus')" [ngClass]="{'segment-btn-active':activeTab === 'orderStatus'}" value="orderStatus"> 
-           Order status
-        </ion-segment-button>
-        <ion-segment-button class="" (click)="changeTabs('orderHistory')" [ngClass]="{'segment-btn-active':activeTab === 'orderHistory'}" value ="orderHistory"> 
-            History
-        </ion-segment-button>
-   
-  </ion-segment>
-
+    <ion-row no-lines>
+        <ion-col class="heading">
+            ORDER LIST
+        </ion-col>
+    </ion-row>
+    <ion-segment (ionChange)="segmentChanged($event)">
+        <button (click)="changeTabs('orderStatus')" [ngClass]="{'segment-btn-active':activeTab === 'orderStatus'}" class="button-segment">
+            <ion-label>Order status</ion-label>
+        </button>
+        <button (click)="changeTabs('orderHistory')" [ngClass]="{'segment-btn-active':activeTab === 'orderHistory'}" class="button-segment">
+            <ion-label>History</ion-label>
+        </button>
+    </ion-segment>
 
 </ion-header>
 
-<ion-content>
-<ion-card class="section__main">
-    <ion-list style="background-color: #EFEFEF">
-      <ion-card class="section__sub">
-          <ion-grid>
-              <ion-row>
-                  <ion-label class="item__header">Item 12/12/1212</ion-label>
-              </ion-row>
-          </ion-grid>
-          <ion-item class="detail__wrapper" lines="none"  (click)="gotoOrderStatus()">
-              <ion-item class="item__price-tag">
-                      Sent Request
-                      <ion-img class="item__price-tag__slash" src="assets/shopping-cart/slash.svg"></ion-img>
-                      3 Products
-              </ion-item>
-              <ion-img class="item__order-status" src="../../assets/order-status.svg"></ion-img>
-              <ion-img class="item__deliver-icon" src="assets/shopping-cart/deliver.svg"></ion-img>
-              <ion-label class="item__day-to-delive">1 day</ion-label>              
-          </ion-item> 
-          <ion-card-content class="item__detail">Product Product Product, Product Product, Product, Product ...</ion-card-content>
-          <ion-button lines="none" class="re-order" size="small">Re-order</ion-button>
-      </ion-card>
-    </ion-list>
 
-    
-</ion-card>
-</ion-content>  
+<ion-content>
+    <ion-card class="section__main">
+        <ion-list style="background-color: #EFEFEF">
+            <ion-card class="section__sub">
+                <ion-grid>
+                    <ion-row>
+                        <ion-label class="item__header">Item 12/12/1212</ion-label>
+                    </ion-row>
+                </ion-grid>
+                <ion-item class="detail__wrapper" lines="none" (click)="gotoOrderStatus()">
+                    <ion-item class="item__price-tag">
+                        Sent Request
+                        <ion-img class="item__price-tag__slash" src="assets/shopping-cart/slash.svg"></ion-img>
+                        3 Products
+                    </ion-item>
+                    <ion-img class="item__order-status" src="../../assets/order-status.svg"></ion-img>
+                    <ion-img class="item__deliver-icon" src="assets/shopping-cart/deliver.svg"></ion-img>
+                    <ion-label class="item__day-to-delive">1 day</ion-label>
+                </ion-item>
+                <ion-card-content class="item__detail">Product Product Product, Product Product, Product, Product ...
+                </ion-card-content>
+                <ion-button lines="none" class="re-order" size="small">Re-order</ion-button>
+            </ion-card>
+        </ion-list>
+
+
+    </ion-card>
+</ion-content>
