@@ -10,6 +10,7 @@ export enum PERMISSION {
   PREMIUM
 };
 
+
 @Component({
   selector: 'app-product-info',
   templateUrl: './product-info.page.html',

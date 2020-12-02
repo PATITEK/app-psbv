@@ -7,18 +7,13 @@ const routes: Routes = [
   {
     path: '',
     component: OrderListPage,
-    children: [
-
-    {
-      path: 'tabs',
-      loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
-    },
-    {
-      path: 'order-status',
-      loadChildren: () => import('./order-status/order-status.module').then( m => m.OrderStatusPageModule)
-    },
-  
-  ]
+   // children: [
+    // {
+    //   path: 'order-status',
+    //   loadChildren: () => import('./order-status/order-status.module').then( m => m.OrderStatusPageModule)
+    // },
+    
+ // ]
   }]
   
 

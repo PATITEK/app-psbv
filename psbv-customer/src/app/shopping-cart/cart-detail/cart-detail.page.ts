@@ -25,7 +25,6 @@ export class CartDetailPage implements OnInit {
       name: 'Cart 1',
       items: []
     }
-    console.log(this.cart);
   }
 
   ngOnInit() {

@@ -19,13 +19,14 @@ const routes: Routes = [
         path: 'cart-detail',
         loadChildren: () => import('../shopping-cart/cart-detail/cart-detail.module').then(m => m.CartDetailPageModule)
       },
+     
       {
-        path: 'order-list',
-        loadChildren: () => import('../order-list/order-list.module').then(m => m.OrderListPageModule)
+        path: 'order-status',
+        loadChildren: () => import('../order-list/order-status/order-status.module').then( m => m.OrderStatusPageModule)
       },
       {
         path: '',
-        redirectTo: '/main',
+        redirectTo: '/main/product-categories',
         pathMatch: 'full'
       }
     ]

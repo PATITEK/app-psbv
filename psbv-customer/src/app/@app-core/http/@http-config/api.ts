@@ -8,12 +8,14 @@ export const APICONFIG = {
   AUTH: {
     LOGIN: '/app/auth/login',
     SIGNUP: `/app/auth/signup`,
+    TYPE_OF_USER:  `/app/auth/users/profile`,
     RESET_PASSWORD_EMAIL: `/app/reset_password/send_code`,
     CHECK_CODE_RESET: `/app/reset_password/check_code`,
-    RESET_PASSWORD: `/app/reset_password/reset_password`
+    RESET_PASSWORD: `/app/reset_password/reset_password`,
+   
   },
   ACCOUNT: {
-    GET: `/app/users`,
+    PROFILE_USER: `/app/users/profile`,
     GETDETAIL: (id) => `/app/users/${id}`,
     EDIT: (id) => `/app/users/${id}`,
     DELETE: (id) => `/app/users/${id}`,

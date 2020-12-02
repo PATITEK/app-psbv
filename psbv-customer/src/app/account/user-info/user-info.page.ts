@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PERMISSION } from 'src/app/home/product-info/product-info.page';
 import { AlertController } from '@ionic/angular'
-import { AuthService } from 'src/app/@app-core/http';
+import { AccountService, AuthService } from 'src/app/@app-core/http';
+import { IGetAccounts } from 'src/app/@app-core/http/account/account.DTO';
+import { PERMISSION } from 'src/app/product-categories/products/product-info/product-info.page';
 
 @Component({
   selector: 'app-user-info',
@@ -14,19 +15,17 @@ export class UserInfoPage implements OnInit {
   message: string;
   btn: boolean = false;
   notOn: boolean = true;
-
+  
   constructor(
     private router: Router,
     public alertController: AlertController,
-    private authService: AuthService
+    private authService: AuthService,
+  
   ) {}
 
   ngOnInit() {
      this.message = localStorage.getItem('fullname');
-  }
-
-  checkStandardPermission(): boolean {
-    return this.permission == PERMISSION.STANDARD;
+   
   }
 
   upgradePremium(): void {

@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { IPageRequest, ProductGroupsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
-import { PERMISSION } from '../home/product-info/product-info.page';
+import { PERMISSION } from './products/product-info/product-info.page';
+
 
 @Component({
   selector: 'app-product-categories',
