@@ -43,6 +43,10 @@ export class CartDetailPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+    this.cart = JSON.parse(localStorage.getItem('cart')) || {
+      name: 'Cart 1',
+      items: []
+    }
   }
 
   goBack() {
