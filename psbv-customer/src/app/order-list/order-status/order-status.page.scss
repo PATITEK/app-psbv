@@ -16,16 +16,42 @@ ion-header{
         justify-content: space-around;
 
     }
+    // ion-segment {
+    //     ion-segment-button{
+    //         color: #64C18E;
+    //     }
+    //     .segment-btn-active {
+    //         color: white;
+    //         background-color: var(--main-color);
+    //     }
+       
+    // }
     ion-segment {
-        --background: var(--main-color);
-       
-        .segment-btn-active {
-            color: white;
-            background-color: var(--main-color);
+        background: var(--main-color);
+        width: 100%;
+        .button-segment {
+            outline: none;
+            color: #FFFFFF;
+            height: 48px;
+            width: calc(100%/2);
+            border: unset;
+            font-family: "Roboto";
+            font-size: 14px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 0.93;
+            letter-spacing: 0.28px;
+            background: var(--main-color);
+
         }
-       
+
+        .segment-btn-active {
+            border: 1px solid black;
+            color: #ffffff;
+
+        }
     }
-   
 }
 ion-content{
     --background: var(--main-color);
