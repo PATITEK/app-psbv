@@ -35,6 +35,13 @@ export class ProductCategoriesPage implements OnInit {
     this.loadData();
   }
 
+  ionViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
+  }
+
   loadData() {
     setTimeout(() => {
       this.productGroupService.getProductGroups(this.pageRequest).subscribe(data => {
