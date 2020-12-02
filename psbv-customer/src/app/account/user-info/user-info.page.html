@@ -23,9 +23,9 @@
     <ion-row class="user-name">
       <ion-label class="user-name__main">Hi buyer</ion-label>
       <ion-label class="user-name__sub">{{ checkStandardPermission() ? 'Standard' : 'Premium' }}</ion-label>
-      <ion-label class="upgrade-btn" *ngIf="checkStandardPermission()">
+      <!-- <ion-label class="upgrade-btn" *ngIf="checkStandardPermission()">
         <span (click)="gotoUpgrade()">Upgrade <ion-icon name="chevron-forward-outline"></ion-icon></span>
-      </ion-label>
+      </ion-label> -->
     </ion-row>
   </ion-grid>
 

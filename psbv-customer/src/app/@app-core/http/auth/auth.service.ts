@@ -22,7 +22,17 @@ export class AuthService {
   public get receiveData(): Observable<any> {
     return this.data.asObservable();
   }
+  public checkTypeOfUser(res){
+      return this.http.get(`${APICONFIG.AUTH.TYPE_OF_USER}`, res).pipe(
+        map((result) =>{
+          return result
+        }),
+        catchError((errorRes: any) => {
+          throw errorRes.error;
+        })
 
+      )
+  }
   public sendData(value: any) {
     this.data.next(value);
   }
