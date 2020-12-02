@@ -14,7 +14,7 @@ export class AccountService {
     private http: HttpClient,
     // private toastr: ToastrService,
   ) { }
-  permission: string;
+  // permission: string;
   userProfile;
   public getAccounts(request: IGetAccounts) {
     return this.http.get<IGetAccounts>(`${APICONFIG.ACCOUNT.PROFILE_USER}?${(requestQuery(request))}`).pipe(
@@ -26,16 +26,14 @@ export class AccountService {
   public checkRole() {
     if(localStorage.getItem('Authorization') === null)
     {
-        this.permission = 'GUEST';
+       return 'guest';
     }
-    else {
      this.getAccounts(this.userProfile).subscribe((data) => {
-        this.userProfile = {
+        return this.userProfile = {
             role: data.user.role,
         }
-        console.log(this.userProfile.role);
      })
-    }
+    
     
   }
 
