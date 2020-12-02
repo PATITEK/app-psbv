@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: ShoppingCartPage
+  },  {
+    path: 'cart-detail',
+    loadChildren: () => import('./cart-detail/cart-detail.module').then( m => m.CartDetailPageModule)
   }
+
 ];
 
 @NgModule({

@@ -11,7 +11,7 @@
       <div class="img-box">
         <ion-img [src]="product.thumb_image.url"></ion-img>
         <ion-button class="price" shape="round" size="small" disabled *ngIf="product.id != ''">
-          {{ product.price }}
+          {{ product.price | number: '1.0-2'}}
         </ion-button>
       </div>
 

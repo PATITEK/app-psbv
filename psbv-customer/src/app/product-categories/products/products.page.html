@@ -20,7 +20,7 @@
             {{ data[i].name }}
           </ion-label>
           <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-            {{ data[i].price }}
+            {{ data[i].price | number: '1.0-2'}}
           </ion-label>
         </ion-item-group>
       </ion-col>
@@ -31,7 +31,7 @@
             {{ data[i + 1].name }}
           </ion-label>
           <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-            {{ data[i + 1].name }}
+            {{ data[i + 1].price | number: '1.0-2'}}
           </ion-label>
         </ion-item-group>
       </ion-col>
