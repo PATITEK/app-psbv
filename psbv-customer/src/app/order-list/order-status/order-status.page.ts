@@ -1,4 +1,6 @@
+import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { isBuffer } from 'util';
 
 @Component({
@@ -8,14 +10,24 @@ import { isBuffer } from 'util';
 })
 export class OrderStatusPage implements OnInit {
 
-  constructor() { }
+  constructor(private route: Router) { 
+    
+   }
   public activeTab = "orderStatus";
+
   
   ngOnInit() {
   }
   changeTabs(name) {
    this.activeTab = name;
    console.log(name);
+  }
+  // checkTab(): bool {
+  //   return this.activeTab;
+
+  //}
+  gotoDetail() {
+    this.route.navigateByUrl('main/order-status/detail-order')
   }
   async segmentChanged(event) {
     this.activeTab = event.target.value;

@@ -25,7 +25,6 @@ export class LoginPage implements OnInit {
     password: new FormControl(''),
   });
   ngOnInit() {
-    this.authService.checkTypeOfUser
   }
 
   showPassword2() {

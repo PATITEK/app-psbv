@@ -1,14 +1,14 @@
-<ion-header>
+<ion-header  [ngClass]="{'active-bg': activeTab === 'orderHistory'}">
     <ion-row no-lines>
         <ion-col class="heading">
             ORDER LIST
         </ion-col>
     </ion-row>
-    <ion-segment (ionChange)="segmentChanged($event)">
-        <button (click)="changeTabs('orderStatus')" [ngClass]="{'segment-btn-active':activeTab === 'orderStatus'}" class="button-segment">
+    <ion-segment (ionChange)="segmentChanged($event)" value="orderStatus"  [ngClass]="{'active-bg-segment ': activeTab === 'orderHistory'}">
+        <button (click)="changeTabs('orderStatus')" [ngClass]="{'active-btn-status':activeTab === 'orderStatus', 'active-btn-status-h':activeTab==='orderHistory'}" class="button-segment" value="orderStatus">
             <ion-label>Order status</ion-label>
         </button>
-        <button (click)="changeTabs('orderHistory')" [ngClass]="{'segment-btn-active':activeTab === 'orderHistory'}" class="button-segment">
+        <button (click)="changeTabs('orderHistory')" [ngClass]="{'active-btn-history':activeTab === 'orderHistory'}" class="button-segment" value="orderHistory">
             <ion-label>History</ion-label>
         </button>
     </ion-segment>
@@ -16,7 +16,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content  [ngClass]="{'active-bg-content': activeTab === 'orderHistory'}">
     <ion-card class="section__main">
         <ion-list style="background-color: #EFEFEF">
             <ion-card class="section__sub">
@@ -27,7 +27,7 @@
                 </ion-grid>
                 <ion-item class="detail__wrapper" lines="none" (click)="gotoOrderStatus()">
                     <ion-item class="item__price-tag">
-                        Sent Request
+                       Send request
                         <ion-img class="item__price-tag__slash" src="assets/shopping-cart/slash.svg"></ion-img>
                         3 Products
                     </ion-item>
@@ -37,7 +37,10 @@
                 </ion-item>
                 <ion-card-content class="item__detail">Product Product Product, Product Product, Product, Product ...
                 </ion-card-content>
+                <ion-button lines="none" class="re-order" size="small">Detail</ion-button>
+                <ion-button lines="none" class="re-order" size="small">Status</ion-button>
                 <ion-button lines="none" class="re-order" size="small">Re-order</ion-button>
+
             </ion-card>
         </ion-list>
 

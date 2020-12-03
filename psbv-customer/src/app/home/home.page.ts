@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { IPageRequest, ProductsService } from '../@app-core/http';
+import {  IPageRequest, PERMISSIONS, ProductsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
+import { StorageService } from '../@app-core/storage.service';
 import { PERMISSION } from './product-info/product-info.page';
 
 @Component({
@@ -20,11 +21,15 @@ export class HomePage implements OnInit {
   }
   data = [];
   permission: PERMISSION = PERMISSION.STANDARD;
-
+  userProfile = {
+    role: PERMISSIONS[0].value ,
+  }
+  permiss: string;
   constructor(
     private router: Router,
     private productService: ProductsService,
-    private loading: LoadingService
+    private loading: LoadingService,
+    private storageService: StorageService
   ) {}
 
   goToDetail(item) {
@@ -39,9 +44,14 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.loading.present();
     this.loadData();
+    this.storageService.infoAccount.subscribe((data) => {
+      this.permiss = data.role;
+    })
+  
   }
 
   loadData() {
+    
     setTimeout(() => {
       this.productService.getProducts(this.pageRequest).subscribe(data => {
         for (let item of data.products) {
@@ -60,10 +70,11 @@ export class HomePage implements OnInit {
   }
 
   checkGuestPermission(): boolean {
-    return this.permission == PERMISSION.GUEST;
+    return this.permiss === 'guest'
+    
   }
 
-  checkStandardPermission(): boolean {
-    return this.permission == PERMISSION.STANDARD;
-  }
+  // checkStandardPermission(): boolean {
+  //   return this.permiss === 'stand';
+  // }
 }
