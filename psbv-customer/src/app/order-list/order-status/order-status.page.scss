@@ -161,17 +161,25 @@ ion-content {
     margin-right: -2rem;
     margin-left: 1rem;
   }
-  .re-order {
-    // width: cacl(100%/1.5);
+  .btn {
+    width: 98px;
     --background: #91e29b;
     --color-activated: #91e29b;
-    --border-radius: 12px;
+    --border-radius: 8px;
     color: white;
     font-size: 12px;
     height: 26px;
-    // position: absolute;
-    right: 6px;
+    position: absolute;
+    right: 16px;
     bottom: 6px;
+    margin: 0;
+  }
+  .btn-detail {
+
+  }
+  .btn-status {
+    right: 128px;
+    
   }
 }
 @media screen and (min-width: 400px) {
