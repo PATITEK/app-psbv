@@ -14,21 +14,30 @@ export class OrderStatusPage implements OnInit {
     
    }
   public activeTab = "orderStatus";
-
+  checkTab = true;
+  
   
   ngOnInit() {
   }
   changeTabs(name) {
    this.activeTab = name;
+   if(this.activeTab ==='orderStatus'){
+     this.checkTab = true;
+   }
+   else if(this.activeTab === 'orderHistory')
+   {
+     this.checkTab = false;
+   }
    console.log(name);
   }
-  // checkTab(): bool {
-  //   return this.activeTab;
-
-  //}
-  gotoDetail() {
+  gotoDetailOrder() {
     this.route.navigateByUrl('main/order-status/detail-order')
   }
+  gotoOrderStatus(){
+    this.route.navigateByUrl('main/order-status/order-status-detail')
+
+  }
+
   async segmentChanged(event) {
     this.activeTab = event.target.value;
   }

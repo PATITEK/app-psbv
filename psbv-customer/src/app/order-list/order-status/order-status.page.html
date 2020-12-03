@@ -12,14 +12,13 @@
             <ion-label>History</ion-label>
         </button>
     </ion-segment>
-
 </ion-header>
 
 
 <ion-content  [ngClass]="{'active-bg-content': activeTab === 'orderHistory'}">
-    <ion-card class="section__main">
+    <ion-card class="section__main"> 
         <ion-list style="background-color: #EFEFEF">
-            <ion-card class="section__sub">
+            <ion-card class="section__sub"  *ngIf="checkTab">
                 <ion-grid>
                     <ion-row>
                         <ion-label class="item__header">Item 12/12/1212</ion-label>
@@ -37,33 +36,29 @@
                 </ion-item>
                 <ion-card-content class="item__detail">Product Product Product, Product Product, Product, Product ...
                 </ion-card-content>
-                <ion-button lines="none" class="btn btn-detail" size="small">Detail</ion-button>
-                <ion-button lines="none"  class="btn btn-status" size="small">Status</ion-button>
+                <ion-button lines="none" class="btn btn-detail" size="small" (click)="gotoDetailOrder()">Detail</ion-button>
+                <ion-button lines="none"  class="btn btn-status" size="small" (click)="gotoOrderStatus()">Status</ion-button>
+            </ion-card>
+            <ion-card class="section__sub"  *ngIf="!checkTab">
+                <ion-grid>
+                    <ion-row>
+                        <ion-label class="item__header">Item 12/12/1212</ion-label>
+                    </ion-row>
+                </ion-grid>
+                <ion-item class="detail__wrapper" lines="none" >
+                    <ion-item class="item__price-tag">
+                            Sent Request
+                            <ion-img class="item__price-tag__slash" src="assets/shopping-cart/slash.svg"></ion-img>
+                            3 Products
+                    </ion-item>             
+                </ion-item> 
+                <ion-card-content class="item__detail">Product Product Product, Product Product, Product, Product ...</ion-card-content>
+                <ion-button lines="none" class="btn" size="small">Re-order</ion-button>
             </ion-card>
         </ion-list>
 
 
     </ion-card>
-    <ion-card class="section__main-">
-        <ion-list style="background-color: #EFEFEF">
-          <ion-card class="section__sub-">
-              <ion-grid>
-                  <ion-row>
-                      <ion-label class="item__header">Item 12/12/1212</ion-label>
-                  </ion-row>
-              </ion-grid>
-              <ion-item class="detail__wrapper" lines="none"  (click)="gotoOrderStatus()">
-                  <ion-item class="item__price-tag">
-                          Sent Request
-                          <ion-img class="item__price-tag__slash" src="../../assets/slash.svg"></ion-img>
-                          3 Products
-                  </ion-item>             
-              </ion-item> 
-              <ion-card-content class="item__detail">Product Product Product, Product Product, Product, Product ...</ion-card-content>
-              <ion-button lines="none" class="re-order" size="small">Re-order</ion-button>
-          </ion-card>
-        </ion-list>
     
-        
-    </ion-card>
+
 </ion-content>
