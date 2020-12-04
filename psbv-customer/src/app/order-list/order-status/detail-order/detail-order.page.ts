@@ -130,6 +130,10 @@ export class DetailOrderPage implements OnInit {
     } else {
       this.router.navigateByUrl('/main/order-status/shipping');
     }
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
   }
 
   goToDetailComponent(): void {

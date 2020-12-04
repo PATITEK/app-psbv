@@ -21,6 +21,16 @@ export class ProductsService {
       }),
       catchError((errorRes) => { throw errorRes.error; }));
   }
+  //Search
+  public searchProduct(nameprodudct: string) {
+    return this.http.get(`${APICONFIG.PRODUCTS.SEARCH(nameprodudct)}`).pipe(
+      map((result) => {
+        console.log(result);
+        // console.log(result);
+        return result;
+      }),
+    catchError((errorRes) =>{throw errorRes.error}));
+  }
 
   public getProductDetail(id: string) {
     return this.http.get<any>(`${APICONFIG.PRODUCTS.GETDETAIL(id)}`).pipe(

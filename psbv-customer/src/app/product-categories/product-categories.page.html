@@ -1,4 +1,18 @@
-<app-header-home></app-header-home>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-item-group>
+      <ion-item-group>
+        <ion-img src="assets/icon/logo.svg" (click)= "gotoHome()"></ion-img>
+    </ion-item-group>
+  <ion-item-group>
+    <ion-icon name="notifications-outline" class="header__icon header__icon-noti" (click)="gotoNoti()"></ion-icon>
+    <ion-icon name="person-outline" class="header__icon " (click)="onGoUserInfo()"></ion-icon>
+  </ion-item-group>
+</ion-item-group>
+<ion-searchbar (ionInput) ="onInput($event)" autocorrect="off" autocorrect="off"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <ion-grid>

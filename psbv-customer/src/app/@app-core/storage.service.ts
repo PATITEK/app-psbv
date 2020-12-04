@@ -17,25 +17,26 @@ export class StorageService {
         return this.userSub.asObservable();
     }
     public setInfoAccount() {
-        if(localStorage.getItem('Authorization') !== null) {
-               return  this.accountService.getAccounts().subscribe((data: any) => {
-                    this.userSub.next(data.user);
-                })
-                }
-         else {
+        if (localStorage.getItem('Authorization') !== null) {
+            return this.accountService.getAccounts().subscribe((data: any) => {
+
+                this.userSub.next(data.user);
+            })
+        }
+        else {
             const data = {
-                user : {
+                user: {
                     fullname: "Guest",
                     email: "guest@gmail.com",
                     role: PERMISSIONS[0].value,
                     phone_number: "000000"
                 }
             }
-           return this.userSub.next(data.user);
+            return this.userSub.next(data.user);
         }
     }
     public detokenUser(value) {
         //   const data = jwt_decode(value);
-          return "";
+        return "";
     }
 }
