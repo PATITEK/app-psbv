@@ -61,9 +61,18 @@ export class ProductsPage implements OnInit {
         this.productGroupService.getProductGroupDetail(this.id, this.pageRequest)
           .subscribe(data => {
             for (let item of data.products) {
+              console.log(data);
               this.data.push(item);
             }
-
+          // image not found
+          for(let i = 0 ; i < this.data.length ; i++) {
+            if(this.data[i].thumb_image === null) {
+              const data = {
+                url: "https://i.imgur.com/dbpoag5.png"
+              }
+              this.data[i].thumb_image = data;
+            }
+          }
             this.infinityScroll.complete();
             this.loading.dismiss();
             this.pageRequest.page++;

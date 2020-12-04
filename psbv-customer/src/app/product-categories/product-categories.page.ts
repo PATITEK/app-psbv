@@ -16,7 +16,7 @@ export class ProductCategoriesPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
 
   data = [];
-  
+  checkurl: boolean
   pageRequest: IPageRequest = {
     page: 1,
     per_page: 12,
@@ -48,6 +48,16 @@ export class ProductCategoriesPage implements OnInit {
         for (let item of data.product_groups) {
           this.data.push(item);
         }
+        // image not found
+        for(let i = 0 ; i < this.data.length ; i++) {
+          if(this.data[i].thumb_image === null) {
+            const data = {
+              url: "https://i.imgur.com/dbpoag5.png"
+            }
+            this.data[i].thumb_image = data;
+          }
+        }
+       
         this.infinityScroll.complete();
         this.loading.dismiss();
         this.pageRequest.page++;
@@ -64,6 +74,7 @@ export class ProductCategoriesPage implements OnInit {
         }
       })
     }, 50);
+   
   }
 
   goToDetail(item) {

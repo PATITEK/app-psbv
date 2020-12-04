@@ -23,12 +23,16 @@ export const TIMEOUTSEARCH = 500;
 
 export const PERMISSIONS = [
   {
-    valueView: 'Nhân viên',
-    value: 'employee'
+    valueView: 'Guest',
+    value: 'guest'
   },
   {
-    valueView: 'Quản trị viên',
-    value: 'admin'
+    valueView: 'Standard',
+    value: 'standard'
+  },
+  {
+    valueView: 'Premium',
+    value: 'premium'
   }
 ];
 

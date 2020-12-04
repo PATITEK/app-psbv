@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { requestQuery } from 'src/app/@app-core/utils';
 import { IPageRequest } from '../global';
 import { IAccount, IGetAccounts, IPageAccount } from './account.DTO';
+import { promise } from 'protractor';
 
 @Injectable()
 export class AccountService {
@@ -15,26 +16,14 @@ export class AccountService {
     // private toastr: ToastrService,
   ) { }
   // permission: string;
-  userProfile;
-  public getAccounts(request: IGetAccounts) {
-    return this.http.get<IGetAccounts>(`${APICONFIG.ACCOUNT.PROFILE_USER}?${(requestQuery(request))}`).pipe(
+
+  public getAccounts() {
+    return this.http.get(`${APICONFIG.ACCOUNT.PROFILE_USER}`).pipe(
       map((result) => {
         return result;
       }),
-      catchError((errorRes) => { throw errorRes.error; }));
-  }
-  public checkRole() {
-    if(localStorage.getItem('Authorization') === null)
-    {
-       return 'guest';
-    }
-     this.getAccounts(this.userProfile).subscribe((data) => {
-        return this.userProfile = {
-            role: data.user.role,
-        }
-     })
-    
-    
+      catchError((errorRes) => { 
+        throw errorRes.error; }));
   }
 
   public getAccountDetail(id: string) {
@@ -53,19 +42,17 @@ export class AccountService {
       }),
       catchError((errorRes) => { throw errorRes.error; }));
   }
-
-
-    // XOA MOT NHAN VIEN
-    public DeleteAccount(id: string) {
-      return this.http.delete(`${APICONFIG.ACCOUNT.DELETE(id)}`).pipe(
-        map((result) => {
-          // this.toastr.success(SUCCESS.DELETE, STATUS.SUCCESS);
-          return result;
-        }),
-        catchError((errorRes: any) => {
-          throw errorRes.error;
-        }));
-    }
+  // XOA MOT NHAN VIEN
+  public DeleteAccount(id: string) {
+    return this.http.delete(`${APICONFIG.ACCOUNT.DELETE(id)}`).pipe(
+      map((result) => {
+        // this.toastr.success(SUCCESS.DELETE, STATUS.SUCCESS);
+        return result;
+      }),
+      catchError((errorRes: any) => {
+        throw errorRes.error;
+      }));
+  }
 
 
 }

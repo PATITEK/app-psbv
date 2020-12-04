@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     if (localStorage.getItem('Authorization')) {
-      this.storage.setInfoAccount(localStorage.getItem('Authorization'));
+      // this.storage.setInfoAccount(localStorage.getItem('Authorization'));
       return of(true);
     } else {
       this.router.navigateByUrl('/auth/login', { queryParams: { returnUrl: window.location.pathname } });

@@ -25,7 +25,6 @@ export class LoginPage implements OnInit {
     password: new FormControl(''),
   });
   ngOnInit() {
-
   }
 
   showPassword2() {
