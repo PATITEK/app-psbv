@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { AccessoriesService, IPageRequest, ProductsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
+import { StorageService } from 'src/app/@app-core/storage.service';
 
 export enum PERMISSION {
   GUEST,
@@ -26,6 +27,7 @@ export class ProductInfoPage implements OnInit {
   }
   permission: PERMISSION = PERMISSION.GUEST;
   accessories = [];
+  permiss: string;
   product = {
     id: '',
     name: ' ',
@@ -47,7 +49,8 @@ export class ProductInfoPage implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductsService,
     private loading: LoadingService,
-    private accessoriesService: AccessoriesService
+    private accessoriesService: AccessoriesService,
+    private storageService: StorageService
   ) {
     this.cart = JSON.parse(localStorage.getItem('cart')) || {
       name: 'Cart 1',
@@ -69,6 +72,10 @@ export class ProductInfoPage implements OnInit {
       }
     })
     this.loadData();
+    this.storageService.infoAccount.subscribe((data) => {
+      this.permiss = data.role;
+    })
+  
   }
 
   ionViewWillEnter() {
@@ -201,7 +208,8 @@ export class ProductInfoPage implements OnInit {
   }
 
   checkGuestPermission(): boolean {
-    return this.permission == PERMISSION.GUEST;
+    
+    return this.permiss === 'guest'
   }
 
   loadData() {

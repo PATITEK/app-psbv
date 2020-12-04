@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthGuard } from 'src/app/@app-core/auth-guard.service';
+import { ProductsService } from 'src/app/@app-core/http';
 
 @Component({
   selector: 'app-header-home',
@@ -10,18 +11,11 @@ import { AuthGuard } from 'src/app/@app-core/auth-guard.service';
 export class HeaderHomeComponent implements OnInit {
 
   constructor(
-    private router: Router
   ) { }
+  
 
-  ngOnInit() { }
+  ngOnInit() {
+   }
 
-  onGoUserInfo() {
-      this.router.navigateByUrl("/account/user-info");
-  }
-  gotoNoti() {
-    this.router.navigateByUrl('notification');
-  }
-  gotoHome() {
-    this.router.navigateByUrl('/main/product-categories');
-  }
+ 
 }

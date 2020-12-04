@@ -1,9 +1,52 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>detail-order</ion-title>
-  </ion-toolbar>
+<ion-header lines="no">
+  <ion-button fill="clear" size="small" class="back-button" (click)="goBack()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-card-title>Detail order</ion-card-title>
 </ion-header>
 
 <ion-content>
+  <ion-card class="card-title ion-text-center">
+    <ion-card-header>
+      <ion-card-title class="title"> {{ item.name }}</ion-card-title>
+      <div class="status-box">
+        <span class="circle" [style.background]="getStatus().background"></span>
+        <span class="status-name"> {{ getStatus().name }}</span>
+      </div>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list [style.padding]="checkConfirmedStatus() ? text : 0">
+        <ion-item *ngFor="let subItem of item.subItems">
+          <span class="name" slot="start">{{ subItem.name }}</span>
+          <div class="content" slot="end">
+            {{ subItem.desc1 }} {{ subItem.desc2 }}
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 
+  <p class="ion-text-center" style="font-size: 12px; color: #727272;" *ngIf="checkCancelStatus()">You can't view detail component product <br> with cancel order</p>
+
+  <ion-grid class="products">
+    <ion-row *ngFor="let product of products" class="product">
+      <ion-col size="6">
+        <ion-img [src]="product.src"></ion-img>
+      </ion-col>
+      <ion-col size="6">
+        <ion-row class="heading-box">
+          <span class="amount">{{ product.amount }}</span>
+          <span class="product-name">{{ product.name }}</span>
+        </ion-row>
+        <ion-row class="ion-nowrap" style="overflow-x: scroll;">
+          <ion-col size="7" *ngFor="let accessory of product.accessories">
+            <ion-img [src]="accessory.src"></ion-img>
+            <span class="accessory-name">{{ accessory.name }}</span>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+
+      <ion-button class="detail-component-btn" (click)="goToDetailComponent()" *ngIf="checkPremium()">View detail component</ion-button>
+    </ion-row>
+  </ion-grid>
 </ion-content>

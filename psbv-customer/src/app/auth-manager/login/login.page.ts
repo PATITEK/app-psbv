@@ -25,7 +25,6 @@ export class LoginPage implements OnInit {
     password: new FormControl(''),
   });
   ngOnInit() {
-
   }
 
   showPassword2() {
@@ -60,8 +59,7 @@ export class LoginPage implements OnInit {
     this.authService.login(this.profileForm.value).subscribe((data: any) => {
     this.showSpinner = false;
     console.log(data);
-    localStorage.setItem('Authorization', data.token);
-    localStorage.setItem('fullname', data.fullname);
+
     
     this.router.navigateByUrl('/main/product-categories');
     this.authService.sendData(this.message);

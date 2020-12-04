@@ -16,7 +16,7 @@ export class ProductCategoriesPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
 
   data = [];
-  
+  checkurl: boolean
   pageRequest: IPageRequest = {
     page: 1,
     per_page: 12,
@@ -27,19 +27,35 @@ export class ProductCategoriesPage implements OnInit {
   constructor(
     private router: Router,
     private productGroupService: ProductGroupsService,
-    private loading: LoadingService
-  ) { }
+    private loading: LoadingService,
 
+  ) { }
+  val = '';
   ngOnInit() {
     this.loading.present();
     this.loadData();
   }
-
+  onGoUserInfo() {
+    this.router.navigateByUrl("/account/user-info");
+  }
+  gotoNoti() {
+    this.router.navigateByUrl('notification');
+  }
+  gotoHome() {
+    this.router.navigateByUrl('/main/product-categories');
+  }
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'flex';
     });
+  }
+  onInput(event: any) {
+    const val = event.target.value;
+    console.log(this.val.valueOf());
+    this.productGroupService.searchProductGroup(val).subscribe((data: any) => {
+      this.data = data.products;
+    })
   }
 
   loadData() {
@@ -48,6 +64,16 @@ export class ProductCategoriesPage implements OnInit {
         for (let item of data.product_groups) {
           this.data.push(item);
         }
+        // image not found
+        for (let i = 0; i < this.data.length; i++) {
+          if (this.data[i].thumb_image === null) {
+            const data = {
+              url: "https://i.imgur.com/dbpoag5.png"
+            }
+            this.data[i].thumb_image = data;
+          }
+        }
+
         this.infinityScroll.complete();
         this.loading.dismiss();
         this.pageRequest.page++;
@@ -64,6 +90,7 @@ export class ProductCategoriesPage implements OnInit {
         }
       })
     }, 50);
+
   }
 
   goToDetail(item) {
