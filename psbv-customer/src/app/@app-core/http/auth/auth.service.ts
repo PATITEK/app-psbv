@@ -67,7 +67,10 @@ export class AuthService {
   }
   public login(req) {
     return this.http.post(`${APICONFIG.AUTH.LOGIN}`, req).pipe(
-      map((result) => {
+      map((result: any) => {
+        localStorage.setItem('Authorization', result.token);
+        localStorage.setItem('fullname', result.fullname);
+        this.storage.setInfoAccount();
         // this.toastr.success(SUCCESS.AUTH.LOGIN);
         return result;
       }),
@@ -90,7 +93,7 @@ export class AuthService {
   logout() {
     localStorage.clear();
     this.storage.clear();
-    
+    this.storage.setInfoAccount();
     this.router.navigateByUrl('/main/home');
   }
   checkLogin() {

@@ -8,11 +8,11 @@ export const APICONFIG = {
   AUTH: {
     LOGIN: '/app/auth/login',
     SIGNUP: `/app/auth/signup`,
-    TYPE_OF_USER:  `/app/auth/users/profile`,
+    TYPE_OF_USER: `/app/auth/users/profile`,
     RESET_PASSWORD_EMAIL: `/app/reset_password/send_code`,
     CHECK_CODE_RESET: `/app/reset_password/check_code`,
     RESET_PASSWORD: `/app/reset_password/reset_password`,
-   
+
   },
   ACCOUNT: {
     PROFILE_USER: `/app/users/profile`,
@@ -23,6 +23,7 @@ export const APICONFIG = {
   },
   PRODUCT_GROUP: {
     GET: `/app/product_groups`,
+    SEARCH: (search_term) => `/app/product_groups?name=${search_term}`,
     GETDETAIL: (id) => `/app/product_groups/${id}`,
     CREATE: `/app/product_groups`,
     EDIT: (id) => `/app/product_groups/${id}`,
@@ -30,6 +31,7 @@ export const APICONFIG = {
   },
   PRODUCTS: {
     GET: `/app/products`,
+    SEARCH: (name) => `/app/products?name=${name}`,
     GETDETAIL: (id) => `/app/products/${id}`,
     CREATE: `/app/products`,
     EDIT: (id) => `/app/products/${id}`,

@@ -13,6 +13,7 @@ ion-header {
     }
 }
 ion-content{
+    --overflow: hidden;
     .have-account{
         display: block;
         margin-top: 50px;

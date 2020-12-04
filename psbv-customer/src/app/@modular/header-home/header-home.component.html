@@ -10,7 +10,7 @@
     <ion-icon name="person-outline" class="header__icon " (click)="onGoUserInfo()"></ion-icon>
   </ion-item-group>
 </ion-item-group>
-<ion-searchbar class =""></ion-searchbar>
+<ion-searchbar class =""(change) ="search($event)" autocorrect="off"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
  
