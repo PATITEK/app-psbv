@@ -128,7 +128,6 @@ export class ShoppingCartPage implements OnInit {
             return this.items.pop();
           }
         },
-
       ]
     });
     await alert.present();

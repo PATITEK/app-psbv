@@ -6,7 +6,6 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-<ion-icon name="chevron-forward-outline" class="next"routerLink="/main/order-status/shipping"></ion-icon>
   <ion-button class="heading" expand="block" size="small" disabled>Item 12/12/1212</ion-button>
   <ion-list>
     <ion-item lines="none" *ngFor="let status of statuses" (click)="goToChild(status)">
@@ -17,7 +16,7 @@
           {{ status.time }} {{ status.date }}
         </ion-label>
       </ion-item-group>
-      <!-- <ion-icon *ngIf="status.childSrc && status.didPassed" name="chevron-forward-outline" class="shipping-button"></ion-icon> -->
+      <ion-icon *ngIf="status.childSrc && status.didPassed" name="chevron-forward-outline" class="shipping-button"></ion-icon>
     </ion-item>
 
     <div class="line-bottom">

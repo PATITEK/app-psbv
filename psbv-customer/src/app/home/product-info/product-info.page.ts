@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { AccessoriesService, IPageRequest, ProductsService } from 'src/app/@app-core/http';
+import { AccessoriesService, IPageRequest, PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 
@@ -10,7 +10,6 @@ export enum PERMISSION {
   STANDARD,
   PREMIUM
 };
-
 
 @Component({
   selector: 'app-product-info',
@@ -27,8 +26,7 @@ export class ProductInfoPage implements OnInit {
     total_objects: 20
   }
   counter: number = 0;
-  permiss: string;
-  permission: PERMISSION = PERMISSION.GUEST;
+  permission: string;
   accessories = [];
   product = {
     id: '',
@@ -45,6 +43,7 @@ export class ProductInfoPage implements OnInit {
     name: 'Cart 1',
     items: []
   }
+  curProductsLength = 0;
 
   constructor(
     private router: Router,
@@ -53,7 +52,7 @@ export class ProductInfoPage implements OnInit {
     private loading: LoadingService,
     private accessoriesService: AccessoriesService,
     private storageService: StorageService,
-  ) { 
+  ) {
     this.cart = JSON.parse(localStorage.getItem('cart')) || {
       name: 'Cart 1',
       items: []
@@ -63,11 +62,8 @@ export class ProductInfoPage implements OnInit {
   ngOnInit() {
     this.loading.present();
     this.route.queryParams.subscribe(params => {
-      if (params.permission !== undefined) {
-        this.permission = JSON.parse(params['permission']);
-      }
-      if (params.id !== undefined) {
-        this.productService.getProductDetail(JSON.parse(params['id']))
+      if (params.data !== undefined) {
+        this.productService.getProductDetail(JSON.parse(params['data']).id)
         .subscribe(data => {
           this.product = data.product;
         });
@@ -75,10 +71,8 @@ export class ProductInfoPage implements OnInit {
     })
     this.loadData();
     this.storageService.infoAccount.subscribe((data) => {
-      this.permiss = data.role;
-      console.log(this.permiss);
+      this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
-  
   }
 
   ionViewWillEnter() {
@@ -90,68 +84,46 @@ export class ProductInfoPage implements OnInit {
 
   goBack(): void {
     this.router.navigateByUrl('main/home');
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'flex';
-    });
   }
 
   goToDetail(): void {
     if (this.checkGuestPermission()) {
       this.router.navigateByUrl('/auth/login');
     } else {
+      const data = {
+        id: this.product.id
+      }
       this.router.navigate(['/main/home/product-info/product-detail'], {
         queryParams: {
-          id: JSON.stringify(this.product.id),
-          permission: JSON.stringify(this.permission)
+          data: JSON.stringify(data)
         }
       });
     }
   }
 
   goToCart(): void {
-    const data = {
-      urlBack: 'main/home/product-info'
-    }
-    this.router.navigate(['main/cart-detail'], {
-      queryParams: {
-        data: JSON.stringify(data)
-      }
-    });
+    this.router.navigateByUrl('/main/shopping-cart');
   }
 
   getItem(accessory): any {
-    for (let i of this.accessoryIds) {
-      if (i.id == accessory.id) {
-        return i.added ?
-          {
-            background: '#494949',
-            color: 'white',
-            iconName: 'remove-outline'
-          }
-          :
-          {
-            background: '#eaeaea',
-            color: '#636363',
-            iconName: 'add-outline'
-          }
+    return accessory.quantity > 0 ?
+      {
+        background: '#494949',
+        color: 'white'
       }
-    }
-  }
-
-  toggleItem(accessory): void {
-    if (this.permission !== PERMISSION.GUEST) {
-      for (let i of this.accessoryIds) {
-        if (i.id == accessory.id) {
-          i.added = !i.added;
-          break;
-        }
+      :
+      {
+        background: '#eaeaea',
+        color: '#636363'
       }
-    }
   }
 
   selectAllItem(): void {
-    this.accessoryIds.forEach(accessory => accessory.added = true);
+    this.accessoryIds.forEach(accessory => {
+      if (accessory.quantity == 0) {
+        accessory.quantity++;
+      }
+    });
   }
 
   addProduct(): void {
@@ -162,7 +134,7 @@ export class ProductInfoPage implements OnInit {
       quantity: 1, // default = 1
       price: this.product.price,
       accessories: this.accessoryIds.reduce((acc, cur) => {
-        if (cur.added) {
+        if (cur.quantity > 0) {
           let name;
           for (let i of this.accessories) {
             if (cur.id == i.id) {
@@ -173,8 +145,8 @@ export class ProductInfoPage implements OnInit {
           acc.push({
             id: cur.id,
             name: name,
-            quantity: 1, // default = 1,
-            price: 100 // default = 100
+            quantity: cur.quantity,
+            price: cur.price
           });
         }
         return acc;
@@ -192,19 +164,21 @@ export class ProductInfoPage implements OnInit {
     if (!duplicate) {
       this.cart.items.push(product);
     }
+ 
+    if (this.curProductsLength < 99) {
+      this.curProductsLength++;
+    }
 
     // update data
     this.setLocalStorage();
 
     // reset selected item
-    this.accessoryIds.forEach(accessory => accessory.added = false);
+    this.accessoryIds.forEach(accessory => accessory.quantity = 0);
   }
 
-  
   checkGuestPermission(): boolean {
-    return this.permiss === 'guest'
+    return this.permission == PERMISSIONS[0].value;
   }
-
 
   loadData() {
     setTimeout(() => {
@@ -213,7 +187,8 @@ export class ProductInfoPage implements OnInit {
           this.accessories.push(item);
           this.accessoryIds.push({
             id: item.id,
-            added: false
+            quantity: 0,
+            price: item.price
           })
         }
 
@@ -235,9 +210,11 @@ export class ProductInfoPage implements OnInit {
       return false;
     else {
       // comapring each element of array 
-      for (var i = 0; i < a.length; i++)
-        if (a[i].id != b[i].id)
+      for (var i = 0; i < a.length; i++) {
+        if (a[i].id != b[i].id || a[i].quantity != b[i].quantity) {
           return false;
+        }
+      }
       return true;
     }
   }
@@ -246,7 +223,13 @@ export class ProductInfoPage implements OnInit {
     localStorage.setItem('cart', JSON.stringify(this.cart))
   }
 
-  calTotalItems() {
-    return this.cart.items.reduce((acc, cur) => acc + cur.quantity, 0);
+  decreaseQuantity(accessory) {
+    if (accessory.quantity > 0) {
+      accessory.quantity--;
+    }
+  }
+
+  increaseQuantity(accessory) {
+    accessory.quantity++;
   }
 }

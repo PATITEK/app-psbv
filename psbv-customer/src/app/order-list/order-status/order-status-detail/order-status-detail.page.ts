@@ -29,7 +29,7 @@ export class OrderStatusDetailPage implements OnInit {
       time: '09.05am',
       date: '12/12/1212',
       didPassed: true,
-      childSrc: '/main/order/shipping',
+      childSrc: '/main/order-status/shipping',
       iconName: 'airplane-outline'
     },
     {
@@ -50,19 +50,18 @@ export class OrderStatusDetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.text = `calc(${this.countPassedItem()}% + 5px)`;
+  }
+
+  ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
-    this.text = `calc(${this.countPassedItem()}% + 5px)`;
   }
 
   goBack(): void {
     this.router.navigateByUrl('main/order-status');
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'flex';
-    });
   }
 
   goToChild(status: IStatus) {
@@ -70,27 +69,12 @@ export class OrderStatusDetailPage implements OnInit {
       this.router.navigateByUrl(status.childSrc);
     }
   }
-  gotoShipping() {
-    console.log('hihi')
-    this.router.navigateByUrl('main/order-status/shipping')
-  }
-
-  goToDetailOrder(): void {
-    this.router.navigate(['main/order-status/detail-order'],{
-      queryParams:{
-        data: JSON.stringify(1)
-      }
-    });
-  }
 
   countPassedItem(): number {
     let num: number = this.statuses.filter(status => status.didPassed).length;
     return num * 2 * 10 - 20;
   }
 }
-
-  
-
 
 export interface IStatus {
   name: string;
