@@ -26,6 +26,7 @@ export class ShoppingCartPage implements OnInit {
     });
 
     this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    this.cartItemsSelected = [];
     this.cartItems.forEach(() => this.cartItemsSelected.push({
       selected: false
     }))
@@ -35,12 +36,6 @@ export class ShoppingCartPage implements OnInit {
     return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price, 0)) * item.quantity;
   }
 
-  calTotalPrice(items) {
-    return items.reduce((acc, cur) => {
-      return acc + this.calPrice(cur);
-    }, 0)
-  }
-
   listAccessoriesName(item) {
     return item.accessories.reduce((acc, cur) => {
       return acc + ', ' + cur.name;
@@ -48,7 +43,7 @@ export class ShoppingCartPage implements OnInit {
   }
 
   decreaseQuantity(item) {
-    if (item.quantity > 0) {
+    if (item.quantity > 1) {
       item.quantity--;
       this.setLocalStorage();
     }
@@ -67,6 +62,7 @@ export class ShoppingCartPage implements OnInit {
     for (let i of this.cartItems) {
       if (item.id == i.id && this.isEqual(item.accessories, i.accessories)) {
         this.cartItems.splice(this.cartItems.indexOf(item), 1);
+        this.cartItemsSelected.splice(this.cartItems.indexOf(item), 1);
         this.setLocalStorage();
         break;
       }
@@ -79,9 +75,11 @@ export class ShoppingCartPage implements OnInit {
       return false;
     else {
       // comapring each element of array 
-      for (var i = 0; i < a.length; i++)
-        if (a[i].id != b[i].id)
+      for (var i = 0; i < a.length; i++) {
+        if (a[i].id != b[i].id || a[i].quantity != b[i].quantity) {
           return false;
+        }
+      }
       return true;
     }
   }
@@ -103,7 +101,6 @@ export class ShoppingCartPage implements OnInit {
             return;
           }
         },
-
       ]
     });
     await alert.present();
@@ -122,6 +119,10 @@ export class ShoppingCartPage implements OnInit {
     return this.cartItemsSelected.every(a => a.selected);
   }
 
+  checkAllNotSelected() {
+    return this.cartItemsSelected.every(a => !a.selected);
+  }
+
   toggleSelectAll() {
     if (this.checkAllSelected()) {
       this.cartItemsSelected.forEach(a => a.selected = false);
@@ -131,19 +132,20 @@ export class ShoppingCartPage implements OnInit {
   }
 
   goToSelectedProducts() {
-    let data;
+    let data = {
+      selectedItems: []
+    }
 
     this.cartItemsSelected.forEach((a, index) => {
       if (a.selected) {
         const product = {
-          id: this.cartItems[index].id,
           name: this.cartItems[index].name,
           quantity: this.cartItems[index].quantity,
           price: this.cartItems[index].price,
           accessories: this.cartItems[index].accessories
         }
 
-        data.push(product);
+        data.selectedItems.push(product);
       }
     })
     this.router.navigate(['/main/shopping-cart/selected-products'], {

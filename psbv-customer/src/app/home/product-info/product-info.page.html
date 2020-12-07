@@ -49,7 +49,7 @@
             </div>
           </ion-col>
 
-          <div class="modifier">
+          <div class="modifier" *ngIf="!checkGuestPermission()">
             <span class="modifier-btn" (click)="decreaseQuantity(accessoryIds[i])">-</span>
             <span class="counter">{{ accessoryIds[i].quantity }}</span>
             <span class="modifier-btn" (click)="increaseQuantity(accessoryIds[i])">+</span>

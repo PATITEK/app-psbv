@@ -37,6 +37,6 @@
       <span class="total-text">Total:</span>
       <span class="quantity">{{ cartItems.length }} Products</span>
     </ion-item-group>
-    <ion-button slot="end" (click)="goToSelectedProducts()">Send a quote</ion-button>
+    <ion-button slot="end" (click)="goToSelectedProducts()" [disabled]="checkAllNotSelected()">Send a quote</ion-button>
   </ion-item>
 </ion-footer>
