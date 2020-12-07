@@ -10,7 +10,7 @@
 </ion-header>
 <ion-content>
   <ion-grid>
-    <div *ngFor="let item of items ;let indexOfelement = index;">
+    <div *ngFor="let item of items ;let indexOfelement = index;" class="group-wrapper">
       <ion-card class="section__sub" >
         <ion-grid >
           <ion-row>
@@ -31,7 +31,7 @@
         </ion-item>
         <ion-card-content class="item__detail">{{ item.description }}</ion-card-content>
       </ion-card>
-      <ion-item class="section__button" no-padding lines="none" position="fixed">
+      <ion-item class="section__button" no-padding lines="none" >
         <ion-img src="assets/shopping-cart/minus.svg" class="section__button__minus" (click)="minus(item)"></ion-img>
         <span class="item-counter"> {{ item.counter }} </span>
         <ion-img src="assets/shopping-cart/add.svg" class="section__button__add" (click)="add(item)"></ion-img>
@@ -44,14 +44,10 @@
   <ion-item-group class="footer-group">
     <ion-label>
       <ion-checkbox value="all">All </ion-checkbox>
-      <!-- <ion-radio slot="start" value="biff">jijij</ion-radio> -->
     </ion-label>
     <ion-label class="footer-group-total">Total:
-    <!-- </br> -->
     <ion-label class="footer-group-total-t">3 Product</ion-label>
     </ion-label>
-    
-
     <ion-label>
       <ion-button class="btn-send-quote">Send a quote</ion-button>
     </ion-label>

@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { IPageRequest, ProductGroupsService } from 'src/app/@app-core/http';
+import { IPageRequest, PERMISSIONS, ProductGroupsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
+import { StorageService } from 'src/app/@app-core/storage.service';
 import { PERMISSION } from './product-info/product-info.page';
 
 
@@ -21,6 +22,10 @@ export class ProductsPage implements OnInit {
   }
   data = [];
   permission: PERMISSION = PERMISSION.GUEST;
+  permiss: string;
+  userProfile = {
+    role: PERMISSIONS[0].value,
+  }
   title = '';
   isFirstTime = false;
   id = '';
@@ -29,7 +34,8 @@ export class ProductsPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private productGroupService: ProductGroupsService,
-    private loading: LoadingService
+    private loading: LoadingService,
+    private storageService: StorageService
   ) { }
 
   ngOnInit() {
@@ -39,6 +45,9 @@ export class ProductsPage implements OnInit {
     });
     this.loading.present();
     this.loadData();
+    this.storageService.infoAccount.subscribe((data) => {
+      this.permiss = (data !== null) ? data.role : PERMISSIONS[0].value;
+    })
   }
 
   ionViewWillEnter() {
@@ -92,7 +101,7 @@ export class ProductsPage implements OnInit {
   }
 
   checkGuestPermission(): boolean {
-    return this.permission == PERMISSION.GUEST;
+    return this.permiss === 'guest'
   }
 
   checkStandardPermission(): boolean {

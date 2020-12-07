@@ -50,7 +50,7 @@ export class ShippingPage implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigateByUrl('/main/order-status/detail-order');
+    this.router.navigateByUrl('/main/order-status');
   }
 
   goToDetailOrder(): void {
