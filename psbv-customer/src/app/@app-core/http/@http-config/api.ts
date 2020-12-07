@@ -39,6 +39,7 @@ export const APICONFIG = {
   },
   ACCESSORIES: {
     GET: `/app/accessories`,
+    GET_WITH_PRODUCT_ID: (id) => `/app/products/${id}/accessories`,
     GET_DETAIL: (id) => `/app/accessories/${id}`,
     CREATE: '/app/accessories',
     EDIT: (id) => `/app/accessories${id}`,
