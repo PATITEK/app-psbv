@@ -116,10 +116,6 @@ export class CartDetailPage implements OnInit {
     }
   }
 
-  ngOnDestroy() {
-    // this.urlBack = '';
-  }
-
   async presentAlert(text: string, item) {
     const alert = await this.alertCrtl.create({
       header: 'Warning',

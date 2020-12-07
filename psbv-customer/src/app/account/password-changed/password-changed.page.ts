@@ -97,6 +97,7 @@ export class PasswordChangedPage implements OnInit {
     }
   }
   onSubmit() {
+    
     this.router.navigate(['/statusNoti']);
   }
 }

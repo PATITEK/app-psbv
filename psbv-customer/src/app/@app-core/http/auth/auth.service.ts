@@ -71,7 +71,8 @@ export class AuthService {
         localStorage.setItem('Authorization', result.token);
         localStorage.setItem('fullname', result.fullname);
         this.storage.setInfoAccount();
-        // this.toastr.success(SUCCESS.AUTH.LOGIN);
+        
+        //this.toastr.success(SUCCESS.AUTH.LOGIN);
         return result;
       }),
       catchError((errorRes: any) => {
@@ -79,6 +80,14 @@ export class AuthService {
         this.storage.clear();
         throw errorRes.error;
       }));
+  }
+ 
+  logout() {
+    localStorage.clear();
+    this.storage.clear();
+    this.storage.setInfoAccount();
+    
+    this.router.navigateByUrl('/main/home');
   }
   public signup(req) {
     return this.http.post(`${APICONFIG.AUTH.SIGNUP}`, req).pipe(
@@ -89,12 +98,6 @@ export class AuthService {
       catchError((errorRes: any) => {
         throw errorRes.error;
       }));
-  }
-  logout() {
-    localStorage.clear();
-    this.storage.clear();
-    this.storage.setInfoAccount();
-    this.router.navigateByUrl('/main/home');
   }
   checkLogin() {
     const token = localStorage.getItem('Authorization');

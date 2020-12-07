@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { IStatus } from '../order-status-detail/order-status-detail.page';
 
 @Component({
@@ -37,27 +36,17 @@ export class ShippingPage implements OnInit {
   ];
 
   constructor(
-    private router: Router,
     public sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'none';
-    });
     this.text = `calc(${this.countPassedItem()}%)`;
   }
 
-  goBack(): void {
-    this.router.navigateByUrl('/main/order-status');
-  }
-
-  goToDetailOrder(): void {
-    this.router.navigate(['main/order/detail-order'], {
-      queryParams: {
-        data: JSON.stringify(0)
-      }
+  ionViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'none';
     });
   }
 

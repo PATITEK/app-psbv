@@ -4,7 +4,6 @@ import { IonInfiniteScroll } from '@ionic/angular';
 import { IPageRequest, PERMISSIONS, ProductsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 import { StorageService } from '../@app-core/storage.service';
-import { PERMISSION } from './product-info/product-info.page';
 
 @Component({
   selector: 'app-home',
@@ -20,12 +19,9 @@ export class HomePage implements OnInit {
     total_objects: 20
   }
   data = [];
-  permission: PERMISSION = PERMISSION.STANDARD;
-  userProfile = {
-    role: PERMISSIONS[0].value,
-  }
-  permiss: string;
+  permission: string;
   val = '';
+
   constructor(
     private router: Router,
     private productService: ProductsService,
@@ -33,42 +29,55 @@ export class HomePage implements OnInit {
     private storageService: StorageService
   ) { }
 
-  goToDetail(item) {
-    this.router.navigate(['/main/home/product-info'], {
-      queryParams: {
-        id: JSON.stringify(item.id),
-        permission: JSON.stringify(this.permission)
-      }
-    });
-  }
-
   ngOnInit() {
     this.loadData();
     this.loading.present();
     this.storageService.infoAccount.subscribe((data) => {
-      this.permiss = (data !== null) ? data.role : PERMISSIONS[0].value;
+      this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
-
   }
+
+  ionViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
+  }
+  
+  goToDetail(item) {
+    const data = {
+      id: item.id
+    }
+
+    this.router.navigate(['/main/home/product-info'], {
+      queryParams: {
+        data: JSON.stringify(data)
+      }
+    });
+  }
+
   onGoUserInfo() {
     this.router.navigateByUrl("/account/user-info");
   }
+
   gotoNoti() {
     this.router.navigateByUrl('notification');
   }
+
   gotoHome() {
     this.router.navigateByUrl('/main/product-categories');
   }
+
   onInput(event: any) {
     const val = event.target.value;
     console.log(this.val.valueOf());
     this.productService.searchProduct(val).subscribe((data: any) => {
+      
       this.data = data.products;
     })
   }
 
   loadData() {
-
     setTimeout(() => {
       this.productService.getProducts(this.pageRequest).subscribe(data => {
         for (let item of data.products) {
@@ -84,7 +93,6 @@ export class HomePage implements OnInit {
             this.data[i].thumb_image = data;
           }
         }
-
         this.infinityScroll.complete();
         this.loading.dismiss();
         this.pageRequest.page++;
@@ -98,10 +106,6 @@ export class HomePage implements OnInit {
   }
 
   checkGuestPermission(): boolean {
-    return this.permiss === 'guest'
+    return this.permission === PERMISSIONS[0].value;
   }
-
-  // checkStandardPermission(): boolean {
-  //   return this.permiss === 'stand';
-  // }
 }
