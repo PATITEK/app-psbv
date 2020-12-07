@@ -1,60 +1,42 @@
-<ion-header>
-  <ion-row no-lines>
-    <ion-col class="ion-heading">
-      <ion-img class="ion-heading__element__back" src="assets/shopping-cart/back.svg"
-        *ngIf="hasTF" (click)="goBack()"></ion-img>
-      <ion-label class="ion-heading__element__text" >SHOPPING CART</ion-label>
-      <ion-icon name="cart-outline"class="ion-heading__element__shop-icon"></ion-icon>
-    </ion-col>
-  </ion-row>
+<ion-header lines="no">
+  <ion-card-title>Shopping cart</ion-card-title>
 </ion-header>
+
 <ion-content>
-  <ion-grid>
-    <div *ngFor="let item of items ;let indexOfelement = index;">
-      <ion-card class="section__sub" >
-        <ion-grid >
-          <ion-row>
-            <ion-label class="item__header">{{ item.name + " " + item.date }}</ion-label>
-            <ion-img class="item__cancel" src="/assets/shopping-cart/x-icon.svg" (click)="onCancel(item)"></ion-img>
-          </ion-row>
-        </ion-grid>
-        <ion-item class="detail__wrapper" lines="none">
-          <ion-item class="item__price-tag">
-            {{ item.price + "$" }}
-            <ion-img class="item__price-tag__slash" src="assets/shopping-cart/slash.svg"></ion-img>
-            {{ item.numberProduct + "Product"}}
-          </ion-item>
-          <ion-item-group slot="end">
-            <ion-img src="assets/shopping-cart/deliver.svg" ></ion-img>
-            <ion-label class="item__day-to-delive">{{ item.dayToDelivery + "day" }}</ion-label>
-          </ion-item-group>
-        </ion-item>
-        <ion-card-content class="item__detail">{{ item.description }}</ion-card-content>
-      </ion-card>
-      <ion-item class="section__button" no-padding lines="none" position="fixed">
-        <ion-img src="assets/shopping-cart/minus.svg" class="section__button__minus" (click)="minus(item)"></ion-img>
-        <span class="item-counter"> {{ item.counter }} </span>
-        <ion-img src="assets/shopping-cart/add.svg" class="section__button__add" (click)="add(item)"></ion-img>
+  <ion-card class="cart-body" *ngFor="let item of cartItems; let i = index;">
+    <ion-label>{{ item.name }}</ion-label>
+    <ion-item class="cart-heading-body">
+      <span class="selectedBtn" [style.background]="cartItemsSelected[i].selected ? '#91E29B' : 'white'" (click)="toggleSelected(cartItemsSelected[i])"></span>
+      <ion-item class="group_left">
+        <span class="price">{{ calPrice(item) | number: '1.0-2' }}</span>
+        <span class="separation"></span>
+        <span class="quantity">{{ item.accessories.length }} accessories</span>
       </ion-item>
+      <ion-item class="group-right" slot="end">
+        <ion-img src="../../../assets/shopping-cart/deliver-black.svg"></ion-img>
+        <span>1 day</span>
+      </ion-item>
+    </ion-item>
+    <p>{{ listAccessoriesName(item) }}</p>
+
+    <div class="modifier">
+      <span class="modifier-btn" (click)="decreaseQuantity(item)">-</span>
+      <span class="counter">{{ item.quantity }}</span>
+      <span class="modifier-btn" (click)="increaseQuantity(item)">+</span>
     </div>
-  </ion-grid>
 
+    <ion-icon name="close-outline" class="remove-btn" (click)="onRemove(item)"></ion-icon>
+  </ion-card>
 </ion-content>
-<ion-footer class="ion-no-border">
-  <ion-item-group class="footer-group">
-    <ion-label>
-      <ion-checkbox value="all">All </ion-checkbox>
-      <!-- <ion-radio slot="start" value="biff">jijij</ion-radio> -->
-    </ion-label>
-    <ion-label class="footer-group-total">Total:
-    <!-- </br> -->
-    <ion-label class="footer-group-total-t">3 Product</ion-label>
-    </ion-label>
-    
 
-    <ion-label>
-      <ion-button class="btn-send-quote">Send a quote</ion-button>
-    </ion-label>
-  
-  </ion-item-group>
+<ion-footer>
+  <ion-item class="footer-inner">
+    <span class="selectedBtn" [style.background]="checkAllSelected() ? '#91E29B' : 'white'" (click)="toggleSelectAll()"></span>
+    <span style="font-size: 14px; font-weight: 700; color: #727272;">All</span>
+    <ion-item-group slot="end">
+      <span class="total-text">Total:</span>
+      <span class="quantity">{{ cartItems.length }} Products</span>
+    </ion-item-group>
+    <ion-button slot="end" (click)="goToSelectedProducts()">Send a quote</ion-button>
+  </ion-item>
 </ion-footer>

@@ -39,10 +39,7 @@ export class ProductInfoPage implements OnInit {
   accessoryIds = [];
   products = [];
   curProductsLength = 0;
-  cart = {
-    name: 'Cart 1',
-    items: []
-  }
+  cartItems = [];
   categoryId;
   categoryTitle;
 
@@ -54,10 +51,7 @@ export class ProductInfoPage implements OnInit {
     private accessoriesService: AccessoriesService,
     private storageService: StorageService
   ) {
-    this.cart = JSON.parse(localStorage.getItem('cart')) || {
-      name: 'Cart 1',
-      items: []
-    }
+    this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
   }
 
   ngOnInit() {
@@ -165,7 +159,7 @@ export class ProductInfoPage implements OnInit {
     }
 
     let duplicate = false;
-    for (let j of this.cart.items) {
+    for (let j of this.cartItems) {
       if (product.id == j.id && this.isEqual(product.accessories, j.accessories)) {
         j.quantity++;
         duplicate = true;
@@ -173,7 +167,7 @@ export class ProductInfoPage implements OnInit {
       }
     }
     if (!duplicate) {
-      this.cart.items.push(product);
+      this.cartItems.push(product);
     }
 
     if (this.curProductsLength < 99) {
@@ -231,7 +225,7 @@ export class ProductInfoPage implements OnInit {
   }
 
   setLocalStorage() {
-    localStorage.setItem('cart', JSON.stringify(this.cart))
+    localStorage.setItem('cartItems', JSON.stringify(this.cartItems))
   }
 
   decreaseQuantity(accessory) {
