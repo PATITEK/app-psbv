@@ -19,12 +19,7 @@ export class DetailComponentPage implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'none';
-    });
-  }
+  ngOnInit() { }
 
   goBack(): void {
     this.router.navigateByUrl('/main/order-status/detail-order');

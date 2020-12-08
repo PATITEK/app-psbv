@@ -147,6 +147,6 @@ export class HomePage implements OnInit {
       total_objects: 20
     }
     this.data = [];
-    this.infinityScroll.disabled = !this.infinityScroll.disabled;
+    // this.infinityScroll.disabled = !this.infinityScroll.disabled;
   }
 }

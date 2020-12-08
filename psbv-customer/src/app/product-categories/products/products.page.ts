@@ -15,7 +15,7 @@ export class ProductsPage implements OnInit {
 
   pageRequest: IPageRequest = {
     page: 1,
-    per_page: 8,
+    per_page: 10,
     total_objects: 20
   }
   data = [];
@@ -58,6 +58,7 @@ export class ProductsPage implements OnInit {
       if (this.id != '') {
         this.productGroupService.getProductGroupDetail(this.id, this.pageRequest)
           .subscribe(data => {
+            console.log(data);
             for (let item of data.products) {
               // image not found
               if (item.thumb_image === null) {
