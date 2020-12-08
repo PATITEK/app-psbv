@@ -56,7 +56,6 @@ export class UserInfoPage implements OnInit {
     this.router.navigateByUrl('account/password-changed');
   }
   
-
   gotoUpgrade() {
     this.router.navigateByUrl('account/user-info/upgrade');
   }

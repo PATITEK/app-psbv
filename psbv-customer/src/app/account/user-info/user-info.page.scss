@@ -1,3 +1,6 @@
+ion-content {
+  --overflow: hidden;
+}
 .icon-back{
   font-size: 22px;
   color: black;
@@ -137,9 +140,7 @@
   margin-inline-end: 0;
   --background-activated:#CE091C;
 }
-.logout-alert{
-  
-}
+
 @media(max-width: 321px){
   .btn-logout{
     margin-top: 1.5rem;
