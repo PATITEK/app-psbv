@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll } from '@ionic/angular';
 import { IPageRequest, PERMISSIONS, ProductsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 import { StorageService } from '../@app-core/storage.service';
@@ -12,6 +12,7 @@ import { StorageService } from '../@app-core/storage.service';
 })
 export class HomePage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
+  @ViewChild(IonContent) ionContent: IonContent;
 
   pageRequest: IPageRequest;
   data = [];
@@ -19,7 +20,7 @@ export class HomePage implements OnInit {
   val = '';
   counter = 0;
   inputValue: string = '';
-  preInputValue: string;
+  isMaxData = false;
 
   constructor(
     private router: Router,
@@ -27,13 +28,12 @@ export class HomePage implements OnInit {
     private loading: LoadingService,
     private storageService: StorageService
   ) {
-    this.resetPageRequest();
-    this.preInputValue = this.inputValue;
+    this.reset();
   }
 
   ngOnInit() {
-    this.loadData();
     this.loading.present();
+    this.loadData();
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
@@ -70,21 +70,44 @@ export class HomePage implements OnInit {
   }
 
   onInput(event: any) {
-    this.resetPageRequest();
+    this.inputValue = event.target.value;
+    this.reset();
+    this.scrollContent();
     this.counter++;
     this.loadData();
-    this.inputValue = event.target.value;
   }
 
-  done = true;
-
   loadData() {
-    setTimeout(() => {
-      console.log(this.inputValue);
-      if (this.inputValue !== '') {
-        const counterTemp = this.counter;
-        this.productService.searchProduct(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
-          if (counterTemp == this.counter) {
+    if (!this.isMaxData) {
+      setTimeout(() => {
+        if (this.inputValue !== '') {
+          const counterTemp = this.counter;
+          this.productService.searchProduct(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
+            if (counterTemp == this.counter) {
+              for (let item of data.products) {
+                // image not found
+                if (item.thumb_image === null) {
+                  const d = {
+                    url: "https://i.imgur.com/dbpoag5.png"
+                  }
+                  item.thumb_image = d;
+                }
+                this.data.push(item);
+              }
+
+              this.infinityScroll.complete();
+              this.loading.dismiss();
+              this.pageRequest.page++;
+
+              // check max data
+              if (this.data.length >= data.meta.pagination.total_objects) {
+                // this.infinityScroll.disabled = true;
+                this.isMaxData = true;
+              }
+            }
+          })
+        } else {
+          this.productService.getProducts(this.pageRequest).subscribe(data => {
             for (let item of data.products) {
               // image not found
               if (item.thumb_image === null) {
@@ -95,8 +118,6 @@ export class HomePage implements OnInit {
               }
               this.data.push(item);
             }
-            console.log(2);
-            console.log(this.data);
 
             this.infinityScroll.complete();
             this.loading.dismiss();
@@ -104,49 +125,32 @@ export class HomePage implements OnInit {
 
             // check max data
             if (this.data.length >= data.meta.pagination.total_objects) {
-              this.infinityScroll.disabled = true;
+              // this.infinityScroll.disabled = true;
+              this.isMaxData = true;
             }
-          }
-        })
-      } else {
-        this.productService.getProducts(this.pageRequest).subscribe(data => {
-          for (let item of data.products) {
-            // image not found
-            if (item.thumb_image === null) {
-              const d = {
-                url: "https://i.imgur.com/dbpoag5.png"
-              }
-              item.thumb_image = d;
-            }
-            this.data.push(item);
-          }
-          console.log(1);
-          console.log(this.data);
-
-          this.infinityScroll.complete();
-          this.loading.dismiss();
-          this.pageRequest.page++;
-
-          // check max data
-          if (this.data.length >= data.meta.pagination.total_objects) {
-            this.infinityScroll.disabled = true;
-          }
-        })
-      }
-    }, 50);
+          })
+        }
+      }, 50);
+    } else {
+      this.infinityScroll.complete();
+    }
   }
 
   checkGuestPermission(): boolean {
     return this.permission === PERMISSIONS[0].value;
   }
 
-  resetPageRequest() {
+  reset() {
     this.pageRequest = {
       page: 1,
       per_page: 10,
       total_objects: 20
     }
     this.data = [];
-    // this.infinityScroll.disabled = !this.infinityScroll.disabled;
+    this.isMaxData = false;
+  }
+
+  scrollContent() {
+    this.ionContent.scrollToTop(500);
   }
 }
