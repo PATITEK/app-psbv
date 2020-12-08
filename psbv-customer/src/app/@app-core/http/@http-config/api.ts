@@ -46,6 +46,13 @@ export const APICONFIG = {
     CREATE: '/app/accessories',
     EDIT: (id) => `/app/accessories${id}`,
     DELETE: (id) => `/app/accessories${id}`
+  },
+  ORDERS: {
+    GET: `/app/orders`,
+    GET_DETAIL: (id) => `/app/orders/${id}`,
+    CREATE: '/app/orders',
+    EDIT: (id) => `/app/orders${id}`,
+    DELETE: (id) => `/app/orders${id}`
   }
 };
 
