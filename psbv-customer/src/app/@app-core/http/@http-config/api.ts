@@ -16,6 +16,7 @@ export const APICONFIG = {
   },
   ACCOUNT: {
     PROFILE_USER: `/app/users/profile`,
+    UPDATE_NAME: `/app/users/update_profile`,
     GETDETAIL: (id) => `/app/users/${id}`,
     EDIT: (id) => `/app/users/${id}`,
     DELETE: (id) => `/app/users/${id}`,

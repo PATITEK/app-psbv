@@ -19,14 +19,14 @@
         <ion-icon name="eye-off-outline" class="icon-eye-throught"></ion-icon>
       </button>
     </ion-item-group>
-    <ion-router-link class="forgot-password" (click)="resetPass()">Forgot Password?</ion-router-link>
+    <ion-label class="forgot-password" (click)="resetPass()">Forgot Password?</ion-label>
     <ion-button class="btn-main" type="button" (click)="onSubmit()" [disabled]="showSpinner">
       <ion-spinner *ngIf="showSpinner"></ion-spinner>Login My Account
     </ion-button>
   </form>
   <ion-item-group class="question__wrapper">
-    <ion-router-link class="question">Don't have an account?</ion-router-link><br />
-    <ion-router-link class="question" (click)="gotoSignUp()"><u>Sign up now</u>
-    </ion-router-link>
+    <ion-label class="question">Don't have an account?</ion-label><br />
+    <ion-label class="question" (click)="gotoSignUp()"><u>Sign up now</u>
+    </ion-label>
   </ion-item-group>
 </ion-content>

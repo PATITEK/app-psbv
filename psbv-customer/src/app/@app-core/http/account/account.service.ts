@@ -7,15 +7,16 @@ import { requestQuery } from 'src/app/@app-core/utils';
 import { IPageRequest } from '../global';
 import { IAccount, IGetAccounts, IPageAccount } from './account.DTO';
 import { promise } from 'protractor';
+import { StorageService } from '../../storage.service';
 
 @Injectable()
 export class AccountService {
 
   constructor(
     private http: HttpClient,
+    
     // private toastr: ToastrService,
   ) { }
-  // permission: string;
 
   public getAccounts() {
     return this.http.get(`${APICONFIG.ACCOUNT.PROFILE_USER}`).pipe(
@@ -25,7 +26,15 @@ export class AccountService {
       catchError((errorRes) => { 
         throw errorRes.error; }));
   }
-
+  public updateName(name) {
+    return this.http.put(`${APICONFIG.ACCOUNT.UPDATE_NAME}`, name).pipe(
+      map((result) => {
+        // this.storage.setInfoAccount();
+        return result;
+      }),
+      catchError((errorRes) => { 
+        throw errorRes.error; }));
+  }
   public getAccountDetail(id: string) {
     return this.http.get<any>(`${APICONFIG.ACCOUNT.GETDETAIL(id)}`).pipe(
       map((result) => {

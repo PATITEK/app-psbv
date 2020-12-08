@@ -63,6 +63,7 @@ export class LoginPage implements OnInit {
     
     this.router.navigateByUrl('/main/product-categories');
     this.authService.sendData(this.message);
+    
     })
   }
   resetPass() {
