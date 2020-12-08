@@ -25,7 +25,6 @@ export class UserInfoPage implements OnInit {
 
   ngOnInit() {
      this.message = localStorage.getItem('fullname');
-   
   }
 
   upgradePremium(): void {
