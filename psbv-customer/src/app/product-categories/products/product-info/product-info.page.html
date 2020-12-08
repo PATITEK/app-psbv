@@ -18,9 +18,7 @@
         <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
       </ion-button>
     </ion-card-content>
-    <ion-fab-button class="add-product-button" (click)="addProduct()" *ngIf="!checkGuestPermission()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
+    <ion-img src="../../../../assets/add-btn.svg" class="add-product-button" (click)="addProduct()" *ngIf="!checkGuestPermission()"></ion-img>
   </ion-card>
 
   <ion-card class="accessories">
@@ -48,7 +46,7 @@
             </div>
           </ion-col>
 
-          <div class="modifier">
+          <div class="modifier" *ngIf="!checkGuestPermission()">
             <span class="modifier-btn" (click)="decreaseQuantity(accessoryIds[i])">-</span>
             <span class="counter">{{ accessoryIds[i].quantity }}</span>
             <span class="modifier-btn" (click)="increaseQuantity(accessoryIds[i])">+</span>

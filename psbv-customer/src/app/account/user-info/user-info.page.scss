@@ -8,9 +8,10 @@ ion-content {
 .icon-more{
   height: 20px;
   display: flex;
-  float: right;
-  margin-top: 0px;
-  position: relative;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
 
   ion-img{
     width: 22px;
@@ -43,7 +44,7 @@ ion-content {
       background-color: #fff;
     }
   }
-}
+
 .header-md::after {
   background-image: none;
 }

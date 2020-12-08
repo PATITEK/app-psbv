@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class NotificationPage implements OnInit {
 
+  doesClick = false;
+
   constructor(private router: Router) { }
 
   ngOnInit() {
@@ -24,5 +26,9 @@ export class NotificationPage implements OnInit {
   }
   gotoNotiTracking(){
     this.router.navigateByUrl('notification/noti-tracking');
+  }
+
+  toggleActive() {
+    this.doesClick = !this.doesClick;
   }
 }

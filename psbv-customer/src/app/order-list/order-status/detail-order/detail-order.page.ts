@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PERMISSIONS } from 'src/app/@app-core/http';
 import { StorageService } from 'src/app/@app-core/storage.service';
 
 export enum STATUS {
@@ -38,10 +39,10 @@ export interface IProduct {
   styleUrls: ['./detail-order.page.scss'],
 })
 export class DetailOrderPage implements OnInit {
-  permiss: string; 
+  permission: string; 
   item: IItem = {
     name: 'Item 12/12/1212',
-    status: STATUS.CONFIRMED,
+    status: STATUS.DONE,
     subItems: [
       {
         name: 'ID',
@@ -52,11 +53,11 @@ export class DetailOrderPage implements OnInit {
         desc1: '12-12-1212',
         desc2: '12:12'
       },
-      // {
-      //   name: 'Time received',
-      //   desc1: '13-12-1212',
-      //   desc2: '12:12'
-      // }
+      {
+        name: 'Time received',
+        desc1: '13-12-1212',
+        desc2: '12:12'
+      }
     ]
   }
 
@@ -102,8 +103,7 @@ export class DetailOrderPage implements OnInit {
 
   ngOnInit() {
     this.storageService.infoAccount.subscribe((data) => {
-      console.log(data);
-      this.permiss = data.role;
+      this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
   }
 
@@ -137,8 +137,8 @@ export class DetailOrderPage implements OnInit {
     }
   }
 
-  checkPremium() :boolean {
-    return this.permiss === 'premium';
+  checkPremiumPermission(): boolean {
+    return this.permission === PERMISSIONS[2].value;
   }
 
   checkConfirmedStatus(): boolean {

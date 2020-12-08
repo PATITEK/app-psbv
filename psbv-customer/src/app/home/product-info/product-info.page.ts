@@ -22,7 +22,7 @@ export class ProductInfoPage implements OnInit {
 
   pageRequest: IPageRequest = {
     page: 1,
-    per_page: 5,
+    per_page: 6,
     total_objects: 20
   }
   counter: number = 0;
@@ -55,14 +55,6 @@ export class ProductInfoPage implements OnInit {
 
   ngOnInit() {
     this.loading.present();
-    this.route.queryParams.subscribe(params => {
-      if (params.data !== undefined) {
-        this.productService.getProductDetail(JSON.parse(params['data']).id)
-        .subscribe(data => {
-          this.product = data.product;
-        });
-      }
-    })
     this.loadData();
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
@@ -175,27 +167,36 @@ export class ProductInfoPage implements OnInit {
   }
 
   loadData() {
-    setTimeout(() => {
-      this.accessoriesService.getAccessories(this.pageRequest).subscribe(data => {
-        for (let item of data.accessories) {
-          this.accessories.push(item);
-          this.accessoryIds.push({
-            id: item.id,
-            quantity: 0,
-            price: item.price
-          })
-        }
+    this.route.queryParams.subscribe(params => {
+      if (params.data !== undefined) {
+        this.productService.getProductDetail(JSON.parse(params['data']).id)
+        .subscribe(data => {
+          this.product = data.product;
 
-        this.infinityScroll.complete();
-        this.loading.dismiss();
-        this.pageRequest.page++;
-
-        // check max data
-        if (this.accessories.length >= data.meta.pagination.total_objects) {
-          this.infinityScroll.disabled = true;
-        }
-      })
-    }, 500);
+          setTimeout(() => {
+            this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, this.product.id).subscribe(data => {
+              for (let item of data.accessories) {
+                this.accessories.push(item);
+                this.accessoryIds.push({
+                  id: item.id,
+                  quantity: 0,
+                  price: item.price
+                })
+              }
+      
+              this.infinityScroll.complete();
+              this.loading.dismiss();
+              this.pageRequest.page++;
+      
+              // check max data
+              if (this.accessories.length >= data.meta.pagination.total_objects) {
+                this.infinityScroll.disabled = true;
+              }
+            })
+          }, 500);
+        });
+      }
+    })
   }
 
   isEqual(a, b) {

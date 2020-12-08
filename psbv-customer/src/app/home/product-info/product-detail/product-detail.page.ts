@@ -53,11 +53,10 @@ export class ProductDetailPage implements OnInit {
   }
 
   download() {
-    event.preventDefault();
     const data: IDataNoti = {
       title: 'DOWNLOAD DONE',
       description: '',
-      routerLink: ''
+      routerLink: 'main/home'
     }
     this.pageNotiService.setdataStatusNoti(data);
     this.router.navigate(['/statusNoti']);
