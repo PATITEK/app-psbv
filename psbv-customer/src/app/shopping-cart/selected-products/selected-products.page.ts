@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
 
 @Component({
   selector: 'app-selected-products',
@@ -12,7 +13,8 @@ export class SelectedProductsPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private pageNotiService: PageNotiService
   ) { }
 
   ngOnInit() {
@@ -48,4 +50,13 @@ export class SelectedProductsPage implements OnInit {
     }, '').substring(2);
   }
 
+  sendMailQuote() {
+    const data: IDataNoti = {
+      title: 'SEND A EMAIL QUOTE',
+      description: '',
+      routerLink: 'main/shopping-cart'
+    }
+    this.pageNotiService.setdataStatusNoti(data);
+    this.router.navigate(['/statusNoti']);
+  }
 }

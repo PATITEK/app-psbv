@@ -36,6 +36,6 @@
       </ion-item>
       <span class="price">{{ calTotalPrice(cartItems) | number: '1.0-2'}}</span>
     </ion-item-group>
-    <ion-button slot="end">Send mail quote</ion-button>
+    <ion-button slot="end" (click)="sendMailQuote()">Send mail quote</ion-button>
   </ion-item>
 </ion-footer>

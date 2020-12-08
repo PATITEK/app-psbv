@@ -64,17 +64,14 @@ export class ProductCategoriesPage implements OnInit {
     setTimeout(() => {
       this.productGroupService.getProductGroups(this.pageRequest).subscribe(data => {
         for (let item of data.product_groups) {
-          this.data.push(item);
-        }
-
-        // image not found
-        for (let i = 0; i < this.data.length; i++) {
-          if (this.data[i].thumb_image === null) {
+          // image not found
+          if (item.thumb_image === null) {
             const data = {
               url: "https://i.imgur.com/dbpoag5.png"
             }
-            this.data[i].thumb_image = data;
+            item.thumb_image = data;
           }
+          this.data.push(item);
         }
 
         this.infinityScroll.complete();

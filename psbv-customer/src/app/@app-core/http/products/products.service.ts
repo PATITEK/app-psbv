@@ -22,10 +22,9 @@ export class ProductsService {
       catchError((errorRes) => { throw errorRes.error; }));
   }
   //Search
-  public searchProduct(nameprodudct: string) {
-    return this.http.get(`${APICONFIG.PRODUCTS.SEARCH(nameprodudct)}`).pipe(
+  public searchProduct(request: IPageRequest, nameprodudct: string, counter: number) {
+    return this.http.get(`${APICONFIG.PRODUCTS.SEARCH(nameprodudct)}&${(requestQuery(request))}`).pipe(
       map((result) => {
-        console.log(result);
         // console.log(result);
         return result;
       }),
