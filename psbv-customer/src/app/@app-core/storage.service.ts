@@ -19,7 +19,6 @@ export class StorageService {
     public setInfoAccount() {
         if (localStorage.getItem('Authorization') !== null) {
             return this.accountService.getAccounts().subscribe((data: any) => {
-
                 this.userSub.next(data.user);
             })
         }

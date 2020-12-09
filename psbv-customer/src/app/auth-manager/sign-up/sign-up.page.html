@@ -53,8 +53,9 @@
     </div>
     <pre *ngIf ="formSignup.errors" class="not-match not-match-pass">
       
-      {{formNewPass.errors.error |json}}
+      {{formSignup.errors.error |json}}
      </pre>
+  
     <ion-button class="button-sign-up" type="submit" [disabled] ="!formSignup.valid || showSpinner">
       <ion-spinner *ngIf="showSpinner"></ion-spinner>Sign up My Account</ion-button>
 </form>

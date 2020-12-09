@@ -10,7 +10,7 @@ import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti
   styleUrls: ['./password-changed.page.scss'],
 })
 export class PasswordChangedPage implements OnInit {
-  public type = 'password';
+  public type1 = 'password';
   public type2 = 'password';
   public type3 = 'password';
 
@@ -87,13 +87,13 @@ export class PasswordChangedPage implements OnInit {
   ngOnInit() {
     // if((this.formNewPass.get('currentpassword').hasError(error.type) && (this.formNewPass.get('currentpassword').dirty || this.formNewPass.get('currentpassword').touched))
   }
-  showPasswordCurent() {
+  showPasswordCurrent() {
     this.showPassCurrent = !this.showPassCurrent;
     if (this.showPassCurrent) {
-      this.type = 'text';
+      this.type1 = 'text';
     }
     else {
-      this.type = 'password';
+      this.type1 = 'password';
     }
   }
   showPasswordNew() {

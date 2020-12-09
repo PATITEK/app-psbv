@@ -64,7 +64,7 @@ export class SignUpPage implements OnInit {
     const cp = formGroup.get('confirmpassword').value;
     if(np === cp)
     return ""
-    else return {error: "Password not match"}
+    else return { error: "Password not match"}
   }
     public type2 = 'password';
     public showPass2 = false;

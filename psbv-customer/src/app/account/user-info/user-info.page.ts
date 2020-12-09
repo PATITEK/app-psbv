@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular'
 import { AccountService, AuthService } from 'src/app/@app-core/http';
 import { IGetAccounts } from 'src/app/@app-core/http/account/account.DTO';
+import { StorageService } from 'src/app/@app-core/storage.service';
 import { PERMISSION } from 'src/app/product-categories/products/product-info/product-info.page';
 
 @Component({
@@ -25,16 +26,12 @@ export class UserInfoPage implements OnInit {
   ) {}
 
   ngOnInit() {
+  }
+  ionViewDidEnter() {
     this.accountService.getAccounts().subscribe((data: any)=>{
       this.message = data.user.fullname;
             
     })
-    //  this.message = localStorage.getItem('fullname');
-  }
-
-  upgradePremium(): void {
-    this.router.navigateByUrl('account/user-info/upgrade');
-    console.log("checked");
   }
 
   goToPasswordChanged(): void {
@@ -99,7 +96,9 @@ export class UserInfoPage implements OnInit {
     });
     await alert.present();
   }
-
+  gotoHome() {
+    this.router.navigateByUrl('main/product-categories');
+  }
   showAlert() {
     this.presentAlert();
   }

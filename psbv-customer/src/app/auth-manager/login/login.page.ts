@@ -67,8 +67,6 @@ export class LoginPage implements OnInit {
     });
     await alert.present();
   }
-
-  
    async onSubmit() {
     this.showSpinner = true;
     if(this.profileForm.value.email === ''){
@@ -89,8 +87,6 @@ export class LoginPage implements OnInit {
       // if(data.error){
       //   this.presentFailedToast();
       // }
-      
-      
     }
 
   }
