@@ -101,6 +101,8 @@ export class UserInfoPage implements OnInit {
     this.presentAlert();
   }
   gotoSupport(){
-    this.router.navigateByUrl('account/support');
+    this.btn = false;
+    setTimeout(() => this.router.navigateByUrl('account/user-info/support'), 100);
+    // this.router.navigateByUrl('account/user-info/support');
   }
 }
