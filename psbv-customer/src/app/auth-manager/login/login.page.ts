@@ -80,15 +80,19 @@ export class LoginPage implements OnInit {
     }
     this.authService.login(this.profileForm.value).subscribe((data: any) => {
     this.showSpinner = true;
-    console.log(data);
-    this.presentSuccessToast();
-    
-    setTimeout(() => {
-      this.router.navigateByUrl('/main/product-categories');
-    }, 200);
-    this.authService.sendData(this.message);
-    
-    })
+    this.router.navigateByUrl('/main/product-categories');
+   
+    }),
+    (data:any) =>{
+      console.log(data.error);
+      
+      // if(data.error){
+      //   this.presentFailedToast();
+      // }
+      
+      
+    }
+
   }
   resetPass() {
     this.router.navigateByUrl('/auth/forgot-password');

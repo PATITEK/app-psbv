@@ -3,11 +3,11 @@
     <ion-back-button style="color: #6D6D6D;" text="" icon="chevron-back-outline"></ion-back-button>
   </ion-buttons>
 
-  <div class="icon-more" (click)="clicked()">
+  <div class="icon-more" (click) = "clicked()">
       <ion-img src="../../assets/more.svg"></ion-img>
-      <div class="more-content"  *ngIf="!hidden" >
+      <div class="more-content"  *ngIf="btn == true" >
         <span id="span1" (click)="goToSupport()">Support</span>
-        <span id="span2" (click)="goToAbout()">Contact Us</span>
+        <span id="span2" (click)="goToAbout()">About</span>
       </div>
   </div>
 </ion-header>
