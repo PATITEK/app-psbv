@@ -28,8 +28,9 @@ export class AccountService {
   }
   public updateName(name) {
     return this.http.put(`${APICONFIG.ACCOUNT.UPDATE_NAME}`, name).pipe(
-      map((result) => {
-     
+      map((result:any) => {
+        // this.storage.clear();
+        // this.storage.setInfoAccount();
         return result;
       }),
       catchError((errorRes) => { 

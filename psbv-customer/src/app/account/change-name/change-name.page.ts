@@ -13,9 +13,9 @@ import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti
 })
 export class ChangeNamePage implements OnInit {
   model: any = {
-    "fullname": localStorage.getItem('fullname')
-  } ;
-
+    "fullname": localStorage.getItem('fullname')  };
+ 
+  message: any;
   formchangename = new FormGroup({
     rename: new FormControl('',[Validators.required], ),
   });
@@ -24,7 +24,7 @@ export class ChangeNamePage implements OnInit {
      private accountService: AccountService,  private pageNotiService: PageNotiService ) { }
  
   ngOnInit() {
- 
+   
   }
   onSubmit(f: NgForm) {
     this.showSpinner = true;
@@ -37,6 +37,7 @@ export class ChangeNamePage implements OnInit {
     }
     
      this.accountService.updateName(name).subscribe((data)=> {
+      
       localStorage.setItem('fullname', name.fullname);
        this.pageNotiService.setdataStatusNoti(datapasing);
         this.router.navigate(['/statusNoti']);
