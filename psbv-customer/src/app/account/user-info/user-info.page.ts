@@ -11,7 +11,7 @@ import { PERMISSION } from 'src/app/product-categories/products/product-info/pro
   styleUrls: ['./user-info.page.scss'],
 })
 export class UserInfoPage implements OnInit {
-  permission: PERMISSION = PERMISSION.STANDARD;
+  permission: PERMISSION = PERMISSION.STANDARD;q
   message: string;
   btn: boolean = false;
   notOn: boolean = true;
@@ -38,13 +38,13 @@ export class UserInfoPage implements OnInit {
   }
 
   clicked() {
-    console.log("clicked");
-    this.btn = true;
-    this.notOn = false;
+    this.btn = !this.btn;
+    this.notOn = !this.notOn;
   }
 
-  setFalse() {
+  clickOveride() {
     if (this.btn == true && this.notOn == true) {
+      console.log("closed");
       this.btn = false;
     }
     else this.notOn = true;
@@ -63,6 +63,9 @@ export class UserInfoPage implements OnInit {
   }
 
   goToSupport() {
+    this.btn = true
+    this.notOn = false;
+    console.log(this.btn);
     this.router.navigateByUrl('account/user-info/support');
   }
 

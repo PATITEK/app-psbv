@@ -1,7 +1,7 @@
 <ion-header>
   <ion-row no-lines>
       <ion-col class="ion-heading">
-          <ion-img class="ion-heading__element__back" src="../../assets/back.svg" routerLink="/notification"></ion-img>
+          <ion-img class="ion-heading__element__back" src="../../assets/shopping-cart/back.svg" routerLink="/notification"></ion-img>
           <ion-label class="ion-heading__element__text">PROMOTIONS</ion-label>
           <ion-icon name="notifications-outline" class="noti-bell"></ion-icon>
       </ion-col>
@@ -13,7 +13,7 @@
 <ion-item-group class ="wrapper__noti" >
       <ion-item class="item__new-noti" lines="none" *ngFor="let item of Details">
         <ion-item class="item__wrapper" lines="none">
-            <ion-label class="item__new-noti--cricle"></ion-label>
+            <ion-label class="item__new-noti--cricle" *ngIf="item.check == false"></ion-label>
             <img [src]="item.src" class="item__new-noti--image" lines="none">
             <span class="item__new-noti--text">
               <ion-label class="item__new-noti--title">{{item.title}}</ion-label>

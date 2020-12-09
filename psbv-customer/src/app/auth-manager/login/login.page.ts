@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/@app-core/http';
 import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,26 @@ export class LoginPage implements OnInit {
     private router: Router,
     private authService: AuthService,
     public alertCtrl: AlertController,
+    private toastController: ToastController,
   ) { }
+
+  async presentSuccessToast() {
+    const toast = await this.toastController.create({
+      message: 'Login successed',
+      duration: 2000
+    });
+    await toast.present();
+  }
+
+  async presentFailedToast() {
+    const toast = await this.toastController.create({
+      message: 'Login Failed',
+      duration: 2000
+    });
+    await toast.present();
+  }
+
+
   profileForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
@@ -47,6 +67,8 @@ export class LoginPage implements OnInit {
     });
     await alert.present();
   }
+
+  
    async onSubmit() {
     this.showSpinner = true;
     if(this.profileForm.value.email === ''){
@@ -57,16 +79,19 @@ export class LoginPage implements OnInit {
       this.presentAlert('Please enter your password');
     }
     this.authService.login(this.profileForm.value).subscribe((data: any) => {
-    this.showSpinner = false;
+    this.showSpinner = true;
     console.log(data);
-
+    this.presentSuccessToast();
     
-    this.router.navigateByUrl('/main/product-categories');
+    setTimeout(() => {
+      this.router.navigateByUrl('/main/product-categories');
+    }, 200);
+    
     this.authService.sendData(this.message);
     })
   }
   resetPass() {
-    this.router.navigateByUrl('/auth/forgot-password')
+    this.router.navigateByUrl('/auth/forgot-password');
   }
   gotoSignUp(){
     this.router.navigateByUrl('/auth/sign-up');
