@@ -41,7 +41,7 @@
         </ion-item-group>
       </ion-col>
     </ion-row>
-    <ion-infinite-scroll #infinityScroll (ionInfinite)="loadData()">
+    <ion-infinite-scroll *ngIf="!isMaxData" #infinityScroll (ionInfinite)="loadData($event)">
       <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ion-grid>

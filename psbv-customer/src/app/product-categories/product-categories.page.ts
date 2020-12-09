@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll } from '@ionic/angular';
 import { IPageRequest, ProductGroupsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 
@@ -12,21 +12,23 @@ import { LoadingService } from '../@app-core/loading.service';
 
 export class ProductCategoriesPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
+  @ViewChild(IonContent) ionContent: IonContent;
 
+  pageRequest: IPageRequest;
   data = [];
+  permission: string;
   val = '';
-  checkurl: boolean
-  pageRequest: IPageRequest = {
-    page: 1,
-    per_page: 12,
-    total_objects: 1
-  }
+  counter = 0;
+  inputValue: string = '';
+  isMaxData = false;
 
   constructor(
     private router: Router,
     private productGroupService: ProductGroupsService,
     private loading: LoadingService,
-  ) { }
+  ) {
+    this.reset();
+  }
 
   ngOnInit() {
     this.loading.present();
@@ -53,43 +55,70 @@ export class ProductCategoriesPage implements OnInit {
   }
 
   onInput(event: any) {
-    const val = event.target.value;
-    console.log(this.val.valueOf());
-    this.productGroupService.searchProductGroup(val).subscribe((data: any) => {
-      this.data = data.products;
-    })
+    this.inputValue = event.target.value;
+    this.reset();
+    this.scrollContent();
+    this.counter++;
+    this.loadData();
   }
 
   loadData() {
-    setTimeout(() => {
-      this.productGroupService.getProductGroups(this.pageRequest).subscribe(data => {
-        for (let item of data.product_groups) {
-          // image not found
-          if (item.thumb_image === null) {
-            const data = {
-              url: "https://i.imgur.com/dbpoag5.png"
+    if (!this.isMaxData) {
+      setTimeout(() => {
+        if (this.inputValue !== '') {
+          const counterTemp = this.counter;
+          this.productGroupService.searchProductGroup(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
+            if (counterTemp == this.counter) {
+              for (let item of data.product_groups) {
+                // image not found
+                if (item.thumb_image === null) {
+                  const d = {
+                    url: "https://i.imgur.com/dbpoag5.png"
+                  }
+                  item.thumb_image = d;
+                }
+                this.data.push(item);
+              }
+
+              this.infinityScroll.complete();
+              this.loading.dismiss();
+              this.pageRequest.page++;
+
+              // check max data
+              if (this.data.length >= data.meta.pagination.total_objects) {
+                // this.infinityScroll.disabled = true;
+                this.isMaxData = true;
+              }
             }
-            item.thumb_image = data;
-          }
-          this.data.push(item);
-        }
+          })
+        } else {
+          this.productGroupService.getProductGroups(this.pageRequest).subscribe(data => {
+            for (let item of data.product_groups) {
+              // image not found
+              if (item.thumb_image === null) {
+                const d = {
+                  url: "https://i.imgur.com/dbpoag5.png"
+                }
+                item.thumb_image = d;
+              }
+              this.data.push(item);
+            }
 
-        this.infinityScroll.complete();
-        this.loading.dismiss();
-        this.pageRequest.page++;
+            this.infinityScroll.complete();
+            this.loading.dismiss();
+            this.pageRequest.page++;
 
-        // check max data
-        if (this.data.length >= data.meta.pagination.total_objects) {
-          this.infinityScroll.disabled = true;
+            // check max data
+            if (this.data.length >= data.meta.pagination.total_objects) {
+              // this.infinityScroll.disabled = true;
+              this.isMaxData = true;
+            }
+          })
         }
-
-        // cal left per_page
-        const temp = data.meta.pagination.total_objects - this.data.length;
-        if (temp <= this.pageRequest.per_page) {
-          this.pageRequest.per_page = temp;
-        }
-      })
-    }, 50);
+      }, 50);
+    } else {
+      this.infinityScroll.complete();
+    }
   }
 
   goToDetail(item) {
@@ -102,5 +131,19 @@ export class ProductCategoriesPage implements OnInit {
         data: JSON.stringify(data)
       }
     });
+  }
+
+  reset() {
+    this.pageRequest = {
+      page: 1,
+      per_page: 12,
+      total_objects: 20
+    }
+    this.data = [];
+    this.isMaxData = false;
+  }
+
+  scrollContent() {
+    this.ionContent.scrollToTop(500);
   }
 }

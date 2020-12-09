@@ -14,7 +14,7 @@ export class AccountService {
 
   constructor(
     private http: HttpClient,
-    
+    // private storage: StorageService,
     // private toastr: ToastrService,
   ) { }
 
@@ -29,7 +29,16 @@ export class AccountService {
   public updateName(name) {
     return this.http.put(`${APICONFIG.ACCOUNT.UPDATE_NAME}`, name).pipe(
       map((result) => {
-        // this.storage.setInfoAccount();
+     
+        return result;
+      }),
+      catchError((errorRes) => { 
+        throw errorRes.error; }));
+  }
+  public updatePassword(pass) {
+    return this.http.put(`${APICONFIG.ACCOUNT.UPDATE_PASS}`, pass).pipe(
+      map((result) => {
+     
         return result;
       }),
       catchError((errorRes) => { 

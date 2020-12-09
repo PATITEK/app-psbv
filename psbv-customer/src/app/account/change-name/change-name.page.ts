@@ -37,9 +37,9 @@ export class ChangeNamePage implements OnInit {
     }
     
      this.accountService.updateName(name).subscribe((data)=> {
-      this.pageNotiService.setdataStatusNoti(datapasing);
-       localStorage.setItem('fullname', name.fullname);
-       this.router.navigate(['/statusNoti']);
+      localStorage.setItem('fullname', name.fullname);
+       this.pageNotiService.setdataStatusNoti(datapasing);
+        this.router.navigate(['/statusNoti']);
      }) 
 
   }

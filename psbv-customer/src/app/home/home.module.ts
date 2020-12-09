@@ -8,7 +8,6 @@ import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
 import { FooterNavComponent } from './footer-nav/footer-nav.component';
-import { HeaderHomeModule } from '../@modular/header-home/header-home.module';
 
 @NgModule({
   imports: [
@@ -16,7 +15,7 @@ import { HeaderHomeModule } from '../@modular/header-home/header-home.module';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    HeaderHomeModule
+
   ],
   declarations: [HomePage, FooterNavComponent]
 })

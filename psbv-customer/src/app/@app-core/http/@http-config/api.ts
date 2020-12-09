@@ -17,6 +17,7 @@ export const APICONFIG = {
   ACCOUNT: {
     PROFILE_USER: `/app/users/profile`,
     UPDATE_NAME: `/app/users/update_profile`,
+    UPDATE_PASS: `/app/users/update_password`,
     GETDETAIL: (id) => `/app/users/${id}`,
     EDIT: (id) => `/app/users/${id}`,
     DELETE: (id) => `/app/users/${id}`,
@@ -45,6 +46,13 @@ export const APICONFIG = {
     CREATE: '/app/accessories',
     EDIT: (id) => `/app/accessories${id}`,
     DELETE: (id) => `/app/accessories${id}`
+  },
+  ORDERS: {
+    GET: `/app/orders`,
+    GET_DETAIL: (id) => `/app/orders/${id}`,
+    CREATE: '/app/orders',
+    EDIT: (id) => `/app/orders${id}`,
+    DELETE: (id) => `/app/orders${id}`
   }
 };
 

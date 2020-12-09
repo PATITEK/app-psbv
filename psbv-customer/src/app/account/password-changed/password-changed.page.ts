@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/@app-core/http';
+import { AccountService, AuthService } from 'src/app/@app-core/http';
+import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
 
 @Component({
   selector: 'app-password-changed',
@@ -21,7 +22,7 @@ export class PasswordChangedPage implements OnInit {
   error_messages = {
     'newpassword': [
       { type: 'required', message: '  Password is required.' },
-      { type: 'minlength', message: 'Min password length is ' },
+      { type: 'minlength', message: 'Min password length is 8' },
       { type: 'maxlength', message: 'Max password length is 16' }
     ],
     'confirmpassword': [
@@ -34,8 +35,11 @@ export class PasswordChangedPage implements OnInit {
 
     ],
   }
+
   constructor(
     public formBuilder: FormBuilder, private authService: AuthService, private router: Router,
+    private accountService: AccountService,
+    private pageNotiService: PageNotiService
   ) {
     this.formNewPass = this.formBuilder.group({
 
@@ -54,15 +58,29 @@ export class PasswordChangedPage implements OnInit {
         Validators.minLength(8),
         Validators.maxLength(16)
       ])),
-    }, {
+    },
+    {
       validators: this.password.bind(this)
-    });
+    },
+    // {
+    //   validators: this.areEqual
+    // }
+   
+)}
+  areEqual(formGroup: FormGroup) {
+    const  cp = formGroup.get('currentpassword').value;
+    console.log(cp)
+    const np = formGroup.get('newpassword').value;
+    if ((cp === np) && (cp!== "") && (np!== ""))
+      return { error: "New password must diffrence Old password " }
+    else return ""
   }
 
   password(formGroup: FormGroup) {
     const np = formGroup.get('newpassword').value;
-    const cp = formGroup.get('confirmpassword').value;
-    if (np === cp)
+    const npc = formGroup.get('confirmpassword').value;
+
+    if (np === npc)
       return ""
     else return { error: "Password not match" }
   }
@@ -97,7 +115,28 @@ export class PasswordChangedPage implements OnInit {
     }
   }
   onSubmit() {
+    const datapasing: IDataNoti = {
+      title: 'PASSWORD CHANGED!',
+      description: 'Your password has been changed, Continue using app',
+      routerLink: '/main/home'
+    }
+    var result_object = {
+      "password": this.formNewPass.get('currentpassword').value,
+      "new_password": this.formNewPass.get('confirmpassword').value
+    }
+    this.accountService.updatePassword(result_object).subscribe((data) => {
+      this.pageNotiService.setdataStatusNoti(datapasing);
+      this.router.navigate(['/statusNoti']);
+    })
     
-    this.router.navigate(['/statusNoti']);
   }
+  onCancel() {
+    this.formNewPass.setValue({
+      currentpassword: '',
+      newpassword:'',
+      confirmpassword:''
+    })
+
+  }
+  
 }
