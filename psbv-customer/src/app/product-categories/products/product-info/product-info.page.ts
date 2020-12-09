@@ -183,7 +183,7 @@ export class ProductInfoPage implements OnInit {
             this.product = data.product;
 
             setTimeout(() => {
-              this.accessoriesService.getAccessories(this.pageRequest).subscribe(data => {
+              this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, this.product.id).subscribe(data => {
                 for (let item of data.accessories) {
                   this.accessories.push(item);
                   this.accessoryIds.push({

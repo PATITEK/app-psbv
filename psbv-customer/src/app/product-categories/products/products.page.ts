@@ -58,7 +58,6 @@ export class ProductsPage implements OnInit {
       if (this.id != '') {
         this.productGroupService.getProductGroupDetail(this.id, this.pageRequest)
           .subscribe(data => {
-            console.log(data);
             for (let item of data.products) {
               // image not found
               if (item.thumb_image === null) {

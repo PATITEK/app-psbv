@@ -21,17 +21,18 @@ ion-content {
     padding: 2px;
     border-radius: 4px;
     top: calc(100% + 5px);
-    right: 0;
+    right: -10px;
     background-color: #f0ecec;
+    min-width: 100px;
 
     &::before{
       content: " ";
       position: absolute;
-      border-width: 8px 6px;
+      border-width: 8px 8px;
       border-style: solid;
       border-color: transparent transparent #f0ecec transparent;
-      top: -16px;
-      right: 5px;
+      top: -15px;
+      right: 13px;
     }
    
     span{
@@ -39,6 +40,8 @@ ion-content {
       text-align: center;
       padding: 4px 11px;
       border-radius: 4px;
+      font-size: 14px;
+      color: #565656;
     }
     span:active{
       background-color: #fff;
