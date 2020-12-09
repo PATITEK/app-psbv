@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { IPageRequest, ProductGroupsService } from 'src/app/@app-core/http';
+import { IPageRequest, PERMISSIONS, ProductGroupsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
-import { PERMISSION } from './product-info/product-info.page';
-
+import { StorageService } from 'src/app/@app-core/storage.service';
 
 @Component({
   selector: 'app-products',
@@ -16,43 +15,42 @@ export class ProductsPage implements OnInit {
 
   pageRequest: IPageRequest = {
     page: 1,
-    per_page: 8,
+    per_page: 10,
     total_objects: 20
   }
   data = [];
-  permission: PERMISSION = PERMISSION.GUEST;
+  permission: string;
   title = '';
-  isFirstTime = false;
   id = '';
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private productGroupService: ProductGroupsService,
-    private loading: LoadingService
+    private loading: LoadingService,
+    private storageService: StorageService
   ) { }
 
   ngOnInit() {
+    this.loading.present();
+    this.loadData();
+    this.storageService.infoAccount.subscribe((data) => {
+      this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
+    })
+
+    this.route.queryParams.subscribe(params => {
+      if (params.data !== undefined) {
+        this.title = JSON.parse(params['data']).title;
+        this.id = JSON.parse(params['data']).id;
+      }
+    })
+  }
+
+  ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
-    this.loading.present();
-    this.loadData();
-  }
-
-  ionViewWillEnter() {
-    this.route.queryParams.subscribe(params => {
-      if (params.permission !== undefined) {
-        this.permission = JSON.parse(params['permission']);
-      }
-      if (params.name !== undefined) {
-        this.title = JSON.parse(params['name']);
-      }
-      if (params.id !== undefined) {
-        this.id = JSON.parse(params['id']);
-      }
-    })
   }
 
   loadData() {
@@ -60,18 +58,18 @@ export class ProductsPage implements OnInit {
       if (this.id != '') {
         this.productGroupService.getProductGroupDetail(this.id, this.pageRequest)
           .subscribe(data => {
+            console.log(data);
             for (let item of data.products) {
+              // image not found
+              if (item.thumb_image === null) {
+                const d = {
+                  url: "https://i.imgur.com/dbpoag5.png"
+                }
+                item.thumb_image = d;
+              }
               this.data.push(item);
             }
-          // image not found
-          for(let i = 0 ; i < this.data.length ; i++) {
-            if(this.data[i].thumb_image === null) {
-              const data = {
-                url: "https://i.imgur.com/dbpoag5.png"
-              }
-              this.data[i].thumb_image = data;
-            }
-          }
+
             this.infinityScroll.complete();
             this.loading.dismiss();
             this.pageRequest.page++;
@@ -92,19 +90,15 @@ export class ProductsPage implements OnInit {
   }
 
   checkGuestPermission(): boolean {
-    return this.permission == PERMISSION.GUEST;
+    return this.permission === PERMISSIONS[0].value;
   }
 
   checkStandardPermission(): boolean {
-    return this.permission == PERMISSION.STANDARD;
+    return this.permission == PERMISSIONS[1].value;
   }
 
   goBack(): void {
     this.router.navigateByUrl('main/product-categories');
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'flex';
-    });
   }
 
   goToNoti() {
@@ -116,10 +110,14 @@ export class ProductsPage implements OnInit {
   }
 
   goToDetail(item) {
+    const data = {
+      id: item.id,
+      categoryId: this.id,
+      categoryTitle: this.title
+    }
     this.router.navigate(['main/product-categories/products/product-info'], {
       queryParams: {
-        id: JSON.stringify(item.id),
-        permission: JSON.stringify(this.permission)
+        data: JSON.stringify(data)
       }
     });
   }

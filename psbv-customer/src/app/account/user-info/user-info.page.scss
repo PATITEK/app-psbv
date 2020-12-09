@@ -1,3 +1,6 @@
+ion-content {
+  --overflow: hidden;
+}
 .icon-back{
   font-size: 22px;
   color: black;
@@ -5,9 +8,10 @@
 .icon-more{
   height: 20px;
   display: flex;
-  float: right;
-  margin-top: 0px;
-  position: relative;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
 
   ion-img{
     width: 22px;
@@ -40,7 +44,7 @@
       background-color: #fff;
     }
   }
-}
+
 .header-md::after {
   background-image: none;
 }
@@ -137,9 +141,7 @@
   margin-inline-end: 0;
   --background-activated:#CE091C;
 }
-.logout-alert{
-  
-}
+
 @media(max-width: 321px){
   .btn-logout{
     margin-top: 1.5rem;

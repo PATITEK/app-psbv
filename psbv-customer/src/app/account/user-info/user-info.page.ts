@@ -11,8 +11,8 @@ import { PERMISSION } from 'src/app/product-categories/products/product-info/pro
   styleUrls: ['./user-info.page.scss'],
 })
 export class UserInfoPage implements OnInit {
-  permission: PERMISSION = PERMISSION.STANDARD;q
-  message: string;
+  permission: PERMISSION = PERMISSION.STANDARD;
+  message: any;
   btn: boolean = false;
   notOn: boolean = true;
   
@@ -20,12 +20,16 @@ export class UserInfoPage implements OnInit {
     private router: Router,
     public alertController: AlertController,
     private authService: AuthService,
+    private accountService: AccountService, 
   
   ) {}
 
   ngOnInit() {
-     this.message = localStorage.getItem('fullname');
-   
+    this.accountService.getAccounts().subscribe((data: any)=>{
+      this.message = data.user.fullname;
+            
+    })
+    //  this.message = localStorage.getItem('fullname');
   }
 
   upgradePremium(): void {
@@ -57,7 +61,6 @@ export class UserInfoPage implements OnInit {
     this.router.navigateByUrl('account/password-changed');
   }
   
-
   gotoUpgrade() {
     this.router.navigateByUrl('account/user-info/upgrade');
   }

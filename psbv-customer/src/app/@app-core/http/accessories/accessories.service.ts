@@ -22,6 +22,14 @@ export class AccessoriesService {
       catchError((errorRes) => { throw errorRes.error; }));
   }
 
+  public getAccessoriesWithProductId(request: IPageRequest, id: string) {
+    return this.http.get<any>(`${APICONFIG.ACCESSORIES.GET_WITH_PRODUCT_ID(id)}?${(requestQuery(request))}`).pipe(
+      map((result) => {
+        return result;
+      }),
+      catchError((errorRes) => { throw errorRes.error; }));
+  }
+
   public getAccessoryDetail(id: string) {
     return this.http.get<any>(`${APICONFIG.ACCESSORIES.GET_DETAIL(id)}`).pipe(
       map((result) => {

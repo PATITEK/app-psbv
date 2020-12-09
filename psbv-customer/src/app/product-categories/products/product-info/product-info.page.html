@@ -18,9 +18,7 @@
         <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
       </ion-button>
     </ion-card-content>
-    <ion-fab-button class="add-product-button" (click)="addProduct()" *ngIf="!checkGuestPermission()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
+    <ion-img src="../../../../assets/add-btn.svg" class="add-product-button" (click)="addProduct()" *ngIf="!checkGuestPermission()"></ion-img>
   </ion-card>
 
   <ion-card class="accessories">
@@ -37,20 +35,22 @@
         </ion-button>
       </ion-item>
       <ion-grid>
-        <ion-row *ngFor="let accessory of accessories" [style.background]="getItem(accessory).background"
-          (click)="toggleItem(accessory)">
+        <ion-row *ngFor="let accessory of accessories; let i = index" [style.background]="getItem(accessoryIds[i]).background">
           <ion-col size="4">
             <ion-img [src]="accessory.thumb_image.url"></ion-img>
           </ion-col>
           <ion-col size="8">
-            <div class="content-block" [style.color]="getItem(accessory).color">
+            <div class="content-block" [style.color]="getItem(accessoryIds[i]).color">
               <ion-label>{{ accessory.name }}</ion-label>
               <p>{{ accessory.description }}</p>
             </div>
           </ion-col>
-          <span class="accessories-item-icon" *ngIf="!checkGuestPermission()">
-            <ion-icon name="{{ getItem(accessory).iconName }}"></ion-icon>
-          </span>
+
+          <div class="modifier" *ngIf="!checkGuestPermission()">
+            <span class="modifier-btn" (click)="decreaseQuantity(accessoryIds[i])">-</span>
+            <span class="counter">{{ accessoryIds[i].quantity }}</span>
+            <span class="modifier-btn" (click)="increaseQuantity(accessoryIds[i])">+</span>
+          </div>
         </ion-row>
         
         <ion-infinite-scroll #infinityScroll (ionInfinite)="loadData()">
@@ -65,6 +65,6 @@
     <ion-fab-button>
       <ion-icon name="cart-outline"></ion-icon>
     </ion-fab-button>
-    <span>{{ calTotalItems() }}</span>
+    <span *ngIf="curProductsLength > 0">+{{ curProductsLength}}</span>
   </ion-fab>
 </ion-content>

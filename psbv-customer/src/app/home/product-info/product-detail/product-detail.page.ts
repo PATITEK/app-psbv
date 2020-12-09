@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PERMISSION } from '../product-info.page';
 import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
-import { ProductsService } from 'src/app/@app-core/http';
+import { PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
+import { StorageService } from 'src/app/@app-core/storage.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -22,29 +22,25 @@ export class ProductDetailPage implements OnInit {
     },
     price: 0
   }
-  permission: PERMISSION = PERMISSION.GUEST;
+  permission: string;
 
   constructor(
     private router: Router,
     private pageNotiService: PageNotiService,
     private route: ActivatedRoute,
     private productService: ProductsService,
-    private loading: LoadingService
-  ) {
-  }
+    private loading: LoadingService,
+    private storageService: StorageService,
+  ) {}
 
   ngOnInit() {
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'none';
-    });
     this.loading.present();
-  }
+    this.storageService.infoAccount.subscribe((data) => {
+      this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
+    })
 
-  ionViewWillEnter() {
     this.route.queryParams.subscribe((params) => {
-      this.permission = JSON.parse(params['permission']);
-      this.productService.getProductDetail(JSON.parse(params['id']))
+      this.productService.getProductDetail(JSON.parse(params['data']).id)
         .subscribe(data => {
           this.product = data.product;
           this.loading.dismiss();
@@ -57,19 +53,16 @@ export class ProductDetailPage implements OnInit {
   }
 
   download() {
-    event.preventDefault();
     const data: IDataNoti = {
       title: 'DOWNLOAD DONE',
       description: '',
-      routerLink: ''
+      routerLink: 'main/home'
     }
     this.pageNotiService.setdataStatusNoti(data);
     this.router.navigate(['/statusNoti']);
-
   }
 
   checkStandardPermission(): boolean {
-    return this.permission == PERMISSION.STANDARD;
+    return this.permission === PERMISSIONS[1].value;
   }
-
 }

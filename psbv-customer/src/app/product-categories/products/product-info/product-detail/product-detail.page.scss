@@ -144,13 +144,14 @@ ion-content {
   }
 
   .download-block {
-    a {
+    span {
       display: inline-block;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
       max-width: 250px;
       font-size: 12px;
+      color: #7193FF;
     }
   
     ion-icon {

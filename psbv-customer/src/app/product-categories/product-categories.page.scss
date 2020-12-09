@@ -105,6 +105,10 @@ ion-grid {
       overflow: hidden;
       height: 120px;
       object-fit: cover;
+
+      @media screen and (max-width: 320px) {
+        height: 100px;
+      }
     }
     
 

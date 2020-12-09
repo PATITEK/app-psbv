@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { APICONFIG } from '../@http-config/api';
 import { catchError, map } from 'rxjs/operators';
-// import { ToastrService } from 'ngx-toastr';
-import { SUCCESS } from '../@http-config/messages';
+  //  import { ToastrService } from 'ngx-toastr';
+//  import { SUCCESS } from '../@http-config/messages';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/@app-core/storage.service';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -14,7 +14,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    // private toastr: ToastrService,
+      //  private toastr: ToastrService,
     private router: Router,
     private storage: StorageService,
   ) { }
@@ -68,9 +68,11 @@ export class AuthService {
   public login(req) {
     return this.http.post(`${APICONFIG.AUTH.LOGIN}`, req).pipe(
       map((result: any) => {
+        this.storage.clear();
         localStorage.setItem('Authorization', result.token);
         localStorage.setItem('fullname', result.fullname);
         this.storage.setInfoAccount();
+        
         // this.toastr.success(SUCCESS.AUTH.LOGIN);
         return result;
       }),
@@ -79,6 +81,14 @@ export class AuthService {
         this.storage.clear();
         throw errorRes.error;
       }));
+  }
+ 
+  logout() {
+    localStorage.clear();
+    this.storage.clear();
+    this.storage.setInfoAccount();
+    
+    this.router.navigateByUrl('/main/home');
   }
   public signup(req) {
     return this.http.post(`${APICONFIG.AUTH.SIGNUP}`, req).pipe(
@@ -89,12 +99,6 @@ export class AuthService {
       catchError((errorRes: any) => {
         throw errorRes.error;
       }));
-  }
-  logout() {
-    localStorage.clear();
-    this.storage.clear();
-    this.storage.setInfoAccount();
-    this.router.navigateByUrl('/main/home');
   }
   checkLogin() {
     const token = localStorage.getItem('Authorization');

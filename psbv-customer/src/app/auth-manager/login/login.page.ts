@@ -86,8 +86,8 @@ export class LoginPage implements OnInit {
     setTimeout(() => {
       this.router.navigateByUrl('/main/product-categories');
     }, 200);
-    
     this.authService.sendData(this.message);
+    
     })
   }
   resetPass() {

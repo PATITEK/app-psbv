@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { PERMISSIONS } from 'src/app/@app-core/http';
 import { StorageService } from 'src/app/@app-core/storage.service';
-
 
 export enum STATUS {
   CONFIRMED,
@@ -40,8 +39,7 @@ export interface IProduct {
   styleUrls: ['./detail-order.page.scss'],
 })
 export class DetailOrderPage implements OnInit {
-
-  text: string;
+  permission: string; 
   item: IItem = {
     name: 'Item 12/12/1212',
     status: STATUS.DONE,
@@ -97,47 +95,27 @@ export class DetailOrderPage implements OnInit {
       accessories: []
     },
   ]
-  data: number = 1;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private sanitizer: DomSanitizer,
     private storageService: StorageService
   ) { }
-  permiss: string; 
+
   ngOnInit() {
+    this.storageService.infoAccount.subscribe((data) => {
+      this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
+    })
+  }
+
+  ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
-    this.text = '20px 0';
-    this.storageService.infoAccount.subscribe((data) => {
-      console.log(data);
-      this.permiss = data.role;
-    })
-  }
-
-  ionViewWillEnter(){
-    this.route.queryParams.subscribe((params) => {
-      this.data = JSON.parse(params['data']);
-    })
   }
 
   goBack(): void {
-    if (this.data == 1) {
-      this.router.navigateByUrl('/main/order-status');
-    } else {
-      this.router.navigateByUrl('/main/order-status/shipping');
-    }
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'flex';
-    });
-  }
-
-  goToDetailComponent(): void {
-    this.router.navigateByUrl('/main/order-status/detail-order/detail-component')
+    this.router.navigateByUrl('/main/order-status');
   }
 
   getStatus(): any {
@@ -158,9 +136,11 @@ export class DetailOrderPage implements OnInit {
       background: '#ce091c'
     }
   }
-  checkPremium() :boolean {
-    return this.permiss === 'premium';
+
+  checkPremiumPermission(): boolean {
+    return this.permission === PERMISSIONS[2].value;
   }
+
   checkConfirmedStatus(): boolean {
     return this.item.status === STATUS.CONFIRMED;
   }

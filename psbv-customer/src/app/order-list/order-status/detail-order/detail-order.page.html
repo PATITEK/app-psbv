@@ -15,7 +15,7 @@
       </div>
     </ion-card-header>
     <ion-card-content>
-      <ion-list [style.padding]="checkConfirmedStatus() ? text : 0">
+      <ion-list>
         <ion-item *ngFor="let subItem of item.subItems">
           <span class="name" slot="start">{{ subItem.name }}</span>
           <div class="content" slot="end">
@@ -23,6 +23,7 @@
           </div>
         </ion-item>
       </ion-list>
+      <ion-button class="btn btn-margin-top" *ngIf="checkConfirmedStatus()">Re-order</ion-button>
     </ion-card-content>
   </ion-card>
 
@@ -46,7 +47,7 @@
         </ion-row>
       </ion-col>
 
-      <ion-button class="detail-component-btn" (click)="goToDetailComponent()" *ngIf="checkPremium()">View detail component</ion-button>
+      <ion-button class="btn btn-absolute" routerLink="/main/order-status/detail-order/detail-component" *ngIf="checkPremiumPermission()">View detail component</ion-button>
     </ion-row>
   </ion-grid>
 </ion-content>

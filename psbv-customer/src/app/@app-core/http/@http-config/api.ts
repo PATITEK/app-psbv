@@ -16,6 +16,8 @@ export const APICONFIG = {
   },
   ACCOUNT: {
     PROFILE_USER: `/app/users/profile`,
+    UPDATE_NAME: `/app/users/update_profile`,
+    UPDATE_PASS: `/app/users/update_password`,
     GETDETAIL: (id) => `/app/users/${id}`,
     EDIT: (id) => `/app/users/${id}`,
     DELETE: (id) => `/app/users/${id}`,
@@ -39,6 +41,7 @@ export const APICONFIG = {
   },
   ACCESSORIES: {
     GET: `/app/accessories`,
+    GET_WITH_PRODUCT_ID: (id) => `/app/products/${id}/accessories`,
     GET_DETAIL: (id) => `/app/accessories/${id}`,
     CREATE: '/app/accessories',
     EDIT: (id) => `/app/accessories${id}`,

@@ -19,6 +19,14 @@ export class OrderStatusPage implements OnInit {
   
   ngOnInit() {
   }
+
+  ionViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
+  }
+
   changeTabs(name) {
    this.activeTab = name;
    if(this.activeTab ==='orderStatus'){
