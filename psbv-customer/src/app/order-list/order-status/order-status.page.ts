@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { PERMISSIONS } from 'src/app/@app-core/http';
 import { OrdersService } from 'src/app/@app-core/http/orders';
 import { StorageService } from 'src/app/@app-core/storage.service';
 
@@ -25,19 +24,10 @@ export class OrderStatusPage implements OnInit {
 
   constructor(
     private router: Router,
-    private ordersService: OrdersService,
-    private storageService: StorageService
-  ) {
-    this.storageService.infoAccount.subscribe((data) => {
-      this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
-    })
-  }
+    private ordersService: OrdersService
+  ) {}
 
-  ngOnInit() {   
-    if (this.checkGuestPermission()) {
-      this.router.navigateByUrl('/auth/login');
-    }
-  }
+  ngOnInit() { }
 
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
@@ -86,9 +76,5 @@ export class OrderStatusPage implements OnInit {
       }
       return acc;
     }, '').substring(2);
-  }
-
-  checkGuestPermission(): boolean {
-    return this.permission === PERMISSIONS[0].value;
   }
 }

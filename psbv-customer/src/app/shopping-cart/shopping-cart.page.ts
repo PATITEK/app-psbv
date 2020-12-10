@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { PERMISSIONS } from '../@app-core/http';
-import { StorageService } from '../@app-core/storage.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -17,19 +16,10 @@ export class ShoppingCartPage implements OnInit {
 
   constructor(
     private alertCrtl: AlertController,
-    private router: Router,
-    private storageService: StorageService
-  ) { 
-    this.storageService.infoAccount.subscribe((data) => {
-      this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
-    })
-  }
+    private router: Router
+  ) {}
 
-  ngOnInit() {   
-    if (this.checkGuestPermission()) {
-      this.router.navigateByUrl('/auth/login');
-    }
-  }
+  ngOnInit() { }
 
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
@@ -45,7 +35,11 @@ export class ShoppingCartPage implements OnInit {
   }
 
   calPrice(item) {
-    return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price, 0)) * item.quantity;
+    return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;
+  }
+
+  calTotalAccessories() {
+    // return this.cartItems.
   }
 
   listAccessoriesName(item) {
@@ -54,16 +48,32 @@ export class ShoppingCartPage implements OnInit {
     }, '').substring(2);
   }
 
-  decreaseQuantity(item) {
+  decreaseProductQuantity(item) {
     if (item.quantity > 1) {
       item.quantity--;
       this.setLocalStorage();
     }
   }
 
-  increaseQuantity(item) {
-    item.quantity++;
-    this.setLocalStorage();
+  increaseProductQuantity(item) {
+    if (item.quantity < 999) {
+      item.quantity++;
+      this.setLocalStorage();
+    }
+  }
+
+  decreaseAccessoryQuantity(item) {
+    if (item.quantity > 0) {
+      item.quantity--;
+      this.setLocalStorage();
+    }
+  }
+
+  increaseAccessoryQuantity(item) {
+    if (item.quantity < 999) {
+      item.quantity++;
+      this.setLocalStorage();
+    }
   }
 
   setLocalStorage() {
@@ -143,6 +153,28 @@ export class ShoppingCartPage implements OnInit {
     }
   }
 
+  calSelectedProducts() {
+    let total = 0;
+    for (let i = 0; i < this.cartItemsSelected.length; i++) {
+      if (this.cartItemsSelected[i].selected) {
+        total += this.cartItems[i].quantity;
+      }
+    }
+    return total;
+  }
+
+  calSelectedAccessories() {
+    let total = 0;
+    for (let i = 0; i < this.cartItemsSelected.length; i++) {
+      if (this.cartItemsSelected[i].selected) {
+        total += this.cartItems[i].accessories.reduce((acc, cur) => {
+          return acc + cur.quantity;
+        }, 0);
+      }
+    }
+    return total;
+  }
+
   goToSelectedProducts() {
     let data = {
       selectedItems: []
@@ -155,20 +187,17 @@ export class ShoppingCartPage implements OnInit {
           id: this.cartItems[index].id,
           quantity: this.cartItems[index].quantity,
           price: this.cartItems[index].price,
-          accessories: this.cartItems[index].accessories
+          accessories: this.cartItems[index].accessories.filter(a => a.quantity > 0)
         }
 
         data.selectedItems.push(product);
       }
     })
+    console.log(data);
     this.router.navigate(['/main/shopping-cart/selected-products'], {
       queryParams: {
         data: JSON.stringify(data)
       }
     })
-  }
-
-  checkGuestPermission(): boolean {
-    return this.permission === PERMISSIONS[0].value;
   }
 }
