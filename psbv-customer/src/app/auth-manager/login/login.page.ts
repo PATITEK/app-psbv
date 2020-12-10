@@ -25,6 +25,7 @@ export class LoginPage implements OnInit {
 
   async presentSuccessToast() {
     const toast = await this.toastController.create({
+      color: 'green',
       message: 'Login successed',
       duration: 2000
     });
@@ -33,6 +34,7 @@ export class LoginPage implements OnInit {
 
   async presentFailedToast() {
     const toast = await this.toastController.create({
+      color: 'red',
       message: 'Login Failed',
       duration: 2000
     });
@@ -76,19 +78,18 @@ export class LoginPage implements OnInit {
       this.showSpinner = false;
       this.presentAlert('Please enter your password');
     }
-    this.authService.login(this.profileForm.value).subscribe((data: any) => {
+    this.authService.login(this.profileForm.value).subscribe(
+    (data: any) => {
     this.showSpinner = true;
     this.router.navigateByUrl('/main/product-categories');
-   
-    }),
+    },
     (data:any) =>{
-      console.log(data.error);
-      
-      // if(data.error){
-      //   this.presentFailedToast();
-      // }
+      if(data.error) {
+         this.showSpinner = false;
+         this.presentFailedToast();
+        }
     }
-
+    )
   }
   resetPass() {
     this.router.navigateByUrl('/auth/forgot-password');

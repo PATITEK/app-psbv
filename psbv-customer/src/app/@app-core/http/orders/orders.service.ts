@@ -29,10 +29,9 @@ export class OrdersService {
       catchError((errorRes) => { throw errorRes.error; }));
   }
 
-  public createOrder(payload: any) {
-    return this.http.post<any>(`${APICONFIG.ORDERS.CREATE}`, payload).pipe(
+  public createOrder(data:any) {
+    return this.http.post(`${APICONFIG.ORDERS.CREATE}`,data).pipe(
       map((result) => {
-        // this.toastr.success(SUCCESS.CREATE, STATUS.SUCCESS);
         return result;
       }),
       catchError((errorRes) => { throw errorRes.error; }));

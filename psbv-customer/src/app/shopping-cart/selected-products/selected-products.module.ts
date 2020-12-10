@@ -13,7 +13,7 @@ import { SelectedProductsPage } from './selected-products.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    SelectedProductsPageRoutingModule
+    SelectedProductsPageRoutingModule,
   ],
   declarations: [SelectedProductsPage]
 })

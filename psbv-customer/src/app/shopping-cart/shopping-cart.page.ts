@@ -140,6 +140,7 @@ export class ShoppingCartPage implements OnInit {
       if (a.selected) {
         const product = {
           name: this.cartItems[index].name,
+          id: this.cartItems[index].id,
           quantity: this.cartItems[index].quantity,
           price: this.cartItems[index].price,
           accessories: this.cartItems[index].accessories

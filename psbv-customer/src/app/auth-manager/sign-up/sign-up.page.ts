@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/@app-core/http';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-sign-up',
@@ -33,7 +34,11 @@ export class SignUpPage implements OnInit {
   }
   public showSpinner = false;
 
-  constructor(private router: Router, public formBuilder: FormBuilder,  private authService: AuthService
+  constructor(
+    private router: Router,
+    public formBuilder: FormBuilder,
+    private authService: AuthService,
+    private toastController: ToastController,
     ) { 
         this.formSignup = this.formBuilder.group(
           {
@@ -70,7 +75,23 @@ export class SignUpPage implements OnInit {
     public showPass2 = false;
     ngOnInit() {
     }
-    onSignUp(){
+    async presentSuccessToast() {
+    const toast = await this.toastController.create({
+      message: 'Sign up successed',
+      duration: 500
+    });
+    await toast.present();
+  }
+
+  async presentFailedToast() {
+    const toast = await this.toastController.create({
+      message: 'Sign up Failed',
+      duration: 1000
+    });
+    await toast.present();
+  }
+
+    async onSignUp(){
       this.showSpinner = true;
       var tem_obj = {
         "email": this.formSignup.get('email').value,
@@ -79,9 +100,20 @@ export class SignUpPage implements OnInit {
       }
      
       this.authService.signup(tem_obj).subscribe((data:any) => {
+        this.showSpinner = true;
+        this.presentSuccessToast();
+        setTimeout(() => {
+            this.router.navigateByUrl("auth/login");
+        }, 1000);
+      
+      },
+      (data: any) => {
+        if(data.error) {
         this.showSpinner = false;
-        this.router.navigateByUrl("auth/login");
-      })
+        this.presentFailedToast();
+        }
+      }
+      )
     }
     showPassword2(){
       this.showPass2 = !this.showPass2;

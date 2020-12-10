@@ -6,3 +6,4 @@ export * from './products';
 export * from './global';
 export * from './@http-config';
 export * from './accessories';
+export * from './orders';
