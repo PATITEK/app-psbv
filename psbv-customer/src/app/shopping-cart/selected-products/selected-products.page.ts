@@ -93,7 +93,7 @@ export class SelectedProductsPage implements OnInit {
         "order_details_attributes": orderList
       }
     }
-    this.ordersService.createOrder(orders);
+    this.ordersService.createOrder(orders).subscribe();
   }
 
   checkExistedItem(type, id, orderList) {

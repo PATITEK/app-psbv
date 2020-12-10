@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { PERMISSIONS } from '../@app-core/http';
+import { StorageService } from '../@app-core/storage.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -11,13 +13,23 @@ export class ShoppingCartPage implements OnInit {
   public showSpinner = false;
   cartItems = [];
   cartItemsSelected = [];
+  permission: string;
 
   constructor(
     private alertCrtl: AlertController,
-    private router: Router
-  ) { }
+    private router: Router,
+    private storageService: StorageService
+  ) { 
+    this.storageService.infoAccount.subscribe((data) => {
+      this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
+    })
+  }
 
-  ngOnInit() {}
+  ngOnInit() {   
+    if (this.checkGuestPermission()) {
+      this.router.navigateByUrl('/auth/login');
+    }
+  }
 
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
@@ -154,5 +166,9 @@ export class ShoppingCartPage implements OnInit {
         data: JSON.stringify(data)
       }
     })
+  }
+
+  checkGuestPermission(): boolean {
+    return this.permission === PERMISSIONS[0].value;
   }
 }

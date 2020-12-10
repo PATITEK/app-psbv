@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { PERMISSIONS } from 'src/app/@app-core/http';
 import { OrdersService } from 'src/app/@app-core/http/orders';
+import { StorageService } from 'src/app/@app-core/storage.service';
 
 @Component({
   selector: 'app-order-status',
@@ -19,13 +21,23 @@ export class OrderStatusPage implements OnInit {
     per_page: 10,
     total_objects: 20
   };
+  permission: string;
 
   constructor(
-    private route: Router,
-    private ordersService: OrdersService
-  ) { }
+    private router: Router,
+    private ordersService: OrdersService,
+    private storageService: StorageService
+  ) {
+    this.storageService.infoAccount.subscribe((data) => {
+      this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
+    })
+  }
 
-  ngOnInit() {}
+  ngOnInit() {   
+    if (this.checkGuestPermission()) {
+      this.router.navigateByUrl('/auth/login');
+    }
+  }
 
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
@@ -52,11 +64,11 @@ export class OrderStatusPage implements OnInit {
   }
 
   gotoDetailOrder() {
-    this.route.navigateByUrl('main/order-status/detail-order')
+    this.router.navigateByUrl('main/order-status/detail-order')
   }
 
   gotoOrderStatus() {
-    this.route.navigateByUrl('main/order-status/order-status-detail')
+    this.router.navigateByUrl('main/order-status/order-status-detail')
   }
 
   async segmentChanged(event) {
@@ -70,9 +82,13 @@ export class OrderStatusPage implements OnInit {
   listProductsName(item) {
     return item.order_details.reduce((acc, cur) => {
       if (cur.yieldable_type == 'Product') {
-        acc += ', ' +  cur.name;
+        acc += ', ' + cur.name;
       }
       return acc;
     }, '').substring(2);
+  }
+
+  checkGuestPermission(): boolean {
+    return this.permission === PERMISSIONS[0].value;
   }
 }
