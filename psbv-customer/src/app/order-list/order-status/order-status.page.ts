@@ -13,6 +13,7 @@ export class OrderStatusPage implements OnInit {
 
   public activeTab = "orderStatus";
   checkTab = true;
+  checkstatus = 'confirm';
   data: any = [];
   pageRequest = {
     page: 1,
@@ -25,7 +26,7 @@ export class OrderStatusPage implements OnInit {
     private ordersService: OrdersService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
@@ -40,6 +41,18 @@ export class OrderStatusPage implements OnInit {
       this.data = data.orders;
     })
   }
+  getStatus(item) {
+    if(item.status == 'send_request')
+      return '#CCBAFC';
+    if(item.status == '')
+      return '#B2E9FB';
+    if(item.status == '')
+    return '#F7BDAE';
+    if(item.status == '')
+      return '#AEF4B7';
+    if(item.status == '')
+    return '#F9D775';
+  }
 
   changeTabs(name) {
     this.activeTab = name;
@@ -50,7 +63,7 @@ export class OrderStatusPage implements OnInit {
       this.checkTab = false;
     }
   }
-
+ 
   gotoDetailOrder() {
     this.route.navigateByUrl('main/order-status/detail-order')
   }
@@ -70,7 +83,7 @@ export class OrderStatusPage implements OnInit {
   listProductsName(item) {
     return item.order_details.reduce((acc, cur) => {
       if (cur.yieldable_type == 'Product') {
-        acc += ', ' +  cur.name;
+        acc += ', ' + cur.name;
       }
       return acc;
     }, '').substring(2);

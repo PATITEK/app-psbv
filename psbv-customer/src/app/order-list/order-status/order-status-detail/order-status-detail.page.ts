@@ -14,21 +14,21 @@ export class OrderStatusDetailPage implements OnInit {
       name: 'Sent Request',
       time: '08:23am',
       date: '12/12/1212',
-      didPassed: true,
+      didPassed: false,
       iconName: 'receipt-outline'
     },
     {
       name: 'Confirmed',
       time: '08:54am',
       date: '12/12/1212',
-      didPassed: true,
+      didPassed: false,
       iconName: 'checkbox-outline'
     },
     {
       name: 'Shipping',
       time: '09.05am',
       date: '12/12/1212',
-      didPassed: true,
+      didPassed: false,
       childSrc: '/main/order-status/shipping',
       iconName: 'airplane-outline'
     },

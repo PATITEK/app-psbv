@@ -94,6 +94,7 @@ ion-content {
     margin-top: 2rem;
     left: 3%;
     width: 95%;
+   
     .item__price-tag {
       font-size: 14px;
       color: white;
@@ -112,7 +113,11 @@ ion-content {
         margin-right: 0.3rem;
       }
     }
+    .item__price-tag--history {
+      width: 156px;
+    }
   }
+
 .section__main {
     position: relative;
   --background: #efefef;
@@ -156,7 +161,7 @@ ion-content {
   }
   .item__detail {
     font-size: 12px;
-    margin: 16px 20px;
+    padding: 12px 15px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -164,13 +169,17 @@ ion-content {
   }
   
   .item__order-status {
-    background-color: #CCBAFC;
+    
     border-radius: 50%;
-    height: 20px;
-    width: 14px;
+    height: 22px;
+    width: 22px;
     margin-left: 10px;
+    margin-right: 10px;
 
   }
+
+  
+  
   .btn {
     width: 98px;
     --background: #91e29b;
@@ -184,7 +193,10 @@ ion-content {
     bottom: 6px;
     margin: 0;
   }
-  
+  .btn-re-order {
+    font-size: 20px;
+    width: 148px;
+  }
   .btn-status {
     right: 128px;
     

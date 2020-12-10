@@ -31,11 +31,11 @@
                 <ion-item class="detail__wrapper" lines="none">
                     <ion-item class="item__price-tag">
                         {{ item.status }}
-                        <ion-img class="item__price-tag__slash" src="../../../assets/img/shopping-cart/slash.svg"></ion-img>
+                        <ion-img class="item__price-tag__slash" src="assets/img/shopping-cart/slash.svg"></ion-img>
                         {{ calProductQuantity(item) }} Products
                     </ion-item>
-                    <ion-label class="item__order-status"></ion-label>
-                    <ion-img class="item__deliver-icon" src="../../../assets/img/shopping-cart/delive.svg"></ion-img>
+                    <p class="item__order-status" [style.background]="getStatus(item)" ></p>
+                    <ion-img class="item__deliver-icon" src="assets/img/shopping-cart/delive.svg"></ion-img>
                     <ion-label class="item__day-to-delive">1 day</ion-label>
                 </ion-item>
                 <p class="item__detail">{{ listProductsName(item) }}
@@ -54,15 +54,15 @@
                     </ion-row>
                 </ion-grid>
                 <ion-item class="detail__wrapper" lines="none">
-                    <ion-item class="item__price-tag">
-                        Sent Request
+                    <ion-item class="item__price-tag  item__price-tag--history">
+                        Done
                         <ion-img class="item__price-tag__slash" src="assets/img/shopping-cart/slash.svg"></ion-img>
                         3 Products
                     </ion-item>
                 </ion-item>
                 <ion-card-content class="item__detail">Product Product Product, Product Product, Product, Product ...
                 </ion-card-content>
-                <ion-button lines="none" class="btn" size="small">Re-order</ion-button>
+                <ion-button lines="none" class="btn btn-re-order" size="small">Re-order</ion-button>
             </ion-card>
         </ion-list>
     </ion-card>
