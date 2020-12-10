@@ -6,22 +6,22 @@
     padding: 0;
 }
 .active-bg {
-  background-color: black;
+  // background-color:  black !important;  
 }
 .active-bg-content {
-  --background: black;
+  // --background: black;
 }
 .active-btn-status {
   border-bottom: 2px solid  ;
   border-color: #ffffff !important;
 }
 .active-btn-status-h {
-  background: black !important;
+  // background: black !important;
 }
 .active-btn-history {
   border-bottom: 2px solid ;
   border-color: #ffffff !important;
-  background: black !important;  
+  // background: black !important;  
 }
 ion-header {
   background-color: var(--main-color);
@@ -147,7 +147,7 @@ ion-content {
   .item__deliver-icon {
     height: 14px;
     width: auto;
-    margin-left: 3rem;
+  
   }
   .item__day-to-delive {
     margin-right: 0;
@@ -162,9 +162,14 @@ ion-content {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
+  
   .item__order-status {
-    margin-right: -2rem;
-    margin-left: 1rem;
+    background-color: #CCBAFC;
+    border-radius: 50%;
+    height: 20px;
+    width: 14px;
+    margin-left: 10px;
+
   }
   .btn {
     width: 98px;
@@ -202,5 +207,5 @@ ion-content {
   }
 }
 .active-bg-segment {
-  background: black!important;
+  // background: black!important;
 }
