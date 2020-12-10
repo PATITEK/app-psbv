@@ -19,7 +19,19 @@ export class SelectedProductsPage implements OnInit {
     private ordersService: OrdersService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.cartItems = JSON.parse(params['data']).selectedItems;
+    })
+  }
+
+  ionViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'none';
+    });
+  }
+
   goBack() {
     this.router.navigateByUrl('/main/shopping-cart');
   }
@@ -41,14 +53,12 @@ export class SelectedProductsPage implements OnInit {
   }
 
   sendMailQuote() {
-
-    const senddata: IDataNoti = {
+    const data: IDataNoti = {
       title: 'SEND A EMAIL QUOTE',
       description: '',
       routerLink: 'main/shopping-cart'
     }
-    this.pageNotiService.setdataStatusNoti(senddata);
-    this.router.navigate(['/statusNoti']);
+    
 
     let orderList: any = [];
     this.cartItems.forEach(cartItem => {
@@ -82,7 +92,11 @@ export class SelectedProductsPage implements OnInit {
         "order_details_attributes": orderList
       }
     }
-    this.ordersService.createOrder(orders);
+    this.ordersService.createOrder(orders).subscribe((data: any)=> {
+        console.log(data);
+        this.pageNotiService.setdataStatusNoti(data);
+        this.router.navigate(['/statusNoti']);
+    })
   }
 
   checkExistedItem(type, id, orderList) {
