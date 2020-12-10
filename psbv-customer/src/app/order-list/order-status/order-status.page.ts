@@ -13,7 +13,7 @@ export class OrderStatusPage implements OnInit {
 
   public activeTab = "orderStatus";
   checkTab = true;
-  data = [];
+  data: any = [];
   pageRequest = {
     page: 1,
     per_page: 10,
@@ -25,23 +25,19 @@ export class OrderStatusPage implements OnInit {
     private ordersService: OrdersService
   ) { }
 
-  ngOnInit() {
-    this.loadData();
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'flex';
     });
+    this.loadData();
   }
 
   loadData() {
     this.ordersService.getOrders(this.pageRequest).subscribe(data => {
-      console.log(data);
-      for (let item of data.orders) {
-        this.data.push(item);
-      }
+      this.data = data.orders;
     })
   }
 
@@ -65,5 +61,18 @@ export class OrderStatusPage implements OnInit {
 
   async segmentChanged(event) {
     this.activeTab = event.target.value;
+  }
+
+  calProductQuantity(item) {
+    return item.order_details.filter(a => a.yieldable_type == 'Product').length;
+  }
+
+  listProductsName(item) {
+    return item.order_details.reduce((acc, cur) => {
+      if (cur.yieldable_type == 'Product') {
+        acc += ', ' +  cur.name;
+      }
+      return acc;
+    }, '').substring(2);
   }
 }

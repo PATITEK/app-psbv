@@ -31,15 +31,15 @@
                 <ion-item class="detail__wrapper" lines="none">
                     <ion-item class="item__price-tag">
                         {{ item.status }}
-                        <ion-img class="item__price-tag__slash" src="assets/img/shopping-cart/slash.svg"></ion-img>
-                        {{ item.order_details[1].amount }} Products
+                        <ion-img class="item__price-tag__slash" src="../../../assets/img/shopping-cart/slash.svg"></ion-img>
+                        {{ calProductQuantity(item) }} Products
                     </ion-item>
-                    <ion-img class="item__order-status" src="assets/order-status.svg"></ion-img>
-                    <ion-img class="item__deliver-icon" src="assets/img/shopping-cart/delive.svg"></ion-img>
+                    <ion-img class="item__order-status" src="../../assets/order-status.svg"></ion-img>
+                    <ion-img class="item__deliver-icon" src="../../../assets/img/shopping-cart/delive.svg"></ion-img>
                     <ion-label class="item__day-to-delive">1 day</ion-label>
                 </ion-item>
-                <ion-card-content class="item__detail">Product Product Product, Product Product, Product, Product ...
-                </ion-card-content>
+                <p class="item__detail">{{ listProductsName(item) }}
+                </p>
                 <ion-button lines="none" class="btn btn-detail" size="small" (click)="gotoDetailOrder()">Detail
                 </ion-button>
                 <ion-button lines="none" class="btn btn-status" size="small" (click)="gotoOrderStatus()">Status
