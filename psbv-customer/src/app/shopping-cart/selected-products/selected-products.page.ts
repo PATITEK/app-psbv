@@ -37,7 +37,7 @@ export class SelectedProductsPage implements OnInit {
   }
 
   calPrice(item) {
-    return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price, 0)) * item.quantity;
+    return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;
   }
 
   calTotalPrice(items) {
@@ -50,6 +50,12 @@ export class SelectedProductsPage implements OnInit {
     return item.accessories.reduce((acc, cur) => {
       return acc + ', ' + cur.name;
     }, '').substring(2);
+  }
+
+  calTotalProducts() {
+    return this.cartItems.reduce((acc, cur) => {
+      return acc + cur.quantity;
+    }, 0)
   }
 
   sendMailQuote() {
@@ -93,7 +99,6 @@ export class SelectedProductsPage implements OnInit {
       }
     }
     this.ordersService.createOrder(orders).subscribe((data: any)=> {
-        console.log(data);
         this.pageNotiService.setdataStatusNoti(data);
         this.router.navigate(['/statusNoti']);
     })

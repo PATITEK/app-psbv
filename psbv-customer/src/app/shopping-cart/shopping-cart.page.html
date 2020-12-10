@@ -6,7 +6,8 @@
   <ion-card class="cart-body" *ngFor="let item of cartItems; let i = index;">
     <ion-label>{{ item.name }}</ion-label>
     <ion-item class="cart-heading-body">
-      <span class="selectedBtn" [style.background]="cartItemsSelected[i].selected ? '#91E29B' : 'white'" (click)="toggleSelected(cartItemsSelected[i])"></span>
+      <span class="selectedBtn" [style.background]="cartItemsSelected[i].selected ? '#91E29B' : 'white'"
+        (click)="toggleSelected(cartItemsSelected[i])"></span>
       <ion-item class="group_left">
         <span class="price">{{ calPrice(item) | number: '1.0-2' }}</span>
         <span class="separation"></span>
@@ -17,12 +18,29 @@
         <span>1 day</span>
       </ion-item>
     </ion-item>
-    <p>{{ listAccessoriesName(item) }}</p>
+
+    <ion-item class="accessories">
+      <ion-item-group class="price-group">
+        <span
+          *ngFor="let accessory of item.accessories">{{ accessory.price * accessory.quantity | number: '1.0-2' }}</span>
+      </ion-item-group>
+      <ion-item-group class="quantity-group">
+        <span class="title" *ngIf="item.accessories.length != 0">Change</span>
+        <div *ngFor="let accessory of item.accessories">
+          <span class="modifier-btn" (click)="decreaseAccessoryQuantity(accessory)">-</span>
+          <span class="quantity">{{ accessory.quantity }}</span>
+          <span class="modifier-btn" (click)="increaseAccessoryQuantity(accessory)">+</span>
+        </div>
+      </ion-item-group>
+      <ion-item-group class="name-group">
+        <p *ngFor="let accessory of item.accessories">{{ accessory.name }}</p>
+      </ion-item-group>
+    </ion-item>
 
     <div class="modifier">
-      <span class="modifier-btn" (click)="decreaseQuantity(item)">-</span>
+      <span class="modifier-btn" (click)="decreaseProductQuantity(item)">-</span>
       <span class="counter">{{ item.quantity }}</span>
-      <span class="modifier-btn" (click)="increaseQuantity(item)">+</span>
+      <span class="modifier-btn" (click)="increaseProductQuantity(item)">+</span>
     </div>
 
     <ion-icon name="close-outline" class="remove-btn" (click)="onRemove(item)"></ion-icon>
@@ -31,11 +49,13 @@
 
 <ion-footer>
   <ion-item class="footer-inner">
-    <span class="selectedBtn" [style.background]="checkAllSelected() ? '#91E29B' : 'white'" (click)="toggleSelectAll()"></span>
+    <span class="selectedBtn" [style.background]="checkAllSelected() ? '#91E29B' : 'white'"
+      (click)="toggleSelectAll()"></span>
     <span style="font-size: 14px; font-weight: 700; color: #727272;">All</span>
     <ion-item-group slot="end">
       <span class="total-text">Total:</span>
-      <span class="quantity">{{ cartItems.length }} Products</span>
+      <span class="quantity-products">{{ calSelectedProducts() }} Products</span>
+      <span class="quantity-accessories">{{ calSelectedAccessories() }} Accessories</span>
     </ion-item-group>
     <ion-button slot="end" (click)="goToSelectedProducts()" [disabled]="checkAllNotSelected()">Send a quote</ion-button>
   </ion-item>

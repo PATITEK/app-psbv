@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { OrdersService } from 'src/app/@app-core/http/orders';
+import { StorageService } from 'src/app/@app-core/storage.service';
 
 @Component({
   selector: 'app-order-status',
@@ -20,11 +21,12 @@ export class OrderStatusPage implements OnInit {
     per_page: 10,
     total_objects: 20
   };
+  permission: string;
 
   constructor(
-    private route: Router,
+    private router: Router,
     private ordersService: OrdersService
-  ) { }
+  ) {}
 
   ngOnInit() { }
 
@@ -65,11 +67,11 @@ export class OrderStatusPage implements OnInit {
   }
  
   gotoDetailOrder() {
-    this.route.navigateByUrl('main/order-status/detail-order')
+    this.router.navigateByUrl('main/order-status/detail-order')
   }
 
   gotoOrderStatus() {
-    this.route.navigateByUrl('main/order-status/order-status-detail')
+    this.router.navigateByUrl('main/order-status/order-status-detail')
   }
 
   async segmentChanged(event) {
