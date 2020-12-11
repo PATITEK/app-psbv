@@ -1,7 +1,11 @@
+.margin-search {
+  margin-top: 12px;
+}
 .header {
   width: 100%;
   height: 158px;
   background: var(--main-color);
+
   &__icon {
     &-noti {
       margin-right: 6px;

@@ -125,9 +125,9 @@ ion-content {
     color: #424242;
     line-height: 16px;
     margin-top: 5px;
-    margin-bottom: 20px;
     height: 115px;
     overflow-y: scroll;
+    margin-bottom: 0;
 
     @media screen and (max-height: 568px) {
       height: 59px;
@@ -137,6 +137,7 @@ ion-content {
   p.noti {
     font-size: 15px;
     color: #8896a8;
+    padding: 6px 0;
 
     @media screen and (max-height: 668px) {
       margin: -7px;

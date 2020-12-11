@@ -4,6 +4,7 @@ ion-header{
     .noti-bell {
         color: white;
         font-size: 26px;
+        margin-left: -50px;
     }
 }
 .ion-heading{
@@ -15,8 +16,13 @@ ion-header{
     font-weight: 700;
     display: flex;
     &__element__text{
-        margin-left: 4.3rem;
-        margin-right: 0.5rem;
+        margin-left: 44%;
+        transform: translateX(-50%);
+        @media screen and (max-width: 360px) {
+            margin-left: 38%;
+            transform: translateX(-50%);
+            
+        }
         width: 160px;
         clear: both;
         display: inline-block;

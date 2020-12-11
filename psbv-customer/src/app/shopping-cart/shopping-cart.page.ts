@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { PERMISSIONS } from '../@app-core/http';
-
+import {Location} from '@angular/common';
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.page.html',
@@ -13,19 +13,31 @@ export class ShoppingCartPage implements OnInit {
   cartItems = [];
   cartItemsSelected = [];
   permission: string;
-
+  checkdata: Boolean;
+ 
   constructor(
     private alertCrtl: AlertController,
-    private router: Router
-  ) {}
+    private router: Router,
+    private location: Location,
+  ) {
+   
+  }
 
-  ngOnInit() { }
-
+  ngOnInit() { 
+  
+  }
+  ionViewDidEnter() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    
+    this.checkdata = JSON.parse(urlParams.get('data'));
+    console.log(this.checkdata);
+  }
   ionViewWillEnter() {
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'flex';
-    });
+    // const tabs = document.querySelectorAll('ion-tab-bar');
+    // Object.keys(tabs).map((key) => {
+    //   tabs[key].style.display = 'flex';
+    // });
 
     this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     this.cartItemsSelected = [];
@@ -33,7 +45,9 @@ export class ShoppingCartPage implements OnInit {
       selected: false
     }))
   }
-
+  goBack() {
+    console.log(this.location.back());
+  }
   calPrice(item) {
     return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;
   }

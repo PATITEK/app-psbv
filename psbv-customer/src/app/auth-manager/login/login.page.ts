@@ -34,8 +34,7 @@ export class LoginPage implements OnInit {
 
   async presentFailedToast() {
     const toast = await this.toastController.create({
-      color: 'red',
-      message: 'Login Failed',
+      message: 'Email or Password invalid !',
       duration: 2000
     });
     await toast.present();

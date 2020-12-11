@@ -97,7 +97,14 @@ export class ProductInfoPage implements OnInit {
   }
 
   goToCart(): void {
-    this.router.navigateByUrl('/main/shopping-cart');
+    const checkdata = true;
+    this.router.navigate(['main/shopping-cart'], {
+      queryParams: {
+        data: JSON.stringify(checkdata)
+      }
+    });
+   
+
   }
 
   getItem(accessory): any {

@@ -1,4 +1,6 @@
-<ion-header lines="no">
+<ion-header class="ion-padding-horizontal">
+  <ion-icon name="chevron-back-outline" (click)="goBack()" class="icon-back" 
+  [style.visibility]="checkdata ? 'visible' : 'hidden'"></ion-icon>
   <ion-card-title>Shopping cart</ion-card-title>
 </ion-header>
 
@@ -14,7 +16,7 @@
         <span class="quantity">{{ item.accessories.length }} accessories</span>
       </ion-item>
       <ion-item class="group-right" slot="end">
-        <ion-img src="../../../assets/shopping-cart/deliver-black.svg"></ion-img>
+        <ion-img src="assets/shopping-cart/deliver-black.svg"></ion-img>
         <span>1 day</span>
       </ion-item>
     </ion-item>

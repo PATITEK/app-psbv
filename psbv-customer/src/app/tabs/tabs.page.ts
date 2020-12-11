@@ -11,9 +11,12 @@ import { IonContent } from '@ionic/angular';
 export class TabsPage {
   @ViewChild(IonContent) ionContent: IonContent;
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
 
+  }
+  gotoShoppingCart () {
+    this.router.navigateByUrl('main/shopping-cart');
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonInfiniteScroll } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
 import { IPageRequest, PERMISSIONS, ProductsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 import { StorageService } from '../@app-core/storage.service';
@@ -21,22 +21,30 @@ export class HomePage implements OnInit {
   counter = 0;
   inputValue: string = '';
   isMaxData = false;
-
+  checkSystem = false;
   constructor(
     private router: Router,
     private productService: ProductsService,
     private loading: LoadingService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private platform: Platform
+
   ) {
     this.reset();
+  
   }
-
+  
   ngOnInit() {
     this.loading.present();
     this.loadData();
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
+      this.platform.ready().then(() => {
+            if (this.platform.is('android')) {
+               this.checkSystem = true;
+            }
+        });
   }
 
   ionViewWillEnter() {

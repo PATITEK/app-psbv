@@ -20,7 +20,9 @@ ion-content {
 ion-header {
   background: #232323;
   text-align: center;
-  padding: 40px 0;
+  height: 98px;
+  display: flex;
+  align-items: center;
 
   .back-button {
     position: absolute;
@@ -40,9 +42,11 @@ ion-header {
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-    margin-left: 50px;
-    margin-right: 50px;
-
+    margin-left: 40%;
+    transform: translateX(-32%);
+    @media screen and (max-width: 360px) {
+      font-size: 16px;
+    }
     @media screen and (max-width: 320px) {
       font-size: 16px;
     }
@@ -51,12 +55,12 @@ ion-header {
   ion-item-group {
     position: absolute;
     top: 11px;
-    right: 8px;
+    right: 12px;
 
     ion-icon {
       color: white;
       font-size: 21px;
-      margin: 0 8px;
+      margin: 0 7px;
     }
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonInfiniteScroll } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
 import { IPageRequest, ProductGroupsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 
@@ -21,11 +21,12 @@ export class ProductCategoriesPage implements OnInit {
   counter = 0;
   inputValue: string = '';
   isMaxData = false;
-
+  checkSystem = false;
   constructor(
     private router: Router,
     private productGroupService: ProductGroupsService,
     private loading: LoadingService,
+    private platform: Platform
   ) {
     this.reset();
   }
@@ -33,6 +34,11 @@ export class ProductCategoriesPage implements OnInit {
   ngOnInit() {
     this.loading.present();
     this.loadData();
+    this.platform.ready().then(() => {
+      if (this.platform.is('android')) {
+         this.checkSystem = true;
+      }
+  });
   }
 
   ionViewWillEnter() {

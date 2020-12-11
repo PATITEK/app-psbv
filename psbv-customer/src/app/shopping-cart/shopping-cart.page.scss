@@ -10,12 +10,23 @@ ion-card {
 ion-item {
   --inner-border-width: 0;
 }
-
+.visible {
+  visibility: visible;
+}
+.hidden {
+  visibility: hidden;
+}
 ion-header {
+  display: flex;
   background: #ce091c;
-  text-align: center;
-  padding: 40px 0;
+  align-items: center;
+  height: 100px;
+  .icon-back {
+    font-size: 27px;
+    color: white;
+    margin-right: 70px;
 
+  }
   ion-card-title {
     font-size: 20px;
     font-weight: bold;
@@ -288,6 +299,15 @@ ion-footer {
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
+    }
+  }
+}
+@media screen and (max-width: 410px) {
+  ion-footer {
+    ion-button {
+          width: 120px;
+    height: 48px;
+    font-size: 13px;
     }
   }
 }
