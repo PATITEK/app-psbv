@@ -98,9 +98,10 @@ export class SelectedProductsPage implements OnInit {
         "order_details_attributes": orderList
       }
     }
+    this.pageNotiService.setdataStatusNoti(data);
+    this.router.navigate(['/statusNoti']);
     this.ordersService.createOrder(orders).subscribe((data: any)=> {
-        this.pageNotiService.setdataStatusNoti(data);
-        this.router.navigate(['/statusNoti']);
+      
     })
   }
 
