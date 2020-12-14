@@ -48,6 +48,13 @@ export class ProductDetailPage implements OnInit {
     });
   }
 
+  ionViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'none';
+    });
+  }
+
   goBack() {
     this.router.navigateByUrl('/main/home/product-info');
   }

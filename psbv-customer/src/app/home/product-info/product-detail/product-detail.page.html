@@ -8,19 +8,20 @@
 <ion-content>
   <ion-card class="product">
     <ion-card-content>
-      <div class="img-box">
-        <ion-img [src]="product.thumb_image.url"></ion-img>
-        <ion-button class="price" shape="round" size="small" disabled *ngIf="product.id != ''">
-          {{ product.price | number: '1.0-2' }}
-        </ion-button>
-      </div>
-
       <ion-card-subtitle>{{ product.name }}</ion-card-subtitle>
       <ion-label>{{ product.short_description }}</ion-label>
     </ion-card-content>
   </ion-card>
 
   <ion-card class="info">
+    <div class="img-box">
+      <ion-img [src]="product.thumb_image.url"></ion-img>
+    </div>
+
+    <ion-button class="price" shape="round" size="small" disabled *ngIf="product.id != ''">
+      {{ product.price | number: '1.0-2' }}
+    </ion-button>
+
     <ion-card-subtitle>Info</ion-card-subtitle>
     <p class="content">{{ product.description }}</p>
 
