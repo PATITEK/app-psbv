@@ -62,7 +62,7 @@ export class SelectedProductsPage implements OnInit {
     const data: IDataNoti = {
       title: 'SEND A EMAIL QUOTE',
       description: '',
-      routerLink: 'main/shopping-cart'
+      routerLink: '/main/shopping-cart'
     }
     
 
