@@ -64,12 +64,32 @@ ion-content {
   ion-card-content {
     padding-top: 0;
 
-    ion-img {
-      background: white;
-      height: 150px;
+    .img-box {
+      position: relative;
 
-      @media screen and (max-height: 568px) {
-        height: 130px;
+      ion-img {
+        background: white;
+        height: 160px;
+        width: 160px;
+        margin: 0 auto;
+
+        @media screen and (max-width: 360px) {
+          height: 140px;
+          width: 140px;
+        }
+      }
+
+      .detail-button {
+        --background: linear-gradient(90deg, #e52d27 -0.01%, #b31217 100%);
+        font-size: 13px;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+
+        @media screen and (max-width: 360px) {
+          font-size: 11px;
+        }
       }
     }
 
@@ -89,12 +109,6 @@ ion-content {
       font-size: 13px;
       padding: 0px 12px;
       line-height: 1.5;
-    }
-
-    .detail-button {
-      --background: linear-gradient(90deg, #e52d27 -0.01%, #b31217 100%);
-      font-size: 13px;
-      float: right;
     }
   }
 }

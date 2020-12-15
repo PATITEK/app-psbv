@@ -49,45 +49,22 @@ ion-content {
   --background:#232323;
   margin: 0;
   border-radius: 0;
-  height: 35%;
+  height: 30%;
   overflow: visible;
   z-index: 1;
 
   @media screen and (max-height: 736px) {
-    height: 43%;
+    height: 33%;
   }
 
   ion-card-content {
     padding-top: 0;
-
-    .img-box {
-      position: relative;
-
-      ion-img {
-        background-color: white;
-        height: 150px;
-
-        @media screen and (max-height: 568px) {
-          height: 130px;
-        }
-      }
-
-      .price {
-        position: absolute;
-        bottom: -3px;
-        right: -35px;
-        transform: translateY(50%);
-        --background: linear-gradient(90deg, #e52d27 -0.01%, #b31217 100%);
-        --padding-start: 35px;
-        --padding-end: 50px;
-        opacity: 1;
-      }
-    }
+    padding-bottom: 10px;
+    text-align: center;
 
     ion-card-subtitle {
       font-size: 16px;
       text-transform: none;
-      margin-top: 10px;
       color: white;
     }
 
@@ -98,18 +75,64 @@ ion-content {
   }
 }
 
+.img-box {
+  position: absolute;
+  top: -160px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0px 4px 7px -1px rgba(black, .3);
+  border-radius: 15px;
+
+  @media screen and (max-height: 668px) {
+    top: -130px;
+  }
+
+  @media screen and (max-height: 568px) {
+    top: -100px;
+  }
+
+  ion-img {
+    background: white;
+    height: 200px;
+    width: 200px;
+    margin: 0 auto;
+
+    @media screen and (max-height: 668px) {
+      height: 170px;
+      width: 170px;
+    }
+
+    @media screen and (max-height: 568px) {
+      height: 140px;
+      width: 140px;
+    }
+  }
+}
+
+.price {
+  position: absolute;
+  top: 45px;
+  right: -17px;
+  --background: linear-gradient(90deg, #e52d27 -0.01%, #b31217 100%);
+  --padding-start: 35px;
+  --padding-end: 50px;
+  opacity: 1;
+}
+
 .info {
   border-radius: 0;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   background: #ffffff;
   margin: 0;
-  padding: 30px 16px 12px;
-  height: 65%;
+  padding: 60px 16px 12px;
+  height: 70%;
+  z-index: 10;
+  overflow: visible;
+  position: relative;
 
   @media screen and (max-height: 736px) {
-    height: 57%;
-    padding-top: 12px;
+    height: 67%;
   }
 
   ion-card-subtitle {
@@ -125,9 +148,9 @@ ion-content {
     color: #424242;
     line-height: 16px;
     margin-top: 5px;
+    margin-bottom: 20px;
     height: 115px;
     overflow-y: scroll;
-    margin-bottom: 0;
 
     @media screen and (max-height: 568px) {
       height: 59px;
@@ -137,7 +160,6 @@ ion-content {
   p.noti {
     font-size: 15px;
     color: #8896a8;
-    padding: 6px 0;
 
     @media screen and (max-height: 668px) {
       margin: -7px;

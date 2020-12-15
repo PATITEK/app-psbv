@@ -10,13 +10,13 @@
     <ion-card-content>
       <div class="img-box">
         <ion-img [src]="product.thumb_image.url"></ion-img>
+        <ion-button size="small" class="detail-button" (click)="goToDetail()" *ngIf="product.id != ''">
+          Detail
+          <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+        </ion-button>
       </div>
       <ion-card-subtitle>{{ product.name }}</ion-card-subtitle>
       <p>{{ product.description }}</p>
-      <ion-button size="small" class="detail-button" (click)="goToDetail()" *ngIf="product.id != ''">
-        Detail
-        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
-      </ion-button>
     </ion-card-content>
     <ion-img src="../../../../assets/add-btn.svg" class="add-product-button" (click)="addProduct()" *ngIf="!checkGuestPermission()"></ion-img>
   </ion-card>
