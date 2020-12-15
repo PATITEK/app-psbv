@@ -96,7 +96,6 @@ ion-content {
     height: 200px;
     width: 200px;
     margin: 0 auto;
-    padding: 3px;
 
     @media screen and (max-height: 668px) {
       height: 170px;
@@ -113,7 +112,7 @@ ion-content {
 .price {
   position: absolute;
   top: 45px;
-  right: -35px;
+  right: -17px;
   --background: linear-gradient(90deg, #e52d27 -0.01%, #b31217 100%);
   --padding-start: 35px;
   --padding-end: 50px;

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { AccountService, AuthService } from 'src/app/@app-core/http';
+import { LoadingService } from 'src/app/@app-core/loading.service';
 import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
 
 @Component({
@@ -39,13 +41,15 @@ export class PasswordChangedPage implements OnInit {
   constructor(
     public formBuilder: FormBuilder, private authService: AuthService, private router: Router,
     private accountService: AccountService,
-    private pageNotiService: PageNotiService
+    private pageNotiService: PageNotiService,
+    private loadingService: LoadingService,
+    private toastController: ToastController
   ) {
     this.formNewPass = this.formBuilder.group({
 
       newpassword: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.minLength(8),
+        Validators.minLength(6),
         Validators.maxLength(16)
       ])),
       currentpassword: new FormControl('', Validators.compose([
@@ -66,7 +70,8 @@ export class PasswordChangedPage implements OnInit {
     //   validators: this.areEqual
     // }
    
-)}
+  )}
+
   areEqual(formGroup: FormGroup) {
     const  cp = formGroup.get('currentpassword').value;
     console.log(cp)
@@ -115,6 +120,13 @@ export class PasswordChangedPage implements OnInit {
     }
   }
   onSubmit() {
+    // dismiss previous toast
+    try {
+      this.toastController.dismiss();
+    } catch(e) {
+
+    }
+    this.loadingService.present();
     const datapasing: IDataNoti = {
       title: 'PASSWORD CHANGED!',
       description: 'Your password has been changed, Continue using app',
@@ -124,19 +136,41 @@ export class PasswordChangedPage implements OnInit {
       "password": this.formNewPass.get('currentpassword').value,
       "new_password": this.formNewPass.get('confirmpassword').value
     }
-    this.accountService.updatePassword(result_object).subscribe((data) => {
-      this.pageNotiService.setdataStatusNoti(datapasing);
-      this.router.navigate(['/statusNoti']);
-    })
-    
+    this.accountService.updatePassword(result_object).subscribe(
+      (data) => {
+        this.loadingService.dismiss();
+        this.pageNotiService.setdataStatusNoti(datapasing);
+        this.router.navigate(['/statusNoti']);
+      },
+      (data) => {
+        if (data.errors) {
+          this.loadingService.dismiss();
+          this.presentToast(data.errors);
+        }
+      }
+    )
   }
-  onCancel() {
-    this.formNewPass.setValue({
-      currentpassword: '',
-      newpassword:'',
-      confirmpassword:''
-    })
 
+  async presentToast(errors) {
+    try {
+      this.toastController.dismiss();
+    } catch(e) {
+
+    }
+    const toast = await this.toastController.create({
+      message: errors,
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  onCancel() {
+    // this.formNewPass.setValue({
+    //   currentpassword: '',
+    //   newpassword:'',
+    //   confirmpassword:''
+    // })
+    this.router.navigateByUrl('account/user-info');
   }
   
 }
