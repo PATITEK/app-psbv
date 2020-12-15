@@ -34,11 +34,6 @@ export class ShoppingCartPage implements OnInit {
     console.log(this.checkdata);
   }
   ionViewWillEnter() {
-    // const tabs = document.querySelectorAll('ion-tab-bar');
-    // Object.keys(tabs).map((key) => {
-    //   tabs[key].style.display = 'flex';
-    // });
-
     this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     this.cartItemsSelected = [];
     this.cartItems.forEach(() => this.cartItemsSelected.push({
@@ -46,7 +41,7 @@ export class ShoppingCartPage implements OnInit {
     }))
   }
   goBack() {
-    console.log(this.location.back());
+  this.location.back();
   }
   calPrice(item) {
     return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;

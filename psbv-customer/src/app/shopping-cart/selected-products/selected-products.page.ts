@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrdersService } from 'src/app/@app-core/http/orders';
@@ -16,7 +17,8 @@ export class SelectedProductsPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private pageNotiService: PageNotiService,
-    private ordersService: OrdersService
+    private ordersService: OrdersService,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -33,7 +35,13 @@ export class SelectedProductsPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigateByUrl('/main/shopping-cart');
+    var data = true;
+    this.router.navigate([this.location.back()], {
+      queryParams: {
+        data: JSON.stringify(data)
+      }
+    });
+   
   }
 
   calPrice(item) {

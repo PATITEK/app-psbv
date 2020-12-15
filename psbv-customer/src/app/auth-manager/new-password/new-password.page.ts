@@ -23,7 +23,7 @@ export class NewPasswordPage implements OnInit {
   error_messages = {
     'password': [
       { type: 'required', message: 'Password is required.' },
-      { type: 'minlength', message: 'Min password length is ' },
+      { type: 'minlength', message: 'Min password length is 8' },
       { type: 'maxlength', message: 'Max password length is 16' }
     ],
     'confirmpassword': [
@@ -54,7 +54,6 @@ export class NewPasswordPage implements OnInit {
       validators: this.password.bind(this)
     });
   }
-
   password(formGroup: FormGroup) {
     const np = formGroup.get('password').value;
     const cp = formGroup.get('confirmpassword').value;
@@ -82,6 +81,10 @@ export class NewPasswordPage implements OnInit {
     }
   }
   onSubmit(){
+
+  //  this.error_messages.password.forEach {
+  //    if(this.formNewPass.get('password').hasError(error.type) && (formNewPass.get('password').dirty || formNewPass.get('password').touched))
+  //  }
     const datapasing: IDataNoti = {
       title: 'PASSWORD CHANGED!',
       description: 'Your password has been changed, Continue using app',
@@ -89,9 +92,7 @@ export class NewPasswordPage implements OnInit {
     }
     var result_object = {
       "password": this.formNewPass.get('confirmpassword').value
-      
     }
-  
     this.authService.resetPassword(result_object).subscribe((data:any) => {
       this.pageNotiService.setdataStatusNoti(datapasing);
        this.router.navigate(['/statusNoti']);

@@ -51,59 +51,19 @@ export class ResetPasswordPage implements OnInit {
       },);
   }
 
-  // keytab(event, fieldInput) {
-  
-  //   let nextInput = event.srcElement.nextElementSibling;
-
-  //   if (nextInput == null || (nextInput != null && (event.keyCode == 8)))
-  //   {
-  //     return;
-  //   
-  //   else
-  //     nextInput.focus();
-  // }
-
   keytab(event, prevInput, fieldInput, nextInput) {
     if(this.inputCode.value[fieldInput] !== null && this.inputCode.value[fieldInput] !== '' && this.inputCode.value[fieldInput].toString().length > 1) {
       const strSplit = this.inputCode.value[fieldInput].toString();
       this.inputCode.controls[fieldInput].setValue(strSplit[0]);
       this.inputCode.controls[nextInput].setValue(strSplit[1]);
-     
       document.getElementById(nextInput).focus()
     } 
-
     if(this.inputCode.value[fieldInput] !== null && this.inputCode.value[fieldInput] !== '' && this.inputCode.value[fieldInput].toString().length === 1) {
       document.getElementById(nextInput).focus()
     }
-
     if (this.inputCode.value[fieldInput] === null || this.inputCode.value[fieldInput] === '') {
       document.getElementById(prevInput).focus()
     }
-
-    // let nextInput = event.srcElement.nextElementSibling;
-    // let prevInput = event.srcElement.nextElementSibling;
-    // console.log(this.inputCode.value[fieldInput].toString().length , 'this.inputCode.value[fieldInput].length ');
-    // console.log(nextInput, 'nextInput');
-    // nextInput.focus();
-    // console.log(fieldInput, 'fieldInput');
-    
-    // if(this.inputCode.value[fieldInput] !== '' && this.inputCode.value[fieldInput].toString().length === 1) {
-    //   document.getElementById(nextInput).focus()
-    // }
-    // console.log(this.inputCode.value[fieldInput], 'this.inputCode.value[fieldInput]');
-    
-    // if (this.inputCode.value[fieldInput] === '' || (this.inputCode.value[fieldInput] !== null && this.inputCode.value[fieldInput].toString().length === 0)) {
-    //   document.getElementById(prevInput).focus()
-    // }
-  
-    // let nextInput = event.srcElement.nextElementSibling;
-
-    // if (nextInput == null || (nextInput != null && (event.keyCode == 8)))
-    // {
-    //   return;
-    // }
-    // else
-    //   nextInput.focus();
   }
   resendCode(){
     this.authService.forgotPassword(this.dataEmail).subscribe(
@@ -113,7 +73,6 @@ export class ResetPasswordPage implements OnInit {
     
   }
   onSubmit() {
-    
       var c1 = this.inputCode.get('code1').value;
       var c2 = this.inputCode.get('code2').value;
       var c3 = this.inputCode.get('code3').value;

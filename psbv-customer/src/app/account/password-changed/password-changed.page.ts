@@ -131,11 +131,11 @@ export class PasswordChangedPage implements OnInit {
     
   }
   onCancel() {
-    this.formNewPass.setValue({
-      currentpassword: '',
-      newpassword:'',
-      confirmpassword:''
-    })
+    // this.formNewPass.setValue({
+    //   currentpassword: '',
+    //   newpassword:'',
+    //   confirmpassword:''
+    // })
 
   }
   

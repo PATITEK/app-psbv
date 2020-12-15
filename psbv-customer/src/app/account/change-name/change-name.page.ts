@@ -16,9 +16,7 @@ export class ChangeNamePage implements OnInit {
     "fullname": localStorage.getItem('fullname')  };
  
   message: any;
-  formchangename = new FormGroup({
-    rename: new FormControl('',[Validators.required], ),
-  });
+  
   public showSpinner = false;
   constructor( public alertCtrl: AlertController, private router:Router,
      private accountService: AccountService,  private pageNotiService: PageNotiService ) { }
@@ -29,7 +27,6 @@ export class ChangeNamePage implements OnInit {
   onSubmit(f: NgForm) {
     this.showSpinner = true;
      var name = f.value;
-    console.log(name.fullname);
     const datapasing: IDataNoti = {
       title: 'USER NAME CHANGED!',
       description: 'User name has been changed, Continue to start using app',

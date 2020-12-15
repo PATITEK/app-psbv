@@ -33,7 +33,9 @@ export class UserInfoPage implements OnInit {
             
     })
   }
-
+  goToAbout(): void {
+    this.router.navigateByUrl('account/user-info/about-us')
+  }
   goToPasswordChanged(): void {
     this.router.navigateByUrl('account/password-changed')
   }
@@ -67,10 +69,6 @@ export class UserInfoPage implements OnInit {
     this.notOn = false;
     console.log(this.btn);
     this.router.navigateByUrl('account/user-info/support');
-  }
-
-  goToAbout() {
-    
   }
 
   // alert
