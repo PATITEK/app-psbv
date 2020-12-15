@@ -185,6 +185,7 @@ ion-footer {
 
   ion-item-group {
     color: #727272;
+    margin-left: 0;
 
     span {
       display: block;
@@ -206,12 +207,17 @@ ion-footer {
   }
 
   ion-button {
-    height: 50px;
+    height: 40px;
     min-width: 120px;
     font-size: 15px;
     color: white;
     --border-radius: 999px;
     --background: #91e29b;
+
+    @media screen and (max-width: 360px) {
+      min-width: 95px;
+      font-size: 13px;
+    }
   }
 }
 
@@ -299,15 +305,6 @@ ion-footer {
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
-    }
-  }
-}
-@media screen and (max-width: 410px) {
-  ion-footer {
-    ion-button {
-          width: 120px;
-    height: 48px;
-    font-size: 13px;
     }
   }
 }

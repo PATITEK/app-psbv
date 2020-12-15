@@ -18,7 +18,13 @@ export class NewPasswordPage implements OnInit {
 
   public showPass = false;
   public showPassConf = false;
+  checkpassvalid = false;
+  checkconfirm = false;
+  checkpasssame = false;
   formNewPass: FormGroup;
+  errormessage :string;
+  errormessage2 :string;
+  errormessage3: string;
 
   error_messages = {
     'password': [
@@ -81,10 +87,29 @@ export class NewPasswordPage implements OnInit {
     }
   }
   onSubmit(){
+   this.error_messages.password.forEach(error => {
+    if(this.formNewPass.get('password').hasError(error.type) && (this.formNewPass.get('password').dirty
+     || this.formNewPass.get('password').touched)){
+       this.checkpassvalid = true;
+       console.log(error)
+        this.errormessage = error.message;
+    }
+   }
+  )
+  this.error_messages.confirmpassword.forEach(error => {
+    if(this.formNewPass.get('confirmpassword').hasError(error.type) && (this.formNewPass.get('confirmpassword').dirty
+     || this.formNewPass.get('confirmpassword').touched)){
+       this.checkconfirm = true;
+        this.errormessage2 = error.message;
+    }
+   }
+  )
+  if(this.formNewPass.errors.error){
+    this.checkpasssame = true;
+    this.errormessage3 = this.formNewPass.errors.error;
 
-  //  this.error_messages.password.forEach {
-  //    if(this.formNewPass.get('password').hasError(error.type) && (formNewPass.get('password').dirty || formNewPass.get('password').touched))
-  //  }
+  }
+  
     const datapasing: IDataNoti = {
       title: 'PASSWORD CHANGED!',
       description: 'Your password has been changed, Continue using app',
@@ -93,10 +118,10 @@ export class NewPasswordPage implements OnInit {
     var result_object = {
       "password": this.formNewPass.get('confirmpassword').value
     }
-    this.authService.resetPassword(result_object).subscribe((data:any) => {
-      this.pageNotiService.setdataStatusNoti(datapasing);
-       this.router.navigate(['/statusNoti']);
-  });
+  //   this.authService.resetPassword(result_object).subscribe((data:any) => {
+  //     this.pageNotiService.setdataStatusNoti(datapasing);
+  //      this.router.navigate(['/statusNoti']);
+  // });
 
   }
   ngOnInit() {

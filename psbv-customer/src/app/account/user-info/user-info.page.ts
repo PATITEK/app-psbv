@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular'
 import { AccountService, AuthService } from 'src/app/@app-core/http';
-import { IGetAccounts } from 'src/app/@app-core/http/account/account.DTO';
-import { StorageService } from 'src/app/@app-core/storage.service';
-import { PERMISSION } from 'src/app/product-categories/products/product-info/product-info.page';
 
 @Component({
   selector: 'app-user-info',
@@ -12,7 +9,6 @@ import { PERMISSION } from 'src/app/product-categories/products/product-info/pro
   styleUrls: ['./user-info.page.scss'],
 })
 export class UserInfoPage implements OnInit {
-  permission: PERMISSION = PERMISSION.STANDARD;
   message: any;
   btn: boolean = false;
   notOn: boolean = true;
@@ -20,18 +16,17 @@ export class UserInfoPage implements OnInit {
   constructor(
     private router: Router,
     public alertController: AlertController,
-    private authService: AuthService,
-    private accountService: AccountService, 
-  
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
   }
-  ionViewDidEnter() {
-    this.accountService.getAccounts().subscribe((data: any)=>{
-      this.message = data.user.fullname;
+  ionViewWillEnter() {
+    // this.accountService.getAccounts().subscribe((data: any)=>{
+    //   this.message = data.user.fullname;
             
-    })
+    // })
+    this.message = localStorage.getItem('fullname');
   }
   goToAbout(): void {
     this.router.navigateByUrl('account/user-info/about-us')

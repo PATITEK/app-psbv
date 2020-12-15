@@ -29,7 +29,6 @@ export class ShoppingCartPage implements OnInit {
   ionViewDidEnter() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    
     this.checkdata = JSON.parse(urlParams.get('data'));
     console.log(this.checkdata);
   }
@@ -39,6 +38,7 @@ export class ShoppingCartPage implements OnInit {
     this.cartItems.forEach(() => this.cartItemsSelected.push({
       selected: false
     }))
+    
   }
   goBack() {
   this.location.back();

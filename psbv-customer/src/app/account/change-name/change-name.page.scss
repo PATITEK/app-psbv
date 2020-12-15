@@ -7,7 +7,9 @@ ion-header {
     
     }
 }
-
+.header-md::after {
+    height: 0;
+}
 .content__wrapper {
     display: block;
 
