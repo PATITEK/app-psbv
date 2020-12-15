@@ -2,6 +2,7 @@ import { Route } from '@angular/compiler/src/core';
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
+import { GlobalVariablesService } from '../@app-core/global-variables.service';
 
 @Component({
   selector: 'app-tabs',
@@ -11,12 +12,15 @@ import { IonContent } from '@ionic/angular';
 export class TabsPage {
   @ViewChild(IonContent) ionContent: IonContent;
 
-  constructor(private router:Router) { }
+  constructor(
+    private globalVariablesService: GlobalVariablesService
+  ) { }
 
   ngOnInit() {
 
   }
-  gotoShoppingCart () {
-    this.router.navigateByUrl('main/shopping-cart');
+
+  gotoShoppingCart() {
+    this.globalVariablesService.backUrlShoppingCart = '';
   }
 }

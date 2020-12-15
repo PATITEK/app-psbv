@@ -35,13 +35,7 @@ export class SelectedProductsPage implements OnInit {
   }
 
   goBack() {
-    var data = true;
-    this.router.navigate([this.location.back()], {
-      queryParams: {
-        data: JSON.stringify(data)
-      }
-    });
-   
+    this.router.navigateByUrl('main/shopping-cart');
   }
 
   calPrice(item) {
@@ -72,7 +66,6 @@ export class SelectedProductsPage implements OnInit {
       description: '',
       routerLink: '/main/shopping-cart'
     }
-    
 
     let orderList: any = [];
     this.cartItems.forEach(cartItem => {
@@ -108,8 +101,8 @@ export class SelectedProductsPage implements OnInit {
     }
     this.pageNotiService.setdataStatusNoti(data);
     this.router.navigate(['/statusNoti']);
-    this.ordersService.createOrder(orders).subscribe((data: any)=> {
-      
+    this.ordersService.createOrder(orders).subscribe((data: any) => {
+
     })
   }
 
