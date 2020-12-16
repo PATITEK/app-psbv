@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
 import { IPageRequest, ProductGroupsService } from '../@app-core/http';
@@ -14,6 +14,9 @@ export class ProductCategoriesPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
   @ViewChild(IonContent) ionContent: IonContent;
 
+  scrHeight: any;
+  scrWidth: any;
+
   pageRequest: IPageRequest;
   data = [];
   permission: string;
@@ -22,6 +25,7 @@ export class ProductCategoriesPage implements OnInit {
   inputValue: string = '';
   isMaxData = false;
   checkSystem = false;
+
   constructor(
     private router: Router,
     private productGroupService: ProductGroupsService,
@@ -29,6 +33,7 @@ export class ProductCategoriesPage implements OnInit {
     private platform: Platform
   ) {
     this.reset();
+    this.getScreenSize();
   }
 
   ngOnInit() {
@@ -36,9 +41,9 @@ export class ProductCategoriesPage implements OnInit {
     this.loadData();
     this.platform.ready().then(() => {
       if (this.platform.is('android')) {
-         this.checkSystem = true;
+        this.checkSystem = true;
       }
-  });
+    });
   }
 
   ionViewWillEnter() {
@@ -46,6 +51,11 @@ export class ProductCategoriesPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'flex';
     });
+  }
+
+  getScreenSize(event?) {
+    this.scrHeight = window.innerHeight;
+    this.scrWidth = window.innerWidth;
   }
 
   onGoUserInfo() {
@@ -58,7 +68,7 @@ export class ProductCategoriesPage implements OnInit {
 
   gotoHome() {
     this.router.navigateByUrl('/main/product-categories');
-   
+
   }
 
   onInput(event: any) {

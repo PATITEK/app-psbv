@@ -206,7 +206,6 @@ export class ShoppingCartPage implements OnInit {
         data.selectedItems.push(product);
       }
     })
-    console.log(data);
     this.router.navigate(['/main/shopping-cart/selected-products'], {
       queryParams: {
         data: JSON.stringify(data)

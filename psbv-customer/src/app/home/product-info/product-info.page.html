@@ -16,7 +16,7 @@
         </ion-button>
       </div>
       <ion-card-subtitle>{{ product.name }}</ion-card-subtitle>
-      <p>{{ product.description }}</p>
+      <p>{{ product.short_description }}</p>
     </ion-card-content>
     <ion-img src="../../../../assets/add-btn.svg" class="add-product-button" (click)="addProduct()"
       *ngIf="!checkGuestPermission()"></ion-img>
