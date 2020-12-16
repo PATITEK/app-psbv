@@ -20,17 +20,25 @@ export class PasswordChangedPage implements OnInit {
   public showPassNew = false;
   public showPassNewAgain = false;
   formNewPass: FormGroup;
+  checkcurrentpass = false;
+  checknewpass = false;
+  checkconfirmpass = false;
 
+  messagecurrentpass = '';
+  messagenewpass = '';
+  messageconfirmpass = '';
+  checksamepass = false;
+  messagesampass = ''; 
+  
   error_messages = {
     'newpassword': [
       { type: 'required', message: '  Password is required.' },
-      { type: 'minlength', message: 'Min password length is 8' },
-      { type: 'maxlength', message: 'Max password length is 16' }
+      { type: 'minlength', message: 'Min password length is 8' }
+   
     ],
     'confirmpassword': [
       { type: 'required', message: 'Password is required.' },
-      { type: 'minlength', message: 'Min password length is 8' },
-      { type: 'maxlength', message: 'Max password length is 16' }
+      { type: 'minlength', message: 'Min password length is 8' }
     ],
     'currentpassword': [
       { type: 'required', message: 'Password is required.' },
@@ -50,7 +58,7 @@ export class PasswordChangedPage implements OnInit {
       newpassword: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(8),
-        Validators.maxLength(16)
+       
       ])),
       currentpassword: new FormControl('', Validators.compose([
         Validators.required,
@@ -58,7 +66,7 @@ export class PasswordChangedPage implements OnInit {
       confirmpassword: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(8),
-        Validators.maxLength(16)
+       
       ])),
     },
     {
@@ -72,7 +80,6 @@ export class PasswordChangedPage implements OnInit {
 
   areEqual(formGroup: FormGroup) {
     const  cp = formGroup.get('currentpassword').value;
-    console.log(cp)
     const np = formGroup.get('newpassword').value;
     if ((cp === np) && (cp!== "") && (np!== ""))
       return { error: "New password must diffrence Old password " }
@@ -118,13 +125,7 @@ export class PasswordChangedPage implements OnInit {
     }
   }
   onSubmit() {
-    // dismiss previous toast
-    try {
-      this.toastController.dismiss();
-    } catch(e) {
-
-    }
-    this.loadingService.present();
+ 
     const datapasing: IDataNoti = {
       title: 'PASSWORD CHANGED!',
       description: 'Your password has been changed, Continue using app',
@@ -134,26 +135,89 @@ export class PasswordChangedPage implements OnInit {
       "password": this.formNewPass.get('currentpassword').value,
       "new_password": this.formNewPass.get('confirmpassword').value
     }
-    this.accountService.updatePassword(result_object).subscribe(
-      (data) => {
-        this.loadingService.dismiss();
-        this.pageNotiService.setdataStatusNoti(datapasing);
-        this.router.navigate(['/statusNoti']);
-      },
-      (data) => {
-        if (data.errors) {
-          this.loadingService.dismiss();
-          this.presentToast(data.errors);
-        }
-      }
-    )
-  }
-
-  async presentToast(errors) {
-    try {
-      this.toastController.dismiss();
-    } catch(e) {
+    this.error_messages.currentpassword.forEach(error => {
+    if(this.formNewPass.get('currentpassword').hasError(error.type) && (this.formNewPass.get('currentpassword').dirty || this.formNewPass.get('currentpassword').touched)){
+        this.checkcurrentpass = true;
+        this.messagecurrentpass = error.message;
     }
+    else {
+      this.checkcurrentpass = false;
+      this.messagecurrentpass = '';
+    }
+  })
+  this.error_messages.newpassword.forEach(error => {
+ 
+ 
+    if(this.formNewPass.get('newpassword').hasError(error.type) && (this.formNewPass.get('newpassword').dirty || this.formNewPass.get('newpassword').touched)){
+    
+      if ( this.formNewPass.get('newpassword').value.length === 8){ 
+        this.checknewpass = false;
+        console.log(this.checknewpass);
+        this.messagenewpass = '';
+     
+        console.log('rule 2')
+        }
+        else {
+        this.checknewpass = true;
+        console.log(this.checknewpass);
+        this.messagenewpass = 'Min password is 8';
+        console.log('rule 3')
+       }
+       if(this.formNewPass.get('newpassword').errors.required === true) {
+          this.checknewpass = true;
+          this.messagenewpass = error.message;
+          console.log('rule 1')
+       }
+      
+      }
+   
+  })
+  // this.error_messages.confirmpassword.forEach(error => {
+  //   if(this.formNewPass.get('confirmpassword').hasError(error.type) && (this.formNewPass.get('confirmpassword').dirty || this.formNewPass.get('confirmpassword').touched)){
+  //       this.checkconfirmpass = true;
+  //       this.messageconfirmpass = error.message;
+  //   }
+  //   else if ( this.formNewPass.get('confirmpassword').errors.minlength.actualLength < 8){
+  //     this.checknewpass = true;
+  //     console.log('rule 2')
+  //     this.messagenewpass = error.message;
+  //     }
+  //     else {
+  //     this.checknewpass = false;
+  //           console.log('rule 3')
+  //     }
+  // }
+  // )
+
+  if(this.formNewPass.errors === null ){
+    this.checksamepass = false;
+    this.messagesampass = '';
+  }
+  else {
+    this.checksamepass = true;
+    this.messagesampass = this.formNewPass.errors.error;
+  }
+  
+  // if(this.formNewPass.valid){
+  //   console.log('hi');
+  //       this.accountService.updatePassword(result_object).subscribe(
+  //         (data) => {
+            
+  //           this.pageNotiService.setdataStatusNoti(datapasing);
+  //           this.router.navigate(['/statusNoti']);
+  //         },
+  //         (data) => {
+  //            console.log(data);
+  //             this.presentToast(data.errors);
+  //         }
+  //       )
+  // }
+  // else {
+  //   this.presentToast('Please enter valid password !');
+  // }
+}
+  async presentToast(errors) {
+  
     const toast = await this.toastController.create({
       message: errors,
       duration: 2000

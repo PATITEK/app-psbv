@@ -91,7 +91,6 @@ export class NewPasswordPage implements OnInit {
     if(this.formNewPass.get('password').hasError(error.type) && (this.formNewPass.get('password').dirty
      || this.formNewPass.get('password').touched)){
        this.checkpassvalid = true;
-       console.log(error)
         this.errormessage = error.message;
     }
    }
@@ -104,10 +103,13 @@ export class NewPasswordPage implements OnInit {
     }
    }
   )
-  if(this.formNewPass.errors.error){
+  if(this.formNewPass.errors === null ){
+    this.checkpasssame = false;
+    this.errormessage3 = '';
+  }
+  else {
     this.checkpasssame = true;
     this.errormessage3 = this.formNewPass.errors.error;
-
   }
   
     const datapasing: IDataNoti = {
@@ -118,11 +120,13 @@ export class NewPasswordPage implements OnInit {
     var result_object = {
       "password": this.formNewPass.get('confirmpassword').value
     }
-  //   this.authService.resetPassword(result_object).subscribe((data:any) => {
-  //     this.pageNotiService.setdataStatusNoti(datapasing);
-  //      this.router.navigate(['/statusNoti']);
-  // });
-
+    if(this.formNewPass.valid) {
+      this.authService.resetPassword(result_object).subscribe((data:any) => {
+        this.pageNotiService.setdataStatusNoti(datapasing);
+         this.router.navigate(['/statusNoti']);
+    });  
+    }
+   
   }
   ngOnInit() {
   }
