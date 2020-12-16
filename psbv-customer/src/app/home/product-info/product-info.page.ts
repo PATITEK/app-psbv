@@ -71,10 +71,6 @@ export class ProductInfoPage implements OnInit {
     });
   }
 
-  goBack(): void {
-    this.router.navigateByUrl('main/home');
-  }
-
   goToDetail(): void {
     if (this.checkGuestPermission()) {
       this.router.navigateByUrl('/auth/login');

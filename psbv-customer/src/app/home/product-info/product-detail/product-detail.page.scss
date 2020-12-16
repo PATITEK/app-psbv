@@ -13,26 +13,28 @@ ion-card {
 
 ion-header {
   background: #232323;
-  text-align: center;
-  padding: 40px 0;
+  padding-bottom: 45px;
 
-  .back-button {
-    position: absolute;
-    top: 25px;
-    left: 0;
-    font-size: 19px;
-    z-index: 1000;
-    color: white;
-  }
+  ion-buttons {
+    position: relative;
+    margin-top: 20px;
 
-  ion-card-title {
-    font-size: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: white;
+    ion-back-button {
+      color: #fff;
+      position: absolute;
+      left: 0;
+    }
 
-    @media screen and (max-width: 320px) {
-      font-size: 16px;
+    ion-label {
+      font-size: 20px;
+      color: #fff;
+      font-weight: 700;
+      margin: 0 auto;
+      text-transform: uppercase;
+
+      @media screen and (max-width: 360px) {
+        font-size: 17px;
+      }
     }
   }
 }

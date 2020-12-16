@@ -68,7 +68,6 @@ export class ProductCategoriesPage implements OnInit {
 
   gotoHome() {
     this.router.navigateByUrl('/main/product-categories');
-
   }
 
   onInput(event: any) {

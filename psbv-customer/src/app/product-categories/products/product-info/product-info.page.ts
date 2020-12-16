@@ -188,7 +188,7 @@ export class ProductInfoPage implements OnInit {
             this.loading.dismiss();
           });
 
-        this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, this.product.id).subscribe(data => {
+        this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, JSON.parse(params['data']).id).subscribe(data => {
           for (let item of data.accessories) {
             this.accessories.push(item);
             this.accessoryIds.push({

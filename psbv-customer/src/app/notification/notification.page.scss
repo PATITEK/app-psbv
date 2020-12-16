@@ -1,6 +1,29 @@
 ion-header{
     background-color: #232323;
     height: 117px;
+
+    ion-buttons {
+        position: relative;
+        margin-top: 20px;
+    
+        ion-back-button {
+            color: #fff;
+            position: absolute;
+            left: 0;
+        }
+    
+        ion-label {
+            font-size: 20px;
+            color: #fff;
+            font-weight: 700;
+            margin: 0 auto;
+            text-transform: uppercase;
+        
+            @media screen and (max-width: 360px) {
+                font-size: 17px;
+            }
+        }
+      }
 }
 .ion-heading{
     .icon-back {
@@ -14,10 +37,6 @@ ion-header{
     font-weight: 700;
     display: flex;
     &__element{
-        &__text{
-            margin-left: 4.3rem;
-            margin-right: 0.5rem;
-        }
         &__shop-icon{
             width: 30px;
             height: auto;
@@ -71,11 +90,10 @@ ion-content {
         font-weight: bold;
        }
         &-text {
-            width: 235px;
+            margin-right: 35px;
             color: #636363;
-          
-            margin:0;
             font-size: 16px;
+
             &--des{
                 font-size: 14px;
             }
@@ -165,9 +183,6 @@ ion-content {
 ion-item {
     --min-height: 0;
 }
-ion-label {
-    width: 235px;
-}
 
 .notifications {
     position: relative;
@@ -179,57 +194,57 @@ ion-label {
     }
 }
 
-// responsive
-@media screen and (min-height: 813px) and (max-height: 824px) {
-    .ion-heading {
-        &__element {
-            &__text{
-                margin-left: 5.5rem;
-            }
-        }
-    }
-}
+// // responsive
+// @media screen and (min-height: 813px) and (max-height: 824px) {
+//     .ion-heading {
+//         &__element {
+//             &__text{
+//                 margin-left: 5.5rem;
+//             }
+//         }
+//     }
+// }
 
-@media screen and (min-height: 732px) and (max-height: 736px) {
-    .ion-heading {
-        &__element {
-            &__text{
-                margin-left: 5.5rem;
-            }
-        }
-    }
-}
-@media screen and (max-height: 731px) {
-    .ion-heading {
-        &__element {
-            &__text{
-                margin-left: 5.5rem;
-            }
-        }
-    }
-}
+// @media screen and (min-height: 732px) and (max-height: 736px) {
+//     .ion-heading {
+//         &__element {
+//             &__text{
+//                 margin-left: 5.5rem;
+//             }
+//         }
+//     }
+// }
+// @media screen and (max-height: 731px) {
+//     .ion-heading {
+//         &__element {
+//             &__text{
+//                 margin-left: 5.5rem;
+//             }
+//         }
+//     }
+// }
 
-@media screen and (max-height: 640px) {
-    .ion-heading {
-        &__element {
-            &__text{
-                margin-left: 4.5rem;
-            }
-        }
-    }
-}
-@media screen and (max-height: 569px) {
-    .ion-heading {
-        &__element {
-            &__text{
-                margin-left: 3.5rem;
-            }
-        }
-    }
+// @media screen and (max-height: 640px) {
+//     .ion-heading {
+//         &__element {
+//             &__text{
+//                 margin-left: 4.5rem;
+//             }
+//         }
+//     }
+// }
+// @media screen and (max-height: 569px) {
+//     .ion-heading {
+//         &__element {
+//             &__text{
+//                 margin-left: 3.5rem;
+//             }
+//         }
+//     }
 
-    ion-label {
-        width: 180px;
-    }
+//     ion-label {
+//         width: 180px;
+//     }
    
-}
+// }
 

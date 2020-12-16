@@ -1,8 +1,8 @@
-<ion-header  class="ion-padding-horizontal">
-  <ion-button fill="clear" size="small" class="back-button" (click)="goBack()">
-    <ion-icon name="chevron-back-outline"></ion-icon>
-  </ion-button>
-  <ion-card-title>{{ title }}</ion-card-title>
+<ion-header class="ion-padding">
+  <ion-buttons>
+    <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+    <ion-label>{{ title }}</ion-label>
+  </ion-buttons>
 
   <ion-item-group>
     <ion-icon name="notifications-outline" class="header__icon header__icon-noti" (click)="goToNoti()"></ion-icon>

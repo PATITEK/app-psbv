@@ -61,7 +61,6 @@ export class ProductsPage implements OnInit {
   getScreenSize(event?) {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
-    console.log(this.scrHeight, this.scrWidth);
   }
 
   loadData() {
@@ -105,10 +104,6 @@ export class ProductsPage implements OnInit {
 
   checkStandardPermission(): boolean {
     return this.permission == PERMISSIONS[1].value;
-  }
-
-  goBack(): void {
-    this.router.navigateByUrl('main/product-categories');
   }
 
   goToNoti() {
