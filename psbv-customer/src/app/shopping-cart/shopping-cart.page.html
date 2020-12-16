@@ -1,6 +1,7 @@
 <ion-header class="ion-padding-horizontal">
-  <ion-icon name="chevron-back-outline" (click)="goBack()" class="icon-back" 
-  [style.visibility]="checkdata ? 'visible' : 'hidden'"></ion-icon>
+  <ion-buttons *ngIf="hasBackButton()">
+    <ion-back-button (click)="goBack()" style="color: #fff; display: inline-block;" text="" icon="chevron-back-outline"></ion-back-button>
+  </ion-buttons>
   <ion-card-title>Shopping cart</ion-card-title>
 </ion-header>
 

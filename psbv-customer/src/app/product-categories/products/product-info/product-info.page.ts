@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
 import { AccessoriesService, IPageRequest, PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
@@ -49,7 +50,8 @@ export class ProductInfoPage implements OnInit {
     private productService: ProductsService,
     private loading: LoadingService,
     private accessoriesService: AccessoriesService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private globalVariablesService: GlobalVariablesService
   ) {
     this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
   }
@@ -97,14 +99,8 @@ export class ProductInfoPage implements OnInit {
   }
 
   goToCart(): void {
-    const checkdata = true;
-    this.router.navigate(['main/shopping-cart'], {
-      queryParams: {
-        data: JSON.stringify(checkdata)
-      }
-    });
-   
-
+    this.globalVariablesService.backUrlShoppingCart = this.router.url;
+    this.router.navigateByUrl('main/shopping-cart');
   }
 
   getItem(accessory): any {

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { PERMISSIONS } from '../@app-core/http';
-import {Location} from '@angular/common';
+import { GlobalVariablesService } from '../@app-core/global-variables.service';
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.page.html',
@@ -13,26 +12,29 @@ export class ShoppingCartPage implements OnInit {
   cartItems = [];
   cartItemsSelected = [];
   permission: string;
-  checkdata: Boolean;
- 
+
+  public backUrl = '/main/home';
+
   constructor(
     private alertCrtl: AlertController,
     private router: Router,
-    private location: Location,
-  ) {
-   
-  }
+    private globalVariablesService: GlobalVariablesService
+  ) { }
 
-  ngOnInit() { 
-  
-  }
-  ionViewDidEnter() {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    this.checkdata = JSON.parse(urlParams.get('data'));
-    console.log(this.checkdata);
-  }
+  ngOnInit() { }
+
   ionViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
+
+    if (this.hasBackButton()) {
+      Object.keys(tabs).map((key) => {
+        tabs[key].style.display = 'none';
+      });
+    }
+
     this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     this.cartItemsSelected = [];
     this.cartItems.forEach(() => this.cartItemsSelected.push({
@@ -40,15 +42,18 @@ export class ShoppingCartPage implements OnInit {
     }))
     
   }
+
   goBack() {
-  this.location.back();
-  }
-  calPrice(item) {
-    return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;
+    this.router.navigateByUrl(this.globalVariablesService.backUrlShoppingCart);
   }
 
-  calTotalAccessories() {
-    // return this.cartItems.
+  hasBackButton() {
+    const backUrl = this.globalVariablesService.backUrlShoppingCart;
+    return backUrl.search('main/home/product-info') != -1 || backUrl.search('main/product-categories/products/product-info') != -1;
+  }
+
+  calPrice(item) {
+    return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;
   }
 
   listAccessoriesName(item) {
