@@ -71,6 +71,10 @@ ion-content {
     ion-label {
       color: #999999;
       font-size: 12px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
   }
 }

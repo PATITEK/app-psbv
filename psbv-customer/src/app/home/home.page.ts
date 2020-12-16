@@ -26,6 +26,9 @@ export class HomePage implements OnInit {
   isMaxData = false;
   checkSystem = false;
 
+  public activeTab = "all";
+  checkTab = true;
+
   constructor(
     private router: Router,
     private productService: ProductsService,
@@ -60,6 +63,20 @@ export class HomePage implements OnInit {
   getScreenSize(event?) {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
+  }
+
+  changeTabs(name) {
+    this.activeTab = name;
+    if (this.activeTab === 'orderStatus') {
+      this.checkTab = true;
+    }
+    else if (this.activeTab === 'orderHistory') {
+      this.checkTab = false;
+    }
+  }
+
+  async segmentChanged(event) {
+    this.activeTab = event.target.value;
   }
 
   goToDetail(item) {
