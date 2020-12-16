@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { OrdersService } from 'src/app/@app-core/http/orders';
-import { StorageService } from 'src/app/@app-core/storage.service';
 
 @Component({
   selector: 'app-order-status',
@@ -14,19 +13,18 @@ export class OrderStatusPage implements OnInit {
 
   public activeTab = "orderStatus";
   checkTab = true;
-  checkstatus = 'confirm';
+  // checkstatus = 'confirm';
   data: any = [];
   pageRequest = {
     page: 1,
     per_page: 10,
     total_objects: 20
   };
-  permission: string;
 
   constructor(
     private router: Router,
     private ordersService: OrdersService
-  ) {}
+  ) { }
 
   ngOnInit() { }
 
@@ -43,17 +41,18 @@ export class OrderStatusPage implements OnInit {
       this.data = data.orders;
     })
   }
+
   getStatus(item) {
-    if(item.status == 'send_request')
+    if (item.status == 'send_request')
       return '#CCBAFC';
-    if(item.status == '')
+    if (item.status == '')
       return '#B2E9FB';
-    if(item.status == '')
-    return '#F7BDAE';
-    if(item.status == '')
+    if (item.status == '')
+      return '#F7BDAE';
+    if (item.status == '')
       return '#AEF4B7';
-    if(item.status == '')
-    return '#F9D775';
+    if (item.status == '')
+      return '#F9D775';
   }
 
   changeTabs(name) {
@@ -65,7 +64,7 @@ export class OrderStatusPage implements OnInit {
       this.checkTab = false;
     }
   }
- 
+
   gotoDetailOrder() {
     this.router.navigateByUrl('main/order-status/detail-order')
   }

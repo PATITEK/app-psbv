@@ -71,10 +71,6 @@ export class ProductInfoPage implements OnInit {
     });
   }
 
-  goBack(): void {
-    this.router.navigateByUrl('main/home');
-  }
-
   goToDetail(): void {
     if (this.checkGuestPermission()) {
       this.router.navigateByUrl('/auth/login');
@@ -154,7 +150,7 @@ export class ProductInfoPage implements OnInit {
     if (!duplicate) {
       this.cartItems.push(product);
     }
- 
+
     if (this.curProductsLength < 99) {
       this.curProductsLength++;
     }
@@ -174,31 +170,29 @@ export class ProductInfoPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params.data !== undefined) {
         this.productService.getProductDetail(JSON.parse(params['data']).id)
-        .subscribe(data => {
-          this.product = data.product;
+          .subscribe(data => {
+            this.product = data.product;
+            this.loading.dismiss();
+          });
 
-          setTimeout(() => {
-            this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, this.product.id).subscribe(data => {
-              for (let item of data.accessories) {
-                this.accessories.push(item);
-                this.accessoryIds.push({
-                  id: item.id,
-                  quantity: 0,
-                  price: item.price
-                })
-              }
-      
-              this.infinityScroll.complete();
-              this.loading.dismiss();
-              this.pageRequest.page++;
-      
-              // check max data
-              if (this.accessories.length >= data.meta.pagination.total_objects) {
-                this.infinityScroll.disabled = true;
-              }
+        this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, JSON.parse(params['data']).id).subscribe(data => {
+          for (let item of data.accessories) {
+            this.accessories.push(item);
+            this.accessoryIds.push({
+              id: item.id,
+              quantity: 0,
+              price: item.price
             })
-          }, 500);
-        });
+          }
+
+          this.infinityScroll.complete();
+          this.pageRequest.page++;
+
+          // check max data
+          if (this.accessories.length >= data.meta.pagination.total_objects) {
+            this.infinityScroll.disabled = true;
+          }
+        })
       }
     })
   }

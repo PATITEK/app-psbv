@@ -14,6 +14,9 @@ export class HomePage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
   @ViewChild(IonContent) ionContent: IonContent;
 
+  scrHeight: any;
+  scrWidth: any;
+
   pageRequest: IPageRequest;
   data = [];
   permission: string;
@@ -22,29 +25,32 @@ export class HomePage implements OnInit {
   inputValue: string = '';
   isMaxData = false;
   checkSystem = false;
+
+  public activeTab = "all";
+  checkTab = true;
+
   constructor(
     private router: Router,
     private productService: ProductsService,
     private loading: LoadingService,
     private storageService: StorageService,
     private platform: Platform
-
   ) {
     this.reset();
-  
+    this.getScreenSize();
   }
-  
+
   ngOnInit() {
     this.loading.present();
     this.loadData();
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
-      this.platform.ready().then(() => {
-            if (this.platform.is('android')) {
-               this.checkSystem = true;
-            }
-        });
+    this.platform.ready().then(() => {
+      if (this.platform.is('android')) {
+        this.checkSystem = true;
+      }
+    });
   }
 
   ionViewWillEnter() {
@@ -52,6 +58,25 @@ export class HomePage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'flex';
     });
+  }
+
+  getScreenSize(event?) {
+    this.scrHeight = window.innerHeight;
+    this.scrWidth = window.innerWidth;
+  }
+
+  changeTabs(name) {
+    this.activeTab = name;
+    if (this.activeTab === 'orderStatus') {
+      this.checkTab = true;
+    }
+    else if (this.activeTab === 'orderHistory') {
+      this.checkTab = false;
+    }
+  }
+
+  async segmentChanged(event) {
+    this.activeTab = event.target.value;
   }
 
   goToDetail(item) {

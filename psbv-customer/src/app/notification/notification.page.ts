@@ -15,9 +15,7 @@ export class NotificationPage implements OnInit {
 
   ngOnInit() {
   }
-  gotoHome(){
-    this.router.navigateByUrl('main/home');
-  }
+
   gotoNoti(){
     this.router.navigateByUrl('notification/detail-notification');
   }

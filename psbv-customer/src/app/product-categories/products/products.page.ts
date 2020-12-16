@@ -13,6 +13,9 @@ import { StorageService } from 'src/app/@app-core/storage.service';
 export class ProductsPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
 
+  scrHeight: any;
+  scrWidth: any;
+
   pageRequest: IPageRequest = {
     page: 1,
     per_page: 10,
@@ -29,7 +32,9 @@ export class ProductsPage implements OnInit {
     private productGroupService: ProductGroupsService,
     private loading: LoadingService,
     private storageService: StorageService
-  ) { }
+  ) {
+    this.getScreenSize();
+   }
 
   ngOnInit() {
     this.loading.present();
@@ -51,6 +56,11 @@ export class ProductsPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+  }
+
+  getScreenSize(event?) {
+    this.scrHeight = window.innerHeight;
+    this.scrWidth = window.innerWidth;
   }
 
   loadData() {
@@ -94,10 +104,6 @@ export class ProductsPage implements OnInit {
 
   checkStandardPermission(): boolean {
     return this.permission == PERMISSIONS[1].value;
-  }
-
-  goBack(): void {
-    this.router.navigateByUrl('main/product-categories');
   }
 
   goToNoti() {

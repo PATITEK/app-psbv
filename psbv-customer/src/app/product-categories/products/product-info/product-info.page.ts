@@ -185,29 +185,27 @@ export class ProductInfoPage implements OnInit {
         this.productService.getProductDetail(JSON.parse(params['data']).id)
           .subscribe(data => {
             this.product = data.product;
-
-            setTimeout(() => {
-              this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, this.product.id).subscribe(data => {
-                for (let item of data.accessories) {
-                  this.accessories.push(item);
-                  this.accessoryIds.push({
-                    id: item.id,
-                    quantity: 0,
-                    price: item.price
-                  })
-                }
-        
-                this.infinityScroll.complete();
-                this.loading.dismiss();
-                this.pageRequest.page++;
-        
-                // check max data
-                if (this.accessories.length >= data.meta.pagination.total_objects) {
-                  this.infinityScroll.disabled = true;
-                }
-              })
-            }, 50);
+            this.loading.dismiss();
           });
+
+        this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, JSON.parse(params['data']).id).subscribe(data => {
+          for (let item of data.accessories) {
+            this.accessories.push(item);
+            this.accessoryIds.push({
+              id: item.id,
+              quantity: 0,
+              price: item.price
+            })
+          }
+
+          this.infinityScroll.complete();
+          this.pageRequest.page++;
+
+          // check max data
+          if (this.accessories.length >= data.meta.pagination.total_objects) {
+            this.infinityScroll.disabled = true;
+          }
+        })
         this.categoryId = JSON.parse(params['data']).categoryId;
         this.categoryTitle = JSON.parse(params['data']).categoryTitle;
       }
