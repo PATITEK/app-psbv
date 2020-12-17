@@ -20,50 +20,52 @@
 
 
 <ion-content [ngClass]="{'active-bg-content': activeTab === 'orderHistory'}">
-    <ion-card class="section__main">
-        <ion-list style="background-color: #EFEFEF" *ngIf="checkTab">
-            <ion-card class="section__sub" *ngFor="let item of data">
-                <ion-grid>
-                    <ion-row>
-                        <ion-label class="item__header">{{ item.id }}</ion-label>
-                    </ion-row>
-                </ion-grid>
-                <ion-item class="detail__wrapper" lines="none">
-                    <ion-item class="item__price-tag">
-                        {{ item.status }}
-                        <ion-img class="item__price-tag__slash" src="assets/img/shopping-cart/slash.svg"></ion-img>
-                        {{ calProductQuantity(item) }} Products
-                    </ion-item>
-                    <p class="item__order-status" [style.background]="getStatus(item)"></p>
-                    <ion-img class="item__deliver-icon" src="assets/img/shopping-cart/delive.svg"></ion-img>
-                    <ion-label class="item__day-to-delive">1 day</ion-label>
+    <ion-list style="background-color: #EFEFEF" *ngIf="checkTab">
+        <ion-card class="section__sub" *ngFor="let item of data">
+            <ion-grid>
+                <ion-row>
+                    <ion-label class="item__header">{{ item.id }}</ion-label>
+                </ion-row>
+            </ion-grid>
+            <ion-item class="detail__wrapper" lines="none">
+                <ion-item class="item__price-tag">
+                    {{ item.status }}
+                    <ion-img class="item__price-tag__slash" src="assets/img/shopping-cart/slash.svg"></ion-img>
+                    {{ calProductQuantity(item) }} Products
                 </ion-item>
-                <p class="item__detail">{{ listProductsName(item) }}
-                </p>
-                <ion-button lines="none" class="btn btn-detail" size="small" (click)="gotoDetailOrder()">Detail
-                </ion-button>
-                <ion-button lines="none" class="btn btn-status" size="small" (click)="gotoOrderStatus()">Status
-                </ion-button>
-            </ion-card>
-        </ion-list>
-        <ion-list style="background-color: #EFEFEF" *ngIf="!checkTab">
-            <ion-card class="section__sub">
-                <ion-grid>
-                    <ion-row>
-                        <ion-label class="item__header">Item 12/12/1212</ion-label>
-                    </ion-row>
-                </ion-grid>
-                <ion-item class="detail__wrapper" lines="none">
-                    <ion-item class="item__price-tag  item__price-tag--history">
-                        Done
-                        <ion-img class="item__price-tag__slash" src="assets/img/shopping-cart/slash.svg"></ion-img>
-                        3 Products
-                    </ion-item>
+                <p class="item__order-status" [style.background]="getStatus(item)"></p>
+                <ion-img class="item__deliver-icon" src="assets/img/shopping-cart/delive.svg"></ion-img>
+                <ion-label class="item__day-to-delive">1 day</ion-label>
+            </ion-item>
+            <p class="item__detail">{{ listProductsName(item) }}
+            </p>
+            <ion-button lines="none" class="btn btn-detail" size="small" (click)="gotoDetailOrder()">Detail
+            </ion-button>
+            <ion-button lines="none" class="btn btn-status" size="small" (click)="gotoOrderStatus()">Status
+            </ion-button>
+
+        </ion-card>
+        <ion-infinite-scroll (ionInfinite)="loadData($event)">
+            <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </ion-list>
+    <ion-list style="background-color: #EFEFEF" *ngIf="!checkTab">
+        <ion-card class="section__sub">
+            <ion-grid>
+                <ion-row>
+                    <ion-label class="item__header">Item 12/12/1212</ion-label>
+                </ion-row>
+            </ion-grid>
+            <ion-item class="detail__wrapper" lines="none">
+                <ion-item class="item__price-tag  item__price-tag--history">
+                    Done
+                    <ion-img class="item__price-tag__slash" src="assets/img/shopping-cart/slash.svg"></ion-img>
+                    3 Products
                 </ion-item>
-                <ion-card-content class="item__detail">Product Product Product, Product Product, Product, Product ...
-                </ion-card-content>
-                <ion-button lines="none" class="btn btn-re-order" size="small">Re-order</ion-button>
-            </ion-card>
-        </ion-list>
-    </ion-card>
+            </ion-item>
+            <ion-card-content class="item__detail">Product Product Product, Product Product, Product, Product ...
+            </ion-card-content>
+            <ion-button lines="none" class="btn btn-re-order" size="small">Re-order</ion-button>
+        </ion-card>
+    </ion-list>
 </ion-content>
