@@ -7,11 +7,11 @@
     <ion-segment (ionChange)="segmentChanged($event)" value="orderStatus"
         [ngClass]="{'active-bg-segment ': activeTab === 'orderHistory'}">
         <button (click)="changeTabs('orderStatus')"
-            [ngClass]="{'active-btn-status':activeTab === 'orderStatus', 'active-btn-status-h':activeTab==='orderHistory'}"
+            [ngClass]="{'active-btn':activeTab === 'orderStatus'}"
             class="button-segment" value="orderStatus">
             <ion-label>Order status</ion-label>
         </button>
-        <button (click)="changeTabs('orderHistory')" [ngClass]="{'active-btn-history':activeTab === 'orderHistory'}"
+        <button (click)="changeTabs('orderHistory')" [ngClass]="{'active-btn':activeTab === 'orderHistory'}"
             class="button-segment" value="orderHistory">
             <ion-label>History</ion-label>
         </button>
@@ -33,15 +33,15 @@
                     <ion-img class="item__price-tag__slash" src="assets/img/shopping-cart/slash.svg"></ion-img>
                     {{ calProductQuantity(item) }} Products
                 </ion-item>
-                <p class="item__order-status" [style.background]="getStatus(item)"></p>
+                <p class="item__order-status" [style.background]="getStatusColor(item)"></p>
                 <ion-img class="item__deliver-icon" src="assets/img/shopping-cart/delive.svg"></ion-img>
                 <ion-label class="item__day-to-delive">1 day</ion-label>
             </ion-item>
             <p class="item__detail">{{ listProductsName(item) }}
             </p>
-            <ion-button lines="none" class="btn btn-detail" size="small" (click)="gotoDetailOrder()">Detail
+            <ion-button lines="none" class="btn btn-detail" size="small" (click)="gotoDetailOrder(item)">Detail
             </ion-button>
-            <ion-button lines="none" class="btn btn-status" size="small" (click)="gotoOrderStatus()">Status
+            <ion-button lines="none" class="btn btn-status" size="small" (click)="gotoOrderStatus(item)">Status
             </ion-button>
 
         </ion-card>

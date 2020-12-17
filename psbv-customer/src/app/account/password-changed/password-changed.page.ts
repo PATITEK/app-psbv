@@ -20,17 +20,23 @@ export class PasswordChangedPage implements OnInit {
   public showPassNew = false;
   public showPassNewAgain = false;
   formNewPass: FormGroup;
+  checkcurrentpass = false;
+  checknewpass = false;
+  checkconfirmpass = false;
+  checksamepass = false;
+
+  messagecurrentpass = '';
+  messagenewpass = '';
+  messageconfirmpass = '';
+  messagesampass = '';
 
   error_messages = {
     'newpassword': [
-      { type: 'required', message: '  Password is required.' },
-      { type: 'minlength', message: 'Min password length is 8' },
-      { type: 'maxlength', message: 'Max password length is 16' }
+      { type: 'minlength', message: 'Min password length is 8' }
+
     ],
     'confirmpassword': [
-      { type: 'required', message: 'Password is required.' },
-      { type: 'minlength', message: 'Min password length is 8' },
-      { type: 'maxlength', message: 'Max password length is 16' }
+      { type: 'minlength', message: 'Min password length is 8' }
     ],
     'currentpassword': [
       { type: 'required', message: 'Password is required.' },
@@ -48,33 +54,31 @@ export class PasswordChangedPage implements OnInit {
     this.formNewPass = this.formBuilder.group({
 
       newpassword: new FormControl('', Validators.compose([
-        Validators.required,
         Validators.minLength(8),
-        Validators.maxLength(16)
+
       ])),
       currentpassword: new FormControl('', Validators.compose([
         Validators.required,
       ])),
       confirmpassword: new FormControl('', Validators.compose([
-        Validators.required,
         Validators.minLength(8),
-        Validators.maxLength(16)
+
       ])),
     },
-    {
-      validators: this.password.bind(this)
-    },
-    // {
-    //   validators: this.areEqual
-    // }
-   
-  )}
+      {
+        validators: this.password.bind(this)
+      },
+      // {
+      //   validators: this.areEqual
+      // }
+
+    )
+  }
 
   areEqual(formGroup: FormGroup) {
-    const  cp = formGroup.get('currentpassword').value;
-    console.log(cp)
+    const cp = formGroup.get('currentpassword').value;
     const np = formGroup.get('newpassword').value;
-    if ((cp === np) && (cp!== "") && (np!== ""))
+    if ((cp === np) && (cp !== "") && (np !== ""))
       return { error: "New password must diffrence Old password " }
     else return ""
   }
@@ -88,7 +92,7 @@ export class PasswordChangedPage implements OnInit {
     else return { error: "Password not match" }
   }
   ngOnInit() {
-    
+
   }
   showPasswordCurrent() {
     this.showPassCurrent = !this.showPassCurrent;
@@ -118,13 +122,7 @@ export class PasswordChangedPage implements OnInit {
     }
   }
   onSubmit() {
-    // dismiss previous toast
-    try {
-      this.toastController.dismiss();
-    } catch(e) {
 
-    }
-    this.loadingService.present();
     const datapasing: IDataNoti = {
       title: 'PASSWORD CHANGED!',
       description: 'Your password has been changed, Continue using app',
@@ -134,26 +132,80 @@ export class PasswordChangedPage implements OnInit {
       "password": this.formNewPass.get('currentpassword').value,
       "new_password": this.formNewPass.get('confirmpassword').value
     }
-    this.accountService.updatePassword(result_object).subscribe(
-      (data) => {
-        this.loadingService.dismiss();
-        this.pageNotiService.setdataStatusNoti(datapasing);
-        this.router.navigate(['/statusNoti']);
-      },
-      (data) => {
-        if (data.errors) {
-          this.loadingService.dismiss();
-          this.presentToast(data.errors);
-        }
+    this.error_messages.currentpassword.forEach(error => {
+      if (this.formNewPass.get('currentpassword').hasError(error.type) && (this.formNewPass.get('currentpassword').dirty || this.formNewPass.get('currentpassword').touched)) {
+        this.checkcurrentpass = true;
+        this.messagecurrentpass = error.message;
       }
-    )
-  }
-
-  async presentToast(errors) {
-    try {
-      this.toastController.dismiss();
-    } catch(e) {
+      else {
+        this.checkcurrentpass = false;
+        this.messagecurrentpass = '';
+      }
+    })
+    if (this.formNewPass.get('confirmpassword').dirty || this.formNewPass.get('confirmpassword').touched) {
+      this.checkconfirmpass = true;
+      this.messageconfirmpass = 'Password is required!';
     }
+    if (this.formNewPass.get('confirmpassword').value.length != 0) {
+
+      if (this.formNewPass.get('confirmpassword').value.length < 8) {
+        this.checkconfirmpass = true;
+        this.messageconfirmpass = 'Min password length is 8.';
+      }
+      else if (this.formNewPass.get('confirmpassword').value.length > 16) {
+        this.checkconfirmpass = true;
+        this.messageconfirmpass = 'Max password length is 16.';
+      }
+      else {
+        this.checkconfirmpass = false;
+      }
+    }
+    if (this.formNewPass.get('newpassword').dirty || this.formNewPass.get('newpassword').touched) {
+      this.checknewpass = true;
+      this.messagenewpass = 'Password is required!';
+    }
+    if (this.formNewPass.get('newpassword').value.length != 0) {
+
+      if (this.formNewPass.get('newpassword').value.length < 8) {
+        this.checknewpass = true;
+        this.messagenewpass = 'Min password length is 8.';
+      }
+      else if (this.formNewPass.get('newpassword').value.length > 16) {
+        this.checknewpass = true;
+        this.messagenewpass = 'Max password length is 16.';
+      }
+      else {
+        this.checknewpass = false;
+      }
+    }
+  
+
+    if (this.formNewPass.errors === null) {
+      this.checksamepass = false;
+      this.messagesampass = '';
+    }
+    else {
+      this.checksamepass = true;
+      this.messagesampass = this.formNewPass.errors.error;
+    }
+
+    if(this.formNewPass.valid){
+          this.accountService.updatePassword(result_object).subscribe(
+            (data) => {
+              this.pageNotiService.setdataStatusNoti(datapasing);
+              this.router.navigate(['/statusNoti']);
+            },
+            (data) => {
+                this.presentToast(data.errors);
+            }
+          )
+    }
+    else {
+      this.presentToast('Please enter valid password !');
+    }
+  }
+  async presentToast(errors) {
+
     const toast = await this.toastController.create({
       message: errors,
       duration: 2000
@@ -164,5 +216,5 @@ export class PasswordChangedPage implements OnInit {
   onCancel() {
     this.router.navigateByUrl('account/user-info');
   }
-  
+
 }

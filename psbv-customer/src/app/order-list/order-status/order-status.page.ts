@@ -41,8 +41,8 @@ export class OrderStatusPage implements OnInit {
 
   loadData() {
     setTimeout(() => {
-      this.ordersService.getOrders(this.pageRequest).subscribe(data => {
-        for (let item of data.orders) {
+      this.ordersService.getOrders(this.pageRequest).subscribe(orders => {
+        for (let item of orders.orders) {
           this.data.push(item);
         }
         
@@ -51,24 +51,19 @@ export class OrderStatusPage implements OnInit {
         this.pageRequest.page++;
 
         // check max data
-        if (this.data.length >= data.meta.pagination.total_objects) {
+        if (this.data.length >= orders.meta.pagination.total_objects) {
           this.infinityScroll.disabled = true;
         }
       })
     }, 50);
   }
 
-  getStatus(item) {
-    if (item.status == 'send_request')
-      return '#CCBAFC';
-    if (item.status == '')
-      return '#B2E9FB';
-    if (item.status == '')
-      return '#F7BDAE';
-    if (item.status == '')
-      return '#AEF4B7';
-    if (item.status == '')
-      return '#F9D775';
+  getStatusColor(item) {
+    for (let i of this.ordersService.STATUSES) {
+      if (item.status == i.NAME) {
+        return i.COLOR;
+      }
+    }
   }
 
   changeTabs(name) {
@@ -81,12 +76,19 @@ export class OrderStatusPage implements OnInit {
     }
   }
 
-  gotoDetailOrder() {
+  gotoDetailOrder(item) {
     this.router.navigateByUrl('main/order-status/detail-order')
   }
 
-  gotoOrderStatus() {
-    this.router.navigateByUrl('main/order-status/order-status-detail')
+  gotoOrderStatus(item) {
+    const data = {
+      orderId: item.id
+    }
+    this.router.navigate(['main/order-status/order-status-detail'], {
+      queryParams: {
+        data: JSON.stringify(data)
+      }
+    })
   }
 
   async segmentChanged(event) {
@@ -94,7 +96,7 @@ export class OrderStatusPage implements OnInit {
   }
 
   calProductQuantity(item) {
-    return item.order_details.filter(a => a.yieldable_type == 'Product').length;
+    return item.order_details.filter(a => a.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME).length;
   }
 
   listProductsName(item) {

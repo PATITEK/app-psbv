@@ -5,6 +5,7 @@ import { GlobalVariablesService } from 'src/app/@app-core/global-variables.servi
 import { AccessoriesService, IPageRequest, PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
+import { threadId } from 'worker_threads';
 
 export enum PERMISSION {
   GUEST,
@@ -46,6 +47,8 @@ export class ProductInfoPage implements OnInit {
   products = [];
   cartItems = [];
   curProductsLength = 0;
+  loadedProduct = false;
+  loadedAccessories = false;
 
   constructor(
     private router: Router,
@@ -181,7 +184,10 @@ export class ProductInfoPage implements OnInit {
         this.productService.getProductDetail(JSON.parse(params['data']).id)
           .subscribe(data => {
             this.product = data.product;
-            this.loading.dismiss();
+            this.loadedProduct = true;
+            if (this.loadedProduct && this.loadedAccessories) {
+              this.loading.dismiss();
+            }
           });
 
         this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, JSON.parse(params['data']).id).subscribe(data => {
@@ -195,6 +201,10 @@ export class ProductInfoPage implements OnInit {
           }
 
           this.infinityScroll.complete();
+          this.loadedAccessories = true;
+          if (this.loadedProduct && this.loadedAccessories) {
+            this.loading.dismiss();
+          }
           this.pageRequest.page++;
 
           // check max data
@@ -202,6 +212,27 @@ export class ProductInfoPage implements OnInit {
             this.infinityScroll.disabled = true;
           }
         })
+      }
+    })
+  }
+
+  loadMoreAccessories() {
+    this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, this.product.id).subscribe(data => {
+      for (let item of data.accessories) {
+        this.accessories.push(item);
+        this.accessoryIds.push({
+          id: item.id,
+          quantity: 0,
+          price: item.price
+        })
+      }
+
+      this.infinityScroll.complete();
+      this.pageRequest.page++;
+
+      // check max data
+      if (this.accessories.length >= data.meta.pagination.total_objects) {
+        this.infinityScroll.disabled = true;
       }
     })
   }

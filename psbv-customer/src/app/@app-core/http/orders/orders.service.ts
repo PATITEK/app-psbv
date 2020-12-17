@@ -8,6 +8,33 @@ import { requestQuery } from '../../utils';
   providedIn: 'root'
 })
 export class OrdersService {
+  public STATUSES = [
+    {
+      NAME: 'confirmed',
+      COLOR: '#B2E9FB'
+    },
+    {
+      NAME: 'shipping',
+      COLOR: '#CCBAFC'
+    },
+    {
+      NAME: 'received',
+      COLOR: '#F9D775'
+    },
+    {
+      NAME: 'cancel',
+      COLOR: '#F7BDAE'
+    }
+  ];
+  public TYPES = {
+    PRODUCT: {
+      NAME: 'Product'
+    },
+    ACCESSORY: {
+      NAME: 'Accessory'
+    }
+  }
+
   constructor(
     private http: HttpClient
   ) { }

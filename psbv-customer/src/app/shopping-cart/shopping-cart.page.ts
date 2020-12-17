@@ -40,6 +40,7 @@ export class ShoppingCartPage implements OnInit {
     this.cartItems.forEach(() => this.cartItemsSelected.push({
       selected: false
     }))
+    
   }
 
   goBack() {
