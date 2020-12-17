@@ -21,6 +21,9 @@ export enum PERMISSION {
 export class ProductInfoPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
 
+  scrHeight: any;
+  scrWidth: any;
+
   pageRequest: IPageRequest = {
     page: 1,
     per_page: 6,
@@ -54,6 +57,7 @@ export class ProductInfoPage implements OnInit {
     private globalVariablesService: GlobalVariablesService
   ) {
     this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    this.getScreenSize();
   }
 
   ngOnInit() {
@@ -69,6 +73,11 @@ export class ProductInfoPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+  }
+
+  getScreenSize(event?) {
+    this.scrHeight = window.innerHeight;
+    this.scrWidth = window.innerWidth;
   }
 
   goToDetail(): void {

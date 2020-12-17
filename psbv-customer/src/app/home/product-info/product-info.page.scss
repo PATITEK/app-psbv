@@ -5,7 +5,6 @@ ion-content {
 ion-img {
   border-radius: 10px;
   overflow: hidden;
-  object-fit: cover;
 }
 
 ion-card {
@@ -181,12 +180,7 @@ ion-content {
         position: relative;
 
         ion-img {
-          height: 110px;
-          object-fit: cover;
-
-          @media screen and (max-width: 360px) {
-            height: 90px;
-          }
+          background: #fff;
         }
 
         .content-block {
