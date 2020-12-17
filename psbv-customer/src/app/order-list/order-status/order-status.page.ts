@@ -58,7 +58,7 @@ export class OrderStatusPage implements OnInit {
     }, 50);
   }
 
-  getStatus(item) {
+  getStatusColor(item) {
     for (let i of this.ordersService.STATUSES) {
       if (item.status == i.NAME) {
         return i.COLOR;
@@ -76,12 +76,19 @@ export class OrderStatusPage implements OnInit {
     }
   }
 
-  gotoDetailOrder() {
+  gotoDetailOrder(item) {
     this.router.navigateByUrl('main/order-status/detail-order')
   }
 
-  gotoOrderStatus() {
-    this.router.navigateByUrl('main/order-status/order-status-detail')
+  gotoOrderStatus(item) {
+    const data = {
+      orderId: item.id
+    }
+    this.router.navigate(['main/order-status/order-status-detail'], {
+      queryParams: {
+        data: JSON.stringify(data)
+      }
+    })
   }
 
   async segmentChanged(event) {

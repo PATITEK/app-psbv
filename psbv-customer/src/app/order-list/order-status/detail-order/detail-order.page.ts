@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { PERMISSIONS } from 'src/app/@app-core/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OrdersService, PERMISSIONS } from 'src/app/@app-core/http';
 import { StorageService } from 'src/app/@app-core/storage.service';
 
 export enum STATUS {
@@ -39,7 +39,7 @@ export interface IProduct {
   styleUrls: ['./detail-order.page.scss'],
 })
 export class DetailOrderPage implements OnInit {
-  permission: string; 
+  permission: string;
   item: IItem = {
     name: 'Item 12/12/1212',
     status: STATUS.DONE,
@@ -60,7 +60,12 @@ export class DetailOrderPage implements OnInit {
       }
     ]
   }
-
+  data = {
+    name: 'Item 12/12/1212',
+    status: '',
+    order_details: [],
+    audits: []
+  }
   products: IProduct[] = [
     {
       src: 'https://dummyimage.com/165x165.jpg',
@@ -98,12 +103,21 @@ export class DetailOrderPage implements OnInit {
 
   constructor(
     private router: Router,
-    private storageService: StorageService
+    private route: ActivatedRoute,
+    private storageService: StorageService,
+    private ordersService: OrdersService
   ) { }
 
   ngOnInit() {
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
+    })
+
+    this.route.queryParams.subscribe(params => {
+      this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
+        this.data = data.order;
+        console.log(this.data);
+      })
     })
   }
 
