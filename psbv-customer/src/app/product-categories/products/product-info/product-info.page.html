@@ -37,7 +37,7 @@
       <ion-grid>
         <ion-row *ngFor="let accessory of accessories; let i = index" [style.background]="getItem(accessoryIds[i]).background">
           <ion-col size="4">
-            <ion-img [src]="accessory.thumb_image.url"></ion-img>
+            <ion-img [src]="accessory.thumb_image.url" [style.height.px]="(scrWidth - 33.67) / 3 - 10"></ion-img>
           </ion-col>
           <ion-col size="8">
             <div class="content-block" [style.color]="getItem(accessoryIds[i]).color">

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
 import { IPageRequest, ProductGroupsService } from '../@app-core/http';

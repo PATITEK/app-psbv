@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { OrdersService } from 'src/app/@app-core/http/orders';
+import { LoadingService } from 'src/app/@app-core/loading.service';
 
 @Component({
   selector: 'app-order-status',
@@ -13,33 +14,48 @@ export class OrderStatusPage implements OnInit {
 
   public activeTab = "orderStatus";
   checkTab = true;
-  // checkstatus = 'confirm';
   data: any = [];
   pageRequest = {
     page: 1,
-    per_page: 10,
+    per_page: 5,
     total_objects: 20
   };
 
   constructor(
     private router: Router,
-    private ordersService: OrdersService
+    private ordersService: OrdersService,
+    private loadingService: LoadingService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loadingService.present();
+    this.loadData();
+  }
 
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'flex';
     });
-    this.loadData();
   }
 
   loadData() {
-    this.ordersService.getOrders(this.pageRequest).subscribe(data => {
-      this.data = data.orders;
-    })
+    setTimeout(() => {
+      this.ordersService.getOrders(this.pageRequest).subscribe(data => {
+        for (let item of data.orders) {
+          this.data.push(item);
+        }
+        
+        this.loadingService.dismiss();
+        this.infinityScroll.complete();
+        this.pageRequest.page++;
+
+        // check max data
+        if (this.data.length >= data.meta.pagination.total_objects) {
+          this.infinityScroll.disabled = true;
+        }
+      })
+    }, 50);
   }
 
   getStatus(item) {
