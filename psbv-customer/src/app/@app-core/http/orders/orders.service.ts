@@ -8,7 +8,6 @@ import { requestQuery } from '../../utils';
   providedIn: 'root'
 })
 export class OrdersService {
-
   constructor(
     private http: HttpClient
   ) { }
