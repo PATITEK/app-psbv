@@ -5,24 +5,7 @@
 .list-md {
     padding: 0;
 }
-.active-bg {
-  // background-color:  black !important;  
-}
-.active-bg-content {
-  // --background: black;
-}
-.active-btn-status {
-  border-bottom: 2px solid  ;
-  border-color: #ffffff !important;
-}
-.active-btn-status-h {
-  // background: black !important;
-}
-.active-btn-history {
-  border-bottom: 2px solid ;
-  border-color: #ffffff !important;
-  // background: black !important;  
-}
+
 ion-header {
   background-color: var(--main-color);
   padding-bottom: 30px;
@@ -37,10 +20,11 @@ ion-header {
   ion-segment {
     background: var(--main-color);
     width: 100%;
+    
     .button-segment {
       outline: none;
       color: #ffffff;
-      height: 48px;
+      height: 30px;
       width: calc(80% / 2);
       font-family: Arial, Helvetica, sans-serif;
       font-size: 14px;
@@ -51,8 +35,12 @@ ion-header {
       letter-spacing: 0.28px;
       background: var(--main-color);
       margin: 6px 0;
+      border-bottom: 2px solid transparent;
     }
 
+    .active-btn {
+      border-bottom: 2px solid #fff;
+    }
   }
 }
 
@@ -63,7 +51,7 @@ ion-content {
   overflow: hidden;
   z-index: 11;
   position: absolute;
-  height: calc(100% - 113px);
+  height: calc(100% - 98px);
   bottom: 0;
 }
 
@@ -126,20 +114,6 @@ ion-content {
     }
   }
 
-.section__main {
-  //   position: relative;
-  // --background: #efefef;
-  // top: 0%;
-  // width: 100%;
-  // min-height: 100%;
-  // margin: 0;
-  // border-top-left-radius: 1.5rem;
-  // border-top-right-radius: 1.5rem;
-  // border-bottom-left-radius: 0rem;
-  // border-bottom-right-radius: 0rem;
-
-  // overflow-y: scroll;
-}
 .section__sub {
     box-shadow: none;
     font-size: 13px;
@@ -155,7 +129,6 @@ ion-content {
     margin-left: 1.2rem;
     margin-top: 0.8rem;
   }
-
 
   .item__deliver-icon {
     height: 14px;
@@ -186,8 +159,6 @@ ion-content {
 
   }
 
-  
-  
   .btn {
     width: 98px;
     --background: #91e29b;
@@ -225,7 +196,4 @@ ion-content {
       }
     }
   }
-}
-.active-bg-segment {
-  // background: black!important;
 }

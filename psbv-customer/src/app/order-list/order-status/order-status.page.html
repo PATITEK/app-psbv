@@ -7,11 +7,11 @@
     <ion-segment (ionChange)="segmentChanged($event)" value="orderStatus"
         [ngClass]="{'active-bg-segment ': activeTab === 'orderHistory'}">
         <button (click)="changeTabs('orderStatus')"
-            [ngClass]="{'active-btn-status':activeTab === 'orderStatus', 'active-btn-status-h':activeTab==='orderHistory'}"
+            [ngClass]="{'active-btn':activeTab === 'orderStatus'}"
             class="button-segment" value="orderStatus">
             <ion-label>Order status</ion-label>
         </button>
-        <button (click)="changeTabs('orderHistory')" [ngClass]="{'active-btn-history':activeTab === 'orderHistory'}"
+        <button (click)="changeTabs('orderHistory')" [ngClass]="{'active-btn':activeTab === 'orderHistory'}"
             class="button-segment" value="orderHistory">
             <ion-label>History</ion-label>
         </button>
