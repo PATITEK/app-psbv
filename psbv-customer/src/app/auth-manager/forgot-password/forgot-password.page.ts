@@ -34,8 +34,8 @@ export class ForgotPasswordPage implements OnInit {
    
   }
   onSubmit() {
-
     this.message = this.inputEmail.value;
+    // validate form
     if (this.inputEmail.get('email').invalid && (this.inputEmail.get('email').dirty || this.inputEmail.get('email').touched)) {
       if (this.inputEmail.get('email').errors.required === true) {
         this.checkrequired = true;
