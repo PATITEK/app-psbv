@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { IStatus } from '../order-status-detail/order-status-detail.page';
 
 @Component({
   selector: 'app-shipping',
@@ -10,7 +9,7 @@ import { IStatus } from '../order-status-detail/order-status-detail.page';
 
 export class ShippingPage implements OnInit {
   text: string;
-  statuses: IStatus[] = [
+  statuses = [
     {
       name: 'Received request',
       time: '08:23am',
