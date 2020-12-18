@@ -65,7 +65,6 @@ export class OrderStatusPage implements OnInit {
       }
     }
   }
-
   changeTabs(name) {
     this.activeTab = name;
     if (this.activeTab === 'orderStatus') {
@@ -79,10 +78,10 @@ export class OrderStatusPage implements OnInit {
   gotoDetailOrder(item) {
     this.router.navigateByUrl('main/order-status/detail-order')
   }
-
   gotoOrderStatus(item) {
     const data = {
-      orderId: item.id
+      orderId: item.id,
+      // orderStatus: item.s
     }
     this.router.navigate(['main/order-status/order-status-detail'], {
       queryParams: {

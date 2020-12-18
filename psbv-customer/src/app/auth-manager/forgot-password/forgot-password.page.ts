@@ -60,18 +60,12 @@ export class ForgotPasswordPage implements OnInit {
     (data:any)=> {
       if(data.message) {
        this.presentFailedToast(data.message);
-      console.log(data.message);
        }
 
     }
      );
   }
   ngOnInit() {
-    if (!this.inputEmail.valid) {
-      this.checkvalid = true;
-
-    }
-
 
   }
 

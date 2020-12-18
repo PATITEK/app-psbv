@@ -26,6 +26,7 @@ export class AccountService {
       catchError((errorRes) => { 
         throw errorRes.error; }));
   }
+  
   public updateName(name) {
     return this.http.put(`${APICONFIG.ACCOUNT.UPDATE_NAME}`, name).pipe(
       map((result:any) => {
@@ -70,6 +71,16 @@ export class AccountService {
       catchError((errorRes: any) => {
         throw errorRes.error;
       }));
+  }
+  public ContactAdmin(req) {
+    return this.http.post(`${APICONFIG.ACCOUNT.CONTACT_ADMIN}`, req).pipe(
+      map((result)=> {
+        return result;
+      }),
+      catchError((errorRes: any) => {
+        throw errorRes.error;
+      })
+    )
   }
 
 

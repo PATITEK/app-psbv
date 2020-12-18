@@ -50,6 +50,7 @@ ion-header{
    
 }
 ion-content {
+    --overflow: hidden;
     position: absolute;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;

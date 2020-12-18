@@ -13,9 +13,11 @@ ion-content {
   right: 16px;
 }
 
-  ion-img{
-    width: 22px;
-  }
+ion-img {
+  width: 22px;
+  margin: auto 0;
+  margin-right: 10px;
+}
   .more-content{
     position: absolute;
     padding: 2px;
@@ -28,17 +30,17 @@ ion-content {
     &::before{
       content: " ";
       position: absolute;
-      border-width: 8px 8px;
+      border-width: 10px 9px;
       border-style: solid;
       border-color: transparent transparent #f0ecec transparent;
-      top: -15px;
-      right: 13px;
+      top: -20px;
+      right: 16px;
     }
    
     span{
       display: block;
       text-align: center;
-      padding: 4px 11px;
+      padding: 7px 6px;
       border-radius: 4px;
       font-size: 14px;
       color: #565656;

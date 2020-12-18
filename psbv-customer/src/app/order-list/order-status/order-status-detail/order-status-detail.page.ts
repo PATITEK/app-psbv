@@ -28,7 +28,7 @@ export class OrderStatusDetailPage implements OnInit {
       name: 'Shipping',
       time: '09.05am',
       date: '12/12/1212',
-      didPassed: true,
+      didPassed: false,
       childSrc: '/main/order-status/shipping',
       iconName: 'airplane-outline'
     },
