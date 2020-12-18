@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrdersService, PERMISSIONS } from 'src/app/@app-core/http';
 import { StorageService } from 'src/app/@app-core/storage.service';
+import { threadId } from 'worker_threads';
 
 export enum STATUS {
   CONFIRMED,
@@ -61,11 +62,13 @@ export class DetailOrderPage implements OnInit {
     ]
   }
   data = {
+    id: '',
     name: 'Item 12/12/1212',
     status: '',
     order_details: [],
     audits: []
   }
+  items = [];
   products: IProduct[] = [
     {
       src: 'https://dummyimage.com/165x165.jpg',
@@ -116,7 +119,23 @@ export class DetailOrderPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
         this.data = data.order;
-        console.log(this.data);
+
+        if (this.checkConfirmedStatus()) {
+          const dateTime = this.data.audits[0].created_at;
+          this.pushData(dateTime, 'Time confirmed');
+        } else if (this.checkShippingStatus()) {
+          const dateTime1 = this.data.audits[0].created_at;
+          const dateTime2 = this.data.audits[1].created_at;
+          this.pushData(dateTime1, 'Time confirmed', dateTime2, 'Time shipping');
+        } else if (this.checkDoneStatus()) {
+          const dateTime1 = this.data.audits[1].created_at;
+          const dateTime2 = this.data.audits[2].created_at;
+          this.pushData(dateTime1, 'Time shipping', dateTime2, 'Time confirmed');
+        } else if (this.checkCancelStatus()) {
+          const dateTime1 = this.data.audits[this.data.audits.length - 1].created_at;
+          const dateTime2 = ' ';
+          this.pushData(dateTime1, 'Time cancel', dateTime2, 'Reason');
+        }
       })
     })
   }
@@ -128,26 +147,30 @@ export class DetailOrderPage implements OnInit {
     });
   }
 
+  pushData(dateTime1, name1, dateTime2?, name2?) {
+    this.items.push({
+      name: name1,
+      date: dateTime1.substring(0, 10),
+      time: dateTime1.substring(11, 19)
+    })
+    if (dateTime2 && name2) {
+      this.items.push({
+        name: name2,
+        date: dateTime2.substring(0, 10),
+        time: dateTime2.substring(11, 19)
+      })
+    }
+  }
+
   goBack(): void {
     this.router.navigateByUrl('/main/order-status');
   }
 
-  getStatus(): any {
-    if (this.item.status === STATUS.CONFIRMED) {
-      return {
-        name: 'Confirmed',
-        background: '#b2e9fb'
+  getStatusColor() {
+    for (let i of this.ordersService.STATUSES) {
+      if (this.data.status == i.NAME) {
+        return i.COLOR;
       }
-    }
-    if (this.item.status === STATUS.DONE) {
-      return {
-        name: 'Done',
-        background: '#91e29b'
-      }
-    }
-    return {
-      name: 'Cancel',
-      background: '#ce091c'
     }
   }
 
@@ -156,14 +179,18 @@ export class DetailOrderPage implements OnInit {
   }
 
   checkConfirmedStatus(): boolean {
-    return this.item.status === STATUS.CONFIRMED;
+    return this.data.status == this.ordersService.STATUSES[0].NAME;
+  }
+
+  checkShippingStatus() {
+    return this.data.status == this.ordersService.STATUSES[1].NAME;
   }
 
   checkDoneStatus(): boolean {
-    return this.item.status === STATUS.DONE;
+    return this.data.status == this.ordersService.STATUSES[2].NAME;
   }
 
   checkCancelStatus(): boolean {
-    return this.item.status === STATUS.CANCEL;
+    return this.data.status == this.ordersService.STATUSES[3].NAME;
   }
 }

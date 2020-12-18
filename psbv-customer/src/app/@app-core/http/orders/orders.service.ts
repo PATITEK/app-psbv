@@ -19,11 +19,11 @@ export class OrdersService {
     },
     {
       NAME: 'received',
-      COLOR: '#F9D775'
+      COLOR: '#91E29B'
     },
     {
       NAME: 'cancel',
-      COLOR: '#F7BDAE'
+      COLOR: '#CE091C'
     }
   ];
   public TYPES = {

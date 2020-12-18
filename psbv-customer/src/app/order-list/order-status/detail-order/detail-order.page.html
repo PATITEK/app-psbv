@@ -10,16 +10,20 @@
     <ion-card-header>
       <ion-card-title class="title"> {{ item.name }}</ion-card-title>
       <div class="status-box">
-        <span class="circle" [style.background]="getStatus().background"></span>
-        <span class="status-name"> {{ getStatus().name }}</span>
+        <span class="circle" [style.background]="getStatusColor(item)"></span>
+        <span class="status-name"> {{ data.status }}</span>
       </div>
     </ion-card-header>
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let subItem of item.subItems">
-          <span class="name" slot="start">{{ subItem.name }}</span>
+        <ion-item>
+          <span class="name" slot="start">ID</span>
+          <div class="content" slot="end">{{ data.id }}</div>
+        </ion-item>
+        <ion-item *ngFor="let item of items">
+          <span class="name" slot="start">{{ item.name }}</span>
           <div class="content" slot="end">
-            {{ subItem.desc1 }} {{ subItem.desc2 }}
+            {{ item.date }} {{ item.time }}
           </div>
         </ion-item>
       </ion-list>
@@ -30,7 +34,7 @@
   <p class="ion-text-center" style="font-size: 12px; color: #727272;" *ngIf="checkCancelStatus()">You can't view detail component product <br> with cancel order</p>
 
   <ion-grid class="products">
-    <ion-row *ngFor="let product of products" class="product">
+    <ion-row *ngFor="let product of data.order_details" class="product">
       <ion-col size="6">
         <ion-img [src]="product.src"></ion-img>
       </ion-col>
