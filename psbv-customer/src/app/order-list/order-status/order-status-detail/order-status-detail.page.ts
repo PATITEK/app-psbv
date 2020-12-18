@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrdersService } from 'src/app/@app-core/http';
+import { LoadingService } from 'src/app/@app-core/loading.service';
 
 @Component({
   selector: 'app-order-status-detail',
@@ -9,18 +10,18 @@ import { OrdersService } from 'src/app/@app-core/http';
   styleUrls: ['./order-status-detail.page.scss'],
 })
 export class OrderStatusDetailPage implements OnInit {
-  text: string;
   statuses = [];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     public sanitizer: DomSanitizer,
-    private ordersService: OrdersService
+    private ordersService: OrdersService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
-    this.text = `calc(${this.countPassedItem()}% + 5px)`;
+    this.loadingService.present();
     this.route.queryParams.subscribe(params => {
       this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
         const audits = data.order.audits;
@@ -93,6 +94,8 @@ export class OrderStatusDetailPage implements OnInit {
             nameIcon: 'close-outline',
           })
         }
+
+        this.loadingService.dismiss();
       })
     })
   }
@@ -118,6 +121,36 @@ export class OrderStatusDetailPage implements OnInit {
     } : null;
   }
 
+  getTopLine(i) {
+    if (i == 0) {
+      return 0;
+    }
+    if (i == this.statuses.length - 1) {
+      return `calc(100% - 100% / ${this.statuses.length})`;
+    }
+    if (i == 1) {
+      return `calc(100% / ${this.statuses.length})`;
+    }
+  }
+
+  getTransform() {
+    return `translateX(-135px) translateY(${100 / this.statuses.length / 2}%)`;
+  }
+
+  getBottom() {
+    let i = this.calPassedStatus();
+    return `calc(100% / ${this.statuses.length} / 2 + ${i} * 100% / ${this.statuses.length})`;
+  }
+
+  calPassedStatus() {
+    for (let i = 0; i < this.statuses.length; i++) {
+      if (!this.statuses[i].date) {
+        return this.statuses.length - i;
+      }
+    }
+    return 0;
+  }
+
   goBack(): void {
     this.router.navigateByUrl('main/order-status');
   }
@@ -126,11 +159,6 @@ export class OrderStatusDetailPage implements OnInit {
     if (status.urlChild && status.date) {
       this.router.navigateByUrl(status.urlChild);
     }
-  }
-
-  countPassedItem(): number {
-    let num: number = this.statuses.filter(status => status.didPassed).length;
-    return num * 2 * 10 - 20;
   }
 
   checkConfirmedStatus(status): boolean {
