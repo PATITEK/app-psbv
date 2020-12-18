@@ -15,7 +15,7 @@ export class OrdersService {
     },
     {
       NAME: 'shipping',
-      COLOR: '#CCBAFC'
+      COLOR: '#F7BDAE'
     },
     {
       NAME: 'received',
@@ -23,7 +23,7 @@ export class OrdersService {
     },
     {
       NAME: 'cancel',
-      COLOR: '#F7BDAE'
+      COLOR: '#CE091C'
     }
   ];
   public TYPES = {

@@ -76,7 +76,14 @@ export class OrderStatusPage implements OnInit {
   }
 
   gotoDetailOrder(item) {
-    this.router.navigateByUrl('main/order-status/detail-order')
+    const data = {
+      orderId: item.id
+    }
+    this.router.navigate(['main/order-status/detail-order'], {
+      queryParams: {
+        data: JSON.stringify(data)
+      }
+    })
   }
   gotoOrderStatus(item) {
     const data = {
