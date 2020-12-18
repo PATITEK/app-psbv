@@ -88,7 +88,14 @@ export class OrderStatusPage implements OnInit {
   }
 
   gotoOrderStatus(item) {
-    this.router.navigateByUrl('main/order-status/order-status-detail')
+    const data = {
+      orderId: item.id
+    }
+    this.router.navigate(['main/order-status/order-status-detail'], {
+      queryParams: {
+        data: JSON.stringify(data)
+      }
+    })
   }
 
   async segmentChanged(event) {

@@ -15,11 +15,11 @@ export class OrdersService {
     },
     {
       NAME: 'shipping',
-      COLOR: '#CCBAFC'
+      COLOR: '#F7BDAE'
     },
     {
       NAME: 'received',
-      COLOR: '#91E29B'
+      COLOR: '#F9D775'
     },
     {
       NAME: 'cancel',
