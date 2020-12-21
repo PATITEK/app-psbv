@@ -60,7 +60,7 @@ export class ShoppingCartPage implements OnInit {
   }
 
   decreaseProductQuantity(item) {
-    if (item.quantity > 1) {
+    if (item.quantity > 0) {
       item.quantity--;
       this.setLocalStorage();
     }

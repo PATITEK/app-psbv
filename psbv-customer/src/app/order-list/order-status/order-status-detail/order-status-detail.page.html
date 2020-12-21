@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-button class="heading" expand="block" size="small" disabled>Chưa có code order</ion-button>
+  <ion-button class="heading" expand="block" size="small" disabled>{{ orderCode }}</ion-button>
   <ion-list [style.max-height.px]="statuses.length == 3 ? 500 : 250">
     <ion-item lines="none" *ngFor="let status of statuses" [style.height.%]="100 / statuses.length"
       (click)="goToChild(status)">
@@ -18,7 +18,7 @@
         <ion-icon [name]="status.nameIcon"></ion-icon>
       </div>
       <ion-item-group>
-        <ion-card-subtitle>{{ status.name }}</ion-card-subtitle>
+        <ion-card-subtitle>{{ status.name | titlecase }}</ion-card-subtitle>
         <ion-label>
           {{ status.time }} {{ status.date }}
         </ion-label>

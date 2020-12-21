@@ -75,7 +75,8 @@ ion-grid {
       border-radius: 10px;
 
       ion-img {
-        border-radius: 11px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
         overflow: hidden;
         object-fit: cover;
         background-color: #fff;
@@ -84,7 +85,8 @@ ion-grid {
       ion-item-group {
         background-color: #efefef;
         text-align: center;
-        border-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
         padding: 0 2px;
         margin-top: 3px;
 

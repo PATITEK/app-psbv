@@ -11,6 +11,7 @@ import { LoadingService } from 'src/app/@app-core/loading.service';
 })
 export class OrderStatusDetailPage implements OnInit {
   statuses = [];
+  orderCode = '';
 
   constructor(
     private router: Router,
@@ -24,6 +25,7 @@ export class OrderStatusDetailPage implements OnInit {
     this.loadingService.present();
     this.route.queryParams.subscribe(params => {
       this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
+        this.orderCode = data.order.code;
         const audits = data.order.audits;
 
         const dateTimeConfirmed = audits[0].created_at;
