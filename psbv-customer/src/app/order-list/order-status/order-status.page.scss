@@ -87,6 +87,7 @@ ion-content {
     padding: 0 10px;
     --padding-start: 0;
     --border-radius: 25px;
+    --min-height: 38px;
    
     .item__price-tag {
       font-size: 14px;
@@ -96,6 +97,9 @@ ion-content {
       --border-radius: 2rem;
       --padding-start: 1rem;
       --background: linear-gradient(to left, #b31217, #e52d27);
+      --min-height: 38px;
+      --padding-start: 10px;
+
       &__text {
         display: flex;
         --padding-end: -5rem;
