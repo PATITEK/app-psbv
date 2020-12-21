@@ -212,7 +212,6 @@ export class ProductInfoPage implements OnInit {
             })
           }
 
-          this.infinityScroll.complete();
           this.loadedAccessories = true;
           if (this.loadedProduct && this.loadedAccessories) {
             this.loading.dismiss();
