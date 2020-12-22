@@ -28,6 +28,7 @@ export class HomePage implements OnInit {
 
   public activeTab = "all";
   checkTab = true;
+  loadedData = true;
 
   constructor(
     private router: Router,
@@ -103,6 +104,7 @@ export class HomePage implements OnInit {
   }
 
   onInput(event: any) {
+    this.loadedData = false;
     this.inputValue = event.target.value;
     this.reset();
     this.scrollContent();
@@ -128,6 +130,8 @@ export class HomePage implements OnInit {
                 this.data.push(item);
               }
 
+              this.loadedData = true;
+
               this.infinityScroll.complete();
               this.loading.dismiss();
               this.pageRequest.page++;
@@ -151,6 +155,8 @@ export class HomePage implements OnInit {
               }
               this.data.push(item);
             }
+
+            this.loadedData = true;
 
             this.infinityScroll.complete();
             this.loading.dismiss();

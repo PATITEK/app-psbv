@@ -6,12 +6,12 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="card-title ion-text-center">
+  <ion-card class="card-title ion-text-center" *ngIf="items.length != 0">
     <ion-card-header>
-      <ion-card-title class="title">Chưa có code order</ion-card-title>
+      <ion-card-title class="title">{{ data.code }}</ion-card-title>
       <div class="status-box">
         <span class="circle" [style.background]="getStatusColor()"></span>
-        <span class="status-name"> {{ data.status }}</span>
+        <span class="status-name"> {{ data.status | titlecase }}</span>
       </div>
     </ion-card-header>
     <ion-card-content>

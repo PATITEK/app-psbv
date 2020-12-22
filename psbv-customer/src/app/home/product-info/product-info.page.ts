@@ -5,13 +5,6 @@ import { GlobalVariablesService } from 'src/app/@app-core/global-variables.servi
 import { AccessoriesService, IPageRequest, PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
-import { threadId } from 'worker_threads';
-
-export enum PERMISSION {
-  GUEST,
-  STANDARD,
-  PREMIUM
-};
 
 @Component({
   selector: 'app-product-info',
@@ -64,11 +57,11 @@ export class ProductInfoPage implements OnInit {
   }
 
   ngOnInit() {
-    this.loading.present();
-    this.loadData();
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
+    this.loading.present();
+    this.loadData();
   }
 
   ionViewWillEnter() {
@@ -200,7 +193,6 @@ export class ProductInfoPage implements OnInit {
             })
           }
 
-          this.infinityScroll.complete();
           this.loadedAccessories = true;
           if (this.loadedProduct && this.loadedAccessories) {
             this.loading.dismiss();
@@ -231,6 +223,7 @@ export class ProductInfoPage implements OnInit {
       this.pageRequest.page++;
 
       // check max data
+      console.log('object', data.meta.pagination.total_objects);
       if (this.accessories.length >= data.meta.pagination.total_objects) {
         this.infinityScroll.disabled = true;
       }

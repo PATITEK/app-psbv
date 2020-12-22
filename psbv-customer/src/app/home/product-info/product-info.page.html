@@ -3,9 +3,7 @@
     <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
     <ion-label>Information product</ion-label>
   </ion-buttons>
-</ion-header>
 
-<ion-content>
   <ion-card class="product">
     <ion-card-content>
       <div class="img-box">
@@ -18,9 +16,12 @@
       <ion-card-subtitle>{{ product.name }}</ion-card-subtitle>
       <p>{{ product.short_description }}</p>
     </ion-card-content>
-    <ion-img src="../../../../assets/add-btn.svg" class="add-product-button" (click)="addProduct()"
-      *ngIf="!checkGuestPermission()"></ion-img>
   </ion-card>
+</ion-header>
+
+<ion-content>
+  <ion-img src="assets/add-btn.svg" class="add-product-button" (click)="addProduct()"
+    *ngIf="!checkGuestPermission()"></ion-img>
 
   <ion-card class="accessories">
     <ion-card-header class="ion-text-center">
@@ -35,31 +36,8 @@
           <ion-icon name="add-circle-outline" slot="end"></ion-icon>
         </ion-button>
       </ion-item>
-      <ion-grid>
-        <ion-row *ngFor="let accessory of accessories; let i = index;"
-          [style.background]="getItem(accessoryIds[i]).background">
-          <ion-col size="4">
-            <ion-img [src]="accessory.thumb_image.url" [style.height.px]="(scrWidth - 33.67) / 3 - 10"></ion-img>
-          </ion-col>
-          <ion-col size="8">
-            <div class="content-block" [style.color]="getItem(accessoryIds[i]).color">
-              <ion-label>{{ accessory.name }}</ion-label>
-              <p>{{ accessory.description }}</p>
-            </div>
-          </ion-col>
-
-          <div class="modifier" *ngIf="!checkGuestPermission()">
-            <span class="modifier-btn" (click)="decreaseQuantity(accessoryIds[i])">-</span>
-            <span class="counter">{{ accessoryIds[i].quantity }}</span>
-            <span class="modifier-btn" (click)="increaseQuantity(accessoryIds[i])">+</span>
-          </div>
-        </ion-row>
-
-        <ion-infinite-scroll #infinityScroll (ionInfinite)="loadMoreAccessories()">
-          <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
-        </ion-infinite-scroll>
-      </ion-grid>
     </ion-card-content>
+
   </ion-card>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="cart-button" *ngIf="!checkGuestPermission()"
@@ -69,4 +47,29 @@
     </ion-fab-button>
     <span *ngIf="curProductsLength > 0">+{{ curProductsLength}}</span>
   </ion-fab>
+
+  <ion-grid>
+    <ion-row *ngFor="let accessory of accessories; let i = index;"
+      [style.background]="getItem(accessoryIds[i]).background">
+      <ion-col size="4">
+        <ion-img [src]="accessory.thumb_image.url" [style.height.px]="(scrWidth - 33.67) / 3 - 10"></ion-img>
+      </ion-col>
+      <ion-col size="8">
+        <div class="content-block" [style.color]="getItem(accessoryIds[i]).color">
+          <ion-label>{{ accessory.name }}</ion-label>
+          <p>{{ accessory.description }}</p>
+        </div>
+      </ion-col>
+
+      <div class="modifier" *ngIf="!checkGuestPermission()">
+        <span class="modifier-btn" (click)="decreaseQuantity(accessoryIds[i])">-</span>
+        <span class="counter">{{ accessoryIds[i].quantity }}</span>
+        <span class="modifier-btn" (click)="increaseQuantity(accessoryIds[i])">+</span>
+      </div>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll #infinityScroll (ionInfinite)="loadMoreAccessories()">
+    <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

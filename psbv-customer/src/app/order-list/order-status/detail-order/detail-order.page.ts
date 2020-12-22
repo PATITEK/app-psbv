@@ -10,7 +10,7 @@ import { OrdersService, PERMISSIONS } from 'src/app/@app-core/http';
 export class DetailOrderPage implements OnInit {
   data = {
     id: '',
-    name: 'Item 12/12/1212',
+    code: '',
     status: '',
     order_details: [],
     audits: []

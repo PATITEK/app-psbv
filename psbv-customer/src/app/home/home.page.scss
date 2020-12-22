@@ -45,7 +45,7 @@ ion-header {
     button {
       background-color: transparent;
       font-size: 12px;
-      color: #FC8282;
+      color: #fc8282;
       width: 25%;
       font-weight: 700;
       padding-bottom: 5px;
@@ -89,7 +89,8 @@ ion-grid {
       border-radius: 10px;
 
       ion-img {
-        border-radius: 11px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
         overflow: hidden;
         background-color: #fff;
         object-fit: cover;
@@ -102,7 +103,8 @@ ion-grid {
       ion-item-group {
         background-color: #efefef;
         text-align: center;
-        border-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
         padding: 0 2px;
         margin-top: 3px;
 
@@ -126,4 +128,11 @@ ion-grid {
       }
     }
   }
+}
+
+ion-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

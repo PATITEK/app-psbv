@@ -71,6 +71,9 @@ ion-content {
   .cart-heading-body {
     --background: #f9f9fb;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    min-height: 38px;
 
     .group-right {
       --background: #f9f9fb;
@@ -89,6 +92,7 @@ ion-content {
     color: white;
     font-size: 14px;
     min-width: 86px;
+    --min-height: 38px;
 
     @media screen and (max-width: 360px) {
       font-size: 12px;
@@ -104,7 +108,7 @@ ion-content {
 
     .separation {
       width: 1px;
-      height: 37px;
+      height: 27px;
       background: #fff;
     }
 

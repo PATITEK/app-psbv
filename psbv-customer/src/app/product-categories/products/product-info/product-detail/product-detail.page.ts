@@ -15,7 +15,7 @@ export class ProductDetailPage implements OnInit {
   product = {
     id: '',
     name: ' ',
-    short_description: '',
+    short_description: ' ',
     description: ' ',
     thumb_image: {
       url: ''

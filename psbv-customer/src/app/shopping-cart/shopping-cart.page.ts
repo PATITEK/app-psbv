@@ -13,8 +13,6 @@ export class ShoppingCartPage implements OnInit {
   cartItemsSelected = [];
   permission: string;
 
-  public backUrl = '/main/home';
-
   constructor(
     private alertCrtl: AlertController,
     private router: Router,
@@ -40,7 +38,6 @@ export class ShoppingCartPage implements OnInit {
     this.cartItems.forEach(() => this.cartItemsSelected.push({
       selected: false
     }))
-    
   }
 
   goBack() {
@@ -63,7 +60,7 @@ export class ShoppingCartPage implements OnInit {
   }
 
   decreaseProductQuantity(item) {
-    if (item.quantity > 1) {
+    if (item.quantity > 0) {
       item.quantity--;
       this.setLocalStorage();
     }
@@ -187,6 +184,12 @@ export class ShoppingCartPage implements OnInit {
       }
     }
     return total;
+  }
+
+  calAccessoriesQuantity(item) {
+    return item.accessories.reduce((acc, cur) => {
+      return acc + cur.quantity;
+    }, 0);
   }
 
   goToSelectedProducts() {

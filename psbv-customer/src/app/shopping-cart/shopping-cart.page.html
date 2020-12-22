@@ -14,7 +14,7 @@
       <ion-item class="group_left">
         <span class="price">{{ calPrice(item) | number: '1.0-2' }}</span>
         <span class="separation"></span>
-        <span class="quantity">{{ item.accessories.length }} accessories</span>
+        <span class="quantity">{{ calAccessoriesQuantity(item) }} accessories</span>
       </ion-item>
       <ion-item class="group-right" slot="end">
         <ion-img src="assets/shopping-cart/deliver-black.svg"></ion-img>
