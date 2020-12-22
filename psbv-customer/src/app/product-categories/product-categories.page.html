@@ -12,6 +12,9 @@
 </ion-header>
 
 <ion-content>
+  <ion-spinner class="absolute-center" *ngIf="!loadedData"></ion-spinner>
+  <p class="absolute-center" *ngIf="data.length == 0 && loadedData">Not found categories.</p>
+
   <ion-grid>
     <ion-row *ngFor="let item of data; let i = index">
       <ion-col size="4" (click)="goToDetail(data[i])" *ngIf="i % 3 == 0">

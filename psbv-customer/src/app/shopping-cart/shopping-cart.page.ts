@@ -12,6 +12,7 @@ export class ShoppingCartPage implements OnInit {
   cartItems = [];
   cartItemsSelected = [];
   permission: string;
+  loadedData = false;
 
   constructor(
     private alertCrtl: AlertController,
@@ -215,5 +216,15 @@ export class ShoppingCartPage implements OnInit {
         data: JSON.stringify(data)
       }
     })
+  }
+
+  getIonContentAttribute(footerHeight) {
+    return this.cartItems.length == 0 ? {
+      height: `calc(100% - 80px)`,
+      bottom: 0
+    } : {
+        height: `calc(100% - 80px - ${footerHeight}px)`,
+        bottom: `${footerHeight}px`
+      }
   }
 }

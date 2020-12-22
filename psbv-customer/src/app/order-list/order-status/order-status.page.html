@@ -19,6 +19,8 @@
 
 
 <ion-content [ngClass]="{'active-bg-content': activeTab === 'orderHistory'}">
+    <p class="absolute-center" *ngIf="checkTab && data.length == 0 && loadedData">Empty orders.</p>
+
     <ion-list style="background-color: #EFEFEF" *ngIf="checkTab">
         <ion-card class="section__sub" *ngFor="let item of data">
             <ion-item style="--padding-start: 0; --inner-border-width: 0;">

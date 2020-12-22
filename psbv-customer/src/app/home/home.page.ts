@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
+import { allowedNodeEnvironmentFlags } from 'process';
 import { IPageRequest, PERMISSIONS, ProductsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 import { StorageService } from '../@app-core/storage.service';
@@ -28,12 +29,27 @@ export class HomePage implements OnInit {
 
   public activeTab = "all";
   checkTab = true;
-  loadedData = true;
+  loadedData = false;
+
+  filterProducts = [
+    {
+      id: 'all',
+      name: 'All'
+    },
+    {
+      id: 'seenProducts',
+      name: 'Seen Products'
+    },
+    {
+      id: 'hotTrending',
+      name: 'Hot Trending'
+    }
+  ]
 
   constructor(
     private router: Router,
     private productService: ProductsService,
-    private loading: LoadingService,
+    // public loading: LoadingService,
     private storageService: StorageService,
     private platform: Platform
   ) {
@@ -42,8 +58,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.loading.present();
-    this.loadData();
+    // this.loading.present();
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
@@ -52,6 +67,14 @@ export class HomePage implements OnInit {
         this.checkSystem = true;
       }
     });
+
+    if (!this.checkGuestPermission()) {
+      this.filterProducts.push({
+        id: 'onSaleProducts',
+        name: 'On Sale Products'
+      })
+    }
+    this.loadData();
   }
 
   ionViewWillEnter() {
@@ -133,7 +156,7 @@ export class HomePage implements OnInit {
               this.loadedData = true;
 
               this.infinityScroll.complete();
-              this.loading.dismiss();
+              // this.loading.dismiss();
               this.pageRequest.page++;
 
               // check max data
@@ -159,7 +182,7 @@ export class HomePage implements OnInit {
             this.loadedData = true;
 
             this.infinityScroll.complete();
-            this.loading.dismiss();
+            // this.loading.dismiss();
             this.pageRequest.page++;
 
             // check max data

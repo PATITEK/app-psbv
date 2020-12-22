@@ -26,6 +26,8 @@ export class ProductsPage implements OnInit {
   title = '';
   id = '';
 
+  loadedData = false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -78,6 +80,8 @@ export class ProductsPage implements OnInit {
               }
               this.data.push(item);
             }
+
+            this.loadedData = true;
 
             this.infinityScroll.complete();
             this.loading.dismiss();

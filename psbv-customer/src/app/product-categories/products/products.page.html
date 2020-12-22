@@ -11,6 +11,8 @@
 </ion-header>
 
 <ion-content>
+  <p class="absolute-center" *ngIf="data.length == 0 && loadedData">Not found products.</p>
+
   <ion-grid>
     <ion-row *ngFor="let item of data; let i = index">
       <ion-col size="6" (click)="goToDetail(data[i])" *ngIf="i % 2 == 0">

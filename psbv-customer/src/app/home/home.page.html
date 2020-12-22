@@ -11,7 +11,11 @@
 
   <ion-segment (ionChange)="segmentChanged($event)" value="all"
     [ngClass]="{'active-segment-btn ': activeTab === 'all'}">
-    <button (click)="changeTabs('all')" [ngClass]="{'active-segment-btn': activeTab === 'all'}" value="all">
+    <button *ngFor="let filterProduct of filterProducts"
+      [ngClass]="{'active-segment-btn': activeTab == filterProduct.id}" [style.width.%]="100 / filterProducts.length" [value]="filterProduct.id" (click)="changeTabs(filterProduct.id)">
+      <ion-label>{{ filterProduct.name }}</ion-label>
+    </button>
+    <!-- <button (click)="changeTabs('all')" [ngClass]="{'active-segment-btn': activeTab === 'all'}" value="all">
       <ion-label>All</ion-label>
     </button>
     <button (click)="changeTabs('seenProducts')"
@@ -22,15 +26,16 @@
       value="hotTrend">
       <ion-label>Hot trend</ion-label>
     </button>
-    <button (click)="changeTabs('onSaleProducts')"
+    <button *ngIf="!checkGuestPermission()" (click)="changeTabs('onSaleProducts')"
       [ngClass]="{'active-segment-btn': activeTab === 'onSaleProducts'}" value="onSaleProducts">
       <ion-label>On sale products</ion-label>
-    </button>
+    </button> -->
   </ion-segment>
 </ion-header>
 
 <ion-content>
-  <ion-spinner *ngIf="!loadedData"></ion-spinner>
+  <ion-spinner class="absolute-center" *ngIf="!loadedData"></ion-spinner>
+  <p class="absolute-center" *ngIf="data.length == 0 && loadedData">Not found products.</p>
 
   <ion-grid>
     <ion-row *ngFor="let item of data; let i = index">

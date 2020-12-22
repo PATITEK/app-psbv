@@ -65,6 +65,8 @@ export class ProductInfoPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.curProductsLength = 0;
+
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
@@ -173,7 +175,7 @@ export class ProductInfoPage implements OnInit {
 
   loadData() {
     this.route.queryParams.subscribe(params => {
-      if (params.data !== undefined) {
+      if (params.data !== undefined && !this.loadedProduct) {
         this.productService.getProductDetail(JSON.parse(params['data']).id)
           .subscribe(data => {
             this.product = data.product;
@@ -223,7 +225,6 @@ export class ProductInfoPage implements OnInit {
       this.pageRequest.page++;
 
       // check max data
-      console.log('object', data.meta.pagination.total_objects);
       if (this.accessories.length >= data.meta.pagination.total_objects) {
         this.infinityScroll.disabled = true;
       }

@@ -20,6 +20,7 @@ export class OrderStatusPage implements OnInit {
     per_page: 5,
     total_objects: 20
   };
+  loadedData = false;
 
   constructor(
     private router: Router,

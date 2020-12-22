@@ -5,7 +5,9 @@
   <ion-card-title>Shopping cart</ion-card-title>
 </ion-header>
 
-<ion-content>
+<ion-content [style.height]="getIonContentAttribute(80).height" [style.bottom]="getIonContentAttribute(80).bottom">
+  <p class="absolute-center" *ngIf="cartItems.length == 0">Empty cart.</p>
+
   <ion-card class="cart-body" *ngFor="let item of cartItems; let i = index;">
     <ion-label>{{ item.name }}</ion-label>
     <ion-item class="cart-heading-body">
@@ -50,7 +52,7 @@
   </ion-card>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="cartItems.length != 0">
   <ion-item class="footer-inner">
     <span class="selectedBtn" [style.background]="checkAllSelected() ? '#91E29B' : 'white'"
       (click)="toggleSelectAll()"></span>
