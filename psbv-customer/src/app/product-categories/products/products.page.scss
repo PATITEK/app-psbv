@@ -8,13 +8,13 @@ ion-content {
   overflow: hidden;
   z-index: 11;
   position: absolute;
-  height: calc(100% - 80px);
+  height: calc(100% - 90px);
   bottom: 0;
 }
 
 ion-header {
   background: #232323;
-  padding-bottom: 45px;
+  padding-bottom: 60px;
 
   ion-buttons {
     position: relative;
@@ -61,15 +61,11 @@ ion-header {
 
 ion-grid {
   padding: 4px 8px;
-
   ion-row {
     margin: 0 -5px;
-
     ion-col {
       background-color: #e5e5e5;
-      max-width: calc(
-        calc(6 / var(--ion-grid-columns, 12)) * 100% - 8px
-      ) !important;
+      max-width: calc(calc(6 / var(--ion-grid-columns, 12)) * 100% - 8px) !important;
       margin: 4px;
       padding: 4px 5px 5px;
       border-radius: 10px;
