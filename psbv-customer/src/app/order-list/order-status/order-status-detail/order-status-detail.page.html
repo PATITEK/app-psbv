@@ -27,10 +27,12 @@
       </ion-icon>
     </ion-item>
 
-    <div class="line-bottom" [style.top.%]="0" [style.transform]="sanitizer.bypassSecurityTrustStyle(getTransform())" *ngIf="statuses.length != 0">
+    <div class="line-bottom" [style.top.%]="0" [style.transform]="sanitizer.bypassSecurityTrustStyle(getTransform())"
+      *ngIf="statuses.length != 0">
       <span *ngFor="let status of statuses; let i = index;" [style.background]="status.date ? '#93e29d': '#dededf'"
         [style.top]="sanitizer.bypassSecurityTrustStyle(getTopLine(i))"></span>
     </div>
-    <div class="line-top" [style.top.%]="100 / statuses.length / 2" [style.bottom]="sanitizer.bypassSecurityTrustStyle(getBottom())"></div>
+    <div class="line-top" [style.top.%]="100 / statuses.length / 2"
+      [style.bottom]="sanitizer.bypassSecurityTrustStyle(getBottom())"></div>
   </ion-list>
 </ion-content>

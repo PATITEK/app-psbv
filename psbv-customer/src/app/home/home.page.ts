@@ -107,7 +107,7 @@ export class HomePage implements OnInit {
     const data = {
       id: item.id
     }
-    this.router.navigate(['/main/home/product-info'], {
+    this.router.navigate(['/main/home/detail-product'], {
       queryParams: {
         data: JSON.stringify(data)
       }

@@ -15,21 +15,6 @@
       [ngClass]="{'active-segment-btn': activeTab == filterProduct.id}" [style.width.%]="100 / filterProducts.length" [value]="filterProduct.id" (click)="changeTabs(filterProduct.id)">
       <ion-label>{{ filterProduct.name }}</ion-label>
     </button>
-    <!-- <button (click)="changeTabs('all')" [ngClass]="{'active-segment-btn': activeTab === 'all'}" value="all">
-      <ion-label>All</ion-label>
-    </button>
-    <button (click)="changeTabs('seenProducts')"
-      [ngClass]="{'active-segment-btn': activeTab === 'seenProducts'}" value="seenProducts">
-      <ion-label>Seen products</ion-label>
-    </button>
-    <button (click)="changeTabs('hotTrend')" [ngClass]="{'active-segment-btn': activeTab === 'hotTrend'}"
-      value="hotTrend">
-      <ion-label>Hot trend</ion-label>
-    </button>
-    <button *ngIf="!checkGuestPermission()" (click)="changeTabs('onSaleProducts')"
-      [ngClass]="{'active-segment-btn': activeTab === 'onSaleProducts'}" value="onSaleProducts">
-      <ion-label>On sale products</ion-label>
-    </button> -->
   </ion-segment>
 </ion-header>
 
@@ -69,6 +54,6 @@
     </ion-infinite-scroll>
   </ion-grid>
 </ion-content>
-<ion-footer>
+<!-- <ion-footer>
   <app-footer-nav></app-footer-nav>
-</ion-footer>
+</ion-footer> -->
