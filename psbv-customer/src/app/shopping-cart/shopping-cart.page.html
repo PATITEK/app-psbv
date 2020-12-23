@@ -1,67 +1,49 @@
-<ion-header class="ion-padding-horizontal">
-  <ion-buttons *ngIf="hasBackButton()">
-    <ion-back-button (click)="goBack()" style="color: #fff; display: inline-block;" text="" icon="chevron-back-outline"></ion-back-button>
+<ion-header>
+  <ion-buttons>
+    <ion-back-button *ngIf="hasBackButton()" text="" icon="chevron-back-outline" (click)="goBack()"></ion-back-button>
+    <ion-label>Shopping cart</ion-label>
   </ion-buttons>
-  <ion-card-title>Shopping cart</ion-card-title>
 </ion-header>
 
 <ion-content [style.height]="getIonContentAttribute(80).height" [style.bottom]="getIonContentAttribute(80).bottom">
   <p class="absolute-center" *ngIf="cartItems.length == 0">Empty cart.</p>
 
-  <ion-card class="cart-body" *ngFor="let item of cartItems; let i = index;">
-    <ion-label>{{ item.name }}</ion-label>
-    <ion-item class="cart-heading-body">
-      <span class="selectedBtn" [style.background]="cartItemsSelected[i].selected ? '#91E29B' : 'white'"
-        (click)="toggleSelected(cartItemsSelected[i])"></span>
-      <ion-item class="group_left">
-        <span class="price">{{ calPrice(item) | number: '1.0-2' }}</span>
-        <span class="separation"></span>
-        <span class="quantity">{{ calAccessoriesQuantity(item) }} accessories</span>
-      </ion-item>
-      <ion-item class="group-right" slot="end">
-        <ion-img src="assets/shopping-cart/deliver-black.svg"></ion-img>
-        <span>1 day</span>
-      </ion-item>
-    </ion-item>
-
-    <ion-item class="accessories">
-      <ion-item-group class="price-group">
-        <span
-          *ngFor="let accessory of item.accessories">{{ accessory.price * accessory.quantity | number: '1.0-2' }}</span>
-      </ion-item-group>
-      <ion-item-group class="quantity-group">
-        <span class="title" *ngIf="item.accessories.length != 0">Change</span>
-        <div *ngFor="let accessory of item.accessories">
-          <span class="modifier-btn" (click)="decreaseAccessoryQuantity(accessory)">-</span>
-          <span class="quantity">{{ accessory.quantity }}</span>
-          <span class="modifier-btn" (click)="increaseAccessoryQuantity(accessory)">+</span>
+  <ion-card class="item" *ngFor="let item of cartItems; let i = index;">
+    <ion-icon name="close-outline" class="remove-btn" (click)="openModalRemove(item)"></ion-icon>
+    <ion-buttons class="item-header">
+      <ion-buttons (click)="toggleSelected(cartItemsSelected[i])">
+        <span class="selected-btn" [style.background]="cartItemsSelected[i].selected ? '#91E29B' : 'white'"></span>
+        <ion-label class="item-name" [style.max-width.px]="scrWidth - 170">{{ item.name }}</ion-label>
+      </ion-buttons>
+      <ion-buttons>
+        <ion-img src="assets/shopping-cart/deliver-black.svg" class="delivery-icon"></ion-img>
+        <span class="delivery-day">1 day</span>
+      </ion-buttons>
+    </ion-buttons>
+    <ion-buttons class="ion-justify-content-around">
+      <ion-img [src]="item.url" class="item-img"></ion-img>
+      <ion-item-group class="ion-text-center">
+        <p class="item-price">{{ item.price * item.amount | number: '1.0-2' }}</p>
+        <div class="modifier">
+          <span class="modifier-btn" (click)="decreaseAmount(item)">-</span>
+          <span class="counter">{{ item.amount }}</span>
+          <span class="modifier-btn" (click)="increaseAmount(item)">+</span>
         </div>
       </ion-item-group>
-      <ion-item-group class="name-group">
-        <p *ngFor="let accessory of item.accessories">{{ accessory.name }}</p>
-      </ion-item-group>
-    </ion-item>
-
-    <div class="modifier">
-      <span class="modifier-btn" (click)="decreaseProductQuantity(item)">-</span>
-      <span class="counter">{{ item.quantity }}</span>
-      <span class="modifier-btn" (click)="increaseProductQuantity(item)">+</span>
-    </div>
-
-    <ion-icon name="close-outline" class="remove-btn" (click)="onRemove(item)"></ion-icon>
+    </ion-buttons>
   </ion-card>
 </ion-content>
 
 <ion-footer *ngIf="cartItems.length != 0">
-  <ion-item class="footer-inner">
-    <span class="selectedBtn" [style.background]="checkAllSelected() ? '#91E29B' : 'white'"
-      (click)="toggleSelectAll()"></span>
-    <span style="font-size: 14px; font-weight: 700; color: #727272;">All</span>
-    <ion-item-group slot="end">
-      <span class="total-text">Total:</span>
-      <span class="quantity-products">{{ calSelectedProducts() }} Products</span>
-      <span class="quantity-accessories">{{ calSelectedAccessories() }} Accessories</span>
+  <ion-buttons class="footer-inner">
+    <ion-buttons class="selected-all-group" (click)="toggleSelectAll()">
+      <span class="selected-btn" [style.background]="checkAllSelected() ? '#91E29B' : 'white'"></span>
+      <span class="selected-all-label">All</span>
+    </ion-buttons>
+    <ion-item-group class="total-price-group">
+      <span class="total-price-label">Total:</span>
+      <span class="total-price">{{ calSelectedProducts() }} products</span>
     </ion-item-group>
-    <ion-button slot="end" (click)="goToSelectedProducts()" [disabled]="checkAllNotSelected()">Send a quote</ion-button>
-  </ion-item>
+    <ion-button class="btn-send" [disabled]="checkAllNotSelected()">Send a quote</ion-button>
+  </ion-buttons>
 </ion-footer>

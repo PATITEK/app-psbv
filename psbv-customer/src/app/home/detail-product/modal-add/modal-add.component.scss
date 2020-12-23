@@ -6,10 +6,11 @@ ion-content {
 }
 
 .modifier {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   border-radius: 999px;
-  background: white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  background: #F9F9F9;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.4);
 
   .modifier-btn {
     display: inline-flex;
@@ -17,15 +18,16 @@ ion-content {
     align-items: center;
     border: 1px solid rgba(#2d2d2d, 0.15);
     padding: 9px;
-    width: 30px;
-    height: 30px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     color: #91e29b;
-    font-size: 18px;
+    font-size: 29px;
+    background: #fff;
 
-    @media screen and (max-width: 360px) {
-      width: 25px;
-      height: 25px;
+    &:active {
+      background: #91e29b;
+      color: #fff;
     }
   }
 

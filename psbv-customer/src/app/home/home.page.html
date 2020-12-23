@@ -10,7 +10,7 @@
   <ion-searchbar (ionInput)="onInput($event)" autocorrect="off" [value]="inputValue"></ion-searchbar>
 
   <ion-segment (ionChange)="segmentChanged($event)" value="all"
-    [ngClass]="{'active-segment-btn ': activeTab === 'all'}">
+    [ngClass]="{'active-segment-btn': activeTab === 'all'}">
     <button *ngFor="let filterProduct of filterProducts"
       [ngClass]="{'active-segment-btn': activeTab == filterProduct.id}" [style.width.%]="100 / filterProducts.length" [value]="filterProduct.id" (click)="changeTabs(filterProduct.id)">
       <ion-label>{{ filterProduct.name }}</ion-label>
