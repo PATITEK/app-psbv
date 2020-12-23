@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CartDetailPageRoutingModule } from './cart-detail-routing.module';
+import { SelectedItemsPageRoutingModule } from './selected-items-routing.module';
 
-import { CartDetailPage } from './cart-detail.page';
+import { SelectedItemsPage } from './selected-items.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CartDetailPageRoutingModule
+    SelectedItemsPageRoutingModule
   ],
-  declarations: [CartDetailPage]
+  declarations: [SelectedItemsPage]
 })
-export class CartDetailPageModule {}
+export class SelectedItemsPageModule {}

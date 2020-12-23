@@ -8,7 +8,7 @@
 <ion-content [style.height]="getIonContentAttribute(80).height" [style.bottom]="getIonContentAttribute(80).bottom">
   <p class="absolute-center" *ngIf="cartItems.length == 0">Empty cart.</p>
 
-  <ion-card class="item" *ngFor="let item of cartItems; let i = index;">
+  <ion-card class="cart-item" *ngFor="let item of cartItems; let i = index;">
     <ion-icon name="close-outline" class="remove-btn" (click)="openModalRemove(item)"></ion-icon>
     <ion-buttons class="item-header">
       <ion-buttons (click)="toggleSelected(cartItemsSelected[i])">
@@ -40,10 +40,11 @@
       <span class="selected-btn" [style.background]="checkAllSelected() ? '#91E29B' : 'white'"></span>
       <span class="selected-all-label">All</span>
     </ion-buttons>
-    <ion-item-group class="total-price-group">
-      <span class="total-price-label">Total:</span>
-      <span class="total-price">{{ calSelectedProducts() }} products</span>
+    <ion-item-group class="total-product-group">
+      <span class="total-product-label">Total:</span>
+      <span class="total-product">{{ calSelectedProducts() }} products</span>
+      <span class="total-price"></span>
     </ion-item-group>
-    <ion-button class="btn-send" [disabled]="checkAllNotSelected()">Send a quote</ion-button>
+    <ion-button class="btn-send" [disabled]="checkAllNotSelected()" (click)="goToSelectedItems()">Send a quote</ion-button>
   </ion-buttons>
 </ion-footer>

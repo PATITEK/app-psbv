@@ -59,9 +59,9 @@ export class ShoppingCartPage implements OnInit {
     return backUrl.search('main/home/detail-product') != -1 || backUrl.search('main/product-categories/products/detail-product') != -1;
   }
 
-  calPrice(item) {
-    return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;
-  }
+  // calPrice(item) {
+  //   return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;
+  // }
 
   // listAccessoriesName(item) {
   //   return item.accessories.reduce((acc, cur) => {
@@ -183,7 +183,7 @@ export class ShoppingCartPage implements OnInit {
   //   }, 0);
   // }
 
-  goToSelectedProducts() {
+  goToSelectedItems() {
     let data = {
       selectedItems: []
     }
@@ -193,15 +193,15 @@ export class ShoppingCartPage implements OnInit {
         const product = {
           name: this.cartItems[index].name,
           id: this.cartItems[index].id,
-          quantity: this.cartItems[index].quantity,
+          amount: this.cartItems[index].amount,
           price: this.cartItems[index].price,
-          accessories: this.cartItems[index].accessories.filter(a => a.quantity > 0)
+          // accessories: this.cartItems[index].accessories.filter(a => a.quantity > 0)
         }
 
         data.selectedItems.push(product);
       }
     })
-    this.router.navigate(['/main/shopping-cart/selected-products'], {
+    this.router.navigate(['/main/shopping-cart/selected-items'], {
       queryParams: {
         data: JSON.stringify(data)
       }
