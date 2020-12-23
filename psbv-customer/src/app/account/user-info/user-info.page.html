@@ -15,18 +15,24 @@
 <ion-content (click)="clickOveride()">
   <ion-avatar class="header__icon">
 
-    <ion-img class="icon-premium" src="assets/premium.svg"></ion-img>
+    <ion-img class="icon-premium" src="assets/standard.svg"></ion-img>
 
     <ion-icon name="person" class="header__iperson"></ion-icon>
   </ion-avatar>
 
   <ion-grid>
     <ion-row class="user-name">
-      <ion-label class="user-name__main">Hi buyer</ion-label>
-      <!-- <ion-label class="user-name__sub">{{ checkStandardPermission() ? 'Standard' : 'Premium' }}</ion-label> -->
-      <!-- <ion-label class="upgrade-btn" *ngIf="checkStandardPermission()">
-        <span (click)="gotoUpgrade()">Upgrade <ion-icon name="chevron-forward-outline"></ion-icon></span>
-      </ion-label> -->
+      <ion-label class="user-name__main">Hi! {{message}}</ion-label>
+      <ion-label class="user-role">{{role}}</ion-label>
+
+      <!-- {{ checkStandardPermission() ? 'Standard' : 'Premium' }} -->
+      <!-- *ngIf="checkStandardPermission()" -->
+      <ion-label class="upgrade-btn" *ngIf="checkRole()">
+        <span (click)="gotoUpgrade()">Upgrade
+           <ion-icon name="chevron-forward-outline" class="upgrade-icon">
+           </ion-icon>
+        </span>
+      </ion-label>
     </ion-row>
   </ion-grid>
 

@@ -13,38 +13,28 @@ export class AboutUsPage implements OnInit {
 
   constructor(private router: Router, private accountService: AccountService, private pageNotiService: PageNotiService) { }
   model: any = {
-    "fullname": localStorage.getItem('fullname'),
+    "fullname": localStorage.getItem('email'),
     "question": "Text here ..." 
    };
-   email:'';
-   data: {
-     user: {
-       email:'';
-     }
-   }
+   email: any;
   
   ngOnInit() {
+    this.email = localStorage.getItem('email');
   }
   goBack() {
     this.router.navigateByUrl('account/user-info');
   }
   onSubmit(){
-   this.accountService.getAccounts().subscribe((data)=> {
-      this.email = data['user']['email'];
-    })
     const datapasing: IDataNoti = {
       title: 'SUCCESS !',
       description: 'Your response has been delivered',
       routerLink: '/account/user-info'
     }
     var obj_req = {
-        "email_customer": this.email,
-        "email_admin":"hoaimiqng@gmail.com",
+        "email_customer": localStorage.getItem('email'),
         "content": this.model.question
     }
-
    this.accountService.ContactAdmin(obj_req).subscribe((data)=> {
-      console.log(data);
       this.pageNotiService.setdataStatusNoti(datapasing);
         this.router.navigate(['/statusNoti']);
    })

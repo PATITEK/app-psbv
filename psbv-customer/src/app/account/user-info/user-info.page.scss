@@ -13,11 +13,6 @@ ion-content {
   right: 16px;
 }
 
-ion-img {
-  width: 22px;
-  margin: auto 0;
-  margin-right: 10px;
-}
   .more-content{
     position: absolute;
     padding: 2px;
@@ -79,29 +74,33 @@ ion-img {
   color: #3F3F3F;
   display: flex;
   flex-direction: column;
+  margin: 20px 0;
   &__main{
-      font-size: 23px;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 600;
   }
   &__sub{
       font-size: 14px;
       font-weight: normal;
   }
 }
-
+.user-role {
+  font-size: 14px;
+  margin-top: 4px;
+}
 .upgrade-btn {
   span {
       color: white;
-      font-size: 10px;
+      font-size: 12px;
       background: #3f3f3f;
       border-radius: 14px;
-      padding: 6px 12px;
-      margin-top: 10px;
+      padding: 4px 10px;
+      margin-top: 7px;
       display: inline-flex;
       align-items: center;
       
       ion-icon {
-          margin-left: 3px;
+          font-size: 16px;
       }
   }
 }

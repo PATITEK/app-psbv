@@ -12,21 +12,23 @@ export class UserInfoPage implements OnInit {
   message: any;
   btn: boolean = false;
   notOn: boolean = true;
-  
+  role: any;
   constructor(
     private router: Router,
     public alertController: AlertController,
-    private authService: AuthService
+    private authService: AuthService,
+    private accountService: AccountService
   ) {}
 
   ngOnInit() {
+
+  }
+  checkRole(): boolean {
+    return this.role === 'standard';
   }
   ionViewWillEnter() {
-    // this.accountService.getAccounts().subscribe((data: any)=>{
-    //   this.message = data.user.fullname;
-            
-    // })
-    this.message = localStorage.getItem('fullname');
+    this.message = localStorage.getItem('email');
+    this.role = localStorage.getItem('role');
   }
   goToAbout(): void {
     this.router.navigateByUrl('account/user-info/about-us')
@@ -42,7 +44,6 @@ export class UserInfoPage implements OnInit {
 
   clickOveride() {
     if (this.btn == true && this.notOn == true) {
-      console.log("closed");
       this.btn = false;
     }
     else this.notOn = true;
@@ -62,7 +63,6 @@ export class UserInfoPage implements OnInit {
   goToSupport() {
     this.btn = true
     this.notOn = false;
-    console.log(this.btn);
     this.router.navigateByUrl('account/user-info/support');
   }
 

@@ -21,7 +21,7 @@ export const APICONFIG = {
     GETDETAIL: (id) => `/app/users/${id}`,
     EDIT: (id) => `/app/users/${id}`,
     DELETE: (id) => `/app/users/${id}`,
-    UPDATE_PREMIUM: (id) => `/app/users/${id}/request_upgrade`,
+    UPDATE_PREMIUM: (id) => `/app/users/request_upgrade`,
     CONTACT_ADMIN: `/app/interact_email/submit`
   },
   PRODUCT_GROUP: {
