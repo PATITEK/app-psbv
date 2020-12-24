@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrdersService, PERMISSIONS } from 'src/app/@app-core/http';
+import { LoadingService } from 'src/app/@app-core/loading.service';
 
 @Component({
   selector: 'app-detail-order',
@@ -10,20 +11,25 @@ import { OrdersService, PERMISSIONS } from 'src/app/@app-core/http';
 export class DetailOrderPage implements OnInit {
   data = {
     id: '',
-    code: '',
+    code: ' ',
     status: '',
     order_details: [],
     audits: []
   }
   items = [];
 
+  loadedData = false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private ordersService: OrdersService
+    private ordersService: OrdersService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
+    this.loadingService.present();
+
     this.route.queryParams.subscribe(params => {
       this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
         this.data = data.order;
@@ -44,6 +50,9 @@ export class DetailOrderPage implements OnInit {
           const dateTime2 = ' ';
           this.pushData(dateTime1, 'Time cancel', dateTime2, 'Reason');
         }
+        
+        this.loadedData = true;
+        this.loadingService.dismiss();
       })
     })
   }
@@ -68,10 +77,6 @@ export class DetailOrderPage implements OnInit {
         time: dateTime2.substring(11, 19)
       })
     }
-  }
-
-  goBack(): void {
-    this.router.navigateByUrl('/main/order-status');
   }
 
   getStatusColor() {

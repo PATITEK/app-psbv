@@ -1,59 +1,42 @@
-<ion-header lines="no">
-  <ion-button fill="clear" size="small" class="back-button" (click)="goBack()">
-    <ion-icon name="chevron-back-outline"></ion-icon>
-  </ion-button>
-  <ion-card-title>Detail order</ion-card-title>
+<ion-header>
+  <ion-buttons>
+    <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+    <ion-label>Detail order</ion-label>
+  </ion-buttons>
 </ion-header>
 
 <ion-content>
-  <ion-card class="card-title ion-text-center" *ngIf="items.length != 0">
-    <ion-card-header>
-      <ion-card-title class="title">{{ data.code }}</ion-card-title>
-      <div class="status-box">
-        <span class="circle" [style.background]="getStatusColor()"></span>
-        <span class="status-name"> {{ data.status | titlecase }}</span>
-      </div>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <span class="name" slot="start">ID</span>
-          <div class="content" slot="end">{{ data.id }}</div>
-        </ion-item>
-        <ion-item *ngFor="let item of items">
-          <span class="name" slot="start">{{ item.name }}</span>
-          <div class="content" slot="end">
-            {{ item.date }} {{ item.time }}
-          </div>
-        </ion-item>
-      </ion-list>
-      <ion-button class="btn btn-margin-top" *ngIf="checkConfirmedStatus()">Re-order</ion-button>
-    </ion-card-content>
+  <ion-item-group class="ion-text-center">
+    <ion-label class="order-code">{{ data.code }}</ion-label>
+    <div class="status-box">
+      <span class="circle" [style.background]="getStatusColor()"></span>
+      <span class="status-name"> {{ data.status | titlecase }}</span>
+    </div>
+  </ion-item-group>
+  <ion-item-group class="order-heading-box">
+    <ion-buttons class="order-heading" *ngIf="loadedData">
+      <span class="order-title">ID</span>
+      <span class="order-content">{{ data.id }}</span>
+    </ion-buttons>
+    <ion-buttons class="order-heading" *ngFor="let item of items">
+      <span class="order-title">{{ item.name }}</span>
+      <span class="order-content">{{ item.date }} {{ item.time }}</span>
+    </ion-buttons>
+    <ion-button class="btn-re-order" *ngIf="loadedData">Re-order</ion-button>
+  </ion-item-group>
+
+  <ion-card class="cart-item" *ngFor="let item of data.order_details; let i = index;">
+    <ion-buttons class="item-header">
+      <ion-label class="item-name">{{ item.name }}</ion-label>
+      <span class="item-amount">{{ item.amount }}</span>
+    </ion-buttons>
+    <ion-buttons>
+      <ion-img src="assets/shopping-cart/deliver-black.svg" class="delivery-icon"></ion-img>
+      <span class="delivery-day">1 day</span>
+      <p class="item-price">{{ item.price * item.amount | number: '1.0-2' }}</p>
+    </ion-buttons>
   </ion-card>
 
-  <p class="ion-text-center" style="font-size: 12px; color: #727272;" *ngIf="checkCancelStatus()">You can't view detail
-    component product <br> with cancel order</p>
-
-  <ion-grid class="products">
-    <ion-row *ngFor="let product of data.order_details" class="product">
-      <ion-col size="6">
-        <ion-img [src]="product.src"></ion-img>
-      </ion-col>
-      <ion-col size="6">
-        <ion-row class="heading-box">
-          <span class="amount">{{ product.amount }}</span>
-          <span class="product-name">{{ product.name }}</span>
-        </ion-row>
-        <ion-row class="ion-nowrap" style="overflow-x: scroll;">
-          <ion-col size="7" *ngFor="let accessory of product.accessories">
-            <ion-img [src]="accessory.src"></ion-img>
-            <span class="accessory-name">{{ accessory.name }}</span>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-
-      <ion-button class="btn btn-absolute" routerLink="/main/order-status/detail-order/detail-component"
-        *ngIf="checkReceivedStatus()">View detail component</ion-button>
-    </ion-row>
-  </ion-grid>
+  <!-- <ion-button class="btn btn-absolute" routerLink="/main/order-status/detail-order/detail-component"
+    *ngIf="checkReceivedStatus()">View detail component</ion-button> -->
 </ion-content>
