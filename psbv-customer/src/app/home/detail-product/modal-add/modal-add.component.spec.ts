@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { FooterNavComponent } from './footer-nav.component';
+import { ModalAddComponent } from './modal-add.component';
 
-describe('FooterNavComponent', () => {
-  let component: FooterNavComponent;
-  let fixture: ComponentFixture<FooterNavComponent>;
+describe('ModalAddComponent', () => {
+  let component: ModalAddComponent;
+  let fixture: ComponentFixture<ModalAddComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FooterNavComponent ],
+      declarations: [ ModalAddComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FooterNavComponent);
+    fixture = TestBed.createComponent(ModalAddComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -26,6 +26,8 @@ export class ProductsPage implements OnInit {
   title = '';
   id = '';
 
+  loadedData = false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -79,6 +81,8 @@ export class ProductsPage implements OnInit {
               this.data.push(item);
             }
 
+            this.loadedData = true;
+
             this.infinityScroll.complete();
             this.loading.dismiss();
             this.pageRequest.page++;
@@ -120,7 +124,7 @@ export class ProductsPage implements OnInit {
       categoryId: this.id,
       categoryTitle: this.title
     }
-    this.router.navigate(['main/product-categories/products/product-info'], {
+    this.router.navigate(['main/product-categories/products/detail-product'], {
       queryParams: {
         data: JSON.stringify(data)
       }

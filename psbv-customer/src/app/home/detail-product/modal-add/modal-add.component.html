@@ -1,0 +1,17 @@
+<ion-content class="ion-text-center">
+  <ion-icon name="close-outline" (click)="dismissModal()"></ion-icon>
+
+  <span class="line"></span>
+
+  <p>Amount</p>
+
+  <div class="ion-text-center">
+    <div class="modifier">
+      <span class="modifier-btn" (click)="decreaseAmount()">-</span>
+      <span class="counter">{{ amount }}</span>
+      <span class="modifier-btn" (click)="increaseAmount()">+</span>
+    </div>
+  </div>
+
+  <ion-button expand="block" (click)="choose()">OK</ion-button>
+</ion-content>

@@ -5,7 +5,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -14,18 +14,32 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 :root {
-    --main-color:#ce091c;
-    --title-color:#1c1939;
-    --color-input: #F7F7F7;
+  --main-color: #ce091c;
+  --title-color: #1c1939;
+  --color-input: #f7f7f7;
 }
- .btn-main {
-   width: 100%;
-   border-radius: 4px;
-   --background: var(--main-color);
-   color: white;
-   margin-bottom: 44px;
-   height: 40px;
-   margin-inline-start: 0;
-   margin-inline-end: 0;
-   --background-activated: var(--main-color); 
- }
+.btn-main {
+  width: 100%;
+  border-radius: 4px;
+  --background: var(--main-color);
+  color: white;
+  margin-bottom: 44px;
+  height: 40px;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  --background-activated: var(--main-color);
+}
+
+.modal-add-detail-product {
+  .modal-wrapper {
+    height: 170px;
+    position: absolute;
+    top: calc(100% - 170px);
+    background: transparent;
+    --backdrop-opacity: 0;
+  }
+
+  ion-backdrop {
+    background: transparent;
+  }
+}

@@ -10,27 +10,17 @@
   <ion-searchbar (ionInput)="onInput($event)" autocorrect="off" [value]="inputValue"></ion-searchbar>
 
   <ion-segment (ionChange)="segmentChanged($event)" value="all"
-    [ngClass]="{'active-segment-btn ': activeTab === 'all'}">
-    <button (click)="changeTabs('all')" [ngClass]="{'active-segment-btn': activeTab === 'all'}" value="all">
-      <ion-label>All</ion-label>
-    </button>
-    <button (click)="changeTabs('seenProducts')"
-      [ngClass]="{'active-segment-btn': activeTab === 'seenProducts'}" value="seenProducts">
-      <ion-label>Seen products</ion-label>
-    </button>
-    <button (click)="changeTabs('hotTrend')" [ngClass]="{'active-segment-btn': activeTab === 'hotTrend'}"
-      value="hotTrend">
-      <ion-label>Hot trend</ion-label>
-    </button>
-    <button (click)="changeTabs('onSaleProducts')"
-      [ngClass]="{'active-segment-btn': activeTab === 'onSaleProducts'}" value="onSaleProducts">
-      <ion-label>On sale products</ion-label>
+    [ngClass]="{'active-segment-btn': activeTab === 'all'}">
+    <button *ngFor="let filterProduct of filterProducts"
+      [ngClass]="{'active-segment-btn': activeTab == filterProduct.id}" [style.width.%]="100 / filterProducts.length" [value]="filterProduct.id" (click)="changeTabs(filterProduct.id)">
+      <ion-label>{{ filterProduct.name }}</ion-label>
     </button>
   </ion-segment>
 </ion-header>
 
 <ion-content>
-  <ion-spinner *ngIf="!loadedData"></ion-spinner>
+  <ion-spinner class="absolute-center" *ngIf="!loadedData"></ion-spinner>
+  <p class="absolute-center" *ngIf="data.length == 0 && loadedData">Not found products.</p>
 
   <ion-grid>
     <ion-row *ngFor="let item of data; let i = index">
@@ -59,11 +49,8 @@
         </ion-item-group>
       </ion-col>
     </ion-row>
-    <ion-infinite-scroll *ngIf="!isMaxData" #infinityScroll (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll [style.height.px]="!isMaxData ? 84 : 0" style="overflow: hidden;" #infinityScroll (ionInfinite)="loadData($event)">
       <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ion-grid>
 </ion-content>
-<ion-footer>
-  <app-footer-nav></app-footer-nav>
-</ion-footer>

@@ -25,11 +25,12 @@ export class ProductCategoriesPage implements OnInit {
   inputValue: string = '';
   isMaxData = false;
   checkSystem = false;
+  loadedData = false;
 
   constructor(
     private router: Router,
     private productGroupService: ProductGroupsService,
-    private loading: LoadingService,
+    // private loading: LoadingService,
     private platform: Platform
   ) {
     this.reset();
@@ -37,13 +38,8 @@ export class ProductCategoriesPage implements OnInit {
   }
 
   ngOnInit() {
-    this.loading.present();
+    // this.loading.present();
     this.loadData();
-    this.platform.ready().then(() => {
-      if (this.platform.is('android')) {
-        this.checkSystem = true;
-      }
-    });
   }
 
   ionViewWillEnter() {
@@ -71,6 +67,7 @@ export class ProductCategoriesPage implements OnInit {
   }
 
   onInput(event: any) {
+    this.loadedData = false;
     this.inputValue = event.target.value;
     this.reset();
     this.scrollContent();
@@ -78,60 +75,70 @@ export class ProductCategoriesPage implements OnInit {
     this.loadData();
   }
 
+  loadProductGroup() {
+    this.productGroupService.getProductGroups(this.pageRequest).subscribe(data => {
+      for (let item of data.product_groups) {
+        // image not found
+        if (item.thumb_image === null) {
+          const d = {
+            url: "https://i.imgur.com/dbpoag5.png"
+          }
+          item.thumb_image = d;
+        }
+        this.data.push(item);
+      }
+
+      this.loadedData = true;
+
+      this.infinityScroll.complete();
+      // this.loading.dismiss();
+      this.pageRequest.page++;
+
+      // check max data
+      if (this.data.length >= data.meta.pagination.total_objects) {
+        // this.infinityScroll.disabled = true;
+        this.isMaxData = true;
+      }
+    })
+  }
+
+  searchProductGroup() {
+    const counterTemp = this.counter;
+    this.productGroupService.searchProductGroup(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
+      if (counterTemp == this.counter) {
+        for (let item of data.product_groups) {
+          // image not found
+          if (item.thumb_image === null) {
+            const d = {
+              url: "https://i.imgur.com/dbpoag5.png"
+            }
+            item.thumb_image = d;
+          }
+          this.data.push(item);
+        }
+
+        this.loadedData = true;
+
+        this.infinityScroll.complete();
+        // this.loading.dismiss();
+        this.pageRequest.page++;
+
+        // check max data
+        if (this.data.length >= data.meta.pagination.total_objects) {
+          // this.infinityScroll.disabled = true;
+          this.isMaxData = true;
+        }
+      }
+    })
+  }
+
   loadData() {
     if (!this.isMaxData) {
-      setTimeout(() => {
-        if (this.inputValue !== '') {
-          const counterTemp = this.counter;
-          this.productGroupService.searchProductGroup(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
-            if (counterTemp == this.counter) {
-              for (let item of data.product_groups) {
-                // image not found
-                if (item.thumb_image === null) {
-                  const d = {
-                    url: "https://i.imgur.com/dbpoag5.png"
-                  }
-                  item.thumb_image = d;
-                }
-                this.data.push(item);
-              }
-
-              this.infinityScroll.complete();
-              this.loading.dismiss();
-              this.pageRequest.page++;
-
-              // check max data
-              if (this.data.length >= data.meta.pagination.total_objects) {
-                // this.infinityScroll.disabled = true;
-                this.isMaxData = true;
-              }
-            }
-          })
-        } else {
-          this.productGroupService.getProductGroups(this.pageRequest).subscribe(data => {
-            for (let item of data.product_groups) {
-              // image not found
-              if (item.thumb_image === null) {
-                const d = {
-                  url: "https://i.imgur.com/dbpoag5.png"
-                }
-                item.thumb_image = d;
-              }
-              this.data.push(item);
-            }
-
-            this.infinityScroll.complete();
-            this.loading.dismiss();
-            this.pageRequest.page++;
-
-            // check max data
-            if (this.data.length >= data.meta.pagination.total_objects) {
-              // this.infinityScroll.disabled = true;
-              this.isMaxData = true;
-            }
-          })
-        }
-      }, 50);
+      if (this.inputValue !== '') {
+        this.searchProductGroup();
+      } else {
+        this.loadProductGroup();
+      }
     } else {
       this.infinityScroll.complete();
     }
