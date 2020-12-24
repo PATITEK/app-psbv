@@ -82,6 +82,7 @@ export class DetailProductPage implements OnInit {
             name: this.product.name,
             amount: 0,
             price: this.product.price,
+            url: this.product.thumb_image.url
           }
         }
       });

@@ -25,7 +25,7 @@ export class ProductCategoriesPage implements OnInit {
   inputValue: string = '';
   isMaxData = false;
   checkSystem = false;
-  loadedData = false;
+  isLoading = false;
 
   constructor(
     private router: Router,
@@ -67,7 +67,7 @@ export class ProductCategoriesPage implements OnInit {
   }
 
   onInput(event: any) {
-    this.loadedData = false;
+    this.infinityScroll.disabled = false;
     this.inputValue = event.target.value;
     this.reset();
     this.scrollContent();
@@ -88,7 +88,8 @@ export class ProductCategoriesPage implements OnInit {
         this.data.push(item);
       }
 
-      this.loadedData = true;
+      this.isLoading = false;
+      this.counter++;
 
       this.infinityScroll.complete();
       // this.loading.dismiss();
@@ -96,7 +97,7 @@ export class ProductCategoriesPage implements OnInit {
 
       // check max data
       if (this.data.length >= data.meta.pagination.total_objects) {
-        // this.infinityScroll.disabled = true;
+        this.infinityScroll.disabled = true;
         this.isMaxData = true;
       }
     })
@@ -117,7 +118,8 @@ export class ProductCategoriesPage implements OnInit {
           this.data.push(item);
         }
 
-        this.loadedData = true;
+        this.isLoading = false;
+        this.counter++;
 
         this.infinityScroll.complete();
         // this.loading.dismiss();
@@ -125,7 +127,7 @@ export class ProductCategoriesPage implements OnInit {
 
         // check max data
         if (this.data.length >= data.meta.pagination.total_objects) {
-          // this.infinityScroll.disabled = true;
+          this.infinityScroll.disabled = true;
           this.isMaxData = true;
         }
       }
@@ -163,6 +165,7 @@ export class ProductCategoriesPage implements OnInit {
       total_objects: 20
     }
     this.data = [];
+    this.isLoading = true;
     this.isMaxData = false;
   }
 

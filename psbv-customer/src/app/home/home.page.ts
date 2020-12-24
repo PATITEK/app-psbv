@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
-import { allowedNodeEnvironmentFlags } from 'process';
 import { IPageRequest, PERMISSIONS, ProductsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 import { StorageService } from '../@app-core/storage.service';
@@ -26,7 +25,7 @@ export class HomePage implements OnInit {
   isMaxData = false;
   public activeTab = "all";
   checkTab = true;
-  loadedData = false;
+  isLoading = false;
 
   filterProducts = [
     {
@@ -119,7 +118,7 @@ export class HomePage implements OnInit {
   }
 
   onInput(event: any) {
-    this.loadedData = false;
+    this.infinityScroll.disabled = false;
     this.inputValue = event.target.value;
     this.reset();
     this.scrollContent();
@@ -142,7 +141,7 @@ export class HomePage implements OnInit {
           this.data.push(item);
         }
 
-        this.loadedData = true;
+        this.isLoading = false;
 
         this.infinityScroll.complete();
         // this.loading.dismiss();
@@ -150,9 +149,11 @@ export class HomePage implements OnInit {
 
         // check max data
         if (this.data.length >= data.meta.pagination.total_objects) {
-          // this.infinityScroll.disabled = true;
+          this.infinityScroll.disabled = true;
           this.isMaxData = true;
         }
+      } else {
+        this.infinityScroll.complete();
       }
     })
   }
@@ -170,7 +171,7 @@ export class HomePage implements OnInit {
         this.data.push(item);
       }
 
-      this.loadedData = true;
+      this.isLoading = false;
 
       this.infinityScroll.complete();
       // this.loading.dismiss();
@@ -178,7 +179,7 @@ export class HomePage implements OnInit {
 
       // check max data
       if (this.data.length >= data.meta.pagination.total_objects) {
-        // this.infinityScroll.disabled = true;
+        this.infinityScroll.disabled = true;
         this.isMaxData = true;
       }
     })
@@ -197,7 +198,7 @@ export class HomePage implements OnInit {
         this.data.push(item);
       }
 
-      this.loadedData = true;
+      this.isLoading = false;
 
       this.infinityScroll.complete();
       // this.loading.dismiss();
@@ -205,7 +206,7 @@ export class HomePage implements OnInit {
 
       // check max data
       if (this.data.length >= data.meta.pagination.total_objects) {
-        // this.infinityScroll.disabled = true;
+        this.infinityScroll.disabled = true;
         this.isMaxData = true;
       }
     })
@@ -238,6 +239,7 @@ export class HomePage implements OnInit {
       total_objects: 20
     }
     this.data = [];
+    this.isLoading = true;
     this.isMaxData = false;
   }
 

@@ -12,10 +12,11 @@
 </ion-header>
 
 <ion-content>
-  <ion-spinner class="absolute-center" *ngIf="!loadedData"></ion-spinner>
-  <p class="absolute-center" *ngIf="data.length == 0 && loadedData">Not found .</p>
+  <ion-spinner class="absolute-center" *ngIf="isLoading"></ion-spinner>
+  <p class="absolute-center" *ngIf="data.length == 0 && !isLoading">Not found categories.</p>
 
   <ion-grid>
+    <ion-backdrop *ngIf="data.length == 0 || isLoading"></ion-backdrop>
     <ion-row *ngFor="let item of data; let i = index">
       <ion-col size="4" (click)="goToDetail(data[i])" *ngIf="i % 3 == 0">
         <ion-img [src]="data[i].thumb_image.url" [style.height.px]="(scrWidth - 40) / 3"></ion-img>
@@ -31,7 +32,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-infinite-scroll [style.height.px]="!isMaxData ? 84 : 0" style="overflow: hidden;" #infinityScroll (ionInfinite)="loadData()">
+    <ion-infinite-scroll [style.opacity]="data.length == 0 || isLoading ? 0 : 1" #infinityScroll (ionInfinite)="loadData()">
       <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ion-grid>
