@@ -17,16 +17,6 @@ export class HomePage implements OnInit {
   scrHeight: any;
   scrWidth: any;
 
-  pageRequest: IPageRequest;
-  data = [];
-  permission: string;
-  counter = 0;
-  inputValue: string = '';
-  isMaxData = false;
-  public activeTab = "all";
-  checkTab = true;
-  isLoading = false;
-
   filterProducts = [
     {
       id: 'all',
@@ -41,6 +31,16 @@ export class HomePage implements OnInit {
       name: 'Hot Trending'
     }
   ]
+
+  pageRequest: IPageRequest;
+  data = [];
+  permission: string;
+  counter = 0;
+  inputValue: string = '';
+  isMaxData = false;
+  public activeTab = this.filterProducts[0].id;
+  checkTab = true;
+  isLoading = false;
 
   constructor(
     private router: Router,
@@ -82,12 +82,6 @@ export class HomePage implements OnInit {
 
   changeTabs(name) {
     this.activeTab = name;
-    if (this.activeTab === 'orderStatus') {
-      this.checkTab = true;
-    }
-    else if (this.activeTab === 'orderHistory') {
-      this.checkTab = false;
-    }
   }
 
   async segmentChanged(event) {
@@ -187,15 +181,20 @@ export class HomePage implements OnInit {
 
   loadTrending() {
     this.productService.getProductsTrending(this.pageRequest).subscribe(data => {
-      for (let item of data.products) {
+      for (let item of data.order_details) {
         // image not found
-        if (item.thumb_image === null) {
+        if (item.product.thumb_image === null) {
           const d = {
             url: "https://i.imgur.com/dbpoag5.png"
           }
-          item.thumb_image = d;
+          item.product.thumb_image = d;
         }
-        this.data.push(item);
+        this.data.push({
+          id: item.product.id,
+          name: item.product.name,
+          thumb_image: item.product.thumb_image,
+          price: item.product.price
+        });
       }
 
       this.isLoading = false;
@@ -214,14 +213,14 @@ export class HomePage implements OnInit {
 
   loadData() {
     if (!this.isMaxData) {
-      if (this.activeTab == this.filterProducts[2].id) {
-        this.loadTrending();
+      // if (this.activeTab == this.filterProducts[2].id) {
+      //   this.loadTrending();
+      // } else {
+      // }
+      if (this.inputValue !== '') {
+        this.searchProducts();
       } else {
-        if (this.inputValue !== '') {
-          this.searchProducts();
-        } else {
-          this.loadProducts();
-        }
+        this.loadProducts();
       }
     } else {
       this.infinityScroll.complete();

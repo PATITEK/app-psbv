@@ -21,35 +21,32 @@
 <ion-content [ngClass]="{'active-bg-content': activeTab === 'orderHistory'}">
     <p class="absolute-center" *ngIf="checkTab && data.length == 0 && loadedData">Empty orders.</p>
 
-    <ion-list style="background-color: #EFEFEF" *ngIf="checkTab">
-        <ion-card class="section__sub" *ngFor="let item of data">
-            <ion-item style="--padding-start: 0; --inner-border-width: 0;">
-                <ion-label class="item__header">{{ item.code }}</ion-label>
-            </ion-item>
-            <ion-item class="detail__wrapper" lines="none">
-                <ion-item class="item__price-tag">
-                    <span style="min-width: 64px;">{{ item.status | titlecase }}</span>
-                    <span style="width: 1px; height: 27px; background: #fff; margin: 0 10px;"></span>
-                    <span>{{ calProductQuantity(item) }} Products</span>
-                </ion-item>
-                <ion-item slot="end" style="margin: -23px; --background: #f9f9fb; --padding-start: 0;">
-                    <p class="item__order-status" [style.background]="getStatusColor(item)"></p>
-                    <ion-img class="item__deliver-icon" src="assets/img/shopping-cart/delive.svg"></ion-img>
-                    <ion-label class="item__day-to-delive">1 day</ion-label>
-                </ion-item>
-            </ion-item>
-            <p class="item__detail">{{ listProductsName(item) }}
-            </p>
-            <ion-button lines="none" class="btn btn-detail" size="small" (click)="gotoDetailOrder(item)">Detail
-            </ion-button>
-            <ion-button lines="none" class="btn btn-status" size="small" (click)="gotoOrderStatus(item)">Status
-            </ion-button>
-
+    <ion-item-group *ngIf="checkTab">
+        <ion-card class="order-item" *ngFor="let item of data">
+            <ion-label class="item-code">{{ item.code }}</ion-label>
+            <ion-buttons class="item-header">
+                <ion-buttons class="item-header-left">
+                    <span>{{ item.status | titlecase }}</span>
+                    <span class="separation"></span>
+                    <span class="ion-text-center">{{ item.order_details.length }} items</span>
+                </ion-buttons>
+                <ion-buttons class="item-header-right">
+                    <span class="circle" [style.background]="getStatusColor(item)"></span>
+                    <ion-img src="assets/shopping-cart/deliver-black.svg" class="delivery-icon"></ion-img>
+                    <span class="delivery-day">1 day</span>
+                </ion-buttons>
+            </ion-buttons>
+            <p class="items-name">{{ listItemsName(item) }}</p>
+            <ion-buttons class="ion-justify-content-end">
+                <ion-button class="btn" (click)="gotoOrderStatus(item)">Status</ion-button>
+                <ion-button class="btn" (click)="gotoDetailOrder(item)">Detail</ion-button>
+            </ion-buttons>
         </ion-card>
         <ion-infinite-scroll (ionInfinite)="loadData($event)">
             <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
         </ion-infinite-scroll>
-    </ion-list>
+    </ion-item-group>
+
     <ion-list style="background-color: #EFEFEF" *ngIf="!checkTab">
         <ion-card class="section__sub">
             <ion-grid>

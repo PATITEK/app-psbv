@@ -46,7 +46,7 @@ export class OrderStatusPage implements OnInit {
         for (let item of orders.orders) {
           this.data.push(item);
         }
-        
+
         this.loadingService.dismiss();
         this.infinityScroll.complete();
         this.pageRequest.page++;
@@ -66,6 +66,7 @@ export class OrderStatusPage implements OnInit {
       }
     }
   }
+
   changeTabs(name) {
     this.activeTab = name;
     if (this.activeTab === 'orderStatus') {
@@ -86,6 +87,7 @@ export class OrderStatusPage implements OnInit {
       }
     })
   }
+
   gotoOrderStatus(item) {
     const data = {
       orderId: item.id
@@ -101,16 +103,20 @@ export class OrderStatusPage implements OnInit {
     this.activeTab = event.target.value;
   }
 
-  calProductQuantity(item) {
-    return item.order_details.filter(a => a.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME).length;
-  }
+  // calProductQuantity(item) {
+  //   return item.order_details.filter(a => a.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME).length;
+  // }
 
-  listProductsName(item) {
-    return item.order_details.reduce((acc, cur) => {
-      if (cur.yieldable_type == 'Product') {
-        acc += ', ' + cur.name;
-      }
-      return acc;
-    }, '').substring(2);
+  // listProductsName(item) {
+  //   return item.order_details.reduce((acc, cur) => {
+  //     if (cur.yieldable_type == 'Product') {
+  //       acc += ', ' + cur.name;
+  //     }
+  //     return acc;
+  //   }, '').substring(2);
+  // }
+
+  listItemsName(item) {
+    return item.order_details.reduce((acc, cur) => acc + ', ' + cur.name, '').substring(2);
   }
 }

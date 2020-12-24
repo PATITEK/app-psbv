@@ -136,6 +136,7 @@ ion-content {
   height: 32px;
   text-transform: none;
   --border-radius: 10px;
+  min-width: 160px;
 }
 
 .delivery-icon {
@@ -146,4 +147,23 @@ ion-content {
 .delivery-day {
   font-size: 14px;
   color: #333333;
+}
+
+.btn-detail-component {
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  background: rgb(184, 9, 9);
+  position: relative;
+
+  .inner {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    height: 3px;
+    width: 16px;
+    background: #C4C4C4;
+    border-radius: 20px;
+    
+  }
 }

@@ -102,4 +102,8 @@ export class DetailOrderPage implements OnInit {
   checkCancelStatus(): boolean {
     return this.data.status == this.ordersService.STATUSES[3].NAME;
   }
+
+  goToDetailComponent() {
+    this.router.navigateByUrl('main/order-status/detail-order/detail-component');
+  }
 }
