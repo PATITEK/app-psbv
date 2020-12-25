@@ -9,10 +9,12 @@ import { AccountService, AuthService } from 'src/app/@app-core/http';
   styleUrls: ['./user-info.page.scss'],
 })
 export class UserInfoPage implements OnInit {
-  message: any;
+  email: any;
   btn: boolean = false;
   notOn: boolean = true;
   role: any;
+  username: any;
+
   constructor(
     private router: Router,
     public alertController: AlertController,
@@ -27,8 +29,9 @@ export class UserInfoPage implements OnInit {
     return this.role === 'standard';
   }
   ionViewWillEnter() {
-    this.message = localStorage.getItem('email');
+    this.email = localStorage.getItem('email');
     this.role = localStorage.getItem('role');
+    this.username = localStorage.getItem('fullname');
   }
   goToAbout(): void {
     this.router.navigateByUrl('account/user-info/about-us')
