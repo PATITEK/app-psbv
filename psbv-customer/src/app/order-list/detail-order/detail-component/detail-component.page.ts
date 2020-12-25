@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail-component',
@@ -15,13 +14,7 @@ export class DetailComponentPage implements OnInit {
     'component note 4'
   ]
 
-  constructor(
-    private router: Router
-  ) { }
+  constructor() { }
 
   ngOnInit() { }
-
-  goBack(): void {
-    this.router.navigateByUrl('/main/order-status/detail-order');
-  }
 }

@@ -6,7 +6,6 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: './shipping.page.html',
   styleUrls: ['./shipping.page.scss'],
 })
-
 export class ShippingPage implements OnInit {
   text: string;
   statuses = [
