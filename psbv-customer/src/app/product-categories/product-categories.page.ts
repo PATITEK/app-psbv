@@ -62,7 +62,7 @@ export class ProductCategoriesPage implements OnInit {
     this.router.navigateByUrl("/account/user-info");
   }
 
-  gotoNoti() {
+  goToNoti() {
     this.router.navigateByUrl('notification');
   }
 
