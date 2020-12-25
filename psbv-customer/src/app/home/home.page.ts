@@ -56,6 +56,8 @@ export class HomePage implements OnInit {
   isMaxDataTrending = false;
   isLoadingTrending = true;
 
+  dataSeenProducts = JSON.parse(localStorage.getItem('seenProducts')) || [];
+
   constructor(
     private router: Router,
     private productService: ProductsService,
@@ -105,6 +107,10 @@ export class HomePage implements OnInit {
   }
 
   goToDetail(item) {
+    if (this.activeTab != this.filterProducts[1].id) {
+      this.setCartLocalStorage(item);
+    }
+
     const data = {
       id: item.id
     }
@@ -271,5 +277,24 @@ export class HomePage implements OnInit {
 
   scrollToTopSmoothly() {
     this.ionContent.scrollToTop(500);
+  }
+
+  setCartLocalStorage(item) {
+    const product = {
+      id: item.id,
+      name: item.name,
+      thumb_image: item.thumb_image,
+      price: item.price
+    }
+
+    for (let i = 0, n = this.dataSeenProducts.length; i < n; i++) {
+      if (item.id == this.dataSeenProducts[i].id) {
+        this.dataSeenProducts.splice(i, 1);
+        break;
+      }
+    }
+    this.dataSeenProducts.unshift(product);
+
+    localStorage.setItem('seenProducts', JSON.stringify(this.dataSeenProducts));
   }
 }
