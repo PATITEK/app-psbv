@@ -1,29 +1,18 @@
-ion-content {
-  --background: #efefef;
-}
-
-ion-content {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  overflow: hidden;
-  z-index: 11;
-  position: absolute;
-  height: calc(100% - 90px);
-  bottom: 0;
-}
-
 ion-header {
   background: #232323;
-  padding-bottom: 60px;
+  padding-bottom: 30px;
 
   ion-buttons {
     position: relative;
-    margin-top: 20px;
+    height: 100px;
 
     ion-back-button {
       color: #fff;
       position: absolute;
-      left: 0;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: inline-block;
     }
 
     ion-label {
@@ -31,38 +20,45 @@ ion-header {
       color: #fff;
       font-weight: 700;
       margin: 0 auto;
-      padding-left: 35px;
-      padding-right: 35px;
       text-transform: uppercase;
+      padding-left: 56px;
+      padding-right: 56px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      text-align: center;
-
-      @media screen and (max-width: 360px) {
-        font-size: 17px;
-      }
     }
-  }
 
-  ion-item-group {
-    position: absolute;
-    top: 11px;
-    right: 12px;
+    .icon-box {
+      position: absolute;
+      height: auto;
+      top: 10px;
+      right: 15px;
 
-    ion-icon {
-      color: white;
-      font-size: 21px;
-      margin: 0 7px;
+      img {
+        margin-left: 19px;
+      }
     }
   }
 }
 
+ion-content {
+  --background: #efefef;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow: hidden;
+  z-index: 11;
+  position: absolute;
+  height: calc(100% - 90px);
+  bottom: 0;
+  padding: 0;
+}
+
 ion-grid {
   padding: 4px 8px;
+
   ion-row {
     margin: 0 -5px;
+
     ion-col {
       background-color: #e5e5e5;
       max-width: calc(calc(6 / var(--ion-grid-columns, 12)) * 100% - 8px) !important;

@@ -1,13 +1,12 @@
-<ion-header class="ion-padding">
+<ion-header>
   <ion-buttons>
     <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
     <ion-label>{{ title }}</ion-label>
+    <ion-buttons class="icon-box">
+      <img src="assets/noti.svg" (click)="goToNoti()"/>
+      <img src="assets/user.svg" (click)="goToUserInfo()"/>
+    </ion-buttons>
   </ion-buttons>
-
-  <ion-item-group>
-    <ion-icon name="notifications-outline" class="header__icon header__icon-noti" (click)="goToNoti()"></ion-icon>
-    <ion-icon name="person-outline" class="header__icon " (click)="goToUserInfo()"></ion-icon>
-  </ion-item-group>
 </ion-header>
 
 <ion-content>
@@ -16,7 +15,8 @@
   <ion-grid>
     <ion-row *ngFor="let item of data; let i = index">
       <ion-col size="6" (click)="goToDetail(data[i])" *ngIf="i % 2 == 0">
-        <ion-img [src]="data[i].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2"></ion-img>
+        <ion-img [src]="data[i].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2">
+        </ion-img>
         <ion-item-group>
           <ion-label class="product__name">
             {{ data[i].name }}
@@ -27,7 +27,8 @@
         </ion-item-group>
       </ion-col>
       <ion-col size="6" (click)="goToDetail(data[i + 1])" *ngIf="i % 2 == 0 && i !== data.length - 1">
-        <ion-img [src]="data[i + 1].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2"></ion-img>
+        <ion-img [src]="data[i + 1].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2">
+        </ion-img>
         <ion-item-group>
           <ion-label class="product__name">
             {{ data[i + 1].name }}

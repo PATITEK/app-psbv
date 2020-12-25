@@ -54,11 +54,11 @@ export class ProductCategoriesPage implements OnInit {
     this.scrWidth = window.innerWidth;
   }
 
-  onGoUserInfo() {
+  goToUserInfo() {
     this.router.navigateByUrl("/account/user-info");
   }
 
-  gotoNoti() {
+  goToNoti() {
     this.router.navigateByUrl('notification');
   }
 

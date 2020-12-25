@@ -6,8 +6,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-img [src]="product.thumb_image.url" class="main-img"></ion-img>
+  <ion-img [src]="product.thumb_image.url" class="main-img" *ngIf="loadedProduct"></ion-img>
   <ion-card class="product-content">
+    <ion-backdrop *ngIf="!loadedProduct"></ion-backdrop>
     <div *ngIf="curAddedProducts > 0" class="cart-wrapper" (click)="gotToCart()">
       <ion-img src="assets/detail-product/cart.svg" class="cart-btn"></ion-img>
       <span>+{{ curAddedProducts }}</span>

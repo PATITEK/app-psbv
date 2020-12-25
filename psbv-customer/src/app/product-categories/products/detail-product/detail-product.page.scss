@@ -1,6 +1,6 @@
 ion-header {
   background: #232323;
-  height: 80px;
+  height: 90px;
 
   ion-buttons {
     position: relative;
@@ -20,8 +20,8 @@ ion-header {
       font-weight: 700;
       margin: 0 auto;
       text-transform: uppercase;
-      padding-left: 50px;
-      padding-right: 50px;
+      padding-left: 56px;
+      padding-right: 56px;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -169,4 +169,9 @@ ion-footer {
   margin-right: 16px;
   font-size: 12px;
   color: #424242;
+}
+
+ion-backdrop {
+  background: white;
+  opacity: 1;
 }

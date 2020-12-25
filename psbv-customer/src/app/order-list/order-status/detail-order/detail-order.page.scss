@@ -21,8 +21,8 @@ ion-header {
       font-weight: 700;
       margin: 0 auto;
       text-transform: uppercase;
-      padding-left: 50px;
-      padding-right: 50px;
+      padding-left: 56px;
+      padding-right: 56px;
     }
   }
 }
@@ -34,7 +34,7 @@ ion-content {
   overflow: hidden;
   z-index: 11;
   position: absolute;
-  height: calc(100% - 80px);
+  height: calc(100% - 90px);
   bottom: 0;
 }
 

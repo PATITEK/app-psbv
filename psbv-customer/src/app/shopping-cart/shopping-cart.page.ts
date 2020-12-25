@@ -22,7 +22,7 @@ export class ShoppingCartPage implements OnInit {
     private globalVariablesService: GlobalVariablesService
   ) {
     this.getScreenSize();
-   }
+  }
 
   ngOnInit() { }
 
@@ -210,10 +210,10 @@ export class ShoppingCartPage implements OnInit {
 
   getIonContentAttribute(footerHeight) {
     return this.cartItems.length == 0 ? {
-      height: `calc(100% - 80px)`,
+      height: `calc(100% - 90px)`,
       bottom: 0
     } : {
-        height: `calc(100% - 80px - ${footerHeight}px)`,
+        height: `calc(100% - 90px - ${footerHeight}px)`,
         bottom: `${footerHeight}px`
       }
   }

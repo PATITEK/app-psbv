@@ -1,11 +1,11 @@
 <ion-header>
   <ion-item class="top-group">
     <ion-img src="assets/icon/logo.svg" (click)="gotoHome()" slot="start"></ion-img>
-    <ion-item slot="end" class="icon-group">
-      <ion-icon name="notifications-outline" (click)="gotoNoti()"></ion-icon>
-      <ion-icon name="person-outline" (click)="onGoUserInfo()"></ion-icon>
-    </ion-item>
   </ion-item>
+  <ion-buttons class="icon-box">
+    <img src="assets/noti.svg" (click)="goToNoti()"/>
+      <img src="assets/user.svg" (click)="goToUserInfo()"/>
+  </ion-buttons>
 
   <ion-searchbar (ionInput)="onInput($event)" autocorrect="off" [value]="inputValue"
     [ngClass]="checkSystem ? 'margin-search':''"></ion-searchbar>

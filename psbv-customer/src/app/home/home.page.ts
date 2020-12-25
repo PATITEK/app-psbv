@@ -115,11 +115,11 @@ export class HomePage implements OnInit {
     });
   }
 
-  onGoUserInfo() {
+  goToUserInfo() {
     this.router.navigateByUrl("/account/user-info");
   }
 
-  gotoNoti() {
+  goToNoti() {
     this.router.navigateByUrl('notification');
   }
 
@@ -128,10 +128,10 @@ export class HomePage implements OnInit {
   }
 
   onInput(event: any) {
-    this.activeTab = this.filterProducts[0].id;
-    if (this.infinityScroll.disabled) {
+    if (this.activeTab == this.filterProducts[0].id) {
       this.infinityScroll.disabled = false;
     }
+    this.activeTab = this.filterProducts[0].id;
     this.inputValue = event.target.value;
     this.reset();
     this.scrollToTop();
