@@ -8,16 +8,21 @@ import { GlobalVariablesService } from '../@app-core/global-variables.service';
   styleUrls: ['./shopping-cart.page.scss'],
 })
 export class ShoppingCartPage implements OnInit {
-  public showSpinner = false;
   cartItems = [];
   cartItemsSelected = [];
   permission: string;
+  loadedData = false;
+
+  scrHeight: any;
+  scrWidth: any;
 
   constructor(
     private alertCrtl: AlertController,
     private router: Router,
     private globalVariablesService: GlobalVariablesService
-  ) { }
+  ) {
+    this.getScreenSize();
+  }
 
   ngOnInit() { }
 
@@ -40,49 +45,40 @@ export class ShoppingCartPage implements OnInit {
     }))
   }
 
+  getScreenSize(event?) {
+    this.scrHeight = window.innerHeight;
+    this.scrWidth = window.innerWidth;
+  }
+
   goBack() {
     this.router.navigateByUrl(this.globalVariablesService.backUrlShoppingCart);
   }
 
   hasBackButton() {
     const backUrl = this.globalVariablesService.backUrlShoppingCart;
-    return backUrl.search('main/home/product-info') != -1 || backUrl.search('main/product-categories/products/product-info') != -1;
+    return backUrl.search('main/home/detail-product') != -1 || backUrl.search('main/product-categories/products/detail-product') != -1;
   }
 
-  calPrice(item) {
-    return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;
-  }
+  // calPrice(item) {
+  //   return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;
+  // }
 
-  listAccessoriesName(item) {
-    return item.accessories.reduce((acc, cur) => {
-      return acc + ', ' + cur.name;
-    }, '').substring(2);
-  }
+  // listAccessoriesName(item) {
+  //   return item.accessories.reduce((acc, cur) => {
+  //     return acc + ', ' + cur.name;
+  //   }, '').substring(2);
+  // }
 
-  decreaseProductQuantity(item) {
-    if (item.quantity > 0) {
-      item.quantity--;
+  decreaseAmount(item) {
+    if (item.amount > 1) {
+      item.amount--;
       this.setLocalStorage();
     }
   }
 
-  increaseProductQuantity(item) {
-    if (item.quantity < 999) {
-      item.quantity++;
-      this.setLocalStorage();
-    }
-  }
-
-  decreaseAccessoryQuantity(item) {
-    if (item.quantity > 0) {
-      item.quantity--;
-      this.setLocalStorage();
-    }
-  }
-
-  increaseAccessoryQuantity(item) {
-    if (item.quantity < 999) {
-      item.quantity++;
+  increaseAmount(item) {
+    if (item.amount < 999) {
+      item.amount++;
       this.setLocalStorage();
     }
   }
@@ -93,7 +89,7 @@ export class ShoppingCartPage implements OnInit {
 
   removeItem(item) {
     for (let i of this.cartItems) {
-      if (item.id == i.id && this.isEqual(item.accessories, i.accessories)) {
+      if (item.id == i.id) {
         this.cartItems.splice(this.cartItems.indexOf(item), 1);
         this.cartItemsSelected.splice(this.cartItems.indexOf(item), 1);
         this.setLocalStorage();
@@ -102,31 +98,25 @@ export class ShoppingCartPage implements OnInit {
     }
   }
 
-  isEqual(a, b) {
-    // if length is not equal 
-    if (a.length != b.length)
-      return false;
-    else {
-      // comapring each element of array 
-      for (var i = 0; i < a.length; i++) {
-        if (a[i].id != b[i].id || a[i].quantity != b[i].quantity) {
-          return false;
-        }
-      }
-      return true;
-    }
-  }
+  // isEqual(a, b) {
+  //   // if length is not equal 
+  //   if (a.length != b.length)
+  //     return false;
+  //   else {
+  //     // comapring each element of array 
+  //     for (var i = 0; i < a.length; i++) {
+  //       if (a[i].id != b[i].id || a[i].quantity != b[i].quantity) {
+  //         return false;
+  //       }
+  //     }
+  //     return true;
+  //   }
+  // }
 
-  async presentAlert(item) {
+  async openModalRemove(item) {
     const alert = await this.alertCrtl.create({
       message: 'Delete item from your cart?',
       buttons: [
-        {
-          text: 'No',
-          handler: () => {
-            return;
-          }
-        },
         {
           text: 'Yes',
           handler: () => {
@@ -134,14 +124,15 @@ export class ShoppingCartPage implements OnInit {
             return;
           }
         },
+        {
+          text: 'No',
+          handler: () => {
+            return;
+          }
+        }
       ]
     });
     await alert.present();
-  }
-
-  async onRemove(item) {
-    this.showSpinner = true;
-    this.presentAlert(item);
   }
 
   toggleSelected(item) {
@@ -168,31 +159,31 @@ export class ShoppingCartPage implements OnInit {
     let total = 0;
     for (let i = 0; i < this.cartItemsSelected.length; i++) {
       if (this.cartItemsSelected[i].selected) {
-        total += this.cartItems[i].quantity;
+        total += this.cartItems[i].amount;
       }
     }
     return total;
   }
 
-  calSelectedAccessories() {
-    let total = 0;
-    for (let i = 0; i < this.cartItemsSelected.length; i++) {
-      if (this.cartItemsSelected[i].selected) {
-        total += this.cartItems[i].accessories.reduce((acc, cur) => {
-          return acc + cur.quantity;
-        }, 0);
-      }
-    }
-    return total;
-  }
+  // calSelectedAccessories() {
+  //   let total = 0;
+  //   for (let i = 0; i < this.cartItemsSelected.length; i++) {
+  //     if (this.cartItemsSelected[i].selected) {
+  //       total += this.cartItems[i].accessories.reduce((acc, cur) => {
+  //         return acc + cur.quantity;
+  //       }, 0);
+  //     }
+  //   }
+  //   return total;
+  // }
 
-  calAccessoriesQuantity(item) {
-    return item.accessories.reduce((acc, cur) => {
-      return acc + cur.quantity;
-    }, 0);
-  }
+  // calAccessoriesQuantity(item) {
+  //   return item.accessories.reduce((acc, cur) => {
+  //     return acc + cur.quantity;
+  //   }, 0);
+  // }
 
-  goToSelectedProducts() {
+  goToSelectedItems() {
     let data = {
       selectedItems: []
     }
@@ -202,18 +193,28 @@ export class ShoppingCartPage implements OnInit {
         const product = {
           name: this.cartItems[index].name,
           id: this.cartItems[index].id,
-          quantity: this.cartItems[index].quantity,
+          amount: this.cartItems[index].amount,
           price: this.cartItems[index].price,
-          accessories: this.cartItems[index].accessories.filter(a => a.quantity > 0)
+          // accessories: this.cartItems[index].accessories.filter(a => a.quantity > 0)
         }
 
         data.selectedItems.push(product);
       }
     })
-    this.router.navigate(['/main/shopping-cart/selected-products'], {
+    this.router.navigate(['/main/shopping-cart/selected-items'], {
       queryParams: {
         data: JSON.stringify(data)
       }
     })
+  }
+
+  getIonContentAttribute(footerHeight) {
+    return this.cartItems.length == 0 ? {
+      height: `calc(100% - 90px)`,
+      bottom: 0
+    } : {
+        height: `calc(100% - 90px - ${footerHeight}px)`,
+        bottom: `${footerHeight}px`
+      }
   }
 }

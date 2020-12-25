@@ -34,6 +34,7 @@ export const APICONFIG = {
   },
   PRODUCTS: {
     GET: `/app/products`,
+    GET_TRENDING: `/app/products/trending`,
     SEARCH: (name) => `/app/products?name=${name}`,
     GETDETAIL: (id) => `/app/products/${id}`,
     CREATE: `/app/products`,
@@ -51,6 +52,7 @@ export const APICONFIG = {
   ORDERS: {
     GET: `/app/orders`,
     GET_DETAIL: (id) => `/app/orders/${id}`,
+    GET_HISTORY: `/app/history`,
     CREATE: '/app/orders',
     EDIT: (id) => `/app/orders${id}`,
     DELETE: (id) => `/app/orders${id}`

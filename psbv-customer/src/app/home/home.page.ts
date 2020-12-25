@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll } from '@ionic/angular';
 import { IPageRequest, PERMISSIONS, ProductsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 import { StorageService } from '../@app-core/storage.service';
@@ -12,46 +12,74 @@ import { StorageService } from '../@app-core/storage.service';
 })
 export class HomePage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
+  @ViewChild(IonInfiniteScroll) infinityScrollTrending: IonInfiniteScroll;
   @ViewChild(IonContent) ionContent: IonContent;
 
   scrHeight: any;
   scrWidth: any;
 
-  pageRequest: IPageRequest;
+  filterProducts = [
+    {
+      id: 'all',
+      name: 'All'
+    },
+    {
+      id: 'seenProducts',
+      name: 'Seen Products'
+    },
+    {
+      id: 'hotTrending',
+      name: 'Hot Trending'
+    }
+  ]
+
+  pageRequest: IPageRequest = {
+    page: 1,
+    per_page: 10,
+    total_objects: 20
+  }
   data = [];
   permission: string;
-  val = '';
   counter = 0;
   inputValue: string = '';
   isMaxData = false;
-  checkSystem = false;
-
-  public activeTab = "all";
+  public activeTab = this.filterProducts[0].id;
   checkTab = true;
-  loadedData = true;
+  isLoading = true;
+
+  pageRequestTrending: IPageRequest = {
+    page: 1,
+    per_page: 10,
+    total_objects: 20
+  }
+  dataTrending = [];
+  isMaxDataTrending = false;
+  isLoadingTrending = true;
+
+  dataSeenProducts = JSON.parse(localStorage.getItem('seenProducts')) || [];
 
   constructor(
     private router: Router,
     private productService: ProductsService,
-    private loading: LoadingService,
-    private storageService: StorageService,
-    private platform: Platform
+    // public loading: LoadingService,
+    private storageService: StorageService
   ) {
-    this.reset();
     this.getScreenSize();
   }
 
   ngOnInit() {
-    this.loading.present();
-    this.loadData();
+    // this.loading.present();
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
-    this.platform.ready().then(() => {
-      if (this.platform.is('android')) {
-        this.checkSystem = true;
-      }
-    });
+
+    if (!this.checkGuestPermission()) {
+      this.filterProducts.push({
+        id: 'onSaleProducts',
+        name: 'On Sale Products'
+      })
+    }
+    this.loadData();
   }
 
   ionViewWillEnter() {
@@ -67,35 +95,37 @@ export class HomePage implements OnInit {
   }
 
   changeTabs(name) {
-    this.activeTab = name;
-    if (this.activeTab === 'orderStatus') {
-      this.checkTab = true;
+    if (this.activeTab == name) {
+      this.scrollToTopSmoothly();
+    } else {
+      this.scrollToTop();
+      this.activeTab = name;
     }
-    else if (this.activeTab === 'orderHistory') {
-      this.checkTab = false;
+    if (this.activeTab == this.filterProducts[2].id && this.dataTrending.length == 0) {
+      this.loadDataTrending();
     }
-  }
-
-  async segmentChanged(event) {
-    this.activeTab = event.target.value;
   }
 
   goToDetail(item) {
+    if (this.activeTab != this.filterProducts[1].id) {
+      this.setCartLocalStorage(item);
+    }
+
     const data = {
       id: item.id
     }
-    this.router.navigate(['/main/home/product-info'], {
+    this.router.navigate(['/main/home/detail-product'], {
       queryParams: {
         data: JSON.stringify(data)
       }
     });
   }
 
-  onGoUserInfo() {
+  goToUserInfo() {
     this.router.navigateByUrl("/account/user-info");
   }
 
-  gotoNoti() {
+  goToNoti() {
     this.router.navigateByUrl('notification');
   }
 
@@ -104,74 +134,125 @@ export class HomePage implements OnInit {
   }
 
   onInput(event: any) {
-    this.loadedData = false;
+    if (this.activeTab == this.filterProducts[0].id) {
+      this.infinityScroll.disabled = false;
+    }
+    this.activeTab = this.filterProducts[0].id;
     this.inputValue = event.target.value;
     this.reset();
-    this.scrollContent();
+    this.scrollToTop();
     this.counter++;
     this.loadData();
   }
 
-  loadData() {
-    if (!this.isMaxData) {
-      setTimeout(() => {
-        if (this.inputValue !== '') {
-          const counterTemp = this.counter;
-          this.productService.searchProduct(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
-            if (counterTemp == this.counter) {
-              for (let item of data.products) {
-                // image not found
-                if (item.thumb_image === null) {
-                  const d = {
-                    url: "https://i.imgur.com/dbpoag5.png"
-                  }
-                  item.thumb_image = d;
-                }
-                this.data.push(item);
-              }
-
-              this.loadedData = true;
-
-              this.infinityScroll.complete();
-              this.loading.dismiss();
-              this.pageRequest.page++;
-
-              // check max data
-              if (this.data.length >= data.meta.pagination.total_objects) {
-                // this.infinityScroll.disabled = true;
-                this.isMaxData = true;
-              }
+  searchProducts(event?) {
+    const counterTemp = this.counter;
+    this.productService.searchProduct(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
+      if (counterTemp == this.counter) {
+        for (let item of data.products) {
+          // image not found
+          if (item.thumb_image === null) {
+            const d = {
+              url: "https://i.imgur.com/dbpoag5.png"
             }
-          })
-        } else {
-          this.productService.getProducts(this.pageRequest).subscribe(data => {
-            for (let item of data.products) {
-              // image not found
-              if (item.thumb_image === null) {
-                const d = {
-                  url: "https://i.imgur.com/dbpoag5.png"
-                }
-                item.thumb_image = d;
-              }
-              this.data.push(item);
-            }
-
-            this.loadedData = true;
-
-            this.infinityScroll.complete();
-            this.loading.dismiss();
-            this.pageRequest.page++;
-
-            // check max data
-            if (this.data.length >= data.meta.pagination.total_objects) {
-              // this.infinityScroll.disabled = true;
-              this.isMaxData = true;
-            }
-          })
+            item.thumb_image = d;
+          }
+          this.data.push(item);
         }
-      }, 50);
+
+        this.isLoading = false;
+
+        this.infinityScroll.complete();
+        // this.loading.dismiss();
+        this.pageRequest.page++;
+
+        // check max data
+        if (this.data.length >= data.meta.pagination.total_objects) {
+          this.infinityScroll.disabled = true;
+          this.isMaxData = true;
+        }
+      } else {
+        this.infinityScroll.complete();
+      }
+    })
+  }
+
+  loadProducts(event?) {
+    this.productService.getProducts(this.pageRequest).subscribe(data => {
+      for (let item of data.products) {
+        // image not found
+        if (item.thumb_image === null) {
+          const d = {
+            url: "https://i.imgur.com/dbpoag5.png"
+          }
+          item.thumb_image = d;
+        }
+        this.data.push(item);
+      }
+
+      this.isLoading = false;
+
+      this.infinityScroll.complete();
+      // this.loading.dismiss();
+      this.pageRequest.page++;
+
+      // check max data
+      if (this.data.length >= data.meta.pagination.total_objects) {
+        this.infinityScroll.disabled = true;
+        this.isMaxData = true;
+      }
+    })
+  }
+
+  loadTrending(event?) {
+    this.productService.getProductsTrending(this.pageRequestTrending).subscribe(data => {
+      for (let item of data.order_details) {
+        // image not found
+        if (item.product.thumb_image === null) {
+          const d = {
+            url: "https://i.imgur.com/dbpoag5.png"
+          }
+          item.product.thumb_image = d;
+        }
+        this.dataTrending.push({
+          id: item.product.id,
+          name: item.product.name,
+          thumb_image: item.product.thumb_image,
+          price: item.product.price
+        });
+      }
+
+      this.isLoadingTrending = false;
+
+      this.infinityScrollTrending.complete();
+      // this.loading.dismiss();
+      this.pageRequestTrending.page++;
+
+      // check max data
+      if (this.dataTrending.length >= data.meta.pagination.total_objects) {
+        this.infinityScrollTrending.disabled = true;
+        this.isMaxDataTrending = true;
+      }
+    })
+  }
+
+  loadData(event?) {
+    if (!this.isMaxData) {
+      if (this.inputValue !== '') {
+        this.searchProducts();
+      } else {
+        this.loadProducts();
+      }
     } else {
       this.infinityScroll.complete();
+    }
+  }
+
+  loadDataTrending(event?) {
+    if (!this.isMaxDataTrending) {
+      this.loadTrending();
+    } else {
+      this.infinityScrollTrending.complete();
     }
   }
 
@@ -186,10 +267,34 @@ export class HomePage implements OnInit {
       total_objects: 20
     }
     this.data = [];
+    this.isLoading = true;
     this.isMaxData = false;
   }
 
-  scrollContent() {
+  scrollToTop() {
+    this.ionContent.scrollToTop();
+  }
+
+  scrollToTopSmoothly() {
     this.ionContent.scrollToTop(500);
+  }
+
+  setCartLocalStorage(item) {
+    const product = {
+      id: item.id,
+      name: item.name,
+      thumb_image: item.thumb_image,
+      price: item.price
+    }
+
+    for (let i = 0, n = this.dataSeenProducts.length; i < n; i++) {
+      if (item.id == this.dataSeenProducts[i].id) {
+        this.dataSeenProducts.splice(i, 1);
+        break;
+      }
+    }
+    this.dataSeenProducts.unshift(product);
+
+    localStorage.setItem('seenProducts', JSON.stringify(this.dataSeenProducts));
   }
 }

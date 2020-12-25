@@ -39,6 +39,14 @@ export class ProductsService {
       catchError((errorRes) => { throw errorRes.error; }));
   }
 
+  public getProductsTrending(request: IPageRequest) {
+    return this.http.get<any>(`${APICONFIG.PRODUCTS.GET_TRENDING}?${(requestQuery(request))}`).pipe(
+      map((result) => {
+        return result;
+      }),
+      catchError((errorRes) => { throw errorRes.error; }));
+  }
+
   public createProduct(payload: any) {
     return this.http.post<any>(`${APICONFIG.PRODUCTS.CREATE}`, payload).pipe(
       map((result) => {
