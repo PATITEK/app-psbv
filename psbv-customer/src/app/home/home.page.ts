@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll } from '@ionic/angular';
 import { IPageRequest, PERMISSIONS, ProductsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 import { StorageService } from '../@app-core/storage.service';
@@ -12,6 +12,7 @@ import { StorageService } from '../@app-core/storage.service';
 })
 export class HomePage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
+  @ViewChild(IonInfiniteScroll) infinityScrollTrending: IonInfiniteScroll;
   @ViewChild(IonContent) ionContent: IonContent;
 
   scrHeight: any;
@@ -32,7 +33,11 @@ export class HomePage implements OnInit {
     }
   ]
 
-  pageRequest: IPageRequest;
+  pageRequest: IPageRequest = {
+    page: 1,
+    per_page: 10,
+    total_objects: 20
+  }
   data = [];
   permission: string;
   counter = 0;
@@ -40,16 +45,23 @@ export class HomePage implements OnInit {
   isMaxData = false;
   public activeTab = this.filterProducts[0].id;
   checkTab = true;
-  isLoading = false;
+  isLoading = true;
+
+  pageRequestTrending: IPageRequest = {
+    page: 1,
+    per_page: 10,
+    total_objects: 20
+  }
+  dataTrending = [];
+  isMaxDataTrending = false;
+  isLoadingTrending = true;
 
   constructor(
     private router: Router,
     private productService: ProductsService,
     // public loading: LoadingService,
-    private storageService: StorageService,
-    private platform: Platform
+    private storageService: StorageService
   ) {
-    this.reset();
     this.getScreenSize();
   }
 
@@ -81,11 +93,15 @@ export class HomePage implements OnInit {
   }
 
   changeTabs(name) {
-    this.activeTab = name;
-  }
-
-  async segmentChanged(event) {
-    this.activeTab = event.target.value;
+    if (this.activeTab == name) {
+      this.scrollToTopSmoothly();
+    } else {
+      this.scrollToTop();
+      this.activeTab = name;
+    }
+    if (this.activeTab == this.filterProducts[2].id && this.dataTrending.length == 0) {
+      this.loadDataTrending();
+    }
   }
 
   goToDetail(item) {
@@ -112,15 +128,18 @@ export class HomePage implements OnInit {
   }
 
   onInput(event: any) {
-    this.infinityScroll.disabled = false;
+    this.activeTab = this.filterProducts[0].id;
+    if (this.infinityScroll.disabled) {
+      this.infinityScroll.disabled = false;
+    }
     this.inputValue = event.target.value;
     this.reset();
-    this.scrollContent();
+    this.scrollToTop();
     this.counter++;
     this.loadData();
   }
 
-  searchProducts() {
+  searchProducts(event?) {
     const counterTemp = this.counter;
     this.productService.searchProduct(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
       if (counterTemp == this.counter) {
@@ -152,7 +171,7 @@ export class HomePage implements OnInit {
     })
   }
 
-  loadProducts() {
+  loadProducts(event?) {
     this.productService.getProducts(this.pageRequest).subscribe(data => {
       for (let item of data.products) {
         // image not found
@@ -179,8 +198,8 @@ export class HomePage implements OnInit {
     })
   }
 
-  loadTrending() {
-    this.productService.getProductsTrending(this.pageRequest).subscribe(data => {
+  loadTrending(event?) {
+    this.productService.getProductsTrending(this.pageRequestTrending).subscribe(data => {
       for (let item of data.order_details) {
         // image not found
         if (item.product.thumb_image === null) {
@@ -189,7 +208,7 @@ export class HomePage implements OnInit {
           }
           item.product.thumb_image = d;
         }
-        this.data.push({
+        this.dataTrending.push({
           id: item.product.id,
           name: item.product.name,
           thumb_image: item.product.thumb_image,
@@ -197,26 +216,22 @@ export class HomePage implements OnInit {
         });
       }
 
-      this.isLoading = false;
+      this.isLoadingTrending = false;
 
-      this.infinityScroll.complete();
+      this.infinityScrollTrending.complete();
       // this.loading.dismiss();
-      this.pageRequest.page++;
+      this.pageRequestTrending.page++;
 
       // check max data
-      if (this.data.length >= data.meta.pagination.total_objects) {
-        this.infinityScroll.disabled = true;
-        this.isMaxData = true;
+      if (this.dataTrending.length >= data.meta.pagination.total_objects) {
+        this.infinityScrollTrending.disabled = true;
+        this.isMaxDataTrending = true;
       }
     })
   }
 
-  loadData() {
+  loadData(event?) {
     if (!this.isMaxData) {
-      // if (this.activeTab == this.filterProducts[2].id) {
-      //   this.loadTrending();
-      // } else {
-      // }
       if (this.inputValue !== '') {
         this.searchProducts();
       } else {
@@ -224,6 +239,14 @@ export class HomePage implements OnInit {
       }
     } else {
       this.infinityScroll.complete();
+    }
+  }
+
+  loadDataTrending(event?) {
+    if (!this.isMaxDataTrending) {
+      this.loadTrending();
+    } else {
+      this.infinityScrollTrending.complete();
     }
   }
 
@@ -242,7 +265,11 @@ export class HomePage implements OnInit {
     this.isMaxData = false;
   }
 
-  scrollContent() {
+  scrollToTop() {
+    this.ionContent.scrollToTop();
+  }
+
+  scrollToTopSmoothly() {
     this.ionContent.scrollToTop(500);
   }
 }
