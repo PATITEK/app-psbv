@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { OrdersService, PERMISSIONS } from 'src/app/@app-core/http';
+import { Router, ActivatedRoute } from '@angular/router';
+import { OrdersService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 
 @Component({
@@ -31,29 +31,31 @@ export class DetailOrderPage implements OnInit {
     this.loadingService.present();
 
     this.route.queryParams.subscribe(params => {
-      this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
-        this.data = data.order;
+      if (!this.loadedData) {
+        this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
+          this.data = data.order;
 
-        if (this.checkConfirmedStatus()) {
-          const dateTime = this.data.audits[0].created_at;
-          this.pushData(dateTime, 'Time confirmed');
-        } else if (this.checkShippingStatus()) {
-          const dateTime1 = this.data.audits[0].created_at;
-          const dateTime2 = this.data.audits[1].created_at;
-          this.pushData(dateTime1, 'Time confirmed', dateTime2, 'Time shipping');
-        } else if (this.checkReceivedStatus()) {
-          const dateTime1 = this.data.audits[1].created_at;
-          const dateTime2 = this.data.audits[2].created_at;
-          this.pushData(dateTime1, 'Time shipping', dateTime2, 'Time received');
-        } else if (this.checkCancelStatus()) {
-          const dateTime1 = this.data.audits[this.data.audits.length - 1].created_at;
-          const dateTime2 = ' ';
-          this.pushData(dateTime1, 'Time cancel', dateTime2, 'Reason');
-        }
-        
-        this.loadedData = true;
-        this.loadingService.dismiss();
-      })
+          if (this.checkConfirmedStatus()) {
+            const dateTime = this.data.audits[0].created_at;
+            this.pushData(dateTime, 'Time confirmed');
+          } else if (this.checkShippingStatus()) {
+            const dateTime1 = this.data.audits[0].created_at;
+            const dateTime2 = this.data.audits[1].created_at;
+            this.pushData(dateTime1, 'Time confirmed', dateTime2, 'Time shipping');
+          } else if (this.checkReceivedStatus()) {
+            const dateTime1 = this.data.audits[1].created_at;
+            const dateTime2 = this.data.audits[2].created_at;
+            this.pushData(dateTime1, 'Time shipping', dateTime2, 'Time received');
+          } else if (this.checkCancelStatus()) {
+            const dateTime1 = this.data.audits[this.data.audits.length - 1].created_at;
+            const dateTime2 = ' ';
+            this.pushData(dateTime1, 'Time cancel', dateTime2, 'Reason');
+          }
+
+          this.loadedData = true;
+          this.loadingService.dismiss();
+        })
+      }
     })
   }
 
@@ -104,6 +106,6 @@ export class DetailOrderPage implements OnInit {
   }
 
   goToDetailComponent() {
-    this.router.navigateByUrl('main/order-status/detail-order/detail-component');
+    this.router.navigateByUrl('main/order-list/detail-order/detail-component');
   }
 }

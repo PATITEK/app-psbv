@@ -14,7 +14,7 @@ ion-content {
   --overflow: hidden;
   z-index: 11;
   position: absolute;
-  height: calc(100% - 80px);
+  height: calc(100% - 90px);
   bottom: 0;
 }
 
@@ -48,6 +48,7 @@ ion-header {
 }
 
 .heading {
+  margin: 5px 30px 35px;
   --background: white;
   --color: #515151;
   opacity: 1;
@@ -56,70 +57,58 @@ ion-header {
   font-weight: 700;
   text-transform: none;
   --border-radius: 14px;
-  height: 45px;
 }
 
 ion-list {
-  height: calc(100% - 45px - 20px);
-  margin-top: 20px;
-  text-align: center;
+  height: 72%;
+  position: relative;
+  padding-left: 70px;
 
-  ion-item {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 260px;
-
-    ion-img,
-    .icon-container {
-      width: 42px;
-      height: 42px;
-      margin-right: 20px;
-      border-radius: 10px;
-    }
-
-    ion-img {
-      padding: 10px;
-    }
-
-    .icon-container {
-      font-size: 33px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    ion-card-subtitle {
-      text-transform: none;
-      --color: #636363;
-      font-weight: 700;
-      font-size: 16px;
-    }
-
-    ion-label {
-      --color: #515151;
-      font-size: 15px;
-    }
+  @media screen and (max-height: 568px) {
+    padding-left: 50px;
   }
 }
 
-.child-button {
-  position: absolute;
-  right: -7px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #6d6d6d;
+ion-item {
+  height: calc(100% / 4);
+  align-items: flex-start;
+  position: relative;
+
+  ion-card-subtitle {
+    text-transform: none;
+    --color: #636363;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  ion-label {
+    --color: #515151;
+    font-size: 15px;
+  }
+}
+
+.detail-button {
+  font-size: 20px;
+  --background: #91E29B;
+  --border-radius: 10px;
+  float: right;
+  padding-block-start: 12px;
+  text-transform: none;
 }
 
 .line-bottom,
 .line-top {
   width: 4px;
   position: absolute;
-  left: 50%;
+  top: 10px;
+  left: 45px;
   bottom: 0;
   z-index: 1;
   background-color: #dededf;
+
+  @media screen and (max-width: 320px) {
+    left: 30px;
+  }
 
   span {
     width: 12px;
@@ -127,11 +116,25 @@ ion-list {
     border-radius: 50%;
     position: absolute;
     left: -4px;
-    transform: translateY(-5px);
+
+    &:first-child {
+      top: -4px;
+    }
+
+    &:nth-child(2) {
+      top: calc(25% - 3px);
+    }
+
+    &:nth-child(3) {
+      top: calc(50% - 3px);
+    }
+
+    &:nth-child(4) {
+      top: calc(75%);
+    }
   }
 }
 
 .line-top {
   background-color: #93e29d;
-  transform: translateX(-135px) translateY(0);
 }

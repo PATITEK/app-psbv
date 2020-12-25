@@ -7,18 +7,19 @@ const routes: Routes = [
   {
     path: '',
     component: OrderListPage,
-   // children: [
-    // {
-    //   path: 'order-status',
-    //   loadChildren: () => import('./order-status/order-status.module').then( m => m.OrderStatusPageModule)
-    // },
-    
- // ]
-  }]
-  
+  },  {
+    path: 'order-status-detail',
+    loadChildren: () => import('./order-status-detail/order-status-detail.module').then( m => m.OrderStatusDetailPageModule)
+  },
+  {
+    path: 'detail-order',
+    loadChildren: () => import('./detail-order/detail-order.module').then( m => m.DetailOrderPageModule)
+  }
+
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class OrderListPageRoutingModule {}
+export class OrderListPageRoutingModule { }
