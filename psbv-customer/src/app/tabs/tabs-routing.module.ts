@@ -19,11 +19,11 @@ const routes: Routes = [
       {
         path: 'shopping-cart',
         loadChildren: () => import('../shopping-cart/shopping-cart.module').then(m => m.ShoppingCartPageModule),
-        canActivate: [AuthGuard]
+       canActivate: [AuthGuard]
       },
       {
-        path: 'order-list',
-        loadChildren: () => import('../order-list/order-list.module').then(m => m.OrderListPageModule),
+        path: 'order-status',
+        loadChildren: () => import('../order-list/order-status/order-status.module').then( m => m.OrderStatusPageModule),
         canActivate: [AuthGuard]
       },
       {
@@ -44,4 +44,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule { }
+export class TabsPageRoutingModule {}

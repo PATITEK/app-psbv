@@ -21,7 +21,7 @@ export const APICONFIG = {
     GETDETAIL: (id) => `/app/users/${id}`,
     EDIT: (id) => `/app/users/${id}`,
     DELETE: (id) => `/app/users/${id}`,
-    UPDATE_PREMIUM: (id) => `/app/users/request_upgrade`,
+    UPDATE_PREMIUM: (id) => `/app/users/${id}/request_upgrade`,
     CONTACT_ADMIN: `/app/interact_email/submit`
   },
   PRODUCT_GROUP: {
@@ -34,7 +34,6 @@ export const APICONFIG = {
   },
   PRODUCTS: {
     GET: `/app/products`,
-    GET_TRENDING: `/app/products/trending`,
     SEARCH: (name) => `/app/products?name=${name}`,
     GETDETAIL: (id) => `/app/products/${id}`,
     CREATE: `/app/products`,
@@ -52,7 +51,6 @@ export const APICONFIG = {
   ORDERS: {
     GET: `/app/orders`,
     GET_DETAIL: (id) => `/app/orders/${id}`,
-    GET_HISTORY: `/app/history`,
     CREATE: '/app/orders',
     EDIT: (id) => `/app/orders${id}`,
     DELETE: (id) => `/app/orders${id}`

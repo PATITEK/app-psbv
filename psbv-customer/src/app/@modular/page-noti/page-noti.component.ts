@@ -25,6 +25,7 @@ export class PageNotiComponent implements OnInit {
   }
 
   linkRouter() {
+    console.log("main",this.routerLink);
     this.router.navigateByUrl(this.routerLink);
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {

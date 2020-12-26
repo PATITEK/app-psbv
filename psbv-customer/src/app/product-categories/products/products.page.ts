@@ -26,8 +26,6 @@ export class ProductsPage implements OnInit {
   title = '';
   id = '';
 
-  loadedData = false;
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -81,8 +79,6 @@ export class ProductsPage implements OnInit {
               this.data.push(item);
             }
 
-            this.loadedData = true;
-
             this.infinityScroll.complete();
             this.loading.dismiss();
             this.pageRequest.page++;
@@ -119,38 +115,15 @@ export class ProductsPage implements OnInit {
   }
 
   goToDetail(item) {
-    this.setCartLocalStorage(item);
-
     const data = {
       id: item.id,
       categoryId: this.id,
       categoryTitle: this.title
     }
-    this.router.navigate(['main/product-categories/products/detail-product'], {
+    this.router.navigate(['main/product-categories/products/product-info'], {
       queryParams: {
         data: JSON.stringify(data)
       }
     });
-  }
-
-  setCartLocalStorage(item) {
-    let dataSeenProducts = JSON.parse(localStorage.getItem('seenProducts')) || [];
-
-    const product = {
-      id: item.id,
-      name: item.name,
-      thumb_image: item.thumb_image,
-      price: item.price
-    }
-
-    for (let i = 0, n = dataSeenProducts.length; i < n; i++) {
-      if (item.id == dataSeenProducts[i].id) {
-        dataSeenProducts.splice(i, 1);
-        break;
-      }
-    }
-    dataSeenProducts.unshift(product);
-
-    localStorage.setItem('seenProducts', JSON.stringify(dataSeenProducts));
   }
 }

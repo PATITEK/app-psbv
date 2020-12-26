@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-row no-lines>
+      <ion-col class="heading">
+          ORDER LIST
+      </ion-col>
+  </ion-row>
+  <ion-row no-lines class="heading__option">
+      <ion-col (click)="gotoStatus()">Order status
+      </ion-col>
+      <ion-col>
+        History
+      </ion-col>
+  </ion-row>
+  <ion-progress-bar class="selector" value="0.4" reversed="true"></ion-progress-bar>
+</ion-header>
+<ion-content>
+<ion-card class="section__main">
+    <ion-list style="background-color: #EFEFEF">
+      <ion-card class="section__sub">
+          <ion-grid>
+              <ion-row>
+                  <ion-label class="item__header">Item 12/12/1212</ion-label>
+              </ion-row>
+          </ion-grid>
+          <ion-item class="detail__wrapper" lines="none">
+              <ion-item class="item__price-tag">
+                      Sent Request
+                      <ion-img class="item__price-tag__slash" src="../../assets/slash.svg"></ion-img>
+                      3 Products
+              </ion-item>             
+          </ion-item> 
+          <ion-card-content class="item__detail">Product Product Product, Product Product, Product, Product ...</ion-card-content>
+          <ion-button lines="none" class="re-order" size="small">Re-order</ion-button>
+      </ion-card>
+    </ion-list>
+
+    
+</ion-card>
+</ion-content>  

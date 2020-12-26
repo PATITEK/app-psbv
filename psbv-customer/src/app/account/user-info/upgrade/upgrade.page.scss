@@ -1,12 +1,9 @@
 ion-content{
     --overflow:hidden;
 }
-.header-md::after {
-  height: 0;
-}
 .icon-back{
-    font-size: 26px;
-    color: #6D6D6D;
+    font-size: 22px;
+    color: black;
   }
   .icon-more{
     height: 20px;
@@ -75,14 +72,13 @@ ion-content{
     display: flex;
     flex-direction: column;
     &__main{
-        font-size: 16px;
+        font-size: 23px;
         font-weight: 700;
     }
     &__sub{
         font-size: 14px;
         font-weight: normal;
-        margin-top: 6px;
-      }
+    }
   }
   .btn-logout {
     width: 90%;

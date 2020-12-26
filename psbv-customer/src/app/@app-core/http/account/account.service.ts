@@ -20,9 +20,7 @@ export class AccountService {
 
   public getAccounts() {
     return this.http.get(`${APICONFIG.ACCOUNT.PROFILE_USER}`).pipe(
-      map((result: any) => {
-      localStorage.setItem('email', result['user']['email']);
-      localStorage.setItem('role', result['user']['role']);
+      map((result) => {
         return result;
       }),
       catchError((errorRes) => { 
@@ -84,15 +82,6 @@ export class AccountService {
       })
     )
   }
-  public upgradePremium(req) {
-    return this.http.post(`${APICONFIG.ACCOUNT.UPDATE_PREMIUM}`, req).pipe(
-      map((result) => {
-        return result
-      }),
-      catchError((errorRes: any) => {
-        throw errorRes.error;
-      })
-    )
-  }
+
 
 }

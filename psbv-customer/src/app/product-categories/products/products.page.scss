@@ -1,18 +1,29 @@
+ion-content {
+  --background: #efefef;
+}
+
+ion-content {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow: hidden;
+  z-index: 11;
+  position: absolute;
+  height: calc(100% - 80px);
+  bottom: 0;
+}
+
 ion-header {
   background: #232323;
-  padding-bottom: 30px;
+  padding-bottom: 45px;
 
   ion-buttons {
     position: relative;
-    height: 100px;
+    margin-top: 20px;
 
     ion-back-button {
       color: #fff;
       position: absolute;
-      left: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: inline-block;
+      left: 0;
     }
 
     ion-label {
@@ -20,37 +31,32 @@ ion-header {
       color: #fff;
       font-weight: 700;
       margin: 0 auto;
+      padding-left: 35px;
+      padding-right: 35px;
       text-transform: uppercase;
-      padding-left: 56px;
-      padding-right: 56px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       overflow: hidden;
-    }
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      text-align: center;
 
-    .icon-box {
-      position: absolute;
-      height: auto;
-      top: 10px;
-      right: 15px;
-
-      img {
-        margin-left: 19px;
+      @media screen and (max-width: 360px) {
+        font-size: 17px;
       }
     }
   }
-}
 
-ion-content {
-  --background: #efefef;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  overflow: hidden;
-  z-index: 11;
-  position: absolute;
-  height: calc(100% - 90px);
-  bottom: 0;
-  padding: 0;
+  ion-item-group {
+    position: absolute;
+    top: 11px;
+    right: 12px;
+
+    ion-icon {
+      color: white;
+      font-size: 21px;
+      margin: 0 7px;
+    }
+  }
 }
 
 ion-grid {
@@ -61,7 +67,9 @@ ion-grid {
 
     ion-col {
       background-color: #e5e5e5;
-      max-width: calc(calc(6 / var(--ion-grid-columns, 12)) * 100% - 8px) !important;
+      max-width: calc(
+        calc(6 / var(--ion-grid-columns, 12)) * 100% - 8px
+      ) !important;
       margin: 4px;
       padding: 4px 5px 5px;
       border-radius: 10px;
@@ -102,11 +110,4 @@ ion-grid {
       }
     }
   }
-}
-
-.absolute-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }

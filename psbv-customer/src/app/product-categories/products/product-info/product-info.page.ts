@@ -72,7 +72,10 @@ export class ProductInfoPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.curProductsLength = 0;
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'none';
+    });
   }
 
   getScreenSize(event?) {
@@ -189,7 +192,7 @@ export class ProductInfoPage implements OnInit {
 
   loadData() {
     this.route.queryParams.subscribe(params => {
-      if (params.data !== undefined && !this.loadedProduct) {
+      if (params.data !== undefined) {
         this.productService.getProductDetail(JSON.parse(params['data']).id)
           .subscribe(data => {
             this.product = data.product;

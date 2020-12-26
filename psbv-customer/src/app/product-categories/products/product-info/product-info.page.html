@@ -20,12 +20,10 @@
 </ion-header>
 
 <ion-content>
-  <p class="absolute-center" *ngIf="accessories.length == 0 && loadedAccessories">Not found accessories.</p>
-
   <ion-img src="assets/add-btn.svg" class="add-product-button" (click)="addProduct()"
     *ngIf="!checkGuestPermission()"></ion-img>
 
-  <ion-card class="accessories" *ngIf="accessories.length != 0">
+  <ion-card class="accessories">
     <ion-card-header class="ion-text-center">
       <span *ngIf="!checkGuestPermission()">Add product<br> with accessories below</span>
     </ion-card-header>

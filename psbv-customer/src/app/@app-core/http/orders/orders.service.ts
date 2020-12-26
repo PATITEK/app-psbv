@@ -22,7 +22,7 @@ export class OrdersService {
       COLOR: '#F9D775'
     },
     {
-      NAME: 'canceled',
+      NAME: 'cancel',
       COLOR: '#CE091C'
     }
   ];
@@ -83,13 +83,5 @@ export class OrdersService {
       catchError((errorRes: any) => {
         throw errorRes.error;
       }));
-  }
-
-  public getHistory(request: IPageRequest) {
-    return this.http.get<any>(`${APICONFIG.ORDERS.GET_HISTORY}?${(requestQuery(request))}`).pipe(
-      map((result) => {
-        return result;
-      }),
-      catchError((errorRes) => { throw errorRes.error; }));
   }
 }
