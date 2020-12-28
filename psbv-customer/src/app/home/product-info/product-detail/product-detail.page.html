@@ -1,4 +1,4 @@
-<ion-header class="ion-padding">
+<ion-header>
   <ion-buttons>
     <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
     <ion-label>Detail product</ion-label>
@@ -6,36 +6,28 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="product">
-    <ion-card-content>
-      <ion-card-subtitle>{{ product.name }}</ion-card-subtitle>
-      <ion-label>{{ product.short_description }}</ion-label>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card class="info">
-    <div class="img-box">
-      <ion-img [src]="product.thumb_image.url"></ion-img>
-    </div>
-
-    <ion-button class="price" shape="round" size="small" disabled *ngIf="product.id != ''">
-      {{ product.price | number: '1.0-2' }}
-    </ion-button>
-
-    <ion-card-subtitle>Info</ion-card-subtitle>
-    <p class="content">{{ product.description }}</p>
-
-    <div class="download-block" [style.visibility]="checkStandardPermission() ? 'hidden' : 'visible'">
-      <ion-card-subtitle>Technical drawings</ion-card-subtitle>
-      <span (click)="download()">https://docs.google.com/spreadsheets/d</span>
-      <ion-icon name="download-outline" (click)="download()"></ion-icon>
-    </div>
-
-    <p class="noti ion-text-center ion-padding">
-      We will show detail accessories of product after you receive the item!<br>
-      Thank you!
+  <ion-img [src]="product.thumb_image.url" class="main-img" *ngIf="loadedProduct"></ion-img>
+  <ion-card class="product-content">
+    <ion-backdrop *ngIf="!loadedProduct"></ion-backdrop>
+    <!-- <div *ngIf="curAddedProducts > 0" class="cart-wrapper" (click)="gotToCart()">
+      <img src="assets/detail-product/cart.svg" class="cart-btn">
+      <span>+{{ curAddedProducts }}</span>
+    </div> -->
+    <ion-buttons class="product-name-wrapper">
+      <ion-label class="product-name">{{ product.name }}</ion-label>
+      <span class="product-price" *ngIf="!checkGuestPermission()">{{ product.price | number: '1.0-2' }}</span>
+    </ion-buttons>
+    <ion-label style="color: #424242; font-size: 15px; margin-left: 16px;">Info</ion-label>
+    <p class="product-desc">{{ checkGuestPermission() ? product.short_description : product.description }}</p>
+    <p *ngIf="checkPremiumPermission()" class="technical">
+      Technical drawings <br>
+      <span class="link" (click)="downloadTechnical()">https://docs.google.com/d...</span>
+      <ion-img class="download-icon" src="assets/detail-product/download.svg" (click)="downloadTechnical()"></ion-img>
     </p>
-
-    <ion-button expand="block" (click)="goBack()">Choose another accessories</ion-button>
   </ion-card>
 </ion-content>
+
+<ion-footer>
+  <ion-button expand="block" (click)="openModalAdd()">Add to cart</ion-button>
+  <p *ngIf="!checkGuestPermission()">We will show detail component of product after you receive the item!</p>
+</ion-footer>

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-modal-add',
@@ -13,9 +13,10 @@ export class ModalAddComponent implements OnInit {
 
   constructor(
     private modalController: ModalController,
+    public toastController: ToastController
   ) { }
 
-  ngOnInit() { }
+  ngOnInit( ) { }
 
   setCartLocalStorage() {
     let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -52,7 +53,17 @@ export class ModalAddComponent implements OnInit {
   choose() {
     this.setCartLocalStorage();
     const amount = this.amount;
-    this.modalController.dismiss(amount, 'ok');
+    this.modalController.dismiss(amount, 'ok').then(() => {
+      this.alertToast();
+    })
+  }
+
+  async alertToast() {
+    const toast = await this.toastController.create({
+      message: 'Add product successfully',
+      duration: 1000
+    });
+    toast.present();
   }
 
   dismissModal() {

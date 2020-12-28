@@ -1,4 +1,4 @@
-<ion-header class="ion-padding">
+<ion-header>
   <ion-buttons>
     <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
     <ion-label>Information product</ion-label>
@@ -20,41 +20,39 @@
 </ion-header>
 
 <ion-content>
+  <div *ngIf="curAddedProducts > 0" class="cart-wrapper" (click)="goToCart()">
+    <img src="assets/detail-product/cart.svg" class="cart-btn">
+    <span>+{{ curAddedProducts }}</span>
+  </div>
+
   <p class="absolute-center" *ngIf="accessories.length == 0 && loadedAccessories">Not found accessories.</p>
 
-  <ion-img src="assets/add-btn.svg" class="add-product-button" (click)="addProduct()"
-    *ngIf="!checkGuestPermission()"></ion-img>
+  <img src="assets/detail-product/add-btn.svg" class="add-product-button" (click)="addProduct()"
+    *ngIf="!checkGuestPermission()">
 
   <ion-card class="accessories" *ngIf="accessories.length != 0">
     <ion-card-header class="ion-text-center">
-      <span *ngIf="!checkGuestPermission()">Add product<br> with accessories below</span>
+      <span *ngIf="!checkGuestPermission()">Add product</span>
     </ion-card-header>
 
     <ion-card-content>
       <ion-item class="accessories-heading">
         <span>Accessories</span>
-        <ion-button class="add-all-button" slot="end" (click)="selectAllItem()" *ngIf="!checkGuestPermission()">
+        <!-- <ion-button class="add-all-button" slot="end" (click)="selectAllItem()" *ngIf="!checkGuestPermission()">
           Add all accessories
           <ion-icon name="add-circle-outline" slot="end"></ion-icon>
-        </ion-button>
+        </ion-button> -->
       </ion-item>
     </ion-card-content>
 
   </ion-card>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="cart-button" *ngIf="!checkGuestPermission()"
-    (click)="goToCart()">
-    <ion-fab-button>
-      <ion-icon name="cart-outline"></ion-icon>
-    </ion-fab-button>
-    <span *ngIf="curProductsLength > 0">+{{ curProductsLength}}</span>
-  </ion-fab>
-
   <ion-grid>
     <ion-row *ngFor="let accessory of accessories; let i = index;"
       [style.background]="getItem(accessoryIds[i]).background">
       <ion-col size="4">
-        <ion-img [src]="accessory.thumb_image.url" [style.height.px]="(scrWidth - 33.67) / 3 - 10"></ion-img>
+        <ion-img class="accessory-img" [src]="accessory.thumb_image.url"
+          [style.height.px]="(scrWidth - 33.67) / 3 - 10"></ion-img>
       </ion-col>
       <ion-col size="8">
         <div class="content-block" [style.color]="getItem(accessoryIds[i]).color">
@@ -63,11 +61,7 @@
         </div>
       </ion-col>
 
-      <div class="modifier" *ngIf="!checkGuestPermission()">
-        <span class="modifier-btn" (click)="decreaseQuantity(accessoryIds[i])">-</span>
-        <span class="counter">{{ accessoryIds[i].quantity }}</span>
-        <span class="modifier-btn" (click)="increaseQuantity(accessoryIds[i])">+</span>
-      </div>
+      <img *ngIf="!checkGuestPermission()" src="assets/add-btn.svg" class="add-accessory-btn" (click)="addProduct()">
     </ion-row>
   </ion-grid>
 

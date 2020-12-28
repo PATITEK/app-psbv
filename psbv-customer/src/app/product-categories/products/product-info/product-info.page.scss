@@ -17,13 +17,15 @@ ion-header {
 
   ion-buttons {
     position: relative;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    height: 90px;
+    padding-top: 10px;
 
     ion-back-button {
       color: #fff;
       position: absolute;
-      left: 0;
+      left: 8px;
+      top: calc(50% + 5px);
+      transform: translateY(-50%);
     }
 
     ion-label {
@@ -32,8 +34,13 @@ ion-header {
       font-weight: 700;
       margin: 0 auto;
       text-transform: uppercase;
+      padding-left: 56px;
+      padding-right: 56px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
 
-      @media screen and (max-width: 360px) {
+      @media screen and (max-width: 320px) {
         font-size: 17px;
       }
     }
@@ -62,6 +69,7 @@ ion-content {
   overflow: visible;
   z-index: 1;
   height: 278px;
+  padding: 0 13px;
 
   ion-card-content {
     padding: 0;
@@ -70,10 +78,10 @@ ion-content {
       position: relative;
 
       ion-img {
-        background: white;
         height: 160px;
         width: 160px;
         margin: 0 auto;
+        background: #fff;
 
         @media screen and (max-width: 360px) {
           height: 140px;
@@ -88,6 +96,8 @@ ion-content {
         right: 0;
         bottom: 0;
         margin: 0;
+        --border-radius: 7px;
+        text-transform: none;
 
         @media screen and (max-width: 360px) {
           font-size: 11px;
@@ -100,18 +110,23 @@ ion-content {
       text-transform: none;
       margin-top: 12px;
       color: white;
+      margin-left: 10px;
+      margin-right: 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     p {
-      overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 4;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
+      overflow: hidden;
       color: white;
       font-size: 13px;
-      padding: 0px 12px;
       line-height: 1.5;
-      height: 80px;
+      height: 60px;
+      margin: 0 20px;
     }
   }
 }
@@ -125,6 +140,7 @@ ion-content {
 
   ion-card-header {
     padding: 0;
+    margin-bottom: 5px;
 
     span {
       --color: #232323;
@@ -135,7 +151,7 @@ ion-content {
 
   ion-card-content {
     padding: 0;
-    border-top: 1px solid #e5e5e5;
+    border-top: 2px solid #e5e5e5;
 
     .accessories-heading {
       --padding-start: 12px;
@@ -161,7 +177,7 @@ ion-content {
 }
 
 ion-grid {
-  background: #FFF;
+  background: #fff;
   padding: 0;
   padding-left: 10px;
   padding-right: 10px;
@@ -176,7 +192,7 @@ ion-grid {
     align-items: flex-end;
     position: relative;
 
-    ion-img {
+    .acceessory-img {
       background: #fff;
     }
 
@@ -218,22 +234,116 @@ ion-grid {
 
 .add-product-button {
   position: fixed;
-  top: 382px;
+  top: 376px;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
+  box-shadow: 0px 3px 6px rgba(black, 0.8);
+  border-radius: 50%;
 
   @media screen and (max-width: 360px) {
     top: 357px;
   }
 }
 
-.cart-button {
-  ion-fab-button {
-    --background: linear-gradient(90deg, #e52d27 -0.01%, #b31217 100%);
-    border: 3px solid white;
-    border-radius: 999px;
-    overflow: visible;
+// .cart-button {
+//   ion-fab-button {
+//     --background: linear-gradient(90deg, #e52d27 -0.01%, #b31217 100%);
+//     border: 3px solid white;
+//     border-radius: 999px;
+//     overflow: visible;
+//   }
+
+//   span {
+//     display: inline-flex;
+//     justify-content: center;
+//     align-items: center;
+//     border: 1px solid #9d0000;
+//     padding: 9px;
+//     width: 25px;
+//     height: 25px;
+//     border-radius: 50%;
+//     color: black;
+//     background: white;
+//     font-size: 12px;
+//     font-weight: 700;
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+//   }
+// }
+
+// .modifier {
+//   display: inline-block;
+//   border-radius: 999px;
+//   background: white;
+//   padding: 3px;
+//   position: absolute;
+//   top: 5px;
+//   right: 5px;
+
+//   @media screen and (max-width: 360px) {
+//     padding: 1px 3px;
+//   }
+
+//   .modifier-btn {
+//     display: inline-flex;
+//     justify-content: center;
+//     align-items: center;
+//     border: 1px solid rgba(#2d2d2d, 0.15);
+//     padding: 9px;
+//     width: 30px;
+//     height: 30px;
+//     border-radius: 50%;
+//     color: #91e29b;
+//     font-size: 18px;
+
+//     @media screen and (max-width: 360px) {
+//       width: 25px;
+//       height: 25px;
+//     }
+//   }
+
+//   .counter {
+//     display: inline-block;
+//     width: 40px;
+//     text-align: center;
+//     font-size: 19px;
+//     font-weight: 700;
+//   }
+// }
+
+ion-infinite-scroll {
+  background: #fff;
+}
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.add-accessory-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 35px;
+  width: 35px;
+}
+
+.accessory-img {
+  background: #fff;
+}
+
+.cart-wrapper {
+  position: fixed;
+  right: 15px;
+  bottom: 10px;
+  z-index: 1;
+
+  .cart-btn {
+    height: 65px;
   }
 
   span {
@@ -251,57 +361,6 @@ ion-grid {
     font-weight: 700;
     position: absolute;
     top: 0;
-    right: 0;
+    right: 4px;
   }
-}
-
-.modifier {
-  display: inline-block;
-  border-radius: 999px;
-  background: white;
-  padding: 3px;
-  position: absolute;
-  top: 5px;
-  right: 5px;
-
-  @media screen and (max-width: 360px) {
-    padding: 1px 3px;
-  }
-
-  .modifier-btn {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid rgba(#2d2d2d, 0.15);
-    padding: 9px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    color: #91e29b;
-    font-size: 18px;
-
-    @media screen and (max-width: 360px) {
-      width: 25px;
-      height: 25px;
-    }
-  }
-
-  .counter {
-    display: inline-block;
-    width: 40px;
-    text-align: center;
-    font-size: 19px;
-    font-weight: 700;
-  }
-}
-
-ion-infinite-scroll {
-  background: #fff;
-}
-
-.absolute-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }

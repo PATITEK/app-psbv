@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DetailProductPageRoutingModule } from './detail-product-routing.module';
 
 import { DetailProductPage } from './detail-product.page';
-import { ModalAddComponent } from './modal-add/modal-add.component';
+import { ModalAddComponent } from '../product-info/product-detail/modal-add/modal-add.component';
 
 @NgModule({
   imports: [

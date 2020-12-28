@@ -6,7 +6,7 @@ import { ProductsService, PERMISSIONS } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 import { PageNotiService, IDataNoti } from 'src/app/@modular/page-noti/page-noti.service';
-import { ModalAddComponent } from 'src/app/home/detail-product/modal-add/modal-add.component';
+import { ModalAddComponent } from 'src/app/home/product-info/product-detail/modal-add/modal-add.component';
 
 @Component({
   selector: 'app-detail-product',

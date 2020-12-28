@@ -126,7 +126,7 @@ export class ProductsPage implements OnInit {
       categoryId: this.id,
       categoryTitle: this.title
     }
-    this.router.navigate(['main/product-categories/products/detail-product'], {
+    this.router.navigate(['main/product-categories/products/product-info'], {
       queryParams: {
         data: JSON.stringify(data)
       }

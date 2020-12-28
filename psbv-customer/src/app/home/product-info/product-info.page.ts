@@ -23,7 +23,7 @@ export class ProductInfoPage implements OnInit {
     per_page: 6,
     total_objects: 20
   }
-  counter: number = 0;
+  // counter: number = 0;
   permission: string;
   accessories = [];
   product = {
@@ -42,6 +42,7 @@ export class ProductInfoPage implements OnInit {
   curProductsLength = 0;
   loadedProduct = false;
   loadedAccessories = false;
+  curAddedProducts = 0;
 
   constructor(
     private router: Router,
@@ -65,12 +66,16 @@ export class ProductInfoPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.curProductsLength = 0;
+    this.curAddedProducts = JSON.parse(localStorage.getItem('curAddedProducts')) || 0;
 
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+  }
+
+  ngOnDestroy() {
+    localStorage.removeItem('curAddedProducts');
   }
 
   getScreenSize(event?) {
@@ -83,7 +88,8 @@ export class ProductInfoPage implements OnInit {
       this.router.navigateByUrl('/auth/login');
     } else {
       const data = {
-        id: this.product.id
+        id: this.product.id,
+        curAddedProducts: this.curAddedProducts
       }
       this.router.navigate(['/main/home/product-info/product-detail'], {
         queryParams: {
@@ -121,52 +127,59 @@ export class ProductInfoPage implements OnInit {
 
   addProduct(): void {
     // add product to cart
-    const product = {
+    // const product = {
+    //   id: this.product.id,
+    //   name: this.product.name,
+    //   quantity: 1, // default = 1
+    //   price: this.product.price,
+    //   accessories: this.accessoryIds.reduce((acc, cur) => {
+    //     if (cur.quantity > 0) {
+    //       let name;
+    //       for (let i of this.accessories) {
+    //         if (cur.id == i.id) {
+    //           name = i.name;
+    //           break;
+    //         }
+    //       }
+    //       acc.push({
+    //         id: cur.id,
+    //         name: name,
+    //         quantity: cur.quantity,
+    //         price: cur.price
+    //       });
+    //     }
+    //     return acc;
+    //   }, [])
+    // }
+
+    // let duplicate = false;
+    // for (let j of this.cartItems) {
+    //   if (product.id == j.id && this.isEqual(product.accessories, j.accessories)) {
+    //     j.quantity++;
+    //     duplicate = true;
+    //     break;
+    //   }
+    // }
+    // if (!duplicate) {
+    //   this.cartItems.push(product);
+    // }
+
+    // // update data
+    // this.setLocalStorage();
+
+    // // reset selected item
+    // this.accessoryIds.forEach(accessory => accessory.quantity = 0);
+
+    const data = {
       id: this.product.id,
-      name: this.product.name,
-      quantity: 1, // default = 1
-      price: this.product.price,
-      accessories: this.accessoryIds.reduce((acc, cur) => {
-        if (cur.quantity > 0) {
-          let name;
-          for (let i of this.accessories) {
-            if (cur.id == i.id) {
-              name = i.name;
-              break;
-            }
-          }
-          acc.push({
-            id: cur.id,
-            name: name,
-            quantity: cur.quantity,
-            price: cur.price
-          });
-        }
-        return acc;
-      }, [])
+      curAddedProducts: this.curAddedProducts,
+      doesOpenModal: true
     }
-
-    let duplicate = false;
-    for (let j of this.cartItems) {
-      if (product.id == j.id && this.isEqual(product.accessories, j.accessories)) {
-        j.quantity++;
-        duplicate = true;
-        break;
+    this.router.navigate(['/main/home/product-info/product-detail'], {
+      queryParams: {
+        data: JSON.stringify(data)
       }
-    }
-    if (!duplicate) {
-      this.cartItems.push(product);
-    }
-
-    if (this.curProductsLength < 99) {
-      this.curProductsLength++;
-    }
-
-    // update data
-    this.setLocalStorage();
-
-    // reset selected item
-    this.accessoryIds.forEach(accessory => accessory.quantity = 0);
+    });
   }
 
   checkGuestPermission(): boolean {
@@ -250,13 +263,13 @@ export class ProductInfoPage implements OnInit {
     localStorage.setItem('cartItems', JSON.stringify(this.cartItems))
   }
 
-  decreaseQuantity(accessory) {
-    if (accessory.quantity > 0) {
-      accessory.quantity--;
-    }
-  }
+  // decreaseQuantity(accessory) {
+  //   if (accessory.quantity > 0) {
+  //     accessory.quantity--;
+  //   }
+  // }
 
-  increaseQuantity(accessory) {
-    accessory.quantity++;
-  }
+  // increaseQuantity(accessory) {
+  //   accessory.quantity++;
+  // }
 }

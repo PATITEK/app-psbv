@@ -6,12 +6,6 @@ import { AccessoriesService, IPageRequest, PERMISSIONS, ProductsService } from '
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 
-export enum PERMISSION {
-  GUEST,
-  STANDARD,
-  PREMIUM
-};
-
 @Component({
   selector: 'app-product-info',
   templateUrl: './product-info.page.html',
@@ -29,6 +23,7 @@ export class ProductInfoPage implements OnInit {
     per_page: 6,
     total_objects: 20
   }
+  // counter: number = 0;
   permission: string;
   accessories = [];
   product = {
@@ -43,12 +38,11 @@ export class ProductInfoPage implements OnInit {
   }
   accessoryIds = [];
   products = [];
-  curProductsLength = 0;
   cartItems = [];
-  categoryId;
-  categoryTitle;
+  curProductsLength = 0;
   loadedProduct = false;
   loadedAccessories = false;
+  curAddedProducts = 0;
 
   constructor(
     private router: Router,
@@ -64,15 +58,24 @@ export class ProductInfoPage implements OnInit {
   }
 
   ngOnInit() {
-    this.loading.present();
-    this.loadData();
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
+    this.loading.present();
+    this.loadData();
   }
 
   ionViewWillEnter() {
-    this.curProductsLength = 0;
+    this.curAddedProducts = JSON.parse(localStorage.getItem('curAddedProducts')) || 0;
+
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'none';
+    });
+  }
+
+  ngOnDestroy() {
+    localStorage.removeItem('curAddedProducts');
   }
 
   getScreenSize(event?) {
@@ -80,24 +83,13 @@ export class ProductInfoPage implements OnInit {
     this.scrWidth = window.innerWidth;
   }
 
-  goBack(): void {
-    const data = {
-      id: this.categoryId,
-      title: this.categoryTitle
-    }
-    this.router.navigate(['main/product-categories/products'], {
-      queryParams: {
-        data: JSON.stringify(data)
-      }
-    })
-  }
-
   goToDetail(): void {
     if (this.checkGuestPermission()) {
       this.router.navigateByUrl('/auth/login');
     } else {
       const data = {
-        id: this.product.id
+        id: this.product.id,
+        curAddedProducts: this.curAddedProducts
       }
       this.router.navigate(['/main/product-categories/products/product-info/product-detail'], {
         queryParams: {
@@ -135,56 +127,63 @@ export class ProductInfoPage implements OnInit {
 
   addProduct(): void {
     // add product to cart
-    const product = {
+    // const product = {
+    //   id: this.product.id,
+    //   name: this.product.name,
+    //   quantity: 1, // default = 1
+    //   price: this.product.price,
+    //   accessories: this.accessoryIds.reduce((acc, cur) => {
+    //     if (cur.quantity > 0) {
+    //       let name;
+    //       for (let i of this.accessories) {
+    //         if (cur.id == i.id) {
+    //           name = i.name;
+    //           break;
+    //         }
+    //       }
+    //       acc.push({
+    //         id: cur.id,
+    //         name: name,
+    //         quantity: cur.quantity,
+    //         price: cur.price
+    //       });
+    //     }
+    //     return acc;
+    //   }, [])
+    // }
+
+    // let duplicate = false;
+    // for (let j of this.cartItems) {
+    //   if (product.id == j.id && this.isEqual(product.accessories, j.accessories)) {
+    //     j.quantity++;
+    //     duplicate = true;
+    //     break;
+    //   }
+    // }
+    // if (!duplicate) {
+    //   this.cartItems.push(product);
+    // }
+
+    // // update data
+    // this.setLocalStorage();
+
+    // // reset selected item
+    // this.accessoryIds.forEach(accessory => accessory.quantity = 0);
+
+    const data = {
       id: this.product.id,
-      name: this.product.name,
-      quantity: 1, // default = 1
-      price: this.product.price,
-      accessories: this.accessoryIds.reduce((acc, cur) => {
-        if (cur.quantity > 0) {
-          let name;
-          for (let i of this.accessories) {
-            if (cur.id == i.id) {
-              name = i.name;
-              break;
-            }
-          }
-          acc.push({
-            id: cur.id,
-            name: name,
-            quantity: cur.quantity,
-            price: cur.price
-          });
-        }
-        return acc;
-      }, [])
+      curAddedProducts: this.curAddedProducts,
+      doesOpenModal: true
     }
-
-    let duplicate = false;
-    for (let j of this.cartItems) {
-      if (product.id == j.id && this.isEqual(product.accessories, j.accessories)) {
-        j.quantity++;
-        duplicate = true;
-        break;
+    this.router.navigate(['/main/product-categories/products/product-info/product-detail'], {
+      queryParams: {
+        data: JSON.stringify(data)
       }
-    }
-    if (!duplicate) {
-      this.cartItems.push(product);
-    }
-
-    if (this.curProductsLength < 99) {
-      this.curProductsLength++;
-    }
-
-    // update data
-    this.setLocalStorage();
-
-    // reset selected item
-    this.accessoryIds.forEach(accessory => accessory.quantity = 0);
+    });
   }
 
   checkGuestPermission(): boolean {
-    return this.permission === PERMISSIONS[0].value;
+    return this.permission == PERMISSIONS[0].value;
   }
 
   loadData() {
@@ -220,8 +219,6 @@ export class ProductInfoPage implements OnInit {
             this.infinityScroll.disabled = true;
           }
         })
-        this.categoryId = JSON.parse(params['data']).categoryId;
-        this.categoryTitle = JSON.parse(params['data']).categoryTitle;
       }
     })
   }
@@ -266,13 +263,13 @@ export class ProductInfoPage implements OnInit {
     localStorage.setItem('cartItems', JSON.stringify(this.cartItems))
   }
 
-  decreaseQuantity(accessory) {
-    if (accessory.quantity > 0) {
-      accessory.quantity--;
-    }
-  }
+  // decreaseQuantity(accessory) {
+  //   if (accessory.quantity > 0) {
+  //     accessory.quantity--;
+  //   }
+  // }
 
-  increaseQuantity(accessory) {
-    accessory.quantity++;
-  }
+  // increaseQuantity(accessory) {
+  //   accessory.quantity++;
+  // }
 }
