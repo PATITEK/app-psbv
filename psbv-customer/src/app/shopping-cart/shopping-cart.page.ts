@@ -24,7 +24,9 @@ export class ShoppingCartPage implements OnInit {
     this.getScreenSize();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    
+   }
 
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
@@ -56,7 +58,7 @@ export class ShoppingCartPage implements OnInit {
 
   hasBackButton() {
     const backUrl = this.globalVariablesService.backUrlShoppingCart;
-    return backUrl.search('main/home/detail-product') != -1 || backUrl.search('main/product-categories/products/detail-product') != -1;
+    return backUrl.search('main/home/product-info') != -1 || backUrl.search('main/product-categories/products/product-info') != -1;
   }
 
   // calPrice(item) {

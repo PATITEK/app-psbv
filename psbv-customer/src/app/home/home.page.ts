@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonInfiniteScroll } from '@ionic/angular';
+import { AlertController, IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
 import { IPageRequest, PERMISSIONS, ProductsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 import { StorageService } from '../@app-core/storage.service';
@@ -61,12 +61,17 @@ export class HomePage implements OnInit {
   constructor(
     private router: Router,
     private productService: ProductsService,
+    public alertController: AlertController,
+    private platform: Platform,
     // public loading: LoadingService,
     private storageService: StorageService
   ) {
     this.getScreenSize();
   }
-
+  checkRoute() {
+    return this.router.url.search('main/home/detail-product') != -1 || this.router.url.search('main/product-categories/products/detail-product') != -1
+    
+  }
   ngOnInit() {
     // this.loading.present();
     this.storageService.infoAccount.subscribe((data) => {
@@ -81,7 +86,6 @@ export class HomePage implements OnInit {
     }
     this.loadData();
   }
-
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
@@ -144,6 +148,7 @@ export class HomePage implements OnInit {
     this.counter++;
     this.loadData();
   }
+  
 
   searchProducts(event?) {
     const counterTemp = this.counter;
