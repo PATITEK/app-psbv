@@ -1,34 +1,41 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../@app-core/auth-guard.service';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        path: 'home',
+        loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
       },
       {
-        path: 'tab2',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        path: 'product-categories',
+        loadChildren: () => import('../product-categories/product-categories.module').then(m => m.ProductCategoriesPageModule)
       },
       {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        path: 'shopping-cart',
+        loadChildren: () => import('../shopping-cart/shopping-cart.module').then(m => m.ShoppingCartPageModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'order-list',
+        loadChildren: () => import('../order-list/order-list.module').then(m => m.OrderListPageModule),
+        canActivate: [AuthGuard]
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/main/product-categories',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/main',
     pathMatch: 'full'
   }
 ];
@@ -37,4 +44,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Route } from '@angular/compiler/src/core';
+import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IonContent } from '@ionic/angular';
+import { GlobalVariablesService } from '../@app-core/global-variables.service';
 
 @Component({
   selector: 'app-tabs',
@@ -6,7 +10,17 @@ import { Component } from '@angular/core';
   styleUrls: ['tabs.page.scss']
 })
 export class TabsPage {
+  @ViewChild(IonContent) ionContent: IonContent;
 
-  constructor() {}
+  constructor(
+    private globalVariablesService: GlobalVariablesService
+  ) { }
 
+  ngOnInit() {
+
+  }
+
+  gotoShoppingCart() {
+    this.globalVariablesService.backUrlShoppingCart = '';
+  }
 }

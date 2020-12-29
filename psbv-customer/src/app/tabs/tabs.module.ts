@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
+import { AuthGuard } from '../@app-core/auth-guard.service';
 
 @NgModule({
   imports: [
@@ -13,6 +14,9 @@ import { TabsPage } from './tabs.page';
     CommonModule,
     FormsModule,
     TabsPageRoutingModule
+  ],
+  providers: [
+    AuthGuard
   ],
   declarations: [TabsPage]
 })

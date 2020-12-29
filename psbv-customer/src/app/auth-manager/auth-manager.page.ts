@@ -11,8 +11,8 @@ export class AuthManagerPage implements OnInit {
   constructor(private router: Router,) { }
 
   ngOnInit() {
-  }
-  gotoLogin(){
-    this.router.navigateByUrl('/login');
+    setTimeout(() => {
+      this.router.navigateByUrl('/main/product-categories');
+    }, 2000)
   }
 }

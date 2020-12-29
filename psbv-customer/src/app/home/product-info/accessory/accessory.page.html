@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-buttons>
+    <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+    <ion-label>Detail accessory</ion-label>
+  </ion-buttons>
+</ion-header>
+
+<ion-content>
+  <ion-img [src]="accessory.thumb_image.url" class="main-img" *ngIf="loadedAccessory"></ion-img>
+  <ion-card class="product-content">
+    <ion-backdrop *ngIf="!loadedAccessory"></ion-backdrop>
+    <ion-buttons class="product-name-wrapper">
+      <ion-label class="product-name">{{ accessory.name }}</ion-label>
+      <span class="product-price" *ngIf="!checkGuestPermission()">{{ accessory.price | number: '1.0-2' }}</span>
+    </ion-buttons>
+    <ion-label style="color: #424242; font-size: 15px; margin-left: 16px;">Info</ion-label>
+    <p class="product-desc">{{ accessory.description }}</p>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="block" (click)="openModalAdd()">Add to cart</ion-button>
+  <p *ngIf="!checkGuestPermission()">We will show detail component of product after you receive the item!</p>
+</ion-footer>
