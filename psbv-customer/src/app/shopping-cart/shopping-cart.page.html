@@ -15,21 +15,27 @@
         <span class="selected-btn" [style.background]="cartItemsSelected[i].selected ? '#91E29B' : 'white'"></span>
         <ion-label class="item-name" [style.max-width.px]="scrWidth - 170">{{ item.name }}</ion-label>
       </ion-buttons>
-      <ion-buttons>
-        <ion-img src="assets/shopping-cart/deliver-black.svg" class="delivery-icon"></ion-img>
-        <span class="delivery-day">1 day</span>
-      </ion-buttons>
+      <ion-buttons class="item-price">{{ item.price * item.amount | number: '1.0-2' }}</ion-buttons>
     </ion-buttons>
-    <ion-buttons class="ion-justify-content-around">
-      <ion-img [src]="item.url" class="item-img"></ion-img>
+    <ion-buttons class="ion-justify-content-end">
+      <!-- <ion-img [src]="item.url" class="item-img"></ion-img> -->
       <ion-item-group class="ion-text-center">
-        <p class="item-price">{{ item.price * item.amount | number: '1.0-2' }}</p>
         <div class="modifier">
           <span class="modifier-btn" (click)="decreaseAmount(item)">-</span>
           <span class="counter">{{ item.amount }}</span>
           <span class="modifier-btn" (click)="increaseAmount(item)">+</span>
         </div>
       </ion-item-group>
+    </ion-buttons>
+    <ion-buttons class="ion-justify-content-end ion-margin-top ion-margin-end">
+      <img src="assets/shopping-cart/deliver-black.svg" class="delivery-icon">
+      <span class="delivery-day">1 day</span>
+    </ion-buttons>
+    <ion-buttons class="total-group">
+      <span>{{ item.price * item.amount | number: '1.0-2' }}</span>
+      <span class="separation"></span>
+      <span *ngIf="item.kind == 'product'">{{ item.amount }} products</span>
+      <span *ngIf="item.kind == 'accessory'">{{ item.amount }} accessories</span>
     </ion-buttons>
   </ion-card>
 </ion-content>
@@ -45,6 +51,7 @@
       <span class="total-product">{{ calSelectedProducts() }} products</span>
       <span class="total-price"></span>
     </ion-item-group>
-    <ion-button class="btn-send" [disabled]="checkAllNotSelected()" (click)="goToSelectedItems()">Send a quote</ion-button>
+    <ion-button class="btn-send" [disabled]="checkAllNotSelected()" (click)="goToSelectedItems()">Send a quote
+    </ion-button>
   </ion-buttons>
 </ion-footer>

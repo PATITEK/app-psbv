@@ -24,9 +24,7 @@ export class ShoppingCartPage implements OnInit {
     this.getScreenSize();
   }
 
-  ngOnInit() {
-    
-   }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');

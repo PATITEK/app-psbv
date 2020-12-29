@@ -53,8 +53,8 @@ ion-content {
   --background: #fff;
   position: relative;
   overflow: visible;
-  margin: 5px 5px 10px;
-  padding: 6px 10px;
+  margin: 5px 5px 36px;
+  padding: 6px 10px 44px;
   border-radius: 20px;
 
   .remove-btn {
@@ -68,7 +68,7 @@ ion-content {
     justify-content: space-between;
     background: #f7f7f7;
     border-radius: 20px;
-    padding: 9px;
+    padding-left: 9px;
     margin-bottom: 5px;
 
     .item-name {
@@ -102,6 +102,10 @@ ion-content {
     color: #d22321;
     font-size: 18px;
     font-weight: 700;
+    background: #e0e0e0;
+    height: 38px;
+    border-radius: 20px;
+    padding: 0 15px;
   }
 }
 
@@ -116,14 +120,14 @@ ion-content {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgba(#2d2d2d, 0.15);
+    border: 1px solid rgba(45, 45, 45, 0.025);
     padding: 9px;
     width: 45px;
     height: 45px;
     border-radius: 50%;
     color: #91e29b;
     font-size: 29px;
-    background: #fff;
+    background: #f9f9f9;
 
     &:active {
       background: #91e29b;
@@ -144,7 +148,7 @@ ion-content {
 ion-footer {
   box-shadow: 0px -1px 7px rgba(black, 0.4);
   z-index: 11;
-  background: #F4F4F4;
+  background: #f4f4f4;
 
   .footer-inner {
     justify-content: space-around;
@@ -175,7 +179,7 @@ ion-footer {
 
   .btn-send {
     color: #fff;
-    background: #91E29B;
+    background: #91e29b;
     border-radius: 30px;
     height: 47px;
     font-size: 15px;
@@ -189,4 +193,24 @@ ion-footer {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.total-group {
+  background: linear-gradient(90deg, #e52d27 0.03%, #b31217 100.03%);
+  display: inline-flex;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #fff;
+  padding: 5px 10px;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+
+  .separation {
+    width: 1px;
+    height: 32px;
+    background: #fff;
+    margin: 0 9px;
+  }
 }
