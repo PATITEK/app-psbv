@@ -42,18 +42,18 @@ export class SelectedItemsPage implements OnInit {
     //   this.pageNotiService.setdataStatusNoti(data);
     //   this.router.navigate(['/statusNoti']);
 
-    // })
-   
+    // }
   }
-
-  
 
   calTotalPrice() {
     return this.items.reduce((acc, cur) => acc + cur.price * cur.amount, 0);
   }
 
-  calTotalItem() {
-    return this.items.reduce((acc, cur) => acc + cur.amount, 0);
+  calTotalProducts() {
+    return this.items.reduce((acc, cur) => cur.kind == 'product' ? acc + cur.amount : acc, 0);
   }
 
+  calTotalAccessories() {
+    return this.items.reduce((acc, cur) => cur.kind == 'accessory' ? acc + cur.amount : acc, 0);
+  }
 }
