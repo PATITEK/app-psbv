@@ -2,10 +2,10 @@
 <widget encoding="utf-8" id="io.ionic.starter" version="0.0.1" xmlns:gap="http://phonegap.com/ns/1.0"> 
 xmlns="http://www.w3.org/ns/widgets" 
 xmlns:cdv="http://cordova.apache.org/ns/1.0"&gt;
-                                                                                                                                                                                                                                                                                        <name>MyApp</name>
+                                                                                                                                                                                                                                                                                                                <name>MyApp</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://localhost:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -106,4 +106,5 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0"&gt;
     <plugin name="cordova.plugins.diagnostic" spec="^3.7.1" />
     <allow-navigation href="*" />
     <allow-navigation href="http://localhost:8100" sessionid="25bdb1ab" />
+    <allow-navigation href="http://localhost:8101" sessionid="1e94a3d8" />
 </widget>

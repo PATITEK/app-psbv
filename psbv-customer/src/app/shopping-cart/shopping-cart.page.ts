@@ -58,6 +58,7 @@ export class ShoppingCartPage implements OnInit {
     const backUrl = this.globalVariablesService.backUrlShoppingCart;
     return backUrl.search('main/home/product-info') != -1 || backUrl.search('main/product-categories/products/product-info') != -1;
   }
+  
 
   // calPrice(item) {
   //   return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;

@@ -55,9 +55,7 @@ export class HomePage implements OnInit {
   dataTrending = [];
   isMaxDataTrending = false;
   isLoadingTrending = true;
-
   dataSeenProducts = JSON.parse(localStorage.getItem('seenProducts')) || [];
-
   constructor(
     private router: Router,
     private productService: ProductsService,
@@ -148,8 +146,6 @@ export class HomePage implements OnInit {
     this.counter++;
     this.loadData();
   }
-  
-
   searchProducts(event?) {
     const counterTemp = this.counter;
     this.productService.searchProduct(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
@@ -181,7 +177,6 @@ export class HomePage implements OnInit {
       }
     })
   }
-
   loadProducts(event?) {
     this.productService.getProducts(this.pageRequest).subscribe(data => {
       for (let item of data.products) {
