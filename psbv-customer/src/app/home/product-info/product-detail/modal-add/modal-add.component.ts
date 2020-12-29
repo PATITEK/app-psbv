@@ -16,13 +16,10 @@ export class ModalAddComponent implements OnInit {
     public toastController: ToastController
   ) { }
 
-  ngOnInit( ) {
-    console.log(this.data);
-   }
+  ngOnInit( ) {}
 
   setCartLocalStorage() {
     let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    console.log(this.data);
 
     // check duplicated
     let duplicated = false;

@@ -195,6 +195,7 @@ export class ShoppingCartPage implements OnInit {
           id: this.cartItems[index].id,
           amount: this.cartItems[index].amount,
           price: this.cartItems[index].price,
+          kind: this.cartItems[index].kind
           // accessories: this.cartItems[index].accessories.filter(a => a.quantity > 0)
         }
 
