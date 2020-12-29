@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AlertController, ToastController } from '@ionic/angular';
 import { OrdersService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 
 @Component({
-  selector: 'app-order-detail',
-  templateUrl: './order-detail.page.html',
-  styleUrls: ['./order-detail.page.scss'],
+  selector: 'app-order-detail-history',
+  templateUrl: './order-detail-history.page.html',
+  styleUrls: ['./order-detail-history.page.scss'],
 })
-export class OrderDetailPage implements OnInit {
+export class OrderDetailHistoryPage implements OnInit {
   data = {
     id: '',
     code: ' ',
@@ -24,7 +25,9 @@ export class OrderDetailPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private ordersService: OrdersService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private alertController: AlertController,
+    public toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -35,14 +38,14 @@ export class OrderDetailPage implements OnInit {
         this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
           this.data = data.order;
 
-          if (this.checkConfirmedStatus()) {
-            const dateTime = this.data.audits[0].created_at;
-            this.pushData(dateTime, 'Time confirmed');
-          } else if (this.checkShippingStatus()) {
-            const dateTime1 = this.data.audits[0].created_at;
-            const dateTime2 = this.data.audits[1].created_at;
-            this.pushData(dateTime1, 'Time confirmed', dateTime2, 'Time shipping');
-          } else if (this.checkReceivedStatus()) {
+          // if (this.checkConfirmedStatus()) {
+          //   const dateTime = this.data.audits[0].created_at;
+          //   this.pushData(dateTime, 'Time confirmed');
+          // } else if (this.checkShippingStatus()) {
+          //   const dateTime1 = this.data.audits[0].created_at;
+          //   const dateTime2 = this.data.audits[1].created_at;
+          //   this.pushData(dateTime1, 'Time confirmed', dateTime2, 'Time shipping');
+           if (this.checkReceivedStatus()) {
             const dateTime1 = this.data.audits[1].created_at;
             const dateTime2 = this.data.audits[2].created_at;
             this.pushData(dateTime1, 'Time shipping', dateTime2, 'Time received');
@@ -89,13 +92,13 @@ export class OrderDetailPage implements OnInit {
     }
   }
 
-  checkConfirmedStatus(): boolean {
-    return this.data.status == this.ordersService.STATUSES[0].NAME;
-  }
+  // checkConfirmedStatus(): boolean {
+  //   return this.data.status == this.ordersService.STATUSES[0].NAME;
+  // }
 
-  checkShippingStatus() {
-    return this.data.status == this.ordersService.STATUSES[1].NAME;
-  }
+  // checkShippingStatus() {
+  //   return this.data.status == this.ordersService.STATUSES[1].NAME;
+  // }
 
   checkReceivedStatus(): boolean {
     return this.data.status == this.ordersService.STATUSES[2].NAME;
@@ -105,7 +108,47 @@ export class OrderDetailPage implements OnInit {
     return this.data.status == this.ordersService.STATUSES[3].NAME;
   }
 
-  // goToDetailComponent() {
-  //   this.router.navigateByUrl('main/order-list/detail-order/detail-component');
-  // }
+  goToDetailComponent() {
+    if (this.checkReceivedStatus()) {
+      this.router.navigateByUrl('main/order-list/detail-order/detail-component');
+    }
+  }
+  
+  calProductsAmount() {
+    return this.data.order_details.filter(a => a.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME).length;
+  }
+
+  calAccessoriesAmount() {
+    return this.data.order_details.filter(a => a.yieldable_type == this.ordersService.TYPES.ACCESSORY.NAME).length;
+  }
+
+  async openModalReOrder(item) {
+    const alert = await this.alertController.create({
+      message: `Add ${this.calProductsAmount()} products & ${this.calAccessoriesAmount()} accessories to cart?`,
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.alertToast();
+            return;
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            return;
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async alertToast() {
+    const toast = await this.toastController.create({
+      message: `Add to cart successfully`,
+      duration: 1000
+    });
+    toast.present();
+  }
 }

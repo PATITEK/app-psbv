@@ -58,14 +58,14 @@ ion-content {
 
 .order-item {
   margin: 2px 2px 19px;
-  padding: 16px 10px 0;
+  padding: 16px 10px 1px;
   border-radius: 20px;
   overflow: visible;
 }
 
-.order-item-history {
-  padding-bottom: 38px;
-}
+// .order-item-history {
+//   padding-bottom: 38px;
+// }
 
 .absolute-center {
   position: absolute;

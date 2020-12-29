@@ -116,22 +116,44 @@ export class OrderListPage implements OnInit {
     }
   }
 
-  gotoDetailOrder(item) {
+  // gotoDetailOrder(item) {
+  //   const data = {
+  //     orderId: item.id
+  //   }
+  //   this.router.navigate(['main/order-list/detail-order'], {
+  //     queryParams: {
+  //       data: JSON.stringify(data)
+  //     }
+  //   })
+  // }
+
+  // gotoOrderStatus(item) {
+  //   const data = {
+  //     orderId: item.id
+  //   }
+  //   this.router.navigate(['main/order-list/order-status-detail'], {
+  //     queryParams: {
+  //       data: JSON.stringify(data)
+  //     }
+  //   })
+  // }
+
+  goToOrderDetail(item) {
     const data = {
       orderId: item.id
     }
-    this.router.navigate(['main/order-list/detail-order'], {
+    this.router.navigate(['main/order-list/order-detail'], {
       queryParams: {
         data: JSON.stringify(data)
       }
     })
   }
 
-  gotoOrderStatus(item) {
+  goToOrderDetailHistory(item) {
     const data = {
       orderId: item.id
     }
-    this.router.navigate(['main/order-list/order-status-detail'], {
+    this.router.navigate(['main/order-list/order-detail-history'], {
       queryParams: {
         data: JSON.stringify(data)
       }
@@ -174,8 +196,6 @@ export class OrderListPage implements OnInit {
   }
 
   calTotalPrice(item) {
-    return item.reduce((acc, cur) => {
-
-    })
+    return item.order_details.reduce((acc, cur) => acc + cur.amount * cur.price, 0);
   }
 }
