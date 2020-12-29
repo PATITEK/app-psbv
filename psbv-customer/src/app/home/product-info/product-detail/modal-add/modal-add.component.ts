@@ -7,7 +7,7 @@ import { ModalController, ToastController } from '@ionic/angular';
   styleUrls: ['./modal-add.component.scss'],
 })
 export class ModalAddComponent implements OnInit {
-  @Input() product: any;
+  @Input() data: any;
 
   amount = 1;
 
@@ -16,23 +16,26 @@ export class ModalAddComponent implements OnInit {
     public toastController: ToastController
   ) { }
 
-  ngOnInit( ) { }
+  ngOnInit( ) {
+    console.log(this.data);
+   }
 
   setCartLocalStorage() {
     let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    console.log(this.data);
 
-    // check duplicated product
+    // check duplicated
     let duplicated = false;
     for (let i of cartItems) {
-      if (this.product.id == i.id) {
+      if (i.kind == this.data.kind && this.data.id == i.id) {
         i.amount += this.amount;
         duplicated = true;
         break;
       }
     }
     if (!duplicated) {
-      this.product.amount = this.amount;
-      cartItems.push(this.product);
+      this.data.amount = this.amount;
+      cartItems.push(this.data);
     }
 
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -60,7 +63,7 @@ export class ModalAddComponent implements OnInit {
 
   async alertToast() {
     const toast = await this.toastController.create({
-      message: 'Add product successfully',
+      message: `Add ${this.data.kind} successfully`,
       duration: 1000
     });
     toast.present();

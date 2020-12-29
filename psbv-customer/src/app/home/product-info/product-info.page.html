@@ -20,9 +20,9 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="curAddedProducts > 0" class="cart-wrapper" (click)="goToCart()">
+  <div *ngIf="added" class="cart-wrapper" (click)="goToCart()">
     <img src="assets/detail-product/cart.svg" class="cart-btn">
-    <span>+{{ curAddedProducts }}</span>
+    <span>+{{ cartItemsLength }}</span>
   </div>
 
   <p class="absolute-center" *ngIf="accessories.length == 0 && loadedAccessories">Not found accessories.</p>
@@ -61,7 +61,7 @@
         </div>
       </ion-col>
 
-      <img *ngIf="!checkGuestPermission()" src="assets/add-btn.svg" class="add-accessory-btn" (click)="addProduct()">
+      <img *ngIf="!checkGuestPermission()" src="assets/add-btn.svg" class="add-accessory-btn" (click)="addAccessory(accessory)">
     </ion-row>
   </ion-grid>
 
