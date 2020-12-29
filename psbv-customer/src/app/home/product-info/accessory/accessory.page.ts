@@ -1,41 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
-import { PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
+import { ModalController } from '@ionic/angular';
+import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
+import { PERMISSIONS, AccessoriesService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
-import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
-import { ModalController } from '@ionic/angular';
-import { ModalAddComponent } from './modal-add/modal-add.component';
+import { ModalAddComponent } from '../product-detail/modal-add/modal-add.component';
 
 @Component({
-  selector: 'app-product-detail',
-  templateUrl: './product-detail.page.html',
-  styleUrls: ['./product-detail.page.scss'],
+  selector: 'app-accessory',
+  templateUrl: './accessory.page.html',
+  styleUrls: ['./accessory.page.scss'],
 })
-export class ProductDetailPage implements OnInit {
-  product = {
+export class AccessoryPage implements OnInit {
+  accessory = {
     id: '',
     name: ' ',
     description: ' ',
-    short_description: ' ',
     thumb_image: {
       url: ''
     },
     price: 0
   }
 
-  loadedProduct = false;
+  loadedAccessory = false;
   permission = '';
   added: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductsService,
+    private accessoriesService: AccessoriesService,
     private loadingService: LoadingService,
     private storageService: StorageService,
-    private pageNotiService: PageNotiService,
     public globalVariablesService: GlobalVariablesService,
     public modalController: ModalController,
   ) { }
@@ -76,11 +73,11 @@ export class ProductDetailPage implements OnInit {
         cssClass: 'modal-add-detail-product',
         componentProps: {
           data: {
-            id: this.product.id,
-            name: this.product.name,
+            id: this.accessory.id,
+            name: this.accessory.name,
             amount: 0,
-            price: this.product.price,
-            kind: 'product'
+            price: this.accessory.price,
+            kind: 'accessory'
             // url: this.product.thumb_image.url
           }
         }
@@ -100,27 +97,13 @@ export class ProductDetailPage implements OnInit {
 
   loadData() {
     this.route.queryParams.subscribe(params => {
-      if (params.data !== undefined && !this.loadedProduct) {
-        this.productService.getProductDetail(JSON.parse(params['data']).id).subscribe(data => {
-          this.product = data.product;
-          this.loadedProduct = true;
+      if (params.data !== undefined && !this.loadedAccessory) {
+        this.accessoriesService.getAccessoryDetail(JSON.parse(params['data']).id).subscribe(data => {
+          this.accessory = data.accessory;
+          this.loadedAccessory = true;
           this.loadingService.dismiss();
-
-          if (JSON.parse(params['data']).doesOpenModal) {
-            this.openModalAdd();
-          }
         });
       }
     })
-  }
-
-  downloadTechnical() {
-    const data: IDataNoti = {
-      title: 'DOWNLOAD DONE',
-      description: '',
-      routerLink: 'main/home'
-    }
-    this.pageNotiService.setdataStatusNoti(data);
-    this.router.navigate(['/statusNoti']);
   }
 }

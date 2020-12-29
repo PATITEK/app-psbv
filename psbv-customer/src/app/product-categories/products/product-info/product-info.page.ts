@@ -38,11 +38,10 @@ export class ProductInfoPage implements OnInit {
   }
   accessoryIds = [];
   products = [];
-  cartItems = [];
-  curProductsLength = 0;
+  cartItemsLength = 0;
   loadedProduct = false;
   loadedAccessories = false;
-  curAddedProducts = 0;
+  added = JSON.parse(localStorage.getItem('added')) || false;
 
   constructor(
     private router: Router,
@@ -53,7 +52,8 @@ export class ProductInfoPage implements OnInit {
     private storageService: StorageService,
     private globalVariablesService: GlobalVariablesService
   ) {
-    this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
+    this.cartItemsLength = arr.length;
     this.getScreenSize();
   }
 
@@ -66,7 +66,9 @@ export class ProductInfoPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.curAddedProducts = JSON.parse(localStorage.getItem('curAddedProducts')) || 0;
+    this.added = JSON.parse(localStorage.getItem('added')) || false;
+    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
+    this.cartItemsLength = arr.length;
 
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
@@ -75,7 +77,7 @@ export class ProductInfoPage implements OnInit {
   }
 
   ngOnDestroy() {
-    localStorage.removeItem('curAddedProducts');
+    localStorage.removeItem('added');
   }
 
   getScreenSize(event?) {
@@ -89,7 +91,7 @@ export class ProductInfoPage implements OnInit {
     } else {
       const data = {
         id: this.product.id,
-        curAddedProducts: this.curAddedProducts
+        added: this.added
       }
       this.router.navigate(['/main/product-categories/products/product-info/product-detail'], {
         queryParams: {
@@ -172,10 +174,22 @@ export class ProductInfoPage implements OnInit {
 
     const data = {
       id: this.product.id,
-      curAddedProducts: this.curAddedProducts,
+      added: this.added,
       doesOpenModal: true
     }
     this.router.navigate(['/main/product-categories/products/product-info/product-detail'], {
+      queryParams: {
+        data: JSON.stringify(data)
+      }
+    });
+  }
+
+  addAccessory(accessory) {
+    const data = {
+      id: accessory.id,
+      added: this.added
+    }
+    this.router.navigate(['/main/product-categories/products/product-info/accessory'], {
       queryParams: {
         data: JSON.stringify(data)
       }
@@ -259,9 +273,9 @@ export class ProductInfoPage implements OnInit {
     }
   }
 
-  setLocalStorage() {
-    localStorage.setItem('cartItems', JSON.stringify(this.cartItems))
-  }
+  // setLocalStorage() {
+  //   localStorage.setItem('cartItems', JSON.stringify(this.cartItems))
+  // }
 
   // decreaseQuantity(accessory) {
   //   if (accessory.quantity > 0) {

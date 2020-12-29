@@ -18,7 +18,7 @@
       <span class="product-price" *ngIf="!checkGuestPermission()">{{ product.price | number: '1.0-2' }}</span>
     </ion-buttons>
     <ion-label style="color: #424242; font-size: 15px; margin-left: 16px;">Info</ion-label>
-    <p class="product-desc">{{ checkGuestPermission() ? product.short_description : product.description }}</p>
+    <p class="product-desc">{{ product.description }}</p>
     <p *ngIf="checkPremiumPermission()" class="technical">
       Technical drawings <br>
       <span class="link" (click)="downloadTechnical()">https://docs.google.com/d...</span>

@@ -27,7 +27,7 @@ export class ProductDetailPage implements OnInit {
 
   loadedProduct = false;
   permission = '';
-  curAddedProducts = 0;
+  added: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,22 +45,14 @@ export class ProductDetailPage implements OnInit {
       this.permission = data !== null ? data.role : PERMISSIONS[0].value;
     })
     this.route.queryParams.subscribe(params => {
-      this.curAddedProducts = JSON.parse(params['data']).curAddedProducts;
+      this.added = JSON.parse(params['data']).added;
     })
     this.loadingService.present();
     this.loadData();
   }
 
-  ionViewWillEnter() {
-    this.route.queryParams.subscribe(params => {
-      if (JSON.parse(params['data']).doesOpenModal) {
-        this.openModalAdd();
-      }
-    })
-  }
-
   ionViewWillLeave() {
-    localStorage.setItem('curAddedProducts', JSON.stringify(this.curAddedProducts));
+    localStorage.setItem('added', JSON.stringify(this.added));
   }
 
   checkGuestPermission() {
@@ -83,11 +75,12 @@ export class ProductDetailPage implements OnInit {
         component: ModalAddComponent,
         cssClass: 'modal-add-detail-product',
         componentProps: {
-          product: {
+          data: {
             id: this.product.id,
             name: this.product.name,
             amount: 0,
             price: this.product.price,
+            kind: 'product'
             // url: this.product.thumb_image.url
           }
         }
@@ -96,10 +89,11 @@ export class ProductDetailPage implements OnInit {
 
       const { data: amount, role } = await modal.onWillDismiss();
       if (role == 'ok') {
-        const a = this.curAddedProducts + amount;
-        if (a <= 99) {
-          this.curAddedProducts = a;
-        }
+        // const a = this.curAddedProducts + amount;
+        // if (a <= 99) {
+        //   this.curAddedProducts = a;
+        // }
+        this.added = true;
       }
     }
   }
@@ -111,6 +105,10 @@ export class ProductDetailPage implements OnInit {
           this.product = data.product;
           this.loadedProduct = true;
           this.loadingService.dismiss();
+          
+          if (JSON.parse(params['data']).doesOpenModal) {
+            this.openModalAdd();
+          }
         });
       }
     })
