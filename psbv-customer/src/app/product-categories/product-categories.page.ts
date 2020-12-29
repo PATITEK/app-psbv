@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
+import { AlertController, IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
 import { IPageRequest, ProductGroupsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 
@@ -31,6 +31,8 @@ export class ProductCategoriesPage implements OnInit {
     private router: Router,
     private productGroupService: ProductGroupsService,
     // private loading: LoadingService,
+    public alertController: AlertController,
+
     private platform: Platform
   ) {
     this.reset();
@@ -38,10 +40,44 @@ export class ProductCategoriesPage implements OnInit {
   }
 
   ngOnInit() {
-    // this.loading.present();
+    // this.loadingService.present();
     this.loadData();
+    
+    this.platform.backButton.subscribe(() => {
+      if (this.router.url === '/main/product-categories'){
+        console.log('222');
+        this.presentAlert();
+      }
+      else {
+
+        return;
+      }
+    }
+    )
   }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'logout-alert',
+      message: 'Do you want to exit product-category app?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            navigator['app'].exitApp();
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            return;
+          }
+        },
+
+      ]
+    });
+    await alert.present();
+  }
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {

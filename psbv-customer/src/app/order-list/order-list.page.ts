@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonInfiniteScroll } from '@ionic/angular';
+import { AlertController, IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
 import { OrdersService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 
@@ -38,12 +38,48 @@ export class OrderListPage implements OnInit {
   constructor(
     private router: Router,
     private ordersService: OrdersService,
-    private loadingService: LoadingService
-  ) { }
+    private loadingService: LoadingService,
+    public alertController: AlertController,
+    private platform: Platform,
 
+  ) { }
   ngOnInit() {
     // this.loadingService.present();
     this.loadData();
+    this.platform.backButton.subscribe(() => {
+      if(this.router.url === '/main/order-list'){
+        console.log('222');
+        this.presentAlert();
+      }
+      else {
+
+        return;
+      }
+    }
+    )
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'logout-alert',
+      message: 'Do you want to exit order-list app?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            navigator['app'].exitApp();
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            return;
+          }
+        },
+
+      ]
+    });
+    await alert.present();
   }
 
   ionViewWillEnter() {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
+import { AlertController, Platform } from '@ionic/angular';
 import { GlobalVariablesService } from '../@app-core/global-variables.service';
 @Component({
   selector: 'app-shopping-cart',
@@ -15,17 +15,88 @@ export class ShoppingCartPage implements OnInit {
 
   scrHeight: any;
   scrWidth: any;
-
+  private previousUrl: string = undefined;
+  private currentUrl: string = undefined;
   constructor(
     private alertController: AlertController,
     private router: Router,
+    private platform: Platform,
     private globalVariablesService: GlobalVariablesService
   ) {
     this.getScreenSize();
+  
   }
+  
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.platform.backButton.subscribeWithPriority(99999,() => {
+      if (this.router.url === '/main/shopping-cart') {
+        console.log('sp');
+        this.presentAlert1();
+      }
+      else {
 
+        return;
+      }
+    })
+    // document.addEventListener('backbutton', () => {
+    //   if (!this.hasBackButton()) {
+    //     this.presentAlert1();
+    //   }
+    //   else {
+    //     return;
+    //   }
+    // })
+  //   this.platform.backButton.subscribeWithPriority(9999, () => {
+  //     document.addEventListener('backbutton', function (event) {
+  //       event.preventDefault();
+  //       event.stopPropagation();
+  //       this.presentAlert();
+  //       console.log('hello');
+  //     }, false);
+    
+  // })
+    // document.addEventListener('backbutton', function (event) {
+    //   if (!this.hasBackButton()){
+    //     console.log('chưa show');
+      
+    //     console.log('vo roi');
+    //     event.preventDefault();
+    //     event.stopPropagation();
+    //    }
+    // });
+  
+   
+    // this.platform.backButton.subscribe(() => {
+    //   if (!this.hasBackButton()){
+           
+    //       this.presentAlert();
+    //     }
+    // }) 
+  }
+  async presentAlert1() {
+    const alert = await this.alertController.create({
+      cssClass: 'logout-alert',
+      message: 'Do you want to exit ở shopping-cart ?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            navigator['app'].exitApp();
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            return;
+          }
+        },
+  
+      ]
+    });
+    await alert.present();
+  }
+ 
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
@@ -58,6 +129,7 @@ export class ShoppingCartPage implements OnInit {
     const backUrl = this.globalVariablesService.backUrlShoppingCart;
     return backUrl.search('main/home/product-info') != -1 || backUrl.search('main/product-categories/products/product-info') != -1;
   }
+  
 
   // calPrice(item) {
   //   return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;

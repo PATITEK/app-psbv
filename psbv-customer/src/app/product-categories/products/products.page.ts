@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, Platform } from '@ionic/angular';
+import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
 import { IPageRequest, PERMISSIONS, ProductGroupsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
@@ -33,12 +34,34 @@ export class ProductsPage implements OnInit {
     private route: ActivatedRoute,
     private productGroupService: ProductGroupsService,
     private loading: LoadingService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private platform: Platform,
+    private globalVariablesService: GlobalVariablesService
+
   ) {
     this.getScreenSize();
+    console.log('hihi');
    }
 
   ngOnInit() {
+   
+    this.platform.backButton.subscribe((event) => {
+      console.log('hello');
+     
+    }) 
+    this.platform.backButton.subscribeWithPriority(9999, () => {
+      console.log('hello');
+
+      document.addEventListener('backbutton', function (event) {
+        console.log('hello');
+
+        event.preventDefault();
+        event.stopPropagation();
+      }, false);
+    
+    
+  })
+   
     this.loading.present();
     this.loadData();
     this.storageService.infoAccount.subscribe((data) => {

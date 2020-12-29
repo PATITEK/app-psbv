@@ -63,6 +63,8 @@ export class ProductInfoPage implements OnInit {
     })
     this.loading.present();
     this.loadData();
+    console.log(this.router.url);
+
   }
 
   ionViewWillEnter() {

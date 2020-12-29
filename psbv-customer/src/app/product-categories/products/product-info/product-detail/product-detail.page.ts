@@ -49,6 +49,7 @@ export class ProductDetailPage implements OnInit {
     // })
     this.loadingService.present();
     this.loadData();
+    console.log(this.router.url);
   }
 
   ionViewWillLeave() {
