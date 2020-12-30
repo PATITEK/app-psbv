@@ -77,20 +77,30 @@ export class OrderListPage implements OnInit {
   loadDataHistory() {
     this.isLoadingHistory = true;
     this.ordersService.getHistory(this.pageRequestHistory).subscribe(data => {
+      let duplicated = false;
       for (let item of data.orders) {
-        this.dataHistory.push(item);
+        if (this.dataHistory.some(a => a.id == item.id)) {
+          duplicated = true;
+        }
+        if (!duplicated) {
+          this.dataHistory.push(item);
+        } else {
+          break;
+        }
       }
 
       this.isLoadingHistory = false;
 
       // this.loadingService.dismiss();
-      this.infinityScrollHistory.complete();
-      this.pageRequestHistory.page++;
+      if (!duplicated) {
+        this.infinityScrollHistory.complete();
+        this.pageRequestHistory.page++;
 
-      // check max data
-      if (this.dataHistory.length >= data.meta.pagination.total_objects) {
-        this.infinityScrollHistory.disabled = true;
-        this.loadedDataHistory = true;
+        // check max data
+        if (this.dataHistory.length >= data.meta.pagination.total_objects) {
+          this.infinityScrollHistory.disabled = true;
+          this.loadedDataHistory = true;
+        }
       }
     })
   }
@@ -160,11 +170,11 @@ export class OrderListPage implements OnInit {
     })
   }
 
-  goToReOrder(item) {
-    const data = {
-      orderId: item.id
-    }
-  }
+  // goToReOrder(item) {
+  //   const data = {
+  //     orderId: item.id
+  //   }
+  // }
 
   calProductsAmount(item) {
     return item.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME ? acc + cur.amount : acc, 0)
