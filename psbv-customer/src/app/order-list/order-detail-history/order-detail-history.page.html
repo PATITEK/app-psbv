@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-buttons>
+    <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+    <ion-label>Detail order</ion-label>
+  </ion-buttons>
+</ion-header>
+
+<ion-content>
+  <ion-item-group class="ion-text-center">
+    <ion-label class="order-code">{{ data.code }}</ion-label>
+    <div class="status-box">
+      <span class="circle" [style.background]="getStatusColor()"></span>
+      <span class="status-name"> {{ data.status | titlecase }}</span>
+    </div>
+  </ion-item-group>
+  <ion-item-group class="order-heading-box">
+    <ion-buttons class="order-heading" *ngIf="loadedData">
+      <span class="order-title">ID</span>
+      <span class="order-content">{{ data.id }}</span>
+    </ion-buttons>
+    <ion-buttons class="order-heading" *ngFor="let item of items">
+      <span class="order-title">{{ item.name }}</span>
+      <span class="order-content">{{ item.date }} {{ item.time }}</span>
+    </ion-buttons>
+    <!-- <ion-button class="btn-re-order" *ngIf="loadedData">Re-order</ion-button> -->
+  </ion-item-group>
+
+  <ion-card class="cart-item" *ngFor="let item of data.order_details"  (click)="goToDetailComponent()">
+    <ion-buttons class="item-header">
+      <span class="item-amount">{{ item.amount }}</span>
+      <ion-label class="item-name">{{ item.name }}</ion-label>
+    </ion-buttons>
+    <ion-buttons class="ion-justify-content-between">
+      <ion-buttons>
+        <p class="item-price">{{ item.amount * item.price | number: '1.0-2' }}</p>
+        <ion-img src="assets/shopping-cart/deliver-black.svg" class="delivery-icon"></ion-img>
+        <span class="delivery-day">1 day</span>
+      </ion-buttons>
+      <img *ngIf="checkReceivedStatus()" src="assets/order-status/two-lines.svg">
+    </ion-buttons>
+  </ion-card>
+
+  <ion-button expand="block" class="re-order-btn" (click)="openModalReOrder()">Re-order</ion-button>
+</ion-content>

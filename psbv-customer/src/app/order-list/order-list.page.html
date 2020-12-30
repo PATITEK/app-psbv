@@ -23,51 +23,64 @@
         <p class="absolute-center" *ngIf="data.length == 0 && loadedData">Not found orders.</p>
         <ion-spinner class="absolute-center" *ngIf="isLoading"></ion-spinner>
 
-        <ion-card class="order-item" *ngFor="let item of data">
+        <ion-card class="order-item" *ngFor="let item of data" (click)="goToOrderDetail(item)">
             <ion-label class="item-code">{{ item.code }}</ion-label>
             <ion-buttons class="item-header">
                 <ion-buttons class="item-header-left">
-                    <span>{{ item.status | titlecase }}</span>
+                    <span>{{ calTotalPrice(item) | number: '1.0-2' }}</span>
                     <span class="separation"></span>
-                    <span class="ion-text-center">{{ item.order_details.length }} items</span>
+                    <span>{{ calProductsAmount(item) }} products <br> {{ calAccessoriesAmount(item) }}
+                        accessories</span>
                 </ion-buttons>
                 <ion-buttons class="item-header-right">
+                    <span>{{ item.status | titlecase }}</span>
                     <span class="circle" [style.background]="getStatusColor(item)"></span>
+                </ion-buttons>
+            </ion-buttons>
+            <p class="items-name">{{ listProductsName(item) }}</p>
+            <ion-buttons class="ion-justify-content-between">
+                <ion-buttons>
                     <img src="assets/shopping-cart/deliver-black.svg" class="delivery-icon">
                     <span class="delivery-day">1 day</span>
                 </ion-buttons>
-            </ion-buttons>
-            <p class="items-name">{{ listItemsName(item) }}</p>
-            <ion-buttons class="ion-justify-content-end">
-                <ion-button class="btn" (click)="gotoOrderStatus(item)">Status</ion-button>
-                <ion-button class="btn" (click)="gotoDetailOrder(item)">Detail</ion-button>
+                <img src="assets/order-status/two-lines.svg">
+
+                <!-- <ion-button class="btn" (click)="gotoOrderStatus(item)">Status</ion-button>
+                <ion-button class="btn" (click)="gotoDetailOrder(item)">Detail</ion-button> -->
             </ion-buttons>
         </ion-card>
         <ion-infinite-scroll #infinityScroll *ngIf="!loadedData" (ionInfinite)="loadData($event)">
             <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
         </ion-infinite-scroll>
     </ion-item-group>
-    
+
     <ion-item-group *ngIf="activeTab == 'orderHistory'">
         <ion-backdrop *ngIf="dataHistory.length == 0 && isLoadingHistory"></ion-backdrop>
         <p class="absolute-center" *ngIf="dataHistory.length == 0 && loadedDataHistory">Not found orders.</p>
         <ion-spinner class="absolute-center" *ngIf="isLoadingHistory"></ion-spinner>
 
-        <ion-card class="order-item" *ngFor="let item of dataHistory">
+        <ion-card class="order-item" *ngFor="let item of dataHistory" (click)="goToOrderDetailHistory(item)">
             <ion-label class="item-code">{{ item.code }}</ion-label>
             <ion-buttons class="item-header">
                 <ion-buttons class="item-header-left">
-                    <span>{{ item.status | titlecase }}</span>
+                    <span>{{ calTotalPrice(item) | number: '1.0-2' }}</span>
                     <span class="separation"></span>
-                    <span class="ion-text-center">{{ item.order_details.length }} items</span>
+                    <span>{{ calProductsAmount(item) }} products <br> {{ calAccessoriesAmount(item) }}
+                        accessories</span>
+                </ion-buttons>
+                <ion-buttons class="item-header-right">
+                    <span>{{ item.status | titlecase }}</span>
+                    <span class="circle" [style.background]="getStatusColor(item)"></span>
                 </ion-buttons>
             </ion-buttons>
-            <p class="items-name">{{ listItemsName(item) }}</p>
+            <p class="items-name">{{ listProductsName(item) }}</p>
             <ion-buttons class="ion-justify-content-end">
-                <ion-button class="btn" (click)="goToReOrder(item)">Re-order</ion-button>
+                <img src="assets/order-status/two-lines.svg">
             </ion-buttons>
+            <!-- <ion-button class="btn-re-order">Re-order</ion-button> -->
         </ion-card>
-        <ion-infinite-scroll *ngIf="!loadedDataHistory" [style.opacity]="!firstTime ? 0 : 1" #infinityScrollHistory (ionInfinite)="loadDataHistory($event)">
+        <ion-infinite-scroll *ngIf="!loadedDataHistory" [style.opacity]="!firstTime ? 0 : 1" #infinityScrollHistory
+            (ionInfinite)="loadDataHistory($event)">
             <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
         </ion-infinite-scroll>
     </ion-item-group>

@@ -42,7 +42,6 @@ ion-content {
   overflow: hidden;
   z-index: 11;
   position: absolute;
-  position: absolute;
   height: calc(100% - 240px);
   bottom: 160px;
 }
@@ -86,6 +85,7 @@ ion-content {
       font-size: 20px;
       position: absolute;
       left: 0;
+      background: #fff;
     }
   }
 

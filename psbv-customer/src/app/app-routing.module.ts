@@ -29,8 +29,8 @@ const routes: Routes = [
     path: 'supplier',
     loadChildren: () => import('./supplier/supplier.module').then( m => m.SupplierPageModule)
   },
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth' },
+  { path: '', redirectTo: 'main/product-categories', pathMatch: 'full' },
+  { path: '**', redirectTo: 'main/product-categories' },
 
 
 
