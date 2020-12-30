@@ -7,7 +7,7 @@
   <ion-card class="product">
     <ion-card-content>
       <div class="img-box">
-        <ion-img [src]="product.thumb_image.url"></ion-img>
+        <ion-img *ngIf="loadedProduct" [src]="product.thumb_image.url"></ion-img>
         <ion-button size="small" class="detail-button" (click)="goToDetail()" *ngIf="product.id != ''">
           Detail
           <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
