@@ -115,11 +115,11 @@ export class OrderDetailHistoryPage implements OnInit {
   }
   
   calProductsAmount() {
-    return this.data.order_details.filter(a => a.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME).length;
+    return this.data.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME ? acc + cur.amount : acc, 0)
   }
 
   calAccessoriesAmount() {
-    return this.data.order_details.filter(a => a.yieldable_type == this.ordersService.TYPES.ACCESSORY.NAME).length;
+    return this.data.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.ACCESSORY.NAME ? acc + cur.amount : acc, 0)
   }
 
   async openModalReOrder(item) {

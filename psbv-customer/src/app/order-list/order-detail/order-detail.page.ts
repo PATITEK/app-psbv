@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { AlertController, ToastController } from '@ionic/angular';
 import { OrdersService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 
@@ -21,10 +22,11 @@ export class OrderDetailPage implements OnInit {
   loadedData = false;
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private ordersService: OrdersService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private alertController: AlertController,
+    public toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -108,4 +110,42 @@ export class OrderDetailPage implements OnInit {
   // goToDetailComponent() {
   //   this.router.navigateByUrl('main/order-list/detail-order/detail-component');
   // }
+
+  calProductsAmount() {
+    return this.data.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME ? acc + cur.amount : acc, 0)
+  }
+
+  calAccessoriesAmount() {
+    return this.data.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.ACCESSORY.NAME ? acc + cur.amount : acc, 0)
+  }
+
+  async openModalReOrder(item) {
+    const alert = await this.alertController.create({
+      message: `Add ${this.calProductsAmount()} products & ${this.calAccessoriesAmount()} accessories to cart?`,
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.alertToast();
+            return;
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            return;
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async alertToast() {
+    const toast = await this.toastController.create({
+      message: `Add to cart successfully`,
+      duration: 1000
+    });
+    toast.present();
+  }
 }

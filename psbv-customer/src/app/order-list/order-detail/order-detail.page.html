@@ -6,5 +6,20 @@
 </ion-header>
 
 <ion-content>
-  
+  <ion-card class="cart-item" *ngFor="let item of data.order_details">
+    <ion-buttons class="item-header">
+      <span class="item-amount">{{ item.amount }}</span>
+      <ion-label class="item-name">{{ item.name }}</ion-label>
+    </ion-buttons>
+    <ion-buttons class="ion-justify-content-between">
+      <ion-buttons>
+        <p class="item-price">{{ item.amount * item.price | number: '1.0-2' }}</p>
+        <ion-img src="assets/shopping-cart/deliver-black.svg" class="delivery-icon"></ion-img>
+        <span class="delivery-day">1 day</span>
+      </ion-buttons>
+      <img *ngIf="checkReceivedStatus()" src="assets/order-status/two-lines.svg">
+    </ion-buttons>
+  </ion-card>
+
+  <ion-button expand="block" class="re-order-btn" (click)="openModalReOrder()">Re-order</ion-button>
 </ion-content>

@@ -167,11 +167,11 @@ export class OrderListPage implements OnInit {
   }
 
   calProductsAmount(item) {
-    return item.order_details.filter(a => a.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME).length;
+    return item.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME ? acc + cur.amount : acc, 0)
   }
 
   calAccessoriesAmount(item) {
-    return item.order_details.filter(a => a.yieldable_type == this.ordersService.TYPES.ACCESSORY.NAME).length;
+    return item.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.ACCESSORY.NAME ? acc + cur.amount : acc, 0)
   }
 
   // listProductsName(item) {

@@ -36,4 +36,81 @@ ion-content {
   position: absolute;
   height: calc(100% - 90px);
   bottom: 0;
+  --padding-bottom: 80px;
+}
+
+.cart-item {
+  --background: #fff;
+  position: relative;
+  overflow: visible;
+  margin: 5px 5px 10px;
+  padding: 15px 10px 0;
+  border-radius: 20px;
+
+  .item-header {
+    background: #f7f7f7;
+    border-radius: 20px;
+    padding: 9px;
+    margin-bottom: 5px;
+    position: relative;
+
+    .item-name {
+      color: #515151;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: none;
+      margin-left: 47px;
+      max-width: calc(100% - 50px);
+    }
+
+    .item-amount {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      color: #515151;
+      font-weight: 700;
+      border-radius: 50%;
+      border: 1px solid #dedede;
+      font-size: 20px;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #fff;
+    }
+  }
+
+  .item-price {
+    color: #d22321;
+    font-size: 18px;
+    font-weight: 700;
+    margin-right: 15px;
+  }
+}
+
+.re-order-btn {
+  --background: #ce091c;
+  font-size: 17px;
+  height: 40px;
+  text-transform: none;
+  --border-radius: 10px;
+  max-width: 333px;
+  min-width: 300px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  z-index: 100;
+  transform: translateX(-50%);
+}
+
+.delivery-icon {
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+.delivery-day {
+  font-size: 14px;
+  color: #333333;
 }
