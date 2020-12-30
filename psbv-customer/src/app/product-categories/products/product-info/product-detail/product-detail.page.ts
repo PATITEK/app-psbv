@@ -27,7 +27,7 @@ export class ProductDetailPage implements OnInit {
 
   loadedProduct = false;
   permission = '';
-  added: boolean;
+  // added: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,15 +44,15 @@ export class ProductDetailPage implements OnInit {
     this.storageService.infoAccount.subscribe(data => {
       this.permission = data !== null ? data.role : PERMISSIONS[0].value;
     })
-    this.route.queryParams.subscribe(params => {
-      this.added = JSON.parse(params['data']).added;
-    })
+    // this.route.queryParams.subscribe(params => {
+    //   this.added = JSON.parse(params['data']).added;
+    // })
     this.loadingService.present();
     this.loadData();
   }
 
   ionViewWillLeave() {
-    localStorage.setItem('added', JSON.stringify(this.added));
+    // localStorage.setItem('added', JSON.stringify(this.added));
   }
 
   checkGuestPermission() {
@@ -93,7 +93,7 @@ export class ProductDetailPage implements OnInit {
         // if (a <= 99) {
         //   this.curAddedProducts = a;
         // }
-        this.added = true;
+        // this.added = true;
       }
     }
   }
