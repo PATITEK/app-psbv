@@ -11,20 +11,13 @@ ion-header {
   background: var(--main-color);
   padding-bottom: 30px;
 
-  .top-group {
-    margin-top: 8px;
-
-    ion-img {
-      margin-left: -5px;
-    }
+  .wrapper {
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .icon-box {
-    position: absolute;
-    height: auto;
-    top: 10px;
-    right: 15px;
-
     img {
       margin-left: 19px;
     }
@@ -139,4 +132,10 @@ ion-grid {
 
 ion-backdrop {
   opacity: 0.01;
+}
+
+@supports (-webkit-touch-callout: none) {
+  ion-header {
+    padding-top: 30px;
+  }
 }

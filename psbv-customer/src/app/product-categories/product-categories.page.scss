@@ -1,4 +1,4 @@
-ion-content{
+ion-content {
   --background: #efefef;
 }
 
@@ -12,20 +12,13 @@ ion-header {
   padding-bottom: 30px;
   position: relative;
 
-  .top-group {
-    margin-top: 8px;
-
-    ion-img {
-      margin-left: -5px;
-    }
+  .wrapper {
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .icon-box {
-    position: absolute;
-    height: auto;
-    top: 10px;
-    right: 15px;
-
     img {
       margin-left: 19px;
     }
@@ -92,4 +85,10 @@ ion-card-header {
 
 ion-backdrop {
   opacity: 0.01;
+}
+
+@supports (-webkit-touch-callout: none) {
+  ion-header {
+    padding-top: 30px;
+  }
 }
