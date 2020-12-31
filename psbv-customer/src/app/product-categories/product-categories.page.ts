@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
-import { IPageRequest, ProductGroupsService } from '../@app-core/http';
+import { AuthService, IPageRequest, ProductGroupsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 
 @Component({
@@ -26,40 +26,51 @@ export class ProductCategoriesPage implements OnInit {
   isMaxData = false;
   checkSystem = false;
   isLoading = false;
+  previousUrl: any;
 
+  private backButtonService: any;
   constructor(
     private router: Router,
     private productGroupService: ProductGroupsService,
-    // private loading: LoadingService,
-    public alertController: AlertController,
+    private alertController: AlertController,
+    private platform: Platform,
+    private authService: AuthService
 
-    private platform: Platform
   ) {
     this.reset();
     this.getScreenSize();
   }
 
   ngOnInit() {
-    // this.loadingService.present();
+    this.authService.receiveData.subscribe((data: any) => {
+      this.previousUrl = data;
+    })
     this.loadData();
-    
-    this.platform.backButton.subscribe(() => {
-      if (this.router.url === '/main/product-categories'){
-        console.log('222');
+  }
+  backButtonSystem(event) {
+    this.backButtonService = this.platform.backButton.subscribe(() => {
+      if (event) {
         this.presentAlert();
       }
       else {
-
         return;
       }
-    }
-    )
+    })
   }
-
+  ionViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+      this.backButtonSystem(tabs[key].style.display);
+    });
+  }
+  ionViewDidLeave() {
+    this.backButtonService.unsubscribe();
+  }
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'logout-alert',
-      message: 'Do you want to exit product-category app?',
+      message: 'Do you want to exit product category app?',
       buttons: [
         {
           text: 'Yes',
@@ -78,12 +89,7 @@ export class ProductCategoriesPage implements OnInit {
     });
     await alert.present();
   }
-  ionViewWillEnter() {
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'flex';
-    });
-  }
+  
 
   getScreenSize(event?) {
     this.scrHeight = window.innerHeight;
@@ -91,10 +97,12 @@ export class ProductCategoriesPage implements OnInit {
   }
 
   goToUserInfo() {
+     this.backButtonService.unsubscribe();
     this.router.navigateByUrl("/account/user-info");
   }
 
   goToNoti() {
+     this.backButtonService.unsubscribe();
     this.router.navigateByUrl('notification');
   }
 

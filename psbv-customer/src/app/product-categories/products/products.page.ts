@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { IonInfiniteScroll, Platform } from '@ionic/angular';
+import { AlertController, IonInfiniteScroll, Platform } from '@ionic/angular';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
 import { IPageRequest, PERMISSIONS, ProductGroupsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
@@ -28,7 +28,7 @@ export class ProductsPage implements OnInit {
   id = '';
 
   loadedData = false;
-
+  private backButtonService: any;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -36,32 +36,14 @@ export class ProductsPage implements OnInit {
     private loading: LoadingService,
     private storageService: StorageService,
     private platform: Platform,
-    private globalVariablesService: GlobalVariablesService
+    private globalVariablesService: GlobalVariablesService,
+    private alertController: AlertController,
 
   ) {
     this.getScreenSize();
-    console.log('hihi');
    }
 
   ngOnInit() {
-   
-    this.platform.backButton.subscribe((event) => {
-      console.log('hello');
-     
-    }) 
-    this.platform.backButton.subscribeWithPriority(9999, () => {
-      console.log('hello');
-
-      document.addEventListener('backbutton', function (event) {
-        console.log('hello');
-
-        event.preventDefault();
-        event.stopPropagation();
-      }, false);
-    
-    
-  })
-   
     this.loading.present();
     this.loadData();
     this.storageService.infoAccount.subscribe((data) => {
@@ -76,13 +58,36 @@ export class ProductsPage implements OnInit {
     })
   }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'logout-alert',
+      message: 'Do you want to exit home app?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            navigator['app'].exitApp();
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            return;
+          }
+        },
+  
+      ]
+    });
+    await alert.present();
+  }
+
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
   }
-
+  
   getScreenSize(event?) {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;

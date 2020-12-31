@@ -17,4 +17,5 @@ import { ShoppingCartPage } from './shopping-cart.page';
   ],
   declarations: [ShoppingCartPage]
 })
+
 export class ShoppingCartPageModule {}

@@ -93,6 +93,29 @@ export class HomePage implements OnInit {
     )
  
   }
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'logout-alert',
+      message: 'Do you want to exit home app?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            navigator['app'].exitApp();
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            return;
+          }
+        },
+
+      ]
+    });
+    await alert.present();
+  }
+  
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {

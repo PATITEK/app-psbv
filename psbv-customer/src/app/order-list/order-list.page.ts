@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
 import { OrdersService } from '../@app-core/http';
@@ -9,7 +9,7 @@ import { LoadingService } from '../@app-core/loading.service';
   templateUrl: './order-list.page.html',
   styleUrls: ['./order-list.page.scss'],
 })
-export class OrderListPage implements OnInit {
+export class OrderListPage implements OnInit{
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
   @ViewChild(IonInfiniteScroll) infinityScrollHistory: IonInfiniteScroll;
   @ViewChild(IonContent) ionContent: IonContent;
@@ -34,6 +34,7 @@ export class OrderListPage implements OnInit {
   isLoadingHistory = true;
 
   firstTime = false;
+  private backButtonService: any;
 
   constructor(
     private router: Router,
@@ -46,23 +47,12 @@ export class OrderListPage implements OnInit {
   ngOnInit() {
     // this.loadingService.present();
     this.loadData();
-    this.platform.backButton.subscribe(() => {
-      if(this.router.url === '/main/order-list'){
-        console.log('222');
-        this.presentAlert();
-      }
-      else {
-
-        return;
-      }
-    }
-    )
   }
 
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'logout-alert',
-      message: 'Do you want to exit order-list app?',
+      message: 'Do you want to order-list app?',
       buttons: [
         {
           text: 'Yes',
@@ -79,15 +69,31 @@ export class OrderListPage implements OnInit {
 
       ]
     });
-    await alert.present();
+     await alert.present();
+  }
+
+  backButtonSystem(event) {
+    this.backButtonService = this.platform.backButton.subscribe(() => {
+      if (event){
+        this.presentAlert();
+      }
+      else {
+        return;
+      }
+    })
   }
 
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'flex';
+      this.backButtonSystem(tabs[key].style.display)
     });
   }
+
+  ionViewDidLeave() {
+    this.backButtonService.unsubscribe();
+  }  
 
   loadData() {
     this.isLoading = true;

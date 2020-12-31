@@ -49,7 +49,6 @@ export class ProductDetailPage implements OnInit {
     // })
     this.loadingService.present();
     this.loadData();
-    console.log(this.router.url);
   }
 
   ionViewWillLeave() {
@@ -81,7 +80,7 @@ export class ProductDetailPage implements OnInit {
             name: this.product.name,
             amount: 0,
             price: this.product.price,
-            kind: 'product'
+            kind: 'Product'
             // url: this.product.thumb_image.url
           }
         }

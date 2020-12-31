@@ -46,9 +46,7 @@ export class AccessoryPage implements OnInit {
     })
     this.loadingService.present();
     this.loadData();
-    console.log(this.router.url);
-
-  }
+    }
 
   ionViewWillLeave() {
     localStorage.setItem('added', JSON.stringify(this.added));
@@ -79,7 +77,7 @@ export class AccessoryPage implements OnInit {
             name: this.accessory.name,
             amount: 0,
             price: this.accessory.price,
-            kind: 'accessory'
+            kind: 'Accessory'
             // url: this.product.thumb_image.url
           }
         }

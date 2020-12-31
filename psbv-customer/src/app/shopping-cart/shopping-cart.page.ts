@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { AlertController, Platform } from '@ionic/angular';
 import { GlobalVariablesService } from '../@app-core/global-variables.service';
+import { AuthService } from '../@app-core/http';
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.page.html',
@@ -17,67 +18,65 @@ export class ShoppingCartPage implements OnInit {
   scrWidth: any;
   private previousUrl: string = undefined;
   private currentUrl: string = undefined;
+  private backButtonService: any;
   constructor(
     private alertController: AlertController,
     private router: Router,
     private platform: Platform,
+    private authService: AuthService,
     private globalVariablesService: GlobalVariablesService
   ) {
     this.getScreenSize();
-  
   }
-  
-
   ngOnInit() {
-    this.platform.backButton.subscribeWithPriority(99999,() => {
-      if (this.router.url === '/main/shopping-cart') {
-        console.log('sp');
-        this.presentAlert1();
+    this.currentUrl = this.router.url;
+    this.authService.receiveData.subscribe((data: any) => {
+      this.previousUrl = data;
+    })
+  }
+  backButtonSystem(attr) {
+    this.backButtonService = this.platform.backButton.subscribe(() => {
+      if (attr === 'flex'){
+        this.presentAlert();
       }
       else {
 
-        return;
+        if(this.previousUrl.search('/main/home/product-info') != -1) {
+           this.router.navigateByUrl(this.previousUrl);
+        }
+        else if(this.previousUrl.search('/main/product-categories/products/product-info') !=-1){
+          this.router.navigateByUrl(this.previousUrl);
+        }
       }
     })
-    // document.addEventListener('backbutton', () => {
-    //   if (!this.hasBackButton()) {
-    //     this.presentAlert1();
-    //   }
-    //   else {
-    //     return;
-    //   }
-    // })
-  //   this.platform.backButton.subscribeWithPriority(9999, () => {
-  //     document.addEventListener('backbutton', function (event) {
-  //       event.preventDefault();
-  //       event.stopPropagation();
-  //       this.presentAlert();
-  //       console.log('hello');
-  //     }, false);
-    
-  // })
-    // document.addEventListener('backbutton', function (event) {
-    //   if (!this.hasBackButton()){
-    //     console.log('chưa show');
-      
-    //     console.log('vo roi');
-    //     event.preventDefault();
-    //     event.stopPropagation();
-    //    }
-    // });
-  
-   
-    // this.platform.backButton.subscribe(() => {
-    //   if (!this.hasBackButton()){
-           
-    //       this.presentAlert();
-    //     }
-    // }) 
   }
-  async presentAlert1() {
+  ionViewDidLeave() {
+    this.backButtonService.unsubscribe();
+  }  
+  ionViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    if (this.hasBackButton()) {
+      Object.keys(tabs).map((key) => {
+        tabs[key].style.display = 'none';
+        this.backButtonSystem(tabs[key].style.display);
+      });
+  }
+    else {
+      Object.keys(tabs).map((key) => {
+        tabs[key].style.display = 'flex';
+      this.backButtonSystem(tabs[key].style.display);
+      });
+    }
+    this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    this.cartItemsSelected = [];
+    this.cartItems.forEach(() => this.cartItemsSelected.push({
+      selected: false
+    }))
+  }
+  async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'logout-alert',
-      message: 'Do you want to exit ở shopping-cart ?',
+      message: 'Do you want to exit shopping-cart app?',
       buttons: [
         {
           text: 'Yes',
@@ -96,25 +95,6 @@ export class ShoppingCartPage implements OnInit {
     });
     await alert.present();
   }
- 
-  ionViewWillEnter() {
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'flex';
-    });
-
-    if (this.hasBackButton()) {
-      Object.keys(tabs).map((key) => {
-        tabs[key].style.display = 'none';
-      });
-    }
-
-    this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsSelected = [];
-    this.cartItems.forEach(() => this.cartItemsSelected.push({
-      selected: false
-    }))
-  }
 
   getScreenSize(event?) {
     this.scrHeight = window.innerHeight;
@@ -129,8 +109,6 @@ export class ShoppingCartPage implements OnInit {
     const backUrl = this.globalVariablesService.backUrlShoppingCart;
     return backUrl.search('main/home/product-info') != -1 || backUrl.search('main/product-categories/products/product-info') != -1;
   }
-  
-
   // calPrice(item) {
   //   return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;
   // }
@@ -147,18 +125,15 @@ export class ShoppingCartPage implements OnInit {
       this.setLocalStorage();
     }
   }
-
   increaseAmount(item) {
     if (item.amount < 999) {
       item.amount++;
       this.setLocalStorage();
     }
   }
-
   setLocalStorage() {
     localStorage.setItem('cartItems', JSON.stringify(this.cartItems))
   }
-
   removeItem(item) {
     for (let i of this.cartItems) {
       if (item.id == i.id) {
@@ -169,7 +144,6 @@ export class ShoppingCartPage implements OnInit {
       }
     }
   }
-
   // isEqual(a, b) {
   //   // if length is not equal 
   //   if (a.length != b.length)
@@ -226,7 +200,6 @@ export class ShoppingCartPage implements OnInit {
       this.cartItemsSelected.forEach(a => a.selected = true);
     }
   }
-
   calSelectedProducts() {
     let total = 0;
     for (let i = 0; i < this.cartItemsSelected.length; i++) {
@@ -236,7 +209,6 @@ export class ShoppingCartPage implements OnInit {
     }
     return total;
   }
-
   // calSelectedAccessories() {
   //   let total = 0;
   //   for (let i = 0; i < this.cartItemsSelected.length; i++) {
@@ -259,7 +231,6 @@ export class ShoppingCartPage implements OnInit {
     let data = {
       selectedItems: []
     }
-
     this.cartItemsSelected.forEach((a, index) => {
       if (a.selected) {
         const product = {
@@ -270,7 +241,6 @@ export class ShoppingCartPage implements OnInit {
           kind: this.cartItems[index].kind
           // accessories: this.cartItems[index].accessories.filter(a => a.quantity > 0)
         }
-
         data.selectedItems.push(product);
       }
     })
@@ -280,7 +250,6 @@ export class ShoppingCartPage implements OnInit {
       }
     })
   }
-
   getIonContentAttribute(footerHeight) {
     return this.cartItems.length == 0 ? {
       height: `calc(100% - 90px)`,

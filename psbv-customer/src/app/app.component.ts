@@ -27,49 +27,8 @@ export class AppComponent {
     this.storageService.setInfoAccount();
     this.initializeApp();
   }
- 
-  
   ngOnInit() {
-    
-    // this.platform.backButton.subscribe(() => {
-    //   if ((this.router.url === '/main/home')
-    //         || (this.router.url === '/main/product-categories')
-    //         || (this.router.url === '/main/order-list')
-    //         ) 
-    //         {
-    //           console.log('222');
-    //       this.presentAlert();
-    //       }
-    //   else {
-
-    //     return;
-    //   }
-    // }
-    // )
   }
-
-// async presentAlert() {
-//   const alert = await this.alertController.create({
-//     cssClass: 'logout-alert',
-//     message: 'Do you want to exit 1 app?',
-//     buttons: [
-//       {
-//         text: 'Yes',
-//         handler: () => {
-//           navigator['app'].exitApp();
-//         }
-//       },
-//       {
-//         text: 'No',
-//         handler: () => {
-//           return;
-//         }
-//       },
-
-//     ]
-//   });
-//   await alert.present();
-// }
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();

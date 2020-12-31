@@ -29,7 +29,13 @@
   margin-inline-end: 0;
   --background-activated: var(--main-color);
 }
-
+.icon-header {
+  color: white;
+  font-size: 20px;
+}
+.icon-header + .icon-header {
+  margin-left: 12px;
+}
 .modal-add-detail-product {
   .modal-wrapper {
     height: 170px;

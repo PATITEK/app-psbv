@@ -3,8 +3,8 @@
     <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
     <ion-label>{{ title }}</ion-label>
     <ion-buttons class="icon-box">
-      <img src="assets/noti.svg" (click)="goToNoti()"/>
-      <img src="assets/user.svg" (click)="goToUserInfo()"/>
+      <ion-icon class="icon-header" name="notifications-outline" (click)="goToNoti()"></ion-icon>
+      <ion-icon class="icon-header" name="person-outline"(click)="goToUserInfo()"></ion-icon>
     </ion-buttons>
   </ion-buttons>
 </ion-header>
