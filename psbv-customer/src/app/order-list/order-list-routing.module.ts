@@ -7,7 +7,8 @@ const routes: Routes = [
   {
     path: '',
     component: OrderListPage,
-  },  {
+  },
+  {
     path: 'order-status-detail',
     loadChildren: () => import('./order-status-detail/order-status-detail.module').then( m => m.OrderStatusDetailPageModule)
   },
