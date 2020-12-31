@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
-import { AccessoriesService, IPageRequest, PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
+import { AccessoriesService, AuthService, IPageRequest, PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 
@@ -17,7 +17,7 @@ export class ProductInfoPage implements OnInit {
 
   scrHeight: any;
   scrWidth: any;
-
+  previousUrl: any;
   pageRequest: IPageRequest = {
     page: 1,
     per_page: 6,
@@ -50,7 +50,8 @@ export class ProductInfoPage implements OnInit {
     private loading: LoadingService,
     private accessoriesService: AccessoriesService,
     private storageService: StorageService,
-    private globalVariablesService: GlobalVariablesService
+    private globalVariablesService: GlobalVariablesService,
+    private authService: AuthService
   ) {
     const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
     this.cartItemsLength = arr.length;
@@ -63,7 +64,9 @@ export class ProductInfoPage implements OnInit {
     })
     this.loading.present();
     this.loadData();
-  }
+    this.previousUrl =  this.router.url;
+    this.authService.sendData(this.previousUrl);
+    }
 
   ionViewWillEnter() {
     // this.added = JSON.parse(localStorage.getItem('added')) || false;

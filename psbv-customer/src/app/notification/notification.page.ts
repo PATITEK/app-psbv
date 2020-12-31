@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController, Platform } from '@ionic/angular';
+import { AuthService } from '../@app-core/http';
 
 
 @Component({
@@ -10,10 +12,16 @@ import { Router } from '@angular/router';
 export class NotificationPage implements OnInit {
 
   doesClick = false;
-
-  constructor(private router: Router) { }
+  previousUrl: any;
+  constructor(
+    private router: Router,
+    private authService: AuthService
+    ) { }
 
   ngOnInit() {
+    this.previousUrl =  this.router.url;
+    console.log(this.previousUrl);
+    this.authService.sendData(this.previousUrl);
   }
 
   gotoNoti(){

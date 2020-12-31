@@ -341,4 +341,5 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0"&gt;
     <plugin name="cordova.plugins.diagnostic" spec="^3.7.1" />
     <allow-navigation href="*" />
     <allow-navigation href="http://localhost:8100" sessionid="25bdb1ab" />
+    <allow-navigation href="http://localhost:8101" sessionid="1e94a3d8" />
 </widget>

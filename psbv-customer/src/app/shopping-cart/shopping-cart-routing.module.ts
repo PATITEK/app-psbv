@@ -6,7 +6,8 @@ import { ShoppingCartPage } from './shopping-cart.page';
 const routes: Routes = [
   {
     path: '',
-    component: ShoppingCartPage
+    component:
+     ShoppingCartPage
   },
   {
     path: 'selected-items',
