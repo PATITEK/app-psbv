@@ -10,6 +10,7 @@ import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti
 })
 export class SelectedItemsPage implements OnInit {
   items = [];
+  receiveData = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -22,6 +23,7 @@ export class SelectedItemsPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.items = JSON.parse(params['data']).selectedItems;
     })
+    console.log(this.items);
   }
 
   ionViewWillEnter() {
@@ -37,23 +39,39 @@ export class SelectedItemsPage implements OnInit {
       description: '',
       routerLink: 'main/shopping-cart'
     }
-    // this.order.createOrder().subscribe((data:any) => {
 
-    //   this.pageNotiService.setdataStatusNoti(data);
-    //   this.router.navigate(['/statusNoti']);
 
-    // }
+    this.items.forEach((item) => {
+      const i = {
+        amount: "",
+        yieldable_type: "",
+        yieldable_id: ""
+      }
+      i.amount = item.amount;
+      i.yieldable_type = item.kind;
+      i.yieldable_id = item.id;
+      this.receiveData.push(i);
+    })
+    const order = {
+      "order": {
+        "order_details_attributes": this.receiveData
+      }
+    }
+    console.log(order);
+    this.order.createOrder(order).subscribe((data: any) => {
+      this.pageNotiService.setdataStatusNoti(data);
+      this.router.navigate(['/statusNoti']);
+    })
   }
-
   calTotalPrice() {
     return this.items.reduce((acc, cur) => acc + cur.price * cur.amount, 0);
   }
 
   calTotalProducts() {
-    return this.items.reduce((acc, cur) => cur.kind == 'product' ? acc + cur.amount : acc, 0);
+    return this.items.reduce((acc, cur) => cur.kind == 'Product' ? acc + cur.amount : acc, 0);
   }
 
   calTotalAccessories() {
-    return this.items.reduce((acc, cur) => cur.kind == 'accessory' ? acc + cur.amount : acc, 0);
+    return this.items.reduce((acc, cur) => cur.kind == 'Accessory' ? acc + cur.amount : acc, 0);
   }
 }

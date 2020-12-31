@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { AlertController, IonInfiniteScroll, Platform } from '@ionic/angular';
+import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
 import { IPageRequest, PERMISSIONS, ProductGroupsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
@@ -27,13 +28,17 @@ export class ProductsPage implements OnInit {
   id = '';
 
   loadedData = false;
-
+  private backButtonService: any;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private productGroupService: ProductGroupsService,
     private loading: LoadingService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private platform: Platform,
+    private globalVariablesService: GlobalVariablesService,
+    private alertController: AlertController,
+
   ) {
     this.getScreenSize();
    }
@@ -53,13 +58,36 @@ export class ProductsPage implements OnInit {
     })
   }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'logout-alert',
+      message: 'Do you want to exit home app?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            navigator['app'].exitApp();
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            return;
+          }
+        },
+  
+      ]
+    });
+    await alert.present();
+  }
+
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
   }
-
+  
   getScreenSize(event?) {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
