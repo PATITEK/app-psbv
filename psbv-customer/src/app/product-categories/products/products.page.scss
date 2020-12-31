@@ -34,8 +34,14 @@ ion-header {
       top: 10px;
       right: 15px;
 
-      img {
-        margin-left: 19px;
+      // img {
+      //   margin-left: 19px;
+      // }
+
+      ion-icon {
+        font-size: 21px;
+        color: #fff;
+        margin-left: 10px;
       }
     }
   }
@@ -61,7 +67,9 @@ ion-grid {
 
     ion-col {
       background-color: #e5e5e5;
-      max-width: calc(calc(6 / var(--ion-grid-columns, 12)) * 100% - 8px) !important;
+      max-width: calc(
+        calc(6 / var(--ion-grid-columns, 12)) * 100% - 8px
+      ) !important;
       margin: 4px;
       padding: 4px 5px 5px;
       border-radius: 10px;
