@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { OrdersService } from 'src/app/@app-core/http';
@@ -10,6 +11,9 @@ import { LoadingService } from 'src/app/@app-core/loading.service';
   styleUrls: ['./order-detail.page.scss'],
 })
 export class OrderDetailPage implements OnInit {
+  scrHeight: any;
+  scrWidth: any;
+
   data = {
     id: '',
     code: ' ',
@@ -17,7 +21,36 @@ export class OrderDetailPage implements OnInit {
     order_details: [],
     audits: []
   }
-  items = [];
+  statuses = [];
+  normalStatusSize = 42;
+  activeStatusSize = 62;
+  activeStatus = this.data.status;
+  shipping = {
+    status: 'Arrive pick up point',
+    statuses: [
+      {
+        name: 'Arrive pick up point',
+        time: '08:23 am',
+        date: '12/12/2020',
+      },
+      {
+        name: 'Pick up items',
+        time: '08:23 am',
+        date: '12/12/2020',
+      },
+      {
+        name: 'Domestic warehouse',
+        time: '08:23 am',
+        date: '12/12/2020',
+      },
+      {
+        name: 'Done',
+        time: '08:23 am',
+        date: '12/12/2020',
+      }
+    ]
+  }
+  isActiveBtnShipping = false;
 
   loadedData = false;
 
@@ -26,38 +59,54 @@ export class OrderDetailPage implements OnInit {
     private ordersService: OrdersService,
     private loadingService: LoadingService,
     private alertController: AlertController,
-    public toastController: ToastController
-  ) { }
+    public toastController: ToastController,
+    public sanitizer: DomSanitizer,
+  ) { 
+    this.getScreenSize();
+  }
 
   ngOnInit() {
     this.loadingService.present();
 
     this.route.queryParams.subscribe(params => {
-      if (!this.loadedData) {
-        this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
-          this.data = data.order;
+      this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
+        this.data = data.order;
+        this.activeStatus = this.data.status;
 
-          if (this.checkConfirmedStatus()) {
-            const dateTime = this.data.audits[0].created_at;
-            this.pushData(dateTime, 'Time confirmed');
-          } else if (this.checkShippingStatus()) {
-            const dateTime1 = this.data.audits[0].created_at;
-            const dateTime2 = this.data.audits[1].created_at;
-            this.pushData(dateTime1, 'Time confirmed', dateTime2, 'Time shipping');
-          } else if (this.checkReceivedStatus()) {
-            const dateTime1 = this.data.audits[1].created_at;
-            const dateTime2 = this.data.audits[2].created_at;
-            this.pushData(dateTime1, 'Time shipping', dateTime2, 'Time received');
-          } else if (this.checkCancelStatus()) {
-            const dateTime1 = this.data.audits[this.data.audits.length - 1].created_at;
-            const dateTime2 = ' ';
-            this.pushData(dateTime1, 'Time cancel', dateTime2, 'Reason');
+        const confirmedStatus = this.ordersService.STATUSES[0].NAME;
+        const shippingStatus = this.ordersService.STATUSES[1].NAME;
+        const receivedStatus = this.ordersService.STATUSES[2].NAME;
+        const canceledStatus = this.ordersService.STATUSES[3].NAME;
+        let hasPreviousCanceledStatus = false;
+
+        this.pushData(confirmedStatus, this.data.audits[0].created_at);
+
+        if (this.data.audits[1]) {
+          if (this.data.audits[1].audited_changes.status[1] == shippingStatus) {
+            this.pushData(shippingStatus, this.data.audits[1].created_at);
+          } else if (this.data.audits[1].audited_changes.status[1] == canceledStatus) {
+            this.pushData(canceledStatus, this.data.audits[1].created_at);
+            hasPreviousCanceledStatus = true;
           }
+        } else {
+          this.pushData(shippingStatus);
+        }
 
-          this.loadedData = true;
-          this.loadingService.dismiss();
-        })
-      }
+        if (!hasPreviousCanceledStatus) {
+          if (this.data.audits[2]) {
+            if (this.data.audits[2].audited_changes.status[1] == receivedStatus) {
+              this.pushData(receivedStatus, this.data.audits[2].created_at);
+            } else if (this.data.audits[2].audited_changes.status[1] == canceledStatus) {
+              this.pushData(canceledStatus, this.data.audits[2].created_at);
+            }
+          } else {
+            this.pushData(receivedStatus);
+          }
+        }
+
+        this.loadedData = true;
+        this.loadingService.dismiss();
+      })
     })
   }
 
@@ -68,19 +117,26 @@ export class OrderDetailPage implements OnInit {
     });
   }
 
-  pushData(dateTime1, name1, dateTime2?, name2?) {
-    this.items.push({
-      name: name1,
-      date: dateTime1.substring(0, 10),
-      time: dateTime1.substring(11, 19)
-    })
-    if (dateTime2 && name2) {
-      this.items.push({
-        name: name2,
-        date: dateTime2.substring(0, 10),
-        time: dateTime2.substring(11, 19)
-      })
+  getScreenSize(event?) {
+    this.scrHeight = window.innerHeight;
+    this.scrWidth = window.innerWidth;
+  }
+
+  pushData(name, dateTime?) {
+    let item: any = {
+      name: name
     }
+    if (dateTime) {
+      item.date = dateTime.substring(0, 10);
+      item.time = dateTime.substring(11, 19);
+    }
+    this.ordersService.STATUSES.forEach(status => {
+      if (status.NAME == name) {
+        item.color = status.COLOR;
+        item.url = status.URL;
+      }
+    })
+    this.statuses.push(item);
   }
 
   getStatusColor() {
@@ -106,10 +162,6 @@ export class OrderDetailPage implements OnInit {
   checkCancelStatus(): boolean {
     return this.data.status == this.ordersService.STATUSES[3].NAME;
   }
-
-  // goToDetailComponent() {
-  //   this.router.navigateByUrl('main/order-list/detail-order/detail-component');
-  // }
 
   calProductsAmount() {
     return this.data.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME ? acc + cur.amount : acc, 0)
@@ -147,5 +199,26 @@ export class OrderDetailPage implements OnInit {
       duration: 1000
     });
     toast.present();
+  }
+
+  calLineWith() {
+    const n = this.statuses.length;
+    return `calc(${this.normalStatusSize}px * (${n} - 1) + (${n} - 1) * (100% - ${this.normalStatusSize}px * ${n}) / ${n})`;
+  }
+
+  changeActiveStatus(status) {
+    this.activeStatus = status.name;
+  }
+
+  calProgressStatus() {
+    for (let i = 0; i < this.statuses.length; i++) {
+      if (this.statuses[i].name == this.data.status) {
+        return i / (this.statuses.length - 1) * 100;
+      }
+    }
+  }
+
+  toggleBtnShipping() {
+    this.isActiveBtnShipping = !this.isActiveBtnShipping;
   }
 }
