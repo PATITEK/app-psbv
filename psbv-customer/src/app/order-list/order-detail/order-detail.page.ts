@@ -208,6 +208,9 @@ export class OrderDetailPage implements OnInit {
 
   changeActiveStatus(status) {
     this.activeStatus = status.name;
+    if (this.activeStatus != 'shipping') {
+      this.isActiveBtnShipping = false;
+    }
   }
 
   calProgressStatus() {
