@@ -24,7 +24,7 @@ export class ProductInfoPage implements OnInit {
     total_objects: 20
   }
   // counter: number = 0;
-  permission: string;
+  permission = '';
   accessories = [];
   product = {
     id: '',
@@ -41,7 +41,7 @@ export class ProductInfoPage implements OnInit {
   cartItemsLength = 0;
   loadedProduct = false;
   loadedAccessories = false;
-  added = JSON.parse(localStorage.getItem('added')) || false;
+  // added = JSON.parse(localStorage.getItem('added')) || false;
 
   constructor(
     private router: Router,
@@ -66,7 +66,7 @@ export class ProductInfoPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.added = JSON.parse(localStorage.getItem('added')) || false;
+    // this.added = JSON.parse(localStorage.getItem('added')) || false;
     const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
     this.cartItemsLength = arr.length;
 
@@ -91,7 +91,7 @@ export class ProductInfoPage implements OnInit {
     } else {
       const data = {
         id: this.product.id,
-        added: this.added
+        // added: this.added
       }
       this.router.navigate(['/main/home/product-info/product-detail'], {
         queryParams: {
@@ -174,7 +174,7 @@ export class ProductInfoPage implements OnInit {
 
     const data = {
       id: this.product.id,
-      added: this.added,
+      // added: this.added,
       doesOpenModal: true
     }
     this.router.navigate(['/main/home/product-info/product-detail'], {
@@ -187,7 +187,7 @@ export class ProductInfoPage implements OnInit {
   addAccessory(accessory) {
     const data = {
       id: accessory.id,
-      added: this.added
+      // added: this.added
     }
     this.router.navigate(['/main/home/product-info/accessory'], {
       queryParams: {

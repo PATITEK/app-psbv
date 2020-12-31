@@ -72,6 +72,7 @@ ion-content {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 100;
 }
 
 .item-code {
@@ -174,4 +175,10 @@ ion-backdrop {
   bottom: -4px;
   padding-right: -20px;
   --padding-end: 25px;
+}
+
+.a {
+  opacity: 1;
+  background: #efefef;
+  z-index: 1;
 }

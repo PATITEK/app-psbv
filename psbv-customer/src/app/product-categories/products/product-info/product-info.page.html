@@ -20,14 +20,14 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="added" class="cart-wrapper" (click)="goToCart()">
+  <div class="cart-wrapper" (click)="goToCart()">
     <img src="assets/detail-product/cart.svg" class="cart-btn">
     <span>+{{ cartItemsLength }}</span>
   </div>
 
   <p class="absolute-center" *ngIf="accessories.length == 0 && loadedAccessories">Not found accessories.</p>
 
-  <img src="assets/detail-product/add-btn.svg" class="add-product-button" (click)="addProduct()"
+  <img src="assets/detail-product/add-btn.svg" class="add-product-button"  (click)="addProduct()"
     *ngIf="!checkGuestPermission()">
 
   <ion-card class="accessories" *ngIf="accessories.length != 0">

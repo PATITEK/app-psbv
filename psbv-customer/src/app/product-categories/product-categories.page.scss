@@ -1,4 +1,4 @@
-ion-content{
+ion-content {
   --background: #efefef;
 }
 
@@ -9,23 +9,17 @@ ion-item {
 
 ion-header {
   background: var(--main-color);
+  padding-top: 10px;
   padding-bottom: 30px;
   position: relative;
 
-  .top-group {
-    margin-top: 8px;
-
-    ion-img {
-      margin-left: -5px;
-    }
+  .wrapper {
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .icon-box {
-    position: absolute;
-    height: auto;
-    top: 10px;
-    right: 15px;
-
     img {
       margin-left: 19px;
     }
@@ -33,7 +27,7 @@ ion-header {
 
   ion-searchbar {
     height: 36px;
-    margin: 10px auto 20px;
+    margin: 20px auto 20px;
     border-radius: 10px;
     --background: #f3f0f0;
   }
@@ -92,4 +86,10 @@ ion-card-header {
 
 ion-backdrop {
   opacity: 0.01;
+}
+
+@supports (-webkit-touch-callout: none) {
+  ion-header {
+    padding-top: 30px;
+  }
 }

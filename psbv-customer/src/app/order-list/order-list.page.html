@@ -56,6 +56,7 @@
 
     <ion-item-group *ngIf="activeTab == 'orderHistory'">
         <ion-backdrop *ngIf="dataHistory.length == 0 && isLoadingHistory"></ion-backdrop>
+        <ion-backdrop class="a" *ngIf="dataHistory.length == 0"></ion-backdrop>
         <p class="absolute-center" *ngIf="dataHistory.length == 0 && loadedDataHistory">Not found orders.</p>
         <ion-spinner class="absolute-center" *ngIf="isLoadingHistory"></ion-spinner>
 
