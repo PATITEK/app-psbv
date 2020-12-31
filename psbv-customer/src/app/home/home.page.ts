@@ -68,10 +68,12 @@ export class HomePage implements OnInit {
   ) {
     this.getScreenSize();
   }
+  
   checkRoute() {
     return this.router.url.search('main/home/detail-product') != -1 || this.router.url.search('main/product-categories/products/detail-product') != -1
     
   }
+
   ngOnInit() {
     // this.loading.present();
     this.storageService.infoAccount.subscribe((data) => {
@@ -86,6 +88,7 @@ export class HomePage implements OnInit {
     }
     this.loadData();
   }
+
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
@@ -149,7 +152,6 @@ export class HomePage implements OnInit {
     this.loadData();
   }
   
-
   searchProducts(event?) {
     const counterTemp = this.counter;
     this.productService.searchProduct(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {

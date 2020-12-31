@@ -55,8 +55,8 @@ export class OrderListPage implements OnInit {
 
   loadData() {
     this.isLoading = true;
-    this.ordersService.getOrders(this.pageRequest).subscribe(orders => {
-      for (let item of orders.orders) {
+    this.ordersService.getOrders(this.pageRequest).subscribe(data => {
+      for (let item of data.orders) {
         this.data.push(item);
       }
 
@@ -67,7 +67,7 @@ export class OrderListPage implements OnInit {
       this.pageRequest.page++;
 
       // check max data
-      if (this.data.length >= orders.meta.pagination.total_objects) {
+      if (this.data.length >= data.meta.pagination.total_objects) {
         this.infinityScroll.disabled = true;
         this.loadedData = true;
       }
@@ -76,21 +76,31 @@ export class OrderListPage implements OnInit {
 
   loadDataHistory() {
     this.isLoadingHistory = true;
-    this.ordersService.getHistory(this.pageRequestHistory).subscribe(orders => {
-      for (let item of orders.orders) {
-        this.dataHistory.push(item);
+    this.ordersService.getHistory(this.pageRequestHistory).subscribe(data => {
+      let duplicated = false;
+      for (let item of data.orders) {
+        if (this.dataHistory.some(a => a.id == item.id)) {
+          duplicated = true;
+        }
+        if (!duplicated) {
+          this.dataHistory.push(item);
+        } else {
+          break;
+        }
       }
 
       this.isLoadingHistory = false;
 
       // this.loadingService.dismiss();
-      this.infinityScrollHistory.complete();
-      this.pageRequestHistory.page++;
+      if (!duplicated) {
+        this.infinityScrollHistory.complete();
+        this.pageRequestHistory.page++;
 
-      // check max data
-      if (this.dataHistory.length >= orders.meta.pagination.total_objects) {
-        this.infinityScrollHistory.disabled = true;
-        this.loadedDataHistory = true;
+        // check max data
+        if (this.dataHistory.length >= data.meta.pagination.total_objects) {
+          this.infinityScrollHistory.disabled = true;
+          this.loadedDataHistory = true;
+        }
       }
     })
   }
@@ -116,37 +126,63 @@ export class OrderListPage implements OnInit {
     }
   }
 
-  gotoDetailOrder(item) {
-    const data = {
-      orderId: item.id
-    }
-    this.router.navigate(['main/order-list/detail-order'], {
-      queryParams: {
-        data: JSON.stringify(data)
-      }
-    })
-  }
-
-  gotoOrderStatus(item) {
-    const data = {
-      orderId: item.id
-    }
-    this.router.navigate(['main/order-list/order-status-detail'], {
-      queryParams: {
-        data: JSON.stringify(data)
-      }
-    })
-  }
-
-  goToReOrder(item) {
-    const data = {
-      orderId: item.id
-    }
-  }
-
-  // calProductQuantity(item) {
-  //   return item.order_details.filter(a => a.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME).length;
+  // gotoDetailOrder(item) {
+  //   const data = {
+  //     orderId: item.id
+  //   }
+  //   this.router.navigate(['main/order-list/detail-order'], {
+  //     queryParams: {
+  //       data: JSON.stringify(data)
+  //     }
+  //   })
   // }
+
+  // gotoOrderStatus(item) {
+  //   const data = {
+  //     orderId: item.id
+  //   }
+  //   this.router.navigate(['main/order-list/order-status-detail'], {
+  //     queryParams: {
+  //       data: JSON.stringify(data)
+  //     }
+  //   })
+  // }
+
+  goToOrderDetail(item) {
+    const data = {
+      orderId: item.id
+    }
+    this.router.navigate(['main/order-list/order-detail'], {
+      queryParams: {
+        data: JSON.stringify(data)
+      }
+    })
+  }
+
+  goToOrderDetailHistory(item) {
+    const data = {
+      orderId: item.id
+    }
+    this.router.navigate(['main/order-list/order-detail-history'], {
+      queryParams: {
+        data: JSON.stringify(data)
+      }
+    })
+  }
+
+  // goToReOrder(item) {
+  //   const data = {
+  //     orderId: item.id
+  //   }
+  // }
+
+  calProductsAmount(item) {
+    return item.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME ? acc + cur.amount : acc, 0)
+  }
+
+  calAccessoriesAmount(item) {
+    return item.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.ACCESSORY.NAME ? acc + cur.amount : acc, 0)
+  }
 
   // listProductsName(item) {
   //   return item.order_details.reduce((acc, cur) => {
@@ -157,8 +193,8 @@ export class OrderListPage implements OnInit {
   //   }, '').substring(2);
   // }
 
-  listItemsName(item) {
-    return item.order_details.reduce((acc, cur) => acc + ', ' + cur.name, '').substring(2);
+  listProductsName(item) {
+    return item.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME ? acc + ', ' + cur.name : acc, '').substring(2);
   }
 
   scrollToTop() {
@@ -167,5 +203,9 @@ export class OrderListPage implements OnInit {
 
   scrollToTopSmoothly() {
     this.ionContent.scrollToTop(500);
+  }
+
+  calTotalPrice(item) {
+    return item.order_details.reduce((acc, cur) => acc + cur.amount * cur.price, 0);
   }
 }

@@ -53,9 +53,8 @@ export class ModalAddComponent implements OnInit {
   choose() {
     this.setCartLocalStorage();
     const amount = this.amount;
-    this.modalController.dismiss(amount, 'ok').then(() => {
-      this.alertToast();
-    })
+    this.modalController.dismiss(amount, 'ok');
+    this.alertToast();
   }
 
   async alertToast() {

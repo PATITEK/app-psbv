@@ -17,7 +17,7 @@ export class ShoppingCartPage implements OnInit {
   scrWidth: any;
 
   constructor(
-    private alertCrtl: AlertController,
+    private alertController: AlertController,
     private router: Router,
     private globalVariablesService: GlobalVariablesService
   ) {
@@ -114,7 +114,7 @@ export class ShoppingCartPage implements OnInit {
   // }
 
   async openModalRemove(item) {
-    const alert = await this.alertCrtl.create({
+    const alert = await this.alertController.create({
       message: 'Delete item from your cart?',
       buttons: [
         {
