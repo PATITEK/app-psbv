@@ -20,8 +20,14 @@ ion-header {
   }
 
   .icon-box {
-    img {
-      margin-left: 19px;
+    // img {
+    //   margin-left: 19px;
+    // }
+
+    ion-icon {
+      font-size: 21px;
+      color: #fff;
+      margin-left: 10px;
     }
   }
 
@@ -82,6 +88,11 @@ ion-card-header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.absolute-center-text {
+  width: 200px;
+  text-align: center;
 }
 
 ion-backdrop {

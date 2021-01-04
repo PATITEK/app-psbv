@@ -2,8 +2,10 @@
   <ion-buttons class="wrapper">
     <img src="assets/icon/logo.svg" alt="" (click)="gotoHome()">
     <ion-buttons class="icon-box">
-      <img src="assets/noti.svg" (click)="goToNoti()" />
-      <img src="assets/user.svg" (click)="goToUserInfo()"/>
+      <!-- <img src="assets/noti.svg" (click)="goToNoti()" /> -->
+      <!-- <img src="assets/user.svg" (click)="goToUserInfo()"/> -->
+      <ion-icon name="notifications-outline" (click)="goToNoti()"></ion-icon>
+      <ion-icon name="person-outline" (click)="goToUserInfo()"></ion-icon>
     </ion-buttons>
   </ion-buttons>
 
@@ -13,7 +15,7 @@
 
 <ion-content>
   <ion-spinner class="absolute-center" *ngIf="isLoading"></ion-spinner>
-  <p class="absolute-center" *ngIf="data.length == 0 && !isLoading">Not found categories.</p>
+  <p class="absolute-center absolute-center-text" *ngIf="data.length == 0 && !isLoading">Not found categories.</p>
 
   <ion-grid>
     <ion-backdrop *ngIf="data.length == 0 || isLoading"></ion-backdrop>

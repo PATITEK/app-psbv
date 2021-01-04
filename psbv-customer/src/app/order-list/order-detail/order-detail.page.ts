@@ -40,13 +40,9 @@ export class OrderDetailPage implements OnInit {
       },
       {
         name: 'Domestic warehouse',
-        time: '08:23 am',
-        date: '12/12/2020',
       },
       {
         name: 'Done',
-        time: '08:23 am',
-        date: '12/12/2020',
       }
     ]
   }
@@ -208,6 +204,9 @@ export class OrderDetailPage implements OnInit {
 
   changeActiveStatus(status) {
     this.activeStatus = status.name;
+    if (this.activeStatus != 'shipping') {
+      this.isActiveBtnShipping = false;
+    }
   }
 
   calProgressStatus() {
@@ -220,5 +219,14 @@ export class OrderDetailPage implements OnInit {
 
   toggleBtnShipping() {
     this.isActiveBtnShipping = !this.isActiveBtnShipping;
+  }
+
+  calProgressShipping() {
+    for (let i = 0; i < this.shipping.statuses.length; i++) {
+      if (this.shipping.statuses[i].time === undefined) {
+        return (i - 1) / (this.shipping.statuses.length - 1) * 100;
+      }
+    }
+    return 100;
   }
 }

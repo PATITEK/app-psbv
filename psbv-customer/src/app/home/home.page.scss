@@ -19,8 +19,14 @@ ion-header {
   }
 
   .icon-box {
-    img {
-      margin-left: 19px;
+    // img {
+    //   margin-left: 19px;
+    // }
+
+    ion-icon {
+      font-size: 21px;
+      color: #fff;
+      margin-left: 10px;
     }
   }
 
@@ -45,6 +51,10 @@ ion-header {
       padding-bottom: 5px;
       border-bottom: 2px solid transparent;
       line-height: 14px;
+
+      @media screen and (max-width: 360px) {
+        font-size: 11px;
+      }
     }
 
     .active-segment-btn {
@@ -75,9 +85,7 @@ ion-grid {
 
     ion-col {
       background-color: #e5e5e5;
-      max-width: calc(
-        calc(6 / var(--ion-grid-columns, 12)) * 100% - 8px
-      ) !important;
+      max-width: calc(calc(6 / var(--ion-grid-columns, 12)) * 100% - 8px) !important;
       margin: 4px;
       padding: 4px 5px 5px;
       border-radius: 10px;
@@ -131,6 +139,11 @@ ion-grid {
   transform: translate(-50%, -50%);
 }
 
+.absolute-center-text {
+  width: 200px;
+  text-align: center;
+}
+
 ion-backdrop {
   opacity: 0.01;
 }
@@ -138,5 +151,9 @@ ion-backdrop {
 @supports (-webkit-touch-callout: none) {
   ion-header {
     padding-top: 30px;
+  }
+
+  ion-searchbar {
+    margin-bottom: 10px !important;
   }
 }

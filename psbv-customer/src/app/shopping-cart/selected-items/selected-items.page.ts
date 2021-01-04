@@ -34,10 +34,10 @@ export class SelectedItemsPage implements OnInit {
   }
 
   sendMailQuote() {
-    const data: IDataNoti = {
+    const d: IDataNoti = {
       title: 'SEND A EMAIL QUOTE',
       description: '',
-      routerLink: 'main/shopping-cart'
+      routerLink: '/main/shopping-cart'
     }
 
 

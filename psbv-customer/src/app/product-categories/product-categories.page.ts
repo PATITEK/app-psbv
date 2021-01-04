@@ -63,11 +63,11 @@ export class ProductCategoriesPage implements OnInit {
       tabs[key].style.display = 'flex';
     });
   }
- 
+  
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'logout-alert',
-      message: 'Do you want to exit app?',
+      message: 'Do you want to exit product category app?',
       buttons: [
         {
           text: 'Yes',
@@ -94,10 +94,12 @@ export class ProductCategoriesPage implements OnInit {
   }
 
   goToUserInfo() {
+     this.backButtonService.unsubscribe();
     this.router.navigateByUrl("/account/user-info");
   }
 
   goToNoti() {
+     this.backButtonService.unsubscribe();
     this.router.navigateByUrl('notification');
   }
 
