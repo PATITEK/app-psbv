@@ -34,12 +34,11 @@ export class SelectedItemsPage implements OnInit {
   }
 
   sendMailQuote() {
-    const data: IDataNoti = {
+    const d: IDataNoti = {
       title: 'SEND A EMAIL QUOTE',
       description: '',
-      routerLink: 'main/shopping-cart'
+      routerLink: '/main/shopping-cart'
     }
-
 
     this.items.forEach((item) => {
       const i = {
@@ -57,9 +56,9 @@ export class SelectedItemsPage implements OnInit {
         "order_details_attributes": this.receiveData
       }
     }
-    console.log(order);
+
     this.order.createOrder(order).subscribe((data: any) => {
-      this.pageNotiService.setdataStatusNoti(data);
+      this.pageNotiService.setdataStatusNoti(d);
       this.router.navigate(['/statusNoti']);
     })
   }

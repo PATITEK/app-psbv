@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content [style.height]="getIonContentAttribute(80).height" [style.bottom]="getIonContentAttribute(80).bottom">
-  <p class="absolute-center" *ngIf="cartItems.length == 0">Empty cart.</p>
+  <p class="absolute-center absolute-center-text" *ngIf="cartItems.length == 0">Empty cart.</p>
 
   <ion-card class="cart-item" *ngFor="let item of cartItems; let i = index;">
     <ion-icon name="close-outline" class="remove-btn" (click)="openModalRemove(item)"></ion-icon>

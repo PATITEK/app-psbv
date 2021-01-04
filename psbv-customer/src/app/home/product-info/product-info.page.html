@@ -17,6 +17,9 @@
       <p>{{ product.short_description }}</p>
     </ion-card-content>
   </ion-card>
+  <!-- for ios device -->
+  <img src="assets/detail-product/add-btn.svg" class="add-product-button" (click)="addProduct()"
+    *ngIf="!checkGuestPermission()">
 </ion-header>
 
 <ion-content>
@@ -25,7 +28,7 @@
     <span>+{{ cartItemsLength }}</span>
   </div>
 
-  <p class="absolute-center" *ngIf="accessories.length == 0 && loadedAccessories">Not found accessories.</p>
+  <p class="absolute-center absolute-center-text" *ngIf="accessories.length == 0 && loadedAccessories">Not found accessories.</p>
 
   <img src="assets/detail-product/add-btn.svg" class="add-product-button" (click)="addProduct()"
     *ngIf="!checkGuestPermission()">
@@ -44,7 +47,6 @@
         </ion-button> -->
       </ion-item>
     </ion-card-content>
-
   </ion-card>
 
   <ion-grid>

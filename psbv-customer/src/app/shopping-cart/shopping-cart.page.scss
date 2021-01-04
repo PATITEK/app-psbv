@@ -195,6 +195,11 @@ ion-footer {
   transform: translate(-50%, -50%);
 }
 
+.absolute-center-text {
+  width: 200px;
+  text-align: center;
+}
+
 .total-group {
   background: linear-gradient(90deg, #e52d27 0.03%, #b31217 100.03%);
   display: inline-flex;

@@ -119,6 +119,11 @@ ion-grid {
   transform: translate(-50%, -50%);
 }
 
+.absolute-center-text {
+  width: 200px;
+  text-align: center;
+}
+
 @supports (-webkit-touch-callout: none) {
   ion-header {
     padding-top: 20px;
