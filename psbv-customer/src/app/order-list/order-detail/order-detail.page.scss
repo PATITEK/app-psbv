@@ -44,7 +44,7 @@ ion-content {
   position: relative;
   margin-bottom: 200px;
   margin-top: 30px;
-  transition: .3s;
+  transition: 0.3s;
 
   .status-item-wrapper {
     text-align: center;
@@ -116,15 +116,16 @@ ion-content {
             flex-direction: column;
             position: absolute;
             top: 50%;
-            border: 2px solid #F7BDAE;
+            border: 2px solid #f7bdae;
             border-radius: 22px;
-            padding: 15px 12px 12px;
+            padding: 15px 20px 12px;
 
             .shipping-status-item {
               justify-content: space-between;
               width: 100%;
               line-height: 18px;
               max-width: 320px;
+              position: relative;
             }
           }
         }
@@ -137,7 +138,7 @@ ion-content {
       height: 62px;
     }
 
-    .circle {
+    .circle-h {
       position: absolute;
       width: 12px;
       height: 12px;
@@ -155,7 +156,7 @@ ion-content {
     }
   }
 
-  .line {
+  .line-h {
     background: #dededf;
     height: 2px;
     position: absolute;
@@ -164,7 +165,7 @@ ion-content {
     transform: translateX(-50%);
   }
 
-  .line-top {
+  .line-h-top {
     background: #91e29b;
     height: 2px;
     position: absolute;
@@ -247,6 +248,35 @@ ion-content {
 .delivery-day {
   font-size: 14px;
   color: #333333;
+}
+
+.line-v {
+  background: #dededf;
+  width: 2px;
+  height: 300%;
+  position: absolute;
+  left: -10px;
+  top: 50%;
+}
+
+.line-v-top {
+  background: #91e29b;
+  width: 2px;
+  height: 20px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.circle-v {
+  background: #dededf;
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  top: 50%;
+  left: -13.5px;
+  border-radius: 50%;
+  transform: translateY(-3px);
 }
 
 .order-code {
