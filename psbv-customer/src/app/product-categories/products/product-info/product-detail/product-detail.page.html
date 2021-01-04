@@ -6,13 +6,15 @@
 </ion-header>
 
 <ion-content>
+  <div class="cart-wrapper" (click)="goToCart()">
+    <img src="assets/detail-product/cart.svg" class="cart-btn">
+    <span>+{{ cartItemsLength }}</span>
+  </div>
+
   <ion-img [src]="product.thumb_image.url" class="main-img" *ngIf="loadedProduct"></ion-img>
   <ion-card class="product-content">
     <ion-backdrop *ngIf="!loadedProduct"></ion-backdrop>
-    <!-- <div *ngIf="curAddedProducts > 0" class="cart-wrapper" (click)="gotToCart()">
-      <img src="assets/detail-product/cart.svg" class="cart-btn">
-      <span>+{{ curAddedProducts }}</span>
-    </div> -->
+
     <ion-buttons class="product-name-wrapper">
       <ion-label class="product-name">{{ product.name }}</ion-label>
       <span class="product-price" *ngIf="!checkGuestPermission()">{{ product.price | number: '1.0-2' }}</span>

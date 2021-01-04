@@ -23,7 +23,6 @@ export class ProductInfoPage implements OnInit {
     per_page: 6,
     total_objects: 20
   }
-  // counter: number = 0;
   permission: string;
   accessories = [];
   product = {
@@ -41,7 +40,6 @@ export class ProductInfoPage implements OnInit {
   cartItemsLength = 0;
   loadedProduct = false;
   loadedAccessories = false;
-  // added = JSON.parse(localStorage.getItem('added')) || false;
 
   constructor(
     private router: Router,
@@ -69,7 +67,6 @@ export class ProductInfoPage implements OnInit {
     }
 
   ionViewWillEnter() {
-    // this.added = JSON.parse(localStorage.getItem('added')) || false;
     const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
     this.cartItemsLength = arr.length;
 
