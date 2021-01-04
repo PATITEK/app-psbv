@@ -257,6 +257,11 @@ ion-infinite-scroll {
   transform: translate(-50%, -50%);
 }
 
+.absolute-center-text {
+  width: 200px;
+  text-align: center;
+}
+
 .add-accessory-btn {
   position: absolute;
   top: 5px;
@@ -295,5 +300,13 @@ ion-infinite-scroll {
     position: absolute;
     top: 0;
     right: 4px;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .add-product-button {
+    @media screen and (max-width: 360px) {
+      top: 353px;
+    }
   }
 }
