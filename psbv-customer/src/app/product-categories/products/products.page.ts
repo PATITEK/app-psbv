@@ -61,7 +61,7 @@ export class ProductsPage implements OnInit {
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'logout-alert',
-      message: 'Do you want to exit home app?',
+      message: 'Do you want to exit app?',
       buttons: [
         {
           text: 'Yes',
