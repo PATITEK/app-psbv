@@ -81,7 +81,7 @@ export class HomePage implements OnInit {
     }
     this.loadData();
     this.platform.backButton.subscribe(() => {
-      if ((this.router.url === '/main/home')) {
+      if (this.router.url === '/main/home') {
         this.presentAlert();
       }
       else {
@@ -89,7 +89,6 @@ export class HomePage implements OnInit {
       }
     }
     )
- 
   }
   async presentAlert() {
     const alert = await this.alertController.create({
@@ -111,7 +110,7 @@ export class HomePage implements OnInit {
 
       ]
     });
-    await alert.present();
+    await alert.present()
   }
   
   ionViewWillEnter() {
