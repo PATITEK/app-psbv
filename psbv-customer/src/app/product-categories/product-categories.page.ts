@@ -47,7 +47,6 @@ export class ProductCategoriesPage implements OnInit {
     })
     this.loadData();
     this.platform.backButton.subscribe(() => {
-      console.log('cate');
       if (this.router.url === '/main/product-categories') {
         this.presentAlert();
       }
