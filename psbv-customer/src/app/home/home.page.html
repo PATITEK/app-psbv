@@ -22,7 +22,7 @@
 <ion-content>
   <ion-item-group *ngIf="activeTab == filterProducts[0].id">
     <ion-spinner class="absolute-center" *ngIf="isLoading"></ion-spinner>
-    <p class="absolute-center" *ngIf="data.length == 0 && !isLoading">Not found products.</p>
+    <p class="absolute-center absolute-center-text" *ngIf="data.length == 0 && !isLoading">Not found products.</p>
 
     <ion-grid>
       <ion-backdrop *ngIf="data.length == 0 || isLoading"></ion-backdrop>
@@ -61,7 +61,7 @@
 
   <ion-item-group *ngIf="activeTab == filterProducts[1].id">
     <!-- <ion-spinner class="absolute-center" *ngIf="isLoading"></ion-spinner> -->
-    <p class="absolute-center" *ngIf="dataSeenProducts.length == 0">Not found products.</p>
+    <p class="absolute-center  absolute-center-text" *ngIf="dataSeenProducts.length == 0">Not found products.</p>
 
     <ion-grid>
       <ion-backdrop *ngIf="dataSeenProducts.length == 0"></ion-backdrop>
@@ -100,7 +100,7 @@
 
   <ion-item-group *ngIf="activeTab == filterProducts[2].id">
     <ion-spinner class="absolute-center" *ngIf="isLoadingTrending"></ion-spinner>
-    <p class="absolute-center" *ngIf="dataTrending.length == 0 && !isLoadingTrending">Not found products.</p>
+    <p class="absolute-center absolute-center-text" *ngIf="dataTrending.length == 0 && !isLoadingTrending">Not found products.</p>
 
     <ion-grid>
       <ion-backdrop *ngIf="dataTrending.length == 0 || isLoadingTrending"></ion-backdrop>

@@ -15,7 +15,7 @@
 
 <ion-content>
   <ion-spinner class="absolute-center" *ngIf="isLoading"></ion-spinner>
-  <p class="absolute-center" *ngIf="data.length == 0 && !isLoading">Not found categories.</p>
+  <p class="absolute-center absolute-center-text" *ngIf="data.length == 0 && !isLoading">Not found categories.</p>
 
   <ion-grid>
     <ion-backdrop *ngIf="data.length == 0 || isLoading"></ion-backdrop>
