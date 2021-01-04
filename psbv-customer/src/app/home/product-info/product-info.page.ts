@@ -23,7 +23,6 @@ export class ProductInfoPage implements OnInit {
     per_page: 6,
     total_objects: 20
   }
-  // counter: number = 0;
   permission = '';
   accessories = [];
   product = {
@@ -71,7 +70,6 @@ export class ProductInfoPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    // this.added = JSON.parse(localStorage.getItem('added')) || false;
     const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
     this.cartItemsLength = arr.length;
 
@@ -96,7 +94,6 @@ export class ProductInfoPage implements OnInit {
     } else {
       const data = {
         id: this.product.id,
-        // added: this.added
       }
       this.router.navigate(['/main/home/product-info/product-detail'], {
         queryParams: {
