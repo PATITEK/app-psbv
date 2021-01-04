@@ -96,6 +96,7 @@ export class HomePage implements OnInit {
       message: 'Do you want to exit app?',
       buttons: [
         {
+         
           text: 'Yes',
           handler: () => {
             navigator['app'].exitApp();
