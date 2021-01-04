@@ -40,6 +40,7 @@ export class SelectedItemsPage implements OnInit {
       routerLink: '/main/shopping-cart'
     }
 
+
     this.items.forEach((item) => {
       const i = {
         amount: "",
@@ -56,9 +57,9 @@ export class SelectedItemsPage implements OnInit {
         "order_details_attributes": this.receiveData
       }
     }
-
+    console.log(order);
     this.order.createOrder(order).subscribe((data: any) => {
-      this.pageNotiService.setdataStatusNoti(d);
+      this.pageNotiService.setdataStatusNoti(data);
       this.router.navigate(['/statusNoti']);
     })
   }
