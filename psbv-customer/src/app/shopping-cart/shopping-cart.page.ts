@@ -76,7 +76,7 @@ export class ShoppingCartPage implements OnInit {
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'logout-alert',
-      message: 'Do you want to exit shopping-cart app?',
+      message: 'Do you want to app?',
       buttons: [
         {
           text: 'Yes',

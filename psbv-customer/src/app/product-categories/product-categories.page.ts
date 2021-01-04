@@ -46,31 +46,21 @@ export class ProductCategoriesPage implements OnInit {
       this.previousUrl = data;
     })
     this.loadData();
-  }
-  backButtonSystem(event) {
-    this.backButtonService = this.platform.backButton.subscribe(() => {
-      if (event) {
+    this.platform.backButton.subscribe(() => {
+      if ((this.router.url === '/main/product-categories')) {
         this.presentAlert();
       }
       else {
+
         return;
       }
-    })
-  }
-  ionViewWillEnter() {
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'flex';
-      this.backButtonSystem(tabs[key].style.display);
-    });
-  }
-  ionViewDidLeave() {
-    this.backButtonService.unsubscribe();
+    }
+    )
   }
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'logout-alert',
-      message: 'Do you want to exit product category app?',
+      message: 'Do you want to exit app?',
       buttons: [
         {
           text: 'Yes',
@@ -89,6 +79,13 @@ export class ProductCategoriesPage implements OnInit {
     });
     await alert.present();
   }
+  ionViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
+  }
+ 
   
 
   getScreenSize(event?) {
@@ -97,12 +94,10 @@ export class ProductCategoriesPage implements OnInit {
   }
 
   goToUserInfo() {
-     this.backButtonService.unsubscribe();
     this.router.navigateByUrl("/account/user-info");
   }
 
   goToNoti() {
-     this.backButtonService.unsubscribe();
     this.router.navigateByUrl('notification');
   }
 
