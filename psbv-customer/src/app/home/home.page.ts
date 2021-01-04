@@ -81,7 +81,9 @@ export class HomePage implements OnInit {
     }
     this.loadData();
     this.platform.backButton.subscribe(() => {
-      if ((this.router.url === '/main/home')) {
+      console.log("home ne");
+      if (this.router.url === '/main/home') {
+        
         this.presentAlert();
       }
       else {
