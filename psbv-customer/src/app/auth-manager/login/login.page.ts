@@ -88,7 +88,8 @@ export class LoginPage implements OnInit {
       this.authService.login(this.profileForm.value).subscribe(
         (data: any) => {
           this.showSpinner = true;
-          this.router.navigateByUrl('/main/product-categories');
+          // this.router.navigateByUrl('/main/product-categories');
+          window.location.assign('/');
         },
         (data: any) => {
           if (data.error) {
