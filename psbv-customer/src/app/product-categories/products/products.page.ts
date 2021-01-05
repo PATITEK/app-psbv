@@ -5,6 +5,7 @@ import { GlobalVariablesService } from 'src/app/@app-core/global-variables.servi
 import { IPageRequest, PERMISSIONS, ProductGroupsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
+import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 
 @Component({
   selector: 'app-products',
@@ -28,24 +29,35 @@ export class ProductsPage implements OnInit {
   id = '';
 
   loadedData = false;
-  private backButtonService: any;
+  isOnline;
+  isLoading = true;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private productGroupService: ProductGroupsService,
     private loading: LoadingService,
     private storageService: StorageService,
-    private platform: Platform,
-    private globalVariablesService: GlobalVariablesService,
     private alertController: AlertController,
+    private connectivityService: ConnectivityService
 
   ) {
     this.getScreenSize();
-   }
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.isOnline = true;
+        this.loadData();
+      } else {
+        this.isOnline = false;
+      }
+    })
+  }
 
   ngOnInit() {
-    this.loading.present();
-    this.loadData();
+    if (this.isOnline === true) {
+      this.loading.present();
+      this.loadData();
+    }
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
@@ -75,7 +87,6 @@ export class ProductsPage implements OnInit {
             return;
           }
         },
-  
       ]
     });
     await alert.present();
@@ -87,7 +98,7 @@ export class ProductsPage implements OnInit {
       tabs[key].style.display = 'none';
     });
   }
-  
+
   getScreenSize(event?) {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
@@ -96,8 +107,8 @@ export class ProductsPage implements OnInit {
   loadData() {
     setTimeout(() => {
       if (this.id != '') {
-        this.productGroupService.getProductGroupDetail(this.id, this.pageRequest)
-          .subscribe(data => {
+        this.productGroupService.getProductGroupDetail(this.id, this.pageRequest).subscribe(data => {
+          if (!this.data.some(a => a.id == data.products[0].id)) {
             for (let item of data.products) {
               // image not found
               if (item.thumb_image === null) {
@@ -109,10 +120,7 @@ export class ProductsPage implements OnInit {
               this.data.push(item);
             }
 
-            this.loadedData = true;
-
             this.infinityScroll.complete();
-            this.loading.dismiss();
             this.pageRequest.page++;
 
             // check max data
@@ -125,9 +133,12 @@ export class ProductsPage implements OnInit {
             if (temp <= this.pageRequest.per_page) {
               this.pageRequest.per_page = temp;
             }
-          })
+          }
+          this.loadedData = true;
+          this.loading.dismiss();
+        })
       }
-    }, 50)
+    }, 50);
   }
 
   checkGuestPermission(): boolean {

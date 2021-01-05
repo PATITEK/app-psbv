@@ -18,7 +18,7 @@
   </ion-card>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="loadedAccessory">
   <ion-button expand="block" (click)="openModalAdd()">Add to cart</ion-button>
   <p *ngIf="!checkGuestPermission()">We will show detail component of product after you receive the item!</p>
 </ion-footer>

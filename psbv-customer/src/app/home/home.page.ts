@@ -4,6 +4,7 @@ import { AlertController, IonContent, IonInfiniteScroll, Platform } from '@ionic
 import { IPageRequest, PERMISSIONS, ProductsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
 import { StorageService } from '../@app-core/storage.service';
+import { ConnectivityService } from '../@app-core/utils/connectivity.service';
 
 @Component({
   selector: 'app-home',
@@ -56,19 +57,41 @@ export class HomePage implements OnInit {
   isMaxDataTrending = false;
   isLoadingTrending = true;
   dataSeenProducts = JSON.parse(localStorage.getItem('seenProducts')) || [];
+
+  isOnline;
+
   constructor(
     private router: Router,
     private productService: ProductsService,
     public alertController: AlertController,
     private platform: Platform,
-    // public loading: LoadingService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private connectivityService: ConnectivityService,
+    private LoadingService: LoadingService
   ) {
     this.getScreenSize();
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.LoadingService.dismiss();
+        this.isOnline = true;
+        switch (this.activeTab) {
+          case this.filterProducts[0].id:
+            this.loadData();
+            break;
+          case this.filterProducts[2].id:
+            this.loadDataTrending();
+            break;
+          default:
+            break;
+        }
+      } else {
+        // this.LoadingService.present('No internet connection');
+        this.isOnline = false;
+      }
+    })
   }
 
   ngOnInit() {
-    // this.loading.present();
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
@@ -87,8 +110,7 @@ export class HomePage implements OnInit {
       else {
         return;
       }
-    }
-    )
+    })
   }
   async presentAlert() {
     const alert = await this.alertController.create({
@@ -113,7 +135,7 @@ export class HomePage implements OnInit {
     });
     await alert.present()
   }
-  
+
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
@@ -176,10 +198,42 @@ export class HomePage implements OnInit {
     this.counter++;
     this.loadData();
   }
+
   searchProducts(event?) {
     const counterTemp = this.counter;
     this.productService.searchProduct(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
       if (counterTemp == this.counter) {
+        if (!this.data.some(a => a.id == data.products[0].id)) {
+          for (let item of data.products) {
+            // image not found
+            if (item.thumb_image === null) {
+              const d = {
+                url: "https://i.imgur.com/dbpoag5.png"
+              }
+              item.thumb_image = d;
+            }
+            this.data.push(item);
+          }
+
+          this.infinityScroll.complete();
+          this.pageRequest.page++;
+
+          // check max data
+          if (this.data.length >= data.meta.pagination.total_objects) {
+            this.infinityScroll.disabled = true;
+            this.isMaxData = true;
+          }
+        }
+        this.isLoading = false;
+      } else {
+        this.infinityScroll.complete();
+      }
+    })
+  }
+
+  loadProducts(event?) {
+    this.productService.getProducts(this.pageRequest).subscribe(data => {
+      if (!this.data.some(a => a.id == data.products[0].id)) {
         for (let item of data.products) {
           // image not found
           if (item.thumb_image === null) {
@@ -191,8 +245,6 @@ export class HomePage implements OnInit {
           this.data.push(item);
         }
 
-        this.isLoading = false;
-
         this.infinityScroll.complete();
         // this.loading.dismiss();
         this.pageRequest.page++;
@@ -202,72 +254,46 @@ export class HomePage implements OnInit {
           this.infinityScroll.disabled = true;
           this.isMaxData = true;
         }
-      } else {
-        this.infinityScroll.complete();
       }
-    })
-  }
-  loadProducts(event?) {
-    this.productService.getProducts(this.pageRequest).subscribe(data => {
-      for (let item of data.products) {
-        // image not found
-        if (item.thumb_image === null) {
-          const d = {
-            url: "https://i.imgur.com/dbpoag5.png"
-          }
-          item.thumb_image = d;
-        }
-        this.data.push(item);
-      }
-
       this.isLoading = false;
-
-      this.infinityScroll.complete();
-      // this.loading.dismiss();
-      this.pageRequest.page++;
-
-      // check max data
-      if (this.data.length >= data.meta.pagination.total_objects) {
-        this.infinityScroll.disabled = true;
-        this.isMaxData = true;
-      }
     })
   }
 
   loadTrending(event?) {
     this.productService.getProductsTrending(this.pageRequestTrending).subscribe(data => {
-      for (let item of data.order_details) {
-        // image not found
-        if (item.product.thumb_image === null) {
-          const d = {
-            url: "https://i.imgur.com/dbpoag5.png"
+      if (!this.data.some(a => a.id == data.order_details[0].id)) {
+        for (let item of data.order_details) {
+          // image not found
+          if (item.product.thumb_image === null) {
+            const d = {
+              url: "https://i.imgur.com/dbpoag5.png"
+            }
+            item.product.thumb_image = d;
           }
-          item.product.thumb_image = d;
+          this.dataTrending.push({
+            id: item.product.id,
+            name: item.product.name,
+            thumb_image: item.product.thumb_image,
+            price: item.product.price
+          });
         }
-        this.dataTrending.push({
-          id: item.product.id,
-          name: item.product.name,
-          thumb_image: item.product.thumb_image,
-          price: item.product.price
-        });
-      }
 
+        this.infinityScrollTrending.complete();
+        // this.loading.dismiss();
+        this.pageRequestTrending.page++;
+
+        // check max data
+        if (this.dataTrending.length >= data.meta.pagination.total_objects) {
+          this.infinityScrollTrending.disabled = true;
+          this.isMaxDataTrending = true;
+        }
+      }
       this.isLoadingTrending = false;
-
-      this.infinityScrollTrending.complete();
-      // this.loading.dismiss();
-      this.pageRequestTrending.page++;
-
-      // check max data
-      if (this.dataTrending.length >= data.meta.pagination.total_objects) {
-        this.infinityScrollTrending.disabled = true;
-        this.isMaxDataTrending = true;
-      }
     })
   }
 
   loadData(event?) {
-    if (!this.isMaxData) {
+    if (this.isOnline && !this.isMaxData) {
       if (this.inputValue !== '') {
         this.searchProducts();
       } else {
@@ -279,7 +305,7 @@ export class HomePage implements OnInit {
   }
 
   loadDataTrending(event?) {
-    if (!this.isMaxDataTrending) {
+    if (this.isOnline && !this.isMaxDataTrending) {
       this.loadTrending();
     } else {
       this.infinityScrollTrending.complete();

@@ -13,6 +13,7 @@
 
 <ion-content>
   <p class="absolute-center absolute-center-text" *ngIf="data.length == 0 && loadedData">Not found products.</p>
+  <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
 
   <ion-grid>
     <ion-row *ngFor="let item of data; let i = index">

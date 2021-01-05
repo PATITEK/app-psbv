@@ -5,6 +5,7 @@ import { GlobalVariablesService } from 'src/app/@app-core/global-variables.servi
 import { AccessoriesService, AuthService, IPageRequest, PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
+import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 
 @Component({
   selector: 'app-product-info',
@@ -40,6 +41,7 @@ export class ProductInfoPage implements OnInit {
   cartItemsLength = 0;
   loadedProduct = false;
   loadedAccessories = false;
+  isOnline;
 
   constructor(
     private router: Router,
@@ -49,22 +51,33 @@ export class ProductInfoPage implements OnInit {
     private accessoriesService: AccessoriesService,
     private storageService: StorageService,
     private globalVariablesService: GlobalVariablesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private connectivityService: ConnectivityService
   ) {
     const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
     this.cartItemsLength = arr.length;
     this.getScreenSize();
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.isOnline = true;
+        this.loadData();
+      } else {
+        this.isOnline = false;
+      }
+    })
   }
 
   ngOnInit() {
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
-    this.loading.present();
-    this.loadData();
-    this.previousUrl =  this.router.url;
-    this.authService.sendData(this.previousUrl);
+    if (this.isOnline === true) {
+      this.loading.present();
+      this.loadData();
     }
+    this.previousUrl = this.router.url;
+    this.authService.sendData(this.previousUrl);
+  }
 
   ionViewWillEnter() {
     const arr = JSON.parse(localStorage.getItem('cartItems')) || [];

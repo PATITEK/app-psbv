@@ -303,6 +303,20 @@ ion-infinite-scroll {
   }
 }
 
+.no-internet-popup {
+  z-index: 110;
+  background: yellow;
+  display: block;
+  position: fixed;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: 89px;
+  line-height: 30px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
 @supports (-webkit-touch-callout: none) {
   .add-product-button {
     @media screen and (max-width: 360px) {

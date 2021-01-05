@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/@app-core/http';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
+import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 
 @Component({
   selector: 'app-login',
@@ -14,14 +15,20 @@ export class LoginPage implements OnInit {
   public type2 = 'password';
   public showPass2 = false;
   public showSpinner = false;
-  message: string ;
+  message: string;
+  isOnline: boolean;
 
   constructor(
     private router: Router,
     private authService: AuthService,
     public alertCtrl: AlertController,
     private toastController: ToastController,
-  ) { }
+    private connectivityService: ConnectivityService
+  ) {
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      this.isOnline = online ? true : false;
+    })
+  }
 
   async presentSuccessToast() {
     const toast = await this.toastController.create({
@@ -62,41 +69,46 @@ export class LoginPage implements OnInit {
       header: 'Warning',
       message: text,
       buttons: [{
-        text:'Agree',
-        role:'ok'
+        text: 'Agree',
+        role: 'ok'
       }]
     });
     await alert.present();
   }
-   async onSubmit() {
+  async onSubmit() {
     this.showSpinner = true;
-    if(this.profileForm.value.email === ''){
+    if (this.profileForm.value.email === '') {
       this.showSpinner = false;
       this.presentAlert('Please enter your email');
-    }else if(this.profileForm.value.password === ''){
+    } else if (this.profileForm.value.password === '') {
       this.showSpinner = false;
       this.presentAlert('Please enter your password');
     }
-    this.authService.login(this.profileForm.value).subscribe(
-    (data: any) => {
-    this.showSpinner = true;
-    this.router.navigateByUrl('/main/product-categories');
-    },
-    (data:any) =>{
-      if(data.error) {
-         this.showSpinner = false;
-         this.presentFailedToast();
+    if (this.isOnline === true) {
+      this.authService.login(this.profileForm.value).subscribe(
+        (data: any) => {
+          this.showSpinner = true;
+          this.router.navigateByUrl('/main/product-categories');
+        },
+        (data: any) => {
+          if (data.error) {
+            this.showSpinner = false;
+            this.presentFailedToast();
+          }
         }
+      )
+    } else {
+      this.presentAlert('No internet connection');
+      this.showSpinner = false;
     }
-    )
   }
   resetPass() {
     this.router.navigateByUrl('/auth/forgot-password');
   }
-  gotoSignUp(){
+  gotoSignUp() {
     this.router.navigateByUrl('/auth/sign-up');
   }
-  
+
 }
 
 

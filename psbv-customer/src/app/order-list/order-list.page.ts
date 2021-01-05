@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { AlertController, IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
 import { OrdersService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
+import { ConnectivityService } from '../@app-core/utils/connectivity.service';
 
 @Component({
   selector: 'app-order-list',
   templateUrl: './order-list.page.html',
   styleUrls: ['./order-list.page.scss'],
 })
-export class OrderListPage implements OnInit{
+export class OrderListPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
   @ViewChild(IonInfiniteScroll) infinityScrollHistory: IonInfiniteScroll;
   @ViewChild(IonContent) ionContent: IonContent;
@@ -35,6 +36,7 @@ export class OrderListPage implements OnInit{
 
   firstTime = false;
   private backButtonService: any;
+  isOnline;
 
   constructor(
     private router: Router,
@@ -42,11 +44,31 @@ export class OrderListPage implements OnInit{
     private loadingService: LoadingService,
     public alertController: AlertController,
     private platform: Platform,
+    private connectivityService: ConnectivityService,
+  ) {
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.isOnline = true;
+        switch (this.activeTab) {
+          case 'orderStatus':
+            this.loadData();
+            break;
+          case 'orderHistory':
+            this.loadDataHistory();
+            break;
+          default:
+            break;
+        }
+      } else {
+        this.isOnline = false;
+      }
+    })
+  }
 
-  ) { }
   ngOnInit() {
-    // this.loadingService.present();
-    this.loadData();
+    if (this.isOnline === true) {
+      this.loadData();
+    }
   }
 
   async presentAlert() {
@@ -69,12 +91,12 @@ export class OrderListPage implements OnInit{
 
       ]
     });
-     await alert.present();
+    await alert.present();
   }
 
   backButtonSystem(event) {
     this.backButtonService = this.platform.backButton.subscribe(() => {
-      if (event){
+      if (event) {
         this.presentAlert();
       }
       else {
@@ -93,48 +115,39 @@ export class OrderListPage implements OnInit{
 
   ionViewDidLeave() {
     this.backButtonService.unsubscribe();
-  }  
+  }
 
   loadData() {
     this.isLoading = true;
     this.ordersService.getOrders(this.pageRequest).subscribe(data => {
-      for (let item of data.orders) {
-        this.data.push(item);
-      }
+      if (!this.data.some(a => a.id == data.orders[0].id)) {
+        for (let item of data.orders) {
+          this.data.push(item);
+        }
 
+        // this.loadingService.dismiss();
+        this.infinityScroll.complete();
+        this.pageRequest.page++;
+
+        // check max data
+        if (this.data.length >= data.meta.pagination.total_objects) {
+          this.infinityScroll.disabled = true;
+          this.loadedData = true;
+        }
+      }
       this.isLoading = false;
-
-      // this.loadingService.dismiss();
-      this.infinityScroll.complete();
-      this.pageRequest.page++;
-
-      // check max data
-      if (this.data.length >= data.meta.pagination.total_objects) {
-        this.infinityScroll.disabled = true;
-        this.loadedData = true;
-      }
     })
   }
 
   loadDataHistory() {
     this.isLoadingHistory = true;
     this.ordersService.getHistory(this.pageRequestHistory).subscribe(data => {
-      let duplicated = false;
-      for (let item of data.orders) {
-        if (this.dataHistory.some(a => a.id == item.id)) {
-          duplicated = true;
-        }
-        if (!duplicated) {
+      if (!this.dataHistory.some(a => a.id == data.orders[0].id)) {
+        for (let item of data.orders) {
           this.dataHistory.push(item);
-        } else {
-          break;
         }
-      }
 
-      this.isLoadingHistory = false;
-
-      // this.loadingService.dismiss();
-      if (!duplicated) {
+        // this.loadingService.dismiss();
         this.infinityScrollHistory.complete();
         this.pageRequestHistory.page++;
 
@@ -144,6 +157,7 @@ export class OrderListPage implements OnInit{
           this.loadedDataHistory = true;
         }
       }
+      this.isLoadingHistory = false;
     })
   }
 

@@ -3,6 +3,7 @@ import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { AlertController, Platform } from '@ionic/angular';
 import { GlobalVariablesService } from '../@app-core/global-variables.service';
 import { AuthService } from '../@app-core/http';
+import { ConnectivityService } from '../@app-core/utils/connectivity.service';
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.page.html',
@@ -19,40 +20,50 @@ export class ShoppingCartPage implements OnInit {
   private previousUrl: string = undefined;
   private currentUrl: string = undefined;
   private backButtonService: any;
+  isOnline;
+
   constructor(
     private alertController: AlertController,
     private router: Router,
     private platform: Platform,
     private authService: AuthService,
-    private globalVariablesService: GlobalVariablesService
+    private globalVariablesService: GlobalVariablesService,
+    private connectivityService: ConnectivityService,
   ) {
     this.getScreenSize();
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      this.isOnline = online ? true : false;
+    })
   }
+
   ngOnInit() {
     this.currentUrl = this.router.url;
     this.authService.receiveData.subscribe((data: any) => {
       this.previousUrl = data;
     })
   }
+
   backButtonSystem(attr) {
     this.backButtonService = this.platform.backButton.subscribe(() => {
-      if (attr === 'flex'){
+      if (attr === 'flex') {
         this.presentAlert();
       }
       else {
 
-        if(this.previousUrl.search('/main/home/product-info') != -1) {
-           this.router.navigateByUrl(this.previousUrl);
+        if (this.previousUrl.search('/main/home/product-info') != -1) {
+          this.router.navigateByUrl(this.previousUrl);
         }
-        else if(this.previousUrl.search('/main/product-categories/products/product-info') !=-1){
+        else if (this.previousUrl.search('/main/product-categories/products/product-info') != -1) {
           this.router.navigateByUrl(this.previousUrl);
         }
       }
     })
   }
+
   ionViewDidLeave() {
     this.backButtonService.unsubscribe();
-  }  
+  }
+
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     if (this.hasBackButton()) {
@@ -60,11 +71,11 @@ export class ShoppingCartPage implements OnInit {
         tabs[key].style.display = 'none';
         this.backButtonSystem(tabs[key].style.display);
       });
-  }
+    }
     else {
       Object.keys(tabs).map((key) => {
         tabs[key].style.display = 'flex';
-      this.backButtonSystem(tabs[key].style.display);
+        this.backButtonSystem(tabs[key].style.display);
       });
     }
     this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -73,6 +84,7 @@ export class ShoppingCartPage implements OnInit {
       selected: false
     }))
   }
+
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'logout-alert',
@@ -90,7 +102,7 @@ export class ShoppingCartPage implements OnInit {
             return;
           }
         },
-  
+
       ]
     });
     await alert.present();

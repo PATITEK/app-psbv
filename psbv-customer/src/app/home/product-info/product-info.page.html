@@ -19,19 +19,19 @@
   </ion-card>
   <!-- for ios device -->
   <img src="assets/detail-product/add-btn.svg" class="add-product-button" (click)="addProduct()"
-    *ngIf="!checkGuestPermission()">
+    *ngIf="!checkGuestPermission() && loadedProduct && loadedAccessories">
 </ion-header>
 
 <ion-content>
-  <div class="cart-wrapper" (click)="goToCart()">
+  <div class="cart-wrapper" (click)="goToCart()" *ngIf="loadedProduct && loadedAccessories">
     <img src="assets/detail-product/cart.svg" class="cart-btn">
     <span>+{{ cartItemsLength }}</span>
   </div>
 
   <p class="absolute-center absolute-center-text" *ngIf="accessories.length == 0 && loadedAccessories">Not found accessories.</p>
-
+  <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
   <img src="assets/detail-product/add-btn.svg" class="add-product-button" (click)="addProduct()"
-    *ngIf="!checkGuestPermission()">
+    *ngIf="!checkGuestPermission() && loadedProduct && loadedAccessories">
 
   <ion-card class="accessories" *ngIf="accessories.length != 0">
     <ion-card-header class="ion-text-center">

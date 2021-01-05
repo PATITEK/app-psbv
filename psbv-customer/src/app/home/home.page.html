@@ -19,11 +19,12 @@
   </ion-segment>
 </ion-header>
 
-<ion-content>
+<ion-content [style.--padding-top.px]="!isOnline ? 32 : 0">
+  <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
   <ion-item-group *ngIf="activeTab == filterProducts[0].id">
     <ion-spinner class="absolute-center" *ngIf="isLoading"></ion-spinner>
     <p class="absolute-center absolute-center-text" *ngIf="data.length == 0 && !isLoading">Not found products.</p>
-
+    
     <ion-grid>
       <ion-backdrop *ngIf="data.length == 0 || isLoading"></ion-backdrop>
       <ion-row *ngFor="let item of data; let i = index">

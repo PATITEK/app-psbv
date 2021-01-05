@@ -13,7 +13,9 @@
     [ngClass]="checkSystem ? 'margin-search':''"></ion-searchbar>
 </ion-header>
 
-<ion-content>
+<ion-content [style.--padding-top.px]="!isOnline ? 32 : 0">
+  <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
+
   <ion-spinner class="absolute-center" *ngIf="isLoading"></ion-spinner>
   <p class="absolute-center absolute-center-text" *ngIf="data.length == 0 && !isLoading">Not found categories.</p>
 
