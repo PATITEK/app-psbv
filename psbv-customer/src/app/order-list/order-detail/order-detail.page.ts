@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { OrdersService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
+import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -49,6 +50,7 @@ export class OrderDetailPage implements OnInit {
   isActiveBtnShipping = false;
 
   loadedData = false;
+  isOnline;
 
   constructor(
     private route: ActivatedRoute,
@@ -57,53 +59,24 @@ export class OrderDetailPage implements OnInit {
     private alertController: AlertController,
     public toastController: ToastController,
     public sanitizer: DomSanitizer,
-  ) { 
+    private connectivityService: ConnectivityService,
+  ) {
     this.getScreenSize();
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.isOnline = true;
+        this.loadData();
+      } else {
+        this.isOnline = false;
+      }
+    })
   }
 
   ngOnInit() {
-    this.loadingService.present();
-
-    this.route.queryParams.subscribe(params => {
-      this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
-        this.data = data.order;
-        this.activeStatus = this.data.status;
-
-        const confirmedStatus = this.ordersService.STATUSES[0].NAME;
-        const shippingStatus = this.ordersService.STATUSES[1].NAME;
-        const receivedStatus = this.ordersService.STATUSES[2].NAME;
-        const canceledStatus = this.ordersService.STATUSES[3].NAME;
-        let hasPreviousCanceledStatus = false;
-
-        this.pushData(confirmedStatus, this.data.audits[0].created_at);
-
-        if (this.data.audits[1]) {
-          if (this.data.audits[1].audited_changes.status[1] == shippingStatus) {
-            this.pushData(shippingStatus, this.data.audits[1].created_at);
-          } else if (this.data.audits[1].audited_changes.status[1] == canceledStatus) {
-            this.pushData(canceledStatus, this.data.audits[1].created_at);
-            hasPreviousCanceledStatus = true;
-          }
-        } else {
-          this.pushData(shippingStatus);
-        }
-
-        if (!hasPreviousCanceledStatus) {
-          if (this.data.audits[2]) {
-            if (this.data.audits[2].audited_changes.status[1] == receivedStatus) {
-              this.pushData(receivedStatus, this.data.audits[2].created_at);
-            } else if (this.data.audits[2].audited_changes.status[1] == canceledStatus) {
-              this.pushData(canceledStatus, this.data.audits[2].created_at);
-            }
-          } else {
-            this.pushData(receivedStatus);
-          }
-        }
-
-        this.loadedData = true;
-        this.loadingService.dismiss();
-      })
-    })
+    if (this.isOnline === true) {
+      this.loadingService.present();
+      this.loadData();
+    }
   }
 
   ionViewWillEnter() {
@@ -111,6 +84,51 @@ export class OrderDetailPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+  }
+
+  loadData() {
+    this.route.queryParams.subscribe(params => {
+      this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
+        if (this.data.id == '') {
+          this.data = data.order;
+          this.activeStatus = this.data.status;
+
+          const confirmedStatus = this.ordersService.STATUSES[0].NAME;
+          const shippingStatus = this.ordersService.STATUSES[1].NAME;
+          const receivedStatus = this.ordersService.STATUSES[2].NAME;
+          const canceledStatus = this.ordersService.STATUSES[3].NAME;
+          let hasPreviousCanceledStatus = false;
+
+          this.pushData(confirmedStatus, this.data.audits[0].created_at);
+
+          if (this.data.audits[1]) {
+            if (this.data.audits[1].audited_changes.status[1] == shippingStatus) {
+              this.pushData(shippingStatus, this.data.audits[1].created_at);
+            } else if (this.data.audits[1].audited_changes.status[1] == canceledStatus) {
+              this.pushData(canceledStatus, this.data.audits[1].created_at);
+              hasPreviousCanceledStatus = true;
+            }
+          } else {
+            this.pushData(shippingStatus);
+          }
+
+          if (!hasPreviousCanceledStatus) {
+            if (this.data.audits[2]) {
+              if (this.data.audits[2].audited_changes.status[1] == receivedStatus) {
+                this.pushData(receivedStatus, this.data.audits[2].created_at);
+              } else if (this.data.audits[2].audited_changes.status[1] == canceledStatus) {
+                this.pushData(canceledStatus, this.data.audits[2].created_at);
+              }
+            } else {
+              this.pushData(receivedStatus);
+            }
+
+            this.loadingService.dismiss();
+          }
+        }
+        this.loadedData = true;
+      })
+    })
   }
 
   getScreenSize(event?) {

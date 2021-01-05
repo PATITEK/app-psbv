@@ -8,6 +8,7 @@
 <ion-content>
   <span class="order-code">{{ data.code }}</span>
   <span class="order-id">{{ data.id }}</span>
+  <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
 
   <ion-buttons class="status-list" [style.margin-bottom.px]="isActiveBtnShipping ? 190 : 85">
     <span [style.width.%]="100 / statuses.length" [style.height.px]="activeStatusSize"
@@ -63,5 +64,5 @@
     </ion-buttons>
   </ion-card>
 
-  <ion-button expand="block" class="re-order-btn" (click)="openModalReOrder()">Re-order</ion-button>
+  <ion-button expand="block" *ngIf="loadedData" class="re-order-btn" (click)="openModalReOrder()">Re-order</ion-button>
 </ion-content>

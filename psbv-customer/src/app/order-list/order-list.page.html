@@ -16,12 +16,13 @@
     </ion-segment>
 </ion-header>
 
+<ion-content [style.--padding-top.px]="!isOnline ? 32 : 0">
+    <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
 
-<ion-content>
     <ion-item-group *ngIf="activeTab == 'orderStatus'">
         <ion-backdrop *ngIf="data.length == 0 && isLoading"></ion-backdrop>
         <p class="absolute-center absolute-center-text" *ngIf="data.length == 0 && loadedData">Not found orders.</p>
-        <ion-spinner class="absolute-center" *ngIf="isLoading"></ion-spinner>
+        <ion-spinner class="absolute-center" *ngIf="isLoading && data.length == 0"></ion-spinner>
 
         <ion-card class="order-item" *ngFor="let item of data" (click)="goToOrderDetail(item)">
             <ion-label class="item-code">{{ item.code }}</ion-label>
@@ -58,7 +59,7 @@
         <ion-backdrop *ngIf="dataHistory.length == 0 && isLoadingHistory"></ion-backdrop>
         <ion-backdrop class="a" *ngIf="dataHistory.length == 0"></ion-backdrop>
         <p class="absolute-center absolute-center-text" *ngIf="dataHistory.length == 0 && loadedDataHistory">Not found orders.</p>
-        <ion-spinner class="absolute-center" *ngIf="isLoadingHistory"></ion-spinner>
+        <ion-spinner class="absolute-center" *ngIf="isLoadingHistory && dataHistory.length == 0"></ion-spinner>
 
         <ion-card class="order-item" *ngFor="let item of dataHistory" (click)="goToOrderDetailHistory(item)">
             <ion-label class="item-code">{{ item.code }}</ion-label>

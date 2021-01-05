@@ -12,14 +12,17 @@ export class LoadingService {
     public loadingController: LoadingController
   ) { }
 
-  async present() {
+  async present(text?) {
     this.isLoading = true;
-    return await this.loadingController.create()
-      .then(a => a.present().then(() => {
-        if (!this.isLoading) {
-          a.dismiss();
-        }
-      }));
+    return await this.loadingController.create({
+      message: text
+    })
+      .then(a => a.present()
+        .then(() => {
+          if (!this.isLoading) {
+            a.dismiss();
+          }
+        }));
   }
 
   async dismiss() {

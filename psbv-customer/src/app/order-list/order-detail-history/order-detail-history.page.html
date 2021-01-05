@@ -6,6 +6,8 @@
 </ion-header>
 
 <ion-content>
+  <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
+
   <ion-item-group class="ion-text-center">
     <ion-label class="order-code">{{ data.code }}</ion-label>
     <div class="status-box">
@@ -40,5 +42,5 @@
     </ion-buttons>
   </ion-card>
 
-  <ion-button expand="block" class="re-order-btn" (click)="openModalReOrder()">Re-order</ion-button>
+  <ion-button *ngIf="loadedData" expand="block" class="re-order-btn" (click)="openModalReOrder()">Re-order</ion-button>
 </ion-content>

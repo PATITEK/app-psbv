@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { OrdersService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
+import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 
 @Component({
   selector: 'app-order-detail-history',
@@ -20,6 +21,7 @@ export class OrderDetailHistoryPage implements OnInit {
   items = [];
 
   loadedData = false;
+  isOnline;
 
   constructor(
     private router: Router,
@@ -27,39 +29,24 @@ export class OrderDetailHistoryPage implements OnInit {
     private ordersService: OrdersService,
     private loadingService: LoadingService,
     private alertController: AlertController,
-    public toastController: ToastController
-  ) { }
-
-  ngOnInit() {
-    this.loadingService.present();
-
-    this.route.queryParams.subscribe(params => {
-      if (!this.loadedData) {
-        this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
-          this.data = data.order;
-
-          // if (this.checkConfirmedStatus()) {
-          //   const dateTime = this.data.audits[0].created_at;
-          //   this.pushData(dateTime, 'Time confirmed');
-          // } else if (this.checkShippingStatus()) {
-          //   const dateTime1 = this.data.audits[0].created_at;
-          //   const dateTime2 = this.data.audits[1].created_at;
-          //   this.pushData(dateTime1, 'Time confirmed', dateTime2, 'Time shipping');
-           if (this.checkReceivedStatus()) {
-            const dateTime1 = this.data.audits[1].created_at;
-            const dateTime2 = this.data.audits[2].created_at;
-            this.pushData(dateTime1, 'Time shipping', dateTime2, 'Time received');
-          } else if (this.checkCancelStatus()) {
-            const dateTime1 = this.data.audits[this.data.audits.length - 1].created_at;
-            const dateTime2 = ' ';
-            this.pushData(dateTime1, 'Time cancel', dateTime2, 'Reason');
-          }
-
-          this.loadedData = true;
-          this.loadingService.dismiss();
-        })
+    private connectivityService: ConnectivityService,
+    private toastController: ToastController
+  ) {
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.isOnline = true;
+        this.loadData();
+      } else {
+        this.isOnline = false;
       }
     })
+  }
+
+  ngOnInit() {
+    if (this.isOnline === true) {
+      this.loadingService.present();
+      this.loadData();
+    }
   }
 
   ionViewWillEnter() {
@@ -67,6 +54,38 @@ export class OrderDetailHistoryPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+  }
+
+  loadData() {
+    this.route.queryParams.subscribe(params => {
+      if (!this.loadedData) {
+        this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
+          if (this.data.id == '') {
+            this.data = data.order;
+
+            // if (this.checkConfirmedStatus()) {
+            //   const dateTime = this.data.audits[0].created_at;
+            //   this.pushData(dateTime, 'Time confirmed');
+            // } else if (this.checkShippingStatus()) {
+            //   const dateTime1 = this.data.audits[0].created_at;
+            //   const dateTime2 = this.data.audits[1].created_at;
+            //   this.pushData(dateTime1, 'Time confirmed', dateTime2, 'Time shipping');
+            if (this.checkReceivedStatus()) {
+              const dateTime1 = this.data.audits[1].created_at;
+              const dateTime2 = this.data.audits[2].created_at;
+              this.pushData(dateTime1, 'Time shipping', dateTime2, 'Time received');
+            } else if (this.checkCancelStatus()) {
+              const dateTime1 = this.data.audits[this.data.audits.length - 1].created_at;
+              const dateTime2 = ' ';
+              this.pushData(dateTime1, 'Time cancel', dateTime2, 'Reason');
+            }
+
+            this.loadingService.dismiss();
+          }
+          this.loadedData = true;
+        })
+      }
+    })
   }
 
   pushData(dateTime1, name1, dateTime2?, name2?) {
@@ -113,7 +132,7 @@ export class OrderDetailHistoryPage implements OnInit {
       this.router.navigateByUrl('main/order-list/detail-order/detail-component');
     }
   }
-  
+
   calProductsAmount() {
     return this.data.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME ? acc + cur.amount : acc, 0)
   }

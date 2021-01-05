@@ -5,7 +5,8 @@
   </ion-buttons>
 </ion-header>
 
-<ion-content>
+<ion-content [style.--padding-top.px]="!isOnline ? 32 : 0">
+  <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
   <ion-card class="cart-item" *ngFor="let item of items; let i = index;">
     <ion-buttons class="item-header">
       <span class="item-amount">{{ item.amount }}</span>
@@ -36,7 +37,7 @@
         <ion-img src="assets/shopping-cart/deliver-black.svg" class="delivery-icon"></ion-img>
         <span class="delivery-day">1 day</span>
       </ion-buttons>
-      <ion-button class="btn-send" (click)="sendMailQuote()">Send a quote</ion-button>
+      <ion-button class="btn-send" [disabled]="!isOnline" (click)="sendMailQuote()">Send a quote</ion-button>
     </ion-item-group>
   </ion-buttons>
 </ion-footer>

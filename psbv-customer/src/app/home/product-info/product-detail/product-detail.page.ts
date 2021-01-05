@@ -7,6 +7,7 @@ import { StorageService } from 'src/app/@app-core/storage.service';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
 import { ModalController } from '@ionic/angular';
 import { ModalAddComponent } from './modal-add/modal-add.component';
+import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -28,6 +29,7 @@ export class ProductDetailPage implements OnInit {
   loadedProduct = false;
   permission = '';
   cartItemsLength = 0;
+  isOnline;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,17 +40,28 @@ export class ProductDetailPage implements OnInit {
     private pageNotiService: PageNotiService,
     public globalVariablesService: GlobalVariablesService,
     public modalController: ModalController,
+    private connectivityService: ConnectivityService
   ) {
     const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
     this.cartItemsLength = arr.length;
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.isOnline = true;
+        this.loadData();
+      } else {
+        this.isOnline = false;
+      }
+    })
   }
 
   ngOnInit() {
     this.storageService.infoAccount.subscribe(data => {
       this.permission = data !== null ? data.role : PERMISSIONS[0].value;
     })
-    this.loadingService.present();
-    this.loadData();
+    if (this.isOnline === true) {
+      this.loadingService.present();
+      this.loadData();
+    }
   }
 
   ionViewWillEnter() {
@@ -95,6 +108,8 @@ export class ProductDetailPage implements OnInit {
         //   this.curAddedProducts = a;
         // }
         // this.added = true;
+        const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
+        this.cartItemsLength = arr.length;
       }
     }
   }
@@ -103,13 +118,15 @@ export class ProductDetailPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params.data !== undefined && !this.loadedProduct) {
         this.productService.getProductDetail(JSON.parse(params['data']).id).subscribe(data => {
-          this.product = data.product;
-          this.loadedProduct = true;
-          this.loadingService.dismiss();
+          if (!this.loadedProduct) {
+            this.product = data.product;
+            this.loadedProduct = true;
+            this.loadingService.dismiss();
 
-          if (JSON.parse(params['data']).doesOpenModal) {
-            this.openModalAdd();
-          }
+            if (JSON.parse(params['data']).doesOpenModal) {
+              this.openModalAdd();
+            }
+          } 
         });
       }
     })
