@@ -41,7 +41,7 @@ export class ProductInfoPage implements OnInit {
   cartItemsLength = 0;
   loadedProduct = false;
   loadedAccessories = false;
-  previousUrl:any;
+  previousUrl: any;
   isOnline;
 
   constructor(
@@ -76,7 +76,7 @@ export class ProductInfoPage implements OnInit {
       this.loading.present();
       this.loadData();
     }
-    this.previousUrl =  this.router.url;
+    this.previousUrl = this.router.url;
     console.log(this.previousUrl);
     this.authService.sendData(this.previousUrl);
   }
@@ -199,15 +199,17 @@ export class ProductInfoPage implements OnInit {
   }
 
   addAccessory(accessory) {
-    const data = {
-      id: accessory.id,
-      // added: this.added
-    }
-    this.router.navigate(['/main/home/product-info/accessory'], {
-      queryParams: {
-        data: JSON.stringify(data)
+    if (!this.checkGuestPermission()) {
+      const data = {
+        id: accessory.id,
+        // added: this.added
       }
-    });
+      this.router.navigate(['/main/home/product-info/accessory'], {
+        queryParams: {
+          data: JSON.stringify(data)
+        }
+      });
+    }
   }
 
   checkGuestPermission(): boolean {
@@ -227,25 +229,27 @@ export class ProductInfoPage implements OnInit {
           });
 
         this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, JSON.parse(params['data']).id).subscribe(data => {
-          for (let item of data.accessories) {
-            this.accessories.push(item);
-            this.accessoryIds.push({
-              id: item.id,
-              quantity: 0,
-              price: item.price
-            })
-          }
+          if (!this.accessories.some(a => a.id == data.accessories[0].id)) {
+            for (let item of data.accessories) {
+              this.accessories.push(item);
+              this.accessoryIds.push({
+                id: item.id,
+                quantity: 0,
+                price: item.price
+              })
+            }
 
+            if (this.loadedProduct && this.loadedAccessories) {
+              this.loading.dismiss();
+            }
+            this.pageRequest.page++;
+
+            // check max data
+            if (this.accessories.length >= data.meta.pagination.total_objects) {
+              this.infinityScroll.disabled = true;
+            }
+          }
           this.loadedAccessories = true;
-          if (this.loadedProduct && this.loadedAccessories) {
-            this.loading.dismiss();
-          }
-          this.pageRequest.page++;
-
-          // check max data
-          if (this.accessories.length >= data.meta.pagination.total_objects) {
-            this.infinityScroll.disabled = true;
-          }
         })
       }
     })

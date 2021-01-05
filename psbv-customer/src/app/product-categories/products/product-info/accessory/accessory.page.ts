@@ -25,7 +25,7 @@ export class AccessoryPage implements OnInit {
 
   loadedAccessory = false;
   permission = '';
-  added: boolean;
+  cartItemsLength = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,21 +35,17 @@ export class AccessoryPage implements OnInit {
     private storageService: StorageService,
     public globalVariablesService: GlobalVariablesService,
     public modalController: ModalController,
-  ) { }
+  ) {
+    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
+    this.cartItemsLength = arr.length;
+  }
 
   ngOnInit() {
     this.storageService.infoAccount.subscribe(data => {
       this.permission = data !== null ? data.role : PERMISSIONS[0].value;
     })
-    this.route.queryParams.subscribe(params => {
-      this.added = JSON.parse(params['data']).added;
-    })
     this.loadingService.present();
     this.loadData();
-    }
-
-  ionViewWillLeave() {
-    localStorage.setItem('added', JSON.stringify(this.added));
   }
 
   checkGuestPermission() {
@@ -90,7 +86,9 @@ export class AccessoryPage implements OnInit {
         // if (a <= 99) {
         //   this.curAddedProducts = a;
         // }
-        this.added = true;
+        // this.added = true;
+        const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
+        this.cartItemsLength = arr.length;
       }
     }
   }
@@ -105,5 +103,10 @@ export class AccessoryPage implements OnInit {
         });
       }
     })
+  }
+
+  goToCart(): void {
+    this.globalVariablesService.backUrlShoppingCart = this.router.url;
+    this.router.navigateByUrl('main/shopping-cart');
   }
 }

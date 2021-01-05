@@ -6,6 +6,11 @@
 </ion-header>
 
 <ion-content>
+  <div class="cart-wrapper" (click)="goToCart()">
+    <img src="assets/detail-product/cart.svg" class="cart-btn">
+    <span>+{{ cartItemsLength }}</span>
+  </div>
+
   <ion-img [src]="accessory.thumb_image.url" class="main-img" *ngIf="loadedAccessory"></ion-img>
   <ion-card class="product-content">
     <ion-backdrop *ngIf="!loadedAccessory"></ion-backdrop>
