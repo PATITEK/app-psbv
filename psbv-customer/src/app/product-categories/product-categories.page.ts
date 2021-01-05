@@ -104,12 +104,10 @@ export class ProductCategoriesPage implements OnInit {
   }
 
   goToUserInfo() {
-    this.backButtonService.unsubscribe();
     this.router.navigateByUrl("/account/user-info");
   }
 
   goToNoti() {
-    this.backButtonService.unsubscribe();
     this.router.navigateByUrl('notification');
   }
 
