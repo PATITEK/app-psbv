@@ -67,7 +67,7 @@ export class HomePage implements OnInit {
     private platform: Platform,
     private storageService: StorageService,
     private connectivityService: ConnectivityService,
-    private LoadingService: LoadingService
+    private LoadingService: LoadingService,
   ) {
     this.getScreenSize();
     this.connectivityService.appIsOnline$.subscribe(online => {
@@ -112,13 +112,20 @@ export class HomePage implements OnInit {
       }
     })
   }
+
+  ionViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
+  }
+
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'logout-alert',
       message: 'Do you want to exit app?',
       buttons: [
         {
-         
           text: 'Yes',
           handler: () => {
             navigator['app'].exitApp();
@@ -130,17 +137,9 @@ export class HomePage implements OnInit {
             return;
           }
         },
-
       ]
     });
     await alert.present()
-  }
-
-  ionViewWillEnter() {
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'flex';
-    });
   }
 
   getScreenSize(event?) {

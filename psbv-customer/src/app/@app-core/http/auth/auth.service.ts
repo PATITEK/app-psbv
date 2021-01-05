@@ -89,7 +89,8 @@ export class AuthService {
     localStorage.clear();
     this.storage.clear();
     this.storage.setInfoAccount();
-    this.router.navigateByUrl('/main/product-categories');
+    // this.router.navigateByUrl('/main/product-categories');
+    window.location.assign('/');
   }
   public signup(req) {
     return this.http.post(`${APICONFIG.AUTH.SIGNUP}`, req).pipe(
