@@ -23,12 +23,13 @@
 </ion-header>
 
 <ion-content>
-  <div class="cart-wrapper" (click)="goToCart()" *ngIf="loadedProduct && loadedAccessories">
+  <div class="cart-wrapper" (click)="goToCart()" *ngIf="!checkGuestPermission() && loadedProduct && loadedAccessories">
     <img src="assets/detail-product/cart.svg" class="cart-btn">
     <span>+{{ cartItemsLength }}</span>
   </div>
 
-  <p class="absolute-center absolute-center-text" *ngIf="accessories.length == 0 && loadedAccessories">Not found accessories.</p>
+  <p class="absolute-center absolute-center-text" *ngIf="accessories.length == 0 && loadedAccessories">Not found
+    accessories.</p>
   <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
   <img src="assets/detail-product/add-btn.svg" class="add-product-button" (click)="addProduct()"
     *ngIf="!checkGuestPermission() && loadedProduct && loadedAccessories">
@@ -51,7 +52,7 @@
 
   <ion-grid>
     <ion-row *ngFor="let accessory of accessories; let i = index;"
-      [style.background]="getItem(accessoryIds[i]).background">
+      [style.background]="getItem(accessoryIds[i]).background" (click)="addAccessory(accessory)">
       <ion-col size="4">
         <ion-img class="accessory-img" [src]="accessory.thumb_image.url"
           [style.height.px]="(scrWidth - 33.67) / 3 - 10"></ion-img>
@@ -63,7 +64,7 @@
         </div>
       </ion-col>
 
-      <img *ngIf="!checkGuestPermission()" src="assets/add-btn.svg" class="add-accessory-btn" (click)="addAccessory(accessory)">
+      <img *ngIf="!checkGuestPermission()" src="assets/add-btn.svg" class="add-accessory-btn">
     </ion-row>
   </ion-grid>
 

@@ -116,9 +116,9 @@ ion-footer {
 }
 
 .cart-wrapper {
-  position: absolute;
-  top: 105px;
-  right: 10px;
+  position: fixed;
+  right: 15px;
+  bottom: 110px;
   z-index: 1;
 
   .cart-btn {
@@ -173,7 +173,7 @@ ion-footer {
 
 .product-desc {
   margin-left: 16px;
-  margin-right: 16px;
+  margin-right: 83px;
   font-size: 12px;
   color: #424242;
 }
