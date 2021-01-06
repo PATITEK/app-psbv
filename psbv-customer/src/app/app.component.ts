@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { StorageService } from './@app-core/storage.service';
 import { Router } from '@angular/router';
 import { GlobalVariablesService } from './@app-core/global-variables.service';
+import { Network } from '@ionic-native/network/ngx';
 
 @Component({
   selector: 'app-root',
@@ -20,9 +21,8 @@ export class AppComponent {
     private statusBar: StatusBar, 
     private storageService: StorageService,
     public alertController: AlertController,
-    private globalVariablesService: GlobalVariablesService
-
-
+    private globalVariablesService: GlobalVariablesService,
+    private network: Network
   ) {
     this.storageService.setInfoAccount();
     this.initializeApp();
