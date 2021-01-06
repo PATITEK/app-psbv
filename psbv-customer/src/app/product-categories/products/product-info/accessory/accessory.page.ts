@@ -5,6 +5,7 @@ import { GlobalVariablesService } from 'src/app/@app-core/global-variables.servi
 import { PERMISSIONS, AccessoriesService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
+import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 import { ModalAddComponent } from 'src/app/home/product-info/product-detail/modal-add/modal-add.component';
 
 @Component({
@@ -26,6 +27,7 @@ export class AccessoryPage implements OnInit {
   loadedAccessory = false;
   permission = '';
   cartItemsLength = 0;
+  isOnline;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,17 +37,28 @@ export class AccessoryPage implements OnInit {
     private storageService: StorageService,
     public globalVariablesService: GlobalVariablesService,
     public modalController: ModalController,
+    private connectivityService: ConnectivityService
   ) {
     const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
     this.cartItemsLength = arr.length;
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.isOnline = true;
+        this.loadData();
+      } else {
+        this.isOnline = false;
+      }
+    })
   }
 
   ngOnInit() {
     this.storageService.infoAccount.subscribe(data => {
       this.permission = data !== null ? data.role : PERMISSIONS[0].value;
     })
-    this.loadingService.present();
-    this.loadData();
+    if (this.isOnline === true) {
+      this.loadingService.present();
+      this.loadData();
+    }
   }
 
   checkGuestPermission() {
@@ -97,9 +110,11 @@ export class AccessoryPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params.data !== undefined && !this.loadedAccessory) {
         this.accessoriesService.getAccessoryDetail(JSON.parse(params['data']).id).subscribe(data => {
-          this.accessory = data.accessory;
-          this.loadedAccessory = true;
-          this.loadingService.dismiss();
+          if (!this.loadedAccessory) {
+            this.accessory = data.accessory;
+            this.loadingService.dismiss();
+            this.loadedAccessory = true;
+          }
         });
       }
     })

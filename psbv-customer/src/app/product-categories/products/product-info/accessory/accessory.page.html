@@ -11,6 +11,8 @@
     <span>+{{ cartItemsLength }}</span>
   </div>
 
+  <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
+
   <ion-img [src]="accessory.thumb_image.url" class="main-img" *ngIf="loadedAccessory"></ion-img>
   <ion-card class="product-content">
     <ion-backdrop *ngIf="!loadedAccessory"></ion-backdrop>
