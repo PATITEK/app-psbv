@@ -16,27 +16,7 @@ export class ModalAddComponent implements OnInit {
     public toastController: ToastController
   ) { }
 
-  ngOnInit( ) {}
-
-  setCartLocalStorage() {
-    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-    // check duplicated
-    let duplicated = false;
-    for (let i of cartItems) {
-      if (i.kind == this.data.kind && this.data.id == i.id) {
-        i.amount += this.amount;
-        duplicated = true;
-        break;
-      }
-    }
-    if (!duplicated) {
-      this.data.amount = this.amount;
-      cartItems.push(this.data);
-    }
-
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }
+  ngOnInit() { }
 
   decreaseAmount() {
     if (this.amount > 1) {
@@ -51,7 +31,6 @@ export class ModalAddComponent implements OnInit {
   }
 
   choose() {
-    this.setCartLocalStorage();
     const amount = this.amount;
     this.modalController.dismiss(amount, 'ok');
     this.alertToast();

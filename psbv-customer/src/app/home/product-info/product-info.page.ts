@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
-import { AccessoriesService, AuthService, IPageRequest, PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
+import { AccessoriesService, AuthService, IPageRequest, PERMISSIONS, ProductsService, ShoppingCartsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
@@ -38,7 +38,7 @@ export class ProductInfoPage implements OnInit {
   }
   accessoryIds = [];
   products = [];
-  cartItemsLength = 0;
+  cartItems = [];
   loadedProduct = false;
   loadedAccessories = false;
   previousUrl: any;
@@ -53,10 +53,9 @@ export class ProductInfoPage implements OnInit {
     private storageService: StorageService,
     private authService: AuthService,
     private globalVariablesService: GlobalVariablesService,
-    private connectivityService: ConnectivityService
+    private connectivityService: ConnectivityService,
+    private shoppingCartsService: ShoppingCartsService
   ) {
-    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsLength = arr.length;
     this.getScreenSize();
     this.connectivityService.appIsOnline$.subscribe(online => {
       if (online) {
@@ -72,27 +71,31 @@ export class ProductInfoPage implements OnInit {
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
+
     if (this.isOnline === true) {
       this.loading.present();
       this.loadData();
     }
+
     this.previousUrl = this.router.url;
     console.log(this.previousUrl);
     this.authService.sendData(this.previousUrl);
   }
 
   ionViewWillEnter() {
-    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsLength = arr.length;
-
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+
+    this.getCarts();
   }
 
-  ngOnDestroy() {
-    localStorage.removeItem('added');
+  getCarts() {
+    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+      const cartItems = data.preferences.cartItems;
+      this.cartItems = cartItems === undefined ? [] : cartItems;
+    })
   }
 
   getScreenSize(event?) {
@@ -188,7 +191,6 @@ export class ProductInfoPage implements OnInit {
 
     const data = {
       id: this.product.id,
-      // added: this.added,
       doesOpenModal: true
     }
     this.router.navigate(['/main/home/product-info/product-detail'], {
@@ -202,7 +204,6 @@ export class ProductInfoPage implements OnInit {
     if (!this.checkGuestPermission()) {
       const data = {
         id: accessory.id,
-        // added: this.added
       }
       this.router.navigate(['/main/home/product-info/accessory'], {
         queryParams: {
@@ -276,20 +277,20 @@ export class ProductInfoPage implements OnInit {
     })
   }
 
-  isEqual(a, b) {
-    // if length is not equal 
-    if (a.length != b.length)
-      return false;
-    else {
-      // comapring each element of array 
-      for (var i = 0; i < a.length; i++) {
-        if (a[i].id != b[i].id || a[i].quantity != b[i].quantity) {
-          return false;
-        }
-      }
-      return true;
-    }
-  }
+  // isEqual(a, b) {
+  //   // if length is not equal 
+  //   if (a.length != b.length)
+  //     return false;
+  //   else {
+  //     // comapring each element of array 
+  //     for (var i = 0; i < a.length; i++) {
+  //       if (a[i].id != b[i].id || a[i].quantity != b[i].quantity) {
+  //         return false;
+  //       }
+  //     }
+  //     return true;
+  //   }
+  // }
 
   // setLocalStorage() {
   //   localStorage.setItem('cartItems', JSON.stringify(this.cartItems))

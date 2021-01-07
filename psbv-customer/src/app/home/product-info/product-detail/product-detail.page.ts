@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
-import { PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
+import { PERMISSIONS, ProductsService, ShoppingCartsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
@@ -28,8 +28,8 @@ export class ProductDetailPage implements OnInit {
 
   loadedProduct = false;
   permission = '';
-  cartItemsLength = 0;
   isOnline;
+  cartItems = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -40,10 +40,28 @@ export class ProductDetailPage implements OnInit {
     private pageNotiService: PageNotiService,
     public globalVariablesService: GlobalVariablesService,
     public modalController: ModalController,
-    private connectivityService: ConnectivityService
+    private connectivityService: ConnectivityService,
+    private shoppingCartsService: ShoppingCartsService
   ) {
-    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsLength = arr.length;
+    this.checkOnline();
+  }
+
+  ngOnInit() {
+    this.storageService.infoAccount.subscribe(data => {
+      this.permission = data !== null ? data.role : PERMISSIONS[0].value;
+    })
+
+    if (this.isOnline === true) {
+      this.loadingService.present();
+      this.loadData();
+    }
+  }
+
+  ionViewWillEnter() {
+    this.getCarts();
+  }
+
+  checkOnline() {
     this.connectivityService.appIsOnline$.subscribe(online => {
       if (online) {
         this.isOnline = true;
@@ -52,21 +70,6 @@ export class ProductDetailPage implements OnInit {
         this.isOnline = false;
       }
     })
-  }
-
-  ngOnInit() {
-    this.storageService.infoAccount.subscribe(data => {
-      this.permission = data !== null ? data.role : PERMISSIONS[0].value;
-    })
-    if (this.isOnline === true) {
-      this.loadingService.present();
-      this.loadData();
-    }
-  }
-
-  ionViewWillEnter() {
-    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsLength = arr.length;
   }
 
   checkGuestPermission() {
@@ -79,6 +82,37 @@ export class ProductDetailPage implements OnInit {
 
   checkPremiumPermission() {
     return this.permission === PERMISSIONS[2].value;
+  }
+
+  getCarts() {
+    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+      const cartItems = data.preferences.cartItems;
+      this.cartItems = cartItems === undefined ? [] : cartItems;
+    })
+  }
+
+  updateCartsLocal(amount) {
+    let duplicated = false;
+    for (let i of this.cartItems) {
+      if (i.kind == 'Product' && this.product.id == i.id) {
+        i.amount += amount;
+        duplicated = true;
+        break;
+      }
+    }
+    if (!duplicated) {
+      this.cartItems.push({
+        id: this.product.id,
+        name: this.product.name,
+        price: this.product.price,
+        kind: 'Product',
+        amount: amount
+      });
+    }
+  }
+  
+  updateCartsSever() {
+    this.shoppingCartsService.updateShoppingCarts(this.cartItems).subscribe();
   }
 
   async openModalAdd() {
@@ -103,13 +137,8 @@ export class ProductDetailPage implements OnInit {
 
       const { data: amount, role } = await modal.onWillDismiss();
       if (role == 'ok') {
-        // const a = this.curAddedProducts + amount;
-        // if (a <= 99) {
-        //   this.curAddedProducts = a;
-        // }
-        // this.added = true;
-        const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
-        this.cartItemsLength = arr.length;
+        this.updateCartsLocal(amount);
+        this.updateCartsSever();
       }
     }
   }
@@ -126,7 +155,7 @@ export class ProductDetailPage implements OnInit {
             if (JSON.parse(params['data']).doesOpenModal) {
               this.openModalAdd();
             }
-          } 
+          }
         });
       }
     })

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
-import { PERMISSIONS, AccessoriesService } from 'src/app/@app-core/http';
+import { PERMISSIONS, AccessoriesService, ShoppingCartsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
@@ -26,7 +26,7 @@ export class AccessoryPage implements OnInit {
 
   loadedAccessory = false;
   permission = '';
-  cartItemsLength = 0;
+  cartItems = [];
   isOnline;
 
   constructor(
@@ -37,18 +37,10 @@ export class AccessoryPage implements OnInit {
     private storageService: StorageService,
     public globalVariablesService: GlobalVariablesService,
     public modalController: ModalController,
-    private connectivityService: ConnectivityService
+    private connectivityService: ConnectivityService,
+    private shoppingCartsService: ShoppingCartsService
   ) {
-    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsLength = arr.length;
-    this.connectivityService.appIsOnline$.subscribe(online => {
-      if (online) {
-        this.isOnline = true;
-        this.loadData();
-      } else {
-        this.isOnline = false;
-      }
-    })
+    this.checkOnline();
   }
 
   ngOnInit() {
@@ -59,6 +51,52 @@ export class AccessoryPage implements OnInit {
       this.loadingService.present();
       this.loadData();
     }
+  }
+
+  ionViewWillEnter() {
+    this.getCarts();
+  }
+
+  checkOnline() {
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.isOnline = true;
+        this.loadData();
+      } else {
+        this.isOnline = false;
+      }
+    })
+  }
+
+  getCarts() {
+    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+      const cartItems = data.preferences.cartItems;
+      this.cartItems = cartItems === undefined ? [] : cartItems;
+    })
+  }
+
+  updateCartsLocal(amount) {
+    let duplicated = false;
+    for (let i of this.cartItems) {
+      if (i.kind == 'Accessory' && this.accessory.id == i.id) {
+        i.amount += amount;
+        duplicated = true;
+        break;
+      }
+    }
+    if (!duplicated) {
+      this.cartItems.push({
+        id: this.accessory.id,
+        name: this.accessory.name,
+        price: this.accessory.price,
+        kind: 'Accessory',
+        amount: amount
+      });
+    }
+  }
+  
+  updateCartsSever() {
+    this.shoppingCartsService.updateShoppingCarts(this.cartItems).subscribe();
   }
 
   checkGuestPermission() {
@@ -95,13 +133,8 @@ export class AccessoryPage implements OnInit {
 
       const { data: amount, role } = await modal.onWillDismiss();
       if (role == 'ok') {
-        // const a = this.curAddedProducts + amount;
-        // if (a <= 99) {
-        //   this.curAddedProducts = a;
-        // }
-        // this.added = true;
-        const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
-        this.cartItemsLength = arr.length;
+        this.updateCartsLocal(amount);
+        this.updateCartsSever();
       }
     }
   }

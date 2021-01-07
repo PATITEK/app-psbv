@@ -5,9 +5,7 @@ import { requestQuery } from '../../utils';
 import { APICONFIG } from '../@http-config';
 import { IPageRequest } from '../global';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AccessoriesService {
 
   constructor(

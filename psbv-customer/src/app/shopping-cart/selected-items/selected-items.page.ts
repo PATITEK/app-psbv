@@ -22,7 +22,6 @@ export class SelectedItemsPage implements OnInit {
     private connectivityService: ConnectivityService,
   ) {
     this.connectivityService.appIsOnline$.subscribe(online => {
-      console.log('a');
       this.isOnline = online ? true : false;
     })
   }

@@ -8,7 +8,7 @@
 <ion-content>
   <div class="cart-wrapper" (click)="goToCart()">
     <img src="assets/detail-product/cart.svg" class="cart-btn">
-    <span>+{{ cartItemsLength }}</span>
+    <span>+{{ cartItems.length }}</span>
   </div>
 
   <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>

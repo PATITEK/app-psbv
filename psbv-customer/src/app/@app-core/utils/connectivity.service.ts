@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, merge, of, fromEvent } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ConnectivityService {
   public appIsOnline$: Observable<boolean>;
 
