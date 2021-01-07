@@ -4,9 +4,7 @@ import { map, catchError } from 'rxjs/operators';
 import { IPageRequest, APICONFIG } from '..';
 import { requestQuery } from '../../utils';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class OrdersService {
   public STATUSES = [
     {

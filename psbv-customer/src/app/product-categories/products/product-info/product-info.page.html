@@ -25,7 +25,7 @@
 <ion-content>
   <div class="cart-wrapper" (click)="goToCart()" *ngIf="!checkGuestPermission() && loadedProduct && loadedAccessories">
     <img src="assets/detail-product/cart.svg" class="cart-btn">
-    <span>+{{ cartItemsLength }}</span>
+    <span>+{{ cartItems.length }}</span>
   </div>
 
   <p class="absolute-center absolute-center-text" *ngIf="accessories.length == 0 && loadedAccessories">Not found
