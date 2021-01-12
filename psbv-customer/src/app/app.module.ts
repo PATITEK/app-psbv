@@ -18,7 +18,6 @@ import { Network } from '@ionic-native/network/ngx';
   imports: [
     BrowserModule,
     FormsModule, 
-    
     ReactiveFormsModule,
     IonicModule.forRoot(), 
     AppRoutingModule,

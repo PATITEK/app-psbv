@@ -1,53 +1,42 @@
 ion-header{
     background-color: #232323;
     height: 117px;
-
-    ion-buttons {
-        position: relative;
-        margin-top: 20px;
-    
-        ion-back-button {
-            color: #fff;
-            position: absolute;
-            left: 0;
-        }
-    
-        ion-label {
-            font-size: 20px;
-            color: #fff;
-            font-weight: 700;
-            margin: 0 auto;
-            text-transform: uppercase;
-        
-            @media screen and (max-width: 360px) {
-                font-size: 17px;
+    ion-row {
+        ion-col {
+            ion-back-button {
+                color: #fff;
             }
         }
-      }
+    }
+    .noti-bell {
+        color: white;
+        margin-left: -50px;
+        font-size: 26px;
+    }
 }
 .ion-heading{
-    .icon-back {
-        font-size: 30px;
-    }
-    margin-top: 20px;
-    margin-bottom: 1.2rem;
+    margin-top: 28px;
     color: white;
     font-size: 20px;
-
     font-weight: 700;
     display: flex;
-    &__element{
-        &__shop-icon{
-            width: 30px;
-            height: auto;
-            margin-top: -0.3rem;
-        }
-        &__back{
-            margin-left: 26px;
-            margin-top: -0.5rem;
-        }
+    &__element__text{
+        margin-left: calc(50% - 22px);
+        transform: translateX(-50%);
+        clear: both;
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
     }
-   
+    &__element__shop-icon{
+        width: 30px;
+        height: auto;
+        margin-top: -0.3rem;
+    }
+    &__element__back{
+        margin-left: 26px;
+        margin-top: -0.5rem;
+    }
 }
 ion-content {
     --overflow: hidden;

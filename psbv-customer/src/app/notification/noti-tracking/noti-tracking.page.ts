@@ -21,49 +21,49 @@ export class NotiTrackingPage implements OnInit {
       title: "Sản phẩm mới",
       des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
       day: "10/10/2020",
-      src: "/assets/img/products/anh1.jpg",
+      src: "assets/img/products/11.png",
       check: false
     },
     {
       title: "Trải nghiệm tính năng mới",
       des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
       day: "01/08/2020",
-      src: "/assets/img/products/anh1.jpg",
+      src: "assets/img/products/11.png",
       check: false
     },
     {
       title: "Thị trường 2020 có gì",
       des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
       day: "10/10/2020",
-      src: "/assets/img/products/anh1.jpg",
+      src: "assets/img/products/11.png",
       check: false
     },
     {
       title: "Tháng 10 có gì hot",
       des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
       day: "10/10/2020",
-      src: "/assets/img/products/anh1.jpg",
+      src: "assets/img/products/11.png",
       check: false
     },
     {
       title: "",
       des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
       day: "10/10/2020",
-      src: "/assets/img/products/anh1.jpg",
+      src: "assets/img/products/11.png",
       check: false
     },
     {
       title: "Tháng 10 có gì hot",
       des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
       day: "10/10/2020",
-      src: "/assets/img/products/anh1.jpg",
+      src: "assets/img/products/11.png",
       check: false
     },
     {
       title: "",
       des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
       day: "10/10/2020",
-      src: "/assets/img/products/anh1.jpg",
+      src: "assets/img/products/11.png",
       check: false
     },
   ]
