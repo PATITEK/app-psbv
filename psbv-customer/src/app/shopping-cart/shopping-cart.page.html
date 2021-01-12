@@ -5,7 +5,9 @@
   </ion-buttons>
 </ion-header>
 
-<ion-content [style.height]="getIonContentAttribute(80).height" [style.bottom]="getIonContentAttribute(80).bottom">
+<ion-content [style.height]="getIonContentAttribute(80).height" [style.bottom]="getIonContentAttribute(80).bottom"
+  [style.--padding-top.px]="!isOnline ? 32 : 0">
+  <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
   <p class="absolute-center absolute-center-text" *ngIf="cartItems.length == 0">Empty cart.</p>
 
   <ion-card class="cart-item" *ngFor="let item of cartItems; let i = index;">

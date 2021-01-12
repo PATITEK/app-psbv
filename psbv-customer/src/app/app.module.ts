@@ -10,6 +10,7 @@ import { PageNotiService } from './@modular/page-noti/page-noti.service';
 import { FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { CoreModule } from './@app-core';
 import { AuthGuard } from './@app-core/auth-guard.service';
+import { Network } from '@ionic-native/network/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +18,6 @@ import { AuthGuard } from './@app-core/auth-guard.service';
   imports: [
     BrowserModule,
     FormsModule, 
-    
     ReactiveFormsModule,
     IonicModule.forRoot(), 
     AppRoutingModule,
@@ -28,6 +28,7 @@ import { AuthGuard } from './@app-core/auth-guard.service';
     SplashScreen,
     AuthGuard,
     PageNotiService,
+    Network,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

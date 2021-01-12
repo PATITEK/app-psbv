@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
-import { PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
+import { PERMISSIONS, ProductsService, ShoppingCartsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
 import { ModalController } from '@ionic/angular';
 import { ModalAddComponent } from 'src/app/home/product-info/product-detail/modal-add/modal-add.component';
+import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -27,7 +28,8 @@ export class ProductDetailPage implements OnInit {
 
   loadedProduct = false;
   permission = '';
-  cartItemsLength = 0;
+  cartItems = [];
+  isOnline;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,22 +40,63 @@ export class ProductDetailPage implements OnInit {
     private pageNotiService: PageNotiService,
     public globalVariablesService: GlobalVariablesService,
     public modalController: ModalController,
+    private connectivityService: ConnectivityService,
+    private shoppingCartsService: ShoppingCartsService
   ) {
-    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsLength = arr.length;
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.isOnline = true;
+        this.loadData();
+      } else {
+        this.isOnline = false;
+      }
+    })
   }
 
   ngOnInit() {
     this.storageService.infoAccount.subscribe(data => {
       this.permission = data !== null ? data.role : PERMISSIONS[0].value;
     })
-    this.loadingService.present();
-    this.loadData();
+
+    if (this.isOnline === true) {
+      this.loadingService.present();
+      this.loadData();
+    }
   }
 
   ionViewWillEnter() {
-    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsLength = arr.length;
+    this.getCarts();
+  }
+
+  getCarts() {
+    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+      const cartItems = data.preferences.cartItems;
+      this.cartItems = cartItems === undefined ? [] : cartItems;
+    })
+  }
+
+  updateCartsLocal(amount) {
+    let duplicated = false;
+    for (let i of this.cartItems) {
+      if (i.kind == 'Product' && this.product.id == i.id) {
+        i.amount += amount;
+        duplicated = true;
+        break;
+      }
+    }
+    if (!duplicated) {
+      this.cartItems.push({
+        id: this.product.id,
+        name: this.product.name,
+        price: this.product.price,
+        kind: 'Product',
+        amount: amount
+      });
+    }
+  }
+  
+  updateCartsSever() {
+    this.shoppingCartsService.updateShoppingCarts(this.cartItems).subscribe();
   }
 
   checkGuestPermission() {
@@ -90,11 +133,8 @@ export class ProductDetailPage implements OnInit {
 
       const { data: amount, role } = await modal.onWillDismiss();
       if (role == 'ok') {
-        // const a = this.curAddedProducts + amount;
-        // if (a <= 99) {
-        //   this.curAddedProducts = a;
-        // }
-        // this.added = true;
+        this.updateCartsLocal(amount);
+        this.updateCartsSever();
       }
     }
   }
@@ -103,13 +143,15 @@ export class ProductDetailPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params.data !== undefined && !this.loadedProduct) {
         this.productService.getProductDetail(JSON.parse(params['data']).id).subscribe(data => {
-          this.product = data.product;
-          this.loadedProduct = true;
-          this.loadingService.dismiss();
+          if (!this.loadedProduct) {
+            this.product = data.product;
+            this.loadedProduct = true;
+            this.loadingService.dismiss();
 
-          if (JSON.parse(params['data']).doesOpenModal) {
-            this.openModalAdd();
-          }
+            if (JSON.parse(params['data']).doesOpenModal) {
+              this.openModalAdd();
+            }
+          } 
         });
       }
     })

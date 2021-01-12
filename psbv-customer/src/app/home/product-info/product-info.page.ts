@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
-import { AccessoriesService, AuthService, IPageRequest, PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
+import { AccessoriesService, AuthService, IPageRequest, PERMISSIONS, ProductsService, ShoppingCartsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
+import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 
 @Component({
   selector: 'app-product-info',
@@ -37,11 +38,11 @@ export class ProductInfoPage implements OnInit {
   }
   accessoryIds = [];
   products = [];
-  cartItemsLength = 0;
+  cartItems = [];
   loadedProduct = false;
   loadedAccessories = false;
-  previousUrl:any;
-  added = JSON.parse(localStorage.getItem('added')) || false;
+  previousUrl: any;
+  isOnline;
 
   constructor(
     private router: Router,
@@ -51,36 +52,50 @@ export class ProductInfoPage implements OnInit {
     private accessoriesService: AccessoriesService,
     private storageService: StorageService,
     private authService: AuthService,
-    private globalVariablesService: GlobalVariablesService
+    private globalVariablesService: GlobalVariablesService,
+    private connectivityService: ConnectivityService,
+    private shoppingCartsService: ShoppingCartsService
   ) {
-    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsLength = arr.length;
     this.getScreenSize();
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.isOnline = true;
+        this.loadData();
+      } else {
+        this.isOnline = false;
+      }
+    })
   }
 
   ngOnInit() {
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
-    this.loading.present();
-    this.loadData();
-    this.previousUrl =  this.router.url;
+
+    if (this.isOnline === true) {
+      this.loading.present();
+      this.loadData();
+    }
+
+    this.previousUrl = this.router.url;
     console.log(this.previousUrl);
     this.authService.sendData(this.previousUrl);
   }
 
   ionViewWillEnter() {
-    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsLength = arr.length;
-
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+
+    this.getCarts();
   }
 
-  ngOnDestroy() {
-    localStorage.removeItem('added');
+  getCarts() {
+    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+      const cartItems = data.preferences.cartItems;
+      this.cartItems = cartItems === undefined ? [] : cartItems;
+    })
   }
 
   getScreenSize(event?) {
@@ -176,7 +191,6 @@ export class ProductInfoPage implements OnInit {
 
     const data = {
       id: this.product.id,
-      // added: this.added,
       doesOpenModal: true
     }
     this.router.navigate(['/main/home/product-info/product-detail'], {
@@ -187,15 +201,16 @@ export class ProductInfoPage implements OnInit {
   }
 
   addAccessory(accessory) {
-    const data = {
-      id: accessory.id,
-      // added: this.added
-    }
-    this.router.navigate(['/main/home/product-info/accessory'], {
-      queryParams: {
-        data: JSON.stringify(data)
+    if (!this.checkGuestPermission()) {
+      const data = {
+        id: accessory.id,
       }
-    });
+      this.router.navigate(['/main/home/product-info/accessory'], {
+        queryParams: {
+          data: JSON.stringify(data)
+        }
+      });
+    }
   }
 
   checkGuestPermission(): boolean {
@@ -215,25 +230,27 @@ export class ProductInfoPage implements OnInit {
           });
 
         this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, JSON.parse(params['data']).id).subscribe(data => {
-          for (let item of data.accessories) {
-            this.accessories.push(item);
-            this.accessoryIds.push({
-              id: item.id,
-              quantity: 0,
-              price: item.price
-            })
-          }
+          if (!this.accessories.some(a => a.id == data.accessories[0].id)) {
+            for (let item of data.accessories) {
+              this.accessories.push(item);
+              this.accessoryIds.push({
+                id: item.id,
+                quantity: 0,
+                price: item.price
+              })
+            }
 
+            if (this.loadedProduct && this.loadedAccessories) {
+              this.loading.dismiss();
+            }
+            this.pageRequest.page++;
+
+            // check max data
+            if (this.accessories.length >= data.meta.pagination.total_objects) {
+              this.infinityScroll.disabled = true;
+            }
+          }
           this.loadedAccessories = true;
-          if (this.loadedProduct && this.loadedAccessories) {
-            this.loading.dismiss();
-          }
-          this.pageRequest.page++;
-
-          // check max data
-          if (this.accessories.length >= data.meta.pagination.total_objects) {
-            this.infinityScroll.disabled = true;
-          }
         })
       }
     })
@@ -260,20 +277,20 @@ export class ProductInfoPage implements OnInit {
     })
   }
 
-  isEqual(a, b) {
-    // if length is not equal 
-    if (a.length != b.length)
-      return false;
-    else {
-      // comapring each element of array 
-      for (var i = 0; i < a.length; i++) {
-        if (a[i].id != b[i].id || a[i].quantity != b[i].quantity) {
-          return false;
-        }
-      }
-      return true;
-    }
-  }
+  // isEqual(a, b) {
+  //   // if length is not equal 
+  //   if (a.length != b.length)
+  //     return false;
+  //   else {
+  //     // comapring each element of array 
+  //     for (var i = 0; i < a.length; i++) {
+  //       if (a[i].id != b[i].id || a[i].quantity != b[i].quantity) {
+  //         return false;
+  //       }
+  //     }
+  //     return true;
+  //   }
+  // }
 
   // setLocalStorage() {
   //   localStorage.setItem('cartItems', JSON.stringify(this.cartItems))

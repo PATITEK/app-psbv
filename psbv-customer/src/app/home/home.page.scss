@@ -85,7 +85,9 @@ ion-grid {
 
     ion-col {
       background-color: #e5e5e5;
-      max-width: calc(calc(6 / var(--ion-grid-columns, 12)) * 100% - 8px) !important;
+      max-width: calc(
+        calc(6 / var(--ion-grid-columns, 12)) * 100% - 8px
+      ) !important;
       margin: 4px;
       padding: 4px 5px 5px;
       border-radius: 10px;
@@ -146,6 +148,20 @@ ion-grid {
 
 ion-backdrop {
   opacity: 0.01;
+}
+
+.no-internet-popup {
+  z-index: 110;
+  background: yellow;
+  display: block;
+  position: fixed;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: 162px;
+  line-height: 30px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 @supports (-webkit-touch-callout: none) {

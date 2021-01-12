@@ -1,8 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RoutesRecognized } from '@angular/router';
 import { AlertController, Platform } from '@ionic/angular';
 import { GlobalVariablesService } from '../@app-core/global-variables.service';
-import { AuthService } from '../@app-core/http';
+import { AuthService, ShoppingCartsService } from '../@app-core/http';
+import { ConnectivityService } from '../@app-core/utils/connectivity.service';
+
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.page.html',
@@ -19,40 +21,51 @@ export class ShoppingCartPage implements OnInit {
   private previousUrl: string = undefined;
   private currentUrl: string = undefined;
   private backButtonService: any;
+  isOnline;
+
   constructor(
     private alertController: AlertController,
     private router: Router,
     private platform: Platform,
     private authService: AuthService,
-    private globalVariablesService: GlobalVariablesService
+    private globalVariablesService: GlobalVariablesService,
+    private connectivityService: ConnectivityService,
+    private shoppingCartsService: ShoppingCartsService
   ) {
     this.getScreenSize();
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      this.isOnline = online ? true : false;
+    })
   }
+
   ngOnInit() {
     this.currentUrl = this.router.url;
     this.authService.receiveData.subscribe((data: any) => {
       this.previousUrl = data;
     })
   }
+
   backButtonSystem(attr) {
     this.backButtonService = this.platform.backButton.subscribe(() => {
-      if (attr === 'flex'){
+      if (attr === 'flex') {
         this.presentAlert();
       }
       else {
 
-        if(this.previousUrl.search('/main/home/product-info') != -1) {
-           this.router.navigateByUrl(this.previousUrl);
+        if (this.previousUrl.search('/main/home/product-info') != -1) {
+          this.router.navigateByUrl(this.previousUrl);
         }
-        else if(this.previousUrl.search('/main/product-categories/products/product-info') !=-1){
+        else if (this.previousUrl.search('/main/product-categories/products/product-info') != -1) {
           this.router.navigateByUrl(this.previousUrl);
         }
       }
     })
   }
+
   ionViewDidLeave() {
     this.backButtonService.unsubscribe();
-  }  
+  }
+
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     if (this.hasBackButton()) {
@@ -60,19 +73,30 @@ export class ShoppingCartPage implements OnInit {
         tabs[key].style.display = 'none';
         this.backButtonSystem(tabs[key].style.display);
       });
-  }
+    }
     else {
       Object.keys(tabs).map((key) => {
         tabs[key].style.display = 'flex';
-      this.backButtonSystem(tabs[key].style.display);
+        this.backButtonSystem(tabs[key].style.display);
       });
     }
-    this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsSelected = [];
-    this.cartItems.forEach(() => this.cartItemsSelected.push({
-      selected: false
-    }))
+
+    this.getCarts();   
+    this.cartItems.forEach(() => this.cartItemsSelected.push({selected: false})); 
   }
+
+  getCarts() {
+    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+      const cartItems = data.preferences.cartItems;
+      this.cartItems = cartItems === undefined ? [] : cartItems;
+      this.cartItems.forEach(() => this.cartItemsSelected.push({selected: false}));
+    })
+  }
+
+  updateCarts() {
+    this.shoppingCartsService.updateShoppingCarts(this.cartItems).subscribe();
+  }
+
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'logout-alert',
@@ -90,7 +114,7 @@ export class ShoppingCartPage implements OnInit {
             return;
           }
         },
-  
+
       ]
     });
     await alert.present();
@@ -109,6 +133,7 @@ export class ShoppingCartPage implements OnInit {
     const backUrl = this.globalVariablesService.backUrlShoppingCart;
     return backUrl.search('main/home/product-info') != -1 || backUrl.search('main/product-categories/products/product-info') != -1;
   }
+
   // calPrice(item) {
   //   return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;
   // }
@@ -122,28 +147,28 @@ export class ShoppingCartPage implements OnInit {
   decreaseAmount(item) {
     if (item.amount > 1) {
       item.amount--;
-      this.setLocalStorage();
+      this.updateCarts();
     }
   }
+
   increaseAmount(item) {
     if (item.amount < 999) {
       item.amount++;
-      this.setLocalStorage();
+      this.updateCarts();
     }
   }
-  setLocalStorage() {
-    localStorage.setItem('cartItems', JSON.stringify(this.cartItems))
-  }
+
   removeItem(item) {
     for (let i of this.cartItems) {
       if (item.id == i.id) {
         this.cartItems.splice(this.cartItems.indexOf(item), 1);
         this.cartItemsSelected.splice(this.cartItems.indexOf(item), 1);
-        this.setLocalStorage();
+        this.updateCarts();
         break;
       }
     }
   }
+  
   // isEqual(a, b) {
   //   // if length is not equal 
   //   if (a.length != b.length)
@@ -200,6 +225,7 @@ export class ShoppingCartPage implements OnInit {
       this.cartItemsSelected.forEach(a => a.selected = true);
     }
   }
+
   calSelectedProducts() {
     let total = 0;
     for (let i = 0; i < this.cartItemsSelected.length; i++) {
@@ -209,6 +235,7 @@ export class ShoppingCartPage implements OnInit {
     }
     return total;
   }
+
   // calSelectedAccessories() {
   //   let total = 0;
   //   for (let i = 0; i < this.cartItemsSelected.length; i++) {
@@ -250,6 +277,7 @@ export class ShoppingCartPage implements OnInit {
       }
     })
   }
+
   getIonContentAttribute(footerHeight) {
     return this.cartItems.length == 0 ? {
       height: `calc(100% - 90px)`,

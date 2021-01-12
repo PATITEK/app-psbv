@@ -116,9 +116,9 @@ ion-footer {
 }
 
 .cart-wrapper {
-  position: absolute;
-  top: 105px;
-  right: 10px;
+  position: fixed;
+  right: 15px;
+  bottom: 110px;
   z-index: 1;
 
   .cart-btn {
@@ -173,7 +173,7 @@ ion-footer {
 
 .product-desc {
   margin-left: 16px;
-  margin-right: 16px;
+  margin-right: 83px;
   font-size: 12px;
   color: #424242;
 }
@@ -181,4 +181,18 @@ ion-footer {
 ion-backdrop {
   background: white;
   opacity: 1;
+}
+
+.no-internet-popup {
+  z-index: 110;
+  background: yellow;
+  display: block;
+  position: fixed;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: 89px;
+  line-height: 30px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }

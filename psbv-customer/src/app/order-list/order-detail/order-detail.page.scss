@@ -285,7 +285,7 @@ ion-content {
   font-weight: 700;
   text-align: center;
   display: block;
-  margin: 15px 0 10px;
+  margin: 38px 0 10px;
 }
 
 .order-id {
@@ -294,4 +294,18 @@ ion-content {
   text-align: center;
   display: block;
   margin-bottom: 20px;
+}
+
+.no-internet-popup {
+  z-index: 110;
+  background: yellow;
+  display: block;
+  position: fixed;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: 89px;
+  line-height: 30px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }

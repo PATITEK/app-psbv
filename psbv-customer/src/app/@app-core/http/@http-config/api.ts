@@ -56,6 +56,10 @@ export const APICONFIG = {
     CREATE: '/app/orders',
     EDIT: (id) => `/app/orders${id}`,
     DELETE: (id) => `/app/orders${id}`
+  },
+  SHOPPING_CARTS: {
+    GET: `/app/shopping_carts/current_cart`,
+    UPDATE: `/app/shopping_carts/update_cart`
   }
 };
 

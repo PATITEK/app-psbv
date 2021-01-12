@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController, IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
 import { AuthService, IPageRequest, ProductGroupsService } from '../@app-core/http';
 import { LoadingService } from '../@app-core/loading.service';
+import { ConnectivityService } from '../@app-core/utils/connectivity.service';
 
 @Component({
   selector: 'app-product-categories',
@@ -27,6 +28,7 @@ export class ProductCategoriesPage implements OnInit {
   checkSystem = false;
   isLoading = false;
   previousUrl: any;
+  isOnline;
 
   private backButtonService: any;
   constructor(
@@ -34,11 +36,21 @@ export class ProductCategoriesPage implements OnInit {
     private productGroupService: ProductGroupsService,
     private alertController: AlertController,
     private platform: Platform,
-    private authService: AuthService
-
+    private authService: AuthService,
+    private connectivityService: ConnectivityService,
+    private LoadingService: LoadingService
   ) {
     this.reset();
     this.getScreenSize();
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.LoadingService.dismiss();
+        this.isOnline = true;
+        this.loadData();
+      } else {
+        this.isOnline = false;
+      }
+    })
   }
 
   ngOnInit() {
@@ -56,6 +68,14 @@ export class ProductCategoriesPage implements OnInit {
     }
     )
   }
+
+  ionViewWillEnter() {
+    const tabs = document.querySelectorAll('ion-tab-bar');
+    Object.keys(tabs).map((key) => {
+      tabs[key].style.display = 'flex';
+    });
+  }
+
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'logout-alert',
@@ -78,14 +98,6 @@ export class ProductCategoriesPage implements OnInit {
     });
     await alert.present();
   }
-  
-  ionViewWillEnter() {
-    const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'flex';
-    });
-  }
-  
   getScreenSize(event?) {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
@@ -114,36 +126,7 @@ export class ProductCategoriesPage implements OnInit {
 
   loadProductGroup() {
     this.productGroupService.getProductGroups(this.pageRequest).subscribe(data => {
-      for (let item of data.product_groups) {
-        // image not found
-        if (item.thumb_image === null) {
-          const d = {
-            url: "https://i.imgur.com/dbpoag5.png"
-          }
-          item.thumb_image = d;
-        }
-        this.data.push(item);
-      }
-
-      this.isLoading = false;
-      this.counter++;
-
-      this.infinityScroll.complete();
-      // this.loading.dismiss();
-      this.pageRequest.page++;
-
-      // check max data
-      if (this.data.length >= data.meta.pagination.total_objects) {
-        this.infinityScroll.disabled = true;
-        this.isMaxData = true;
-      }
-    })
-  }
-
-  searchProductGroup() {
-    const counterTemp = this.counter;
-    this.productGroupService.searchProductGroup(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
-      if (counterTemp == this.counter) {
+      if (!this.data.some(a => a.id == data.product_groups[0].id)) {
         for (let item of data.product_groups) {
           // image not found
           if (item.thumb_image === null) {
@@ -155,11 +138,9 @@ export class ProductCategoriesPage implements OnInit {
           this.data.push(item);
         }
 
-        this.isLoading = false;
         this.counter++;
 
         this.infinityScroll.complete();
-        // this.loading.dismiss();
         this.pageRequest.page++;
 
         // check max data
@@ -168,11 +149,45 @@ export class ProductCategoriesPage implements OnInit {
           this.isMaxData = true;
         }
       }
+
+      this.isLoading = false;
+    })
+  }
+
+  searchProductGroup() {
+    const counterTemp = this.counter;
+    this.productGroupService.searchProductGroup(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
+      if (counterTemp == this.counter) {
+        if (!this.data.some(a => a.id == data.product_groups[0].id)) {
+          for (let item of data.product_groups) {
+            // image not found
+            if (item.thumb_image === null) {
+              const d = {
+                url: "https://i.imgur.com/dbpoag5.png"
+              }
+              item.thumb_image = d;
+            }
+            this.data.push(item);
+          }
+          this.counter++;
+
+          this.infinityScroll.complete();
+          // this.loading.dismiss();
+          this.pageRequest.page++;
+
+          // check max data
+          if (this.data.length >= data.meta.pagination.total_objects) {
+            this.infinityScroll.disabled = true;
+            this.isMaxData = true;
+          }
+        }
+        this.isLoading = false;
+      }
     })
   }
 
   loadData() {
-    if (!this.isMaxData) {
+    if (this.isOnline && !this.isMaxData) {
       if (this.inputValue !== '') {
         this.searchProductGroup();
       } else {
