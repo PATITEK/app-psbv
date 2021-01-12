@@ -79,16 +79,15 @@ export class ShoppingCartPage implements OnInit {
         tabs[key].style.display = 'flex';
         this.backButtonSystem(tabs[key].style.display);
       });
-    }
-
-    this.getCarts();   
-    this.cartItems.forEach(() => this.cartItemsSelected.push({selected: false})); 
+    };
+    this.getCarts();
   }
 
   getCarts() {
     this.shoppingCartsService.getShoppingCarts().subscribe(data => {
       const cartItems = data.preferences.cartItems;
       this.cartItems = cartItems === undefined ? [] : cartItems;
+      this.cartItemsSelected = [];
       this.cartItems.forEach(() => this.cartItemsSelected.push({selected: false}));
     })
   }
@@ -229,7 +228,17 @@ export class ShoppingCartPage implements OnInit {
   calSelectedProducts() {
     let total = 0;
     for (let i = 0; i < this.cartItemsSelected.length; i++) {
-      if (this.cartItemsSelected[i].selected) {
+      if (this.cartItemsSelected[i].selected && this.cartItems[i].kind == 'Product') {
+        total += this.cartItems[i].amount;
+      }
+    }
+    return total;
+  }
+
+  calSelectedAccessories() {
+    let total = 0;
+    for (let i = 0; i < this.cartItemsSelected.length; i++) {
+      if (this.cartItemsSelected[i].selected && this.cartItems[i].kind == 'Accessory') {
         total += this.cartItems[i].amount;
       }
     }
