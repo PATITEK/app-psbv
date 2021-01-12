@@ -91,9 +91,10 @@ ion-grid {
         margin-top: 3px;
 
         .product__name {
-          font-size: 14px;
+          font-size: 13px;
           text-transform: uppercase;
           color: #2d1b1b;
+          overflow: revert;
           margin: 5px;
         }
 
