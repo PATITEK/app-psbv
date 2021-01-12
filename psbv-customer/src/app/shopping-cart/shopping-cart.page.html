@@ -51,6 +51,7 @@
     <ion-item-group class="total-product-group">
       <span class="total-product-label">Total:</span>
       <span class="total-product">{{ calSelectedProducts() }} products</span>
+      <span class="total-accessory">{{ calSelectedAccessories() }} accessories</span>
       <span class="total-price"></span>
     </ion-item-group>
     <ion-button class="btn-send" [disabled]="checkAllNotSelected()" (click)="goToSelectedItems()">Send a quote
