@@ -28,7 +28,7 @@
             <ion-label class="item-code">{{ item.code }}</ion-label>
             <ion-buttons class="item-header">
                 <ion-buttons class="item-header-left">
-                    <span>{{ calTotalPrice(item) | number: '1.0-2' }}</span>
+                    <span><ion-label class="product__name-price--unit">$</ion-label>{{ calTotalPrice(item) | number: '1.0-2' }}</span>
                     <span class="separation"></span>
                     <span>{{ calProductsAmount(item) }} products <br> {{ calAccessoriesAmount(item) }}
                         accessories</span>
@@ -65,7 +65,7 @@
             <ion-label class="item-code">{{ item.code }}</ion-label>
             <ion-buttons class="item-header">
                 <ion-buttons class="item-header-left">
-                    <span>{{ calTotalPrice(item) | number: '1.0-2' }}</span>
+                    <span><ion-label class="product__name-price--unit">$</ion-label>{{ calTotalPrice(item) | number: '1.0-2' }}</span>
                     <span class="separation"></span>
                     <span>{{ calProductsAmount(item) }} products <br> {{ calAccessoriesAmount(item) }}
                         accessories</span>
