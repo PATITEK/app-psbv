@@ -2,11 +2,9 @@ ion-content,
 ion-item {
   --background: #efefef;
 }
-
 ion-list {
   background: #efefef;
 }
-
 ion-content {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -21,11 +19,6 @@ ion-content {
 ion-header {
   background: #232323;
   padding-bottom: 30px;
-
-  ion-buttons {
-    position: relative;
-    height: 100px;
-
     ion-back-button {
       color: #fff;
       position: absolute;
@@ -44,7 +37,6 @@ ion-header {
       padding-left: 56px;
       padding-right: 56px;
     }
-  }
 }
 
 .heading {

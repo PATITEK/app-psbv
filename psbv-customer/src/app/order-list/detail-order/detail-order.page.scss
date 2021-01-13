@@ -1,11 +1,6 @@
 ion-header {
   background: #232323;
   padding-bottom: 30px;
-
-  ion-buttons {
-    position: relative;
-    height: 100px;
-
     ion-back-button {
       color: #fff;
       position: absolute;
@@ -14,7 +9,6 @@ ion-header {
       transform: translateY(-50%);
       display: inline-block;
     }
-
     ion-label {
       font-size: 20px;
       color: #fff;
@@ -24,9 +18,7 @@ ion-header {
       padding-left: 56px;
       padding-right: 56px;
     }
-  }
 }
-
 ion-content {
   --background: #efefef;
   border-top-left-radius: 20px;
