@@ -108,6 +108,10 @@ ion-grid {
           border-radius: 10px;
           max-width: calc(100% - 4px);
         }
+        .product__price-unit {
+          display: inline-flex;
+          margin-right: 4px;
+        }
       }
     }
   }

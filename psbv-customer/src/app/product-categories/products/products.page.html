@@ -3,14 +3,11 @@
     <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
     <ion-label>{{ title }}</ion-label>
     <ion-buttons class="icon-box">
-       <!-- <img src="assets/noti.svg" (click)="goToNoti()" /> -->
-      <!-- <img src="assets/user.svg" (click)="goToUserInfo()"/> -->
       <ion-icon name="notifications-outline" (click)="goToNoti()"></ion-icon>
       <ion-icon name="person-outline" (click)="goToUserInfo()"></ion-icon>
     </ion-buttons>
   </ion-buttons>
 </ion-header>
-
 <ion-content>
   <p class="absolute-center absolute-center-text" *ngIf="data.length == 0 && loadedData">Not found products.</p>
   <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
@@ -25,7 +22,7 @@
             {{ data[i].name }}
           </ion-label>
           <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-            {{ data[i].price | number: '1.0-2'}}
+           <ion-label class="product__price-unit">$</ion-label>{{ data[i].price | number: '1.0-2'}}
           </ion-label>
         </ion-item-group>
       </ion-col>
@@ -37,7 +34,7 @@
             {{ data[i + 1].name }}
           </ion-label>
           <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-            {{ data[i + 1].price | number: '1.0-2'}}
+            <ion-label class="product__price-unit">$</ion-label>{{ data[i + 1].price | number: '1.0-2'}}
           </ion-label>
         </ion-item-group>
       </ion-col>

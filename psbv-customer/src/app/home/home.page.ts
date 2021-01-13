@@ -206,11 +206,12 @@ export class HomePage implements OnInit {
         if (!this.data.some(a => a.id == data.products[0].id)) {
           for (let item of data.products) {
             // image not found
-            if (item.thumb_image === null) {
+            
+            if (item.thumb_image.url === null) {
               const d = {
-                url: "https://i.imgur.com/dbpoag5.png"
+                url: "https://i.imgur.com/Vm39DR3.jpg"
               }
-              item.thumb_image = d;
+              item.thumb_image.url = d.url;
             }
             this.data.push(item);
           }
@@ -236,11 +237,11 @@ export class HomePage implements OnInit {
       if (!this.data.some(a => a.id == data.products[0].id)) {
         for (let item of data.products) {
           // image not found
-          if (item.thumb_image === null) {
+          if (item.thumb_image.url === null) {
             const d = {
-              url: "https://i.imgur.com/dbpoag5.png"
+              url: "https://i.imgur.com/Vm39DR3.jpg"
             }
-            item.thumb_image = d;
+            item.thumb_image.url = d.url;
           }
           this.data.push(item);
         }
