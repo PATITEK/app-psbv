@@ -71,14 +71,11 @@ export class ProductInfoPage implements OnInit {
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
-
     if (this.isOnline === true) {
       this.loading.present();
       this.loadData();
     }
-
     this.previousUrl = this.router.url;
-    console.log(this.previousUrl);
     this.authService.sendData(this.previousUrl);
   }
 

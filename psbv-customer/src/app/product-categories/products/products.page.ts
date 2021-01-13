@@ -111,15 +111,14 @@ export class ProductsPage implements OnInit {
           if (!this.data.some(a => a.id == data.products[0].id)) {
             for (let item of data.products) {
               // image not found
-              if (item.thumb_image === null) {
+              if (item.thumb_image.url === null) {
                 const d = {
-                  url: "https://i.imgur.com/dbpoag5.png"
+                  url: "https://i.imgur.com/Vm39DR3.jpg"
                 }
-                item.thumb_image = d;
+                item.thumb_image.url = d.url;
               }
               this.data.push(item);
             }
-
             this.infinityScroll.complete();
             this.pageRequest.page++;
 
@@ -159,7 +158,6 @@ export class ProductsPage implements OnInit {
 
   goToDetail(item) {
     this.setCartLocalStorage(item);
-
     const data = {
       id: item.id,
       categoryId: this.id,
@@ -189,7 +187,6 @@ export class ProductsPage implements OnInit {
       }
     }
     dataSeenProducts.unshift(product);
-
     localStorage.setItem('seenProducts', JSON.stringify(dataSeenProducts));
   }
 }
