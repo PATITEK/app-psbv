@@ -104,7 +104,12 @@ ion-content {
     top: 50%;
     transform: translateY(-50%);
     height: 42px;
-
+    .group__price {
+      display: flex;
+      .product__name-price--unit {
+        margin-right: 3px;
+      }
+    }
     @media screen and (max-width: 320px) {
       font-size: 12px;
     }

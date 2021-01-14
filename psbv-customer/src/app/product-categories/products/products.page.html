@@ -25,7 +25,7 @@
             {{ data[i].name}}
           </p>
           <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-            <ion-label class="product__price-unit" >$</ion-label>
+            <ion-label class="product__price-unit"*ngIf="data[i].price !== 0" >$</ion-label>
                <ion-label  *ngIf="data[i].price !== 0">{{ data[i].price |number: '1.2-2'}}</ion-label>
                <ion-label  *ngIf="data[i].price === 0">Request for quotes</ion-label>
            </ion-label>
@@ -40,7 +40,7 @@
             {{ data[i + 1].name }}
           </p>
           <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-            <ion-label class="product__price-unit">$</ion-label>
+            <ion-label class="product__price-unit"*ngIf="data[i].price !== 0">$</ion-label>
             <ion-label  *ngIf="data[i].price !== 0">{{ data[i].price |number: '1.2-2'}}</ion-label>
             <ion-label  *ngIf="data[i].price === 0">Request for quotes</ion-label>
           </ion-label>
