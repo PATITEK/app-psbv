@@ -216,10 +216,10 @@ ion-footer {
   left: 50%;
   bottom: 0;
   transform: translate(-50%, 50%);
-
+  min-width: 226px;
   .separation {
     width: 1px;
-    height: 32px;
+    height: 26px;
     background: #fff;
     margin: 0 9px;
   }

@@ -27,11 +27,11 @@ export class ProductsPage implements OnInit {
   permission: string;
   title = '';
   id = '';
-
+  priceString = '';
   loadedData = false;
   isOnline;
   isLoading = true;
-
+  data1 = [];
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -91,19 +91,17 @@ export class ProductsPage implements OnInit {
     });
     await alert.present();
   }
-
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+   
   }
-
   getScreenSize(event?) {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
   }
-
   loadData() {
     setTimeout(() => {
       if (this.id != '') {
@@ -116,17 +114,15 @@ export class ProductsPage implements OnInit {
                   url: "https://i.imgur.com/Vm39DR3.jpg"
                 }
                 item.thumb_image.url = d.url;
-              }
+              } 
               this.data.push(item);
             }
             this.infinityScroll.complete();
             this.pageRequest.page++;
-
             // check max data
             if (this.data.length >= data.meta.pagination.total_objects) {
               this.infinityScroll.disabled = true;
             }
-
             // cal left per_page
             const temp = data.meta.pagination.total_objects - this.data.length;
             if (temp <= this.pageRequest.per_page) {
@@ -139,7 +135,6 @@ export class ProductsPage implements OnInit {
       }
     }, 50);
   }
-
   checkGuestPermission(): boolean {
     return this.permission === PERMISSIONS[0].value;
   }
