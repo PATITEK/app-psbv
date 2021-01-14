@@ -3,7 +3,10 @@
   [ngClass]="checkSystem ? 'margin-search':''"></ion-searchbar> -->
   <ion-buttons>
     <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
-    <span >{{ title }}</span>
+    <ion-label class="title">
+      <span >{{ title }}</span>
+    </ion-label>
+   
     <ion-buttons class="icon-box">
       <ion-icon name="notifications-outline" (click)="goToNoti()"></ion-icon>
       <ion-icon name="person-outline" (click)="goToUserInfo()"></ion-icon>
