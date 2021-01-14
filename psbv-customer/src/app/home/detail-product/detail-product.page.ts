@@ -97,7 +97,9 @@ export class DetailProductPage implements OnInit {
       }
     }
   }
-
+  linkContactUs() {
+        this.router.navigateByUrl('/account/user-info/about-us');
+  }
   loadData() {
     this.route.queryParams.subscribe(params => {
       if (params.data !== undefined && !this.loadedProduct) {
