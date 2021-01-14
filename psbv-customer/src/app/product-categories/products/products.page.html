@@ -18,8 +18,8 @@
   <ion-grid>
     <ion-row *ngFor="let item of data; let i = index">
       <ion-col size="6" (click)="goToDetail(data[i])" *ngIf="i % 2 == 0">
-        <ion-img [src]="data[i].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2">
-        </ion-img>
+        <ion-img [src]="data[i].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2"> 
+         </ion-img>
         <ion-item-group>
           <ion-label class="product__hastag">#MS00234</ion-label>
           <p class="product__name">
