@@ -155,19 +155,18 @@ ion-footer {
     margin-left: 16px;
     margin-right: 8px;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    width: 68%;
   }
 
   .product-price {
     background: linear-gradient(90deg, #e52d27 -0.01%, #b31217 100%);
     display: inline-block;
-    padding: 10px;
+    padding: 8px;
     text-align: center;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     color: #fff;
-    min-width: 130px;
+    min-width: 90px;
   }
  
 }

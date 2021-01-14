@@ -15,7 +15,7 @@
     <ion-buttons>
       <p class="item-price">
         <ion-label class="product__price--unit">$</ion-label>
-        {{ item.price * item.amount | number: '1.0-2' }}</p>
+        {{ item.price * item.amount | number: '1.2-2' }}</p>
       <ion-img src="assets/shopping-cart/deliver-black.svg" class="delivery-icon"></ion-img>
       <span class="delivery-day">1 day</span>
     </ion-buttons>
@@ -31,7 +31,7 @@
         <span class="total-product-label">Total: </span>
         <span class="total-price">
             <ion-label class="product__price-unit">$</ion-label>
-            {{ calTotalPrice() | number: '1.0-2' }}
+            {{ calTotalPrice() | number: '1.2-2' }}
       </span>
       </ion-buttons>
       <span class="total-product">{{ calTotalProducts() }} products</span>

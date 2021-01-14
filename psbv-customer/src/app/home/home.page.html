@@ -30,11 +30,15 @@
           <ion-img [src]="data[i].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2">
           </ion-img>
           <ion-item-group class="displayBlock">
-            <ion-label class="product__name">
+          <ion-label class="product__hastag">#MS1985</ion-label>
+            <p class="product__name">
               {{ data[i].name }}
-            </ion-label>
+            </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              <ion-label class="product__price-unit">$</ion-label>{{ data[i].price | number: '1.0-2' }}
+              <ion-label class="product__price-unit">$</ion-label>
+              <ion-label  *ngIf="data[i].price !== 0">{{ data[i].price |number: '1.2-2'}}</ion-label>
+            <ion-label  *ngIf="data[i].price === 0">Request for quotes</ion-label>
+              
             </ion-label>
           </ion-item-group>
         </ion-col>
@@ -42,11 +46,15 @@
           <ion-img [src]="data[i + 1].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2">
           </ion-img>
           <ion-item-group class="displayBlock">
-            <ion-label class="product__name">
+            <ion-label class="product__hastag">#MS1985</ion-label>
+            <p class="product__name">
               {{ data[i + 1].name }}
-            </ion-label>
+            </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              <ion-label class="product__price-unit">$</ion-label> {{ data[i + 1].price | number: '1.0-2' }}
+              <ion-label class="product__price-unit">$</ion-label>
+              <ion-label  *ngIf="data[i].price !== 0">{{ data[i].price |number: '1.2-2'}}</ion-label>
+            <ion-label  *ngIf="data[i].price === 0">Request for quotes</ion-label>
+              
             </ion-label>
           </ion-item-group>
         </ion-col>
@@ -61,7 +69,6 @@
   <ion-item-group *ngIf="activeTab == filterProducts[1].id">
     <!-- <ion-spinner class="absolute-center" *ngIf="isLoading"></ion-spinner> -->
     <p class="absolute-center  absolute-center-text" *ngIf="dataSeenProducts.length == 0">Not found products.</p>
-
     <ion-grid>
       <ion-backdrop *ngIf="dataSeenProducts.length == 0"></ion-backdrop>
       <ion-row *ngFor="let item of dataSeenProducts; let i = index">
@@ -69,11 +76,15 @@
           <ion-img [src]="dataSeenProducts[i].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2">
           </ion-img>
           <ion-item-group class="displayBlock">
-            <ion-label class="product__name">
+          <ion-label class="product__hastag">#MS1985</ion-label>
+            <p class="product__name">
               {{ dataSeenProducts[i].name }}
-            </ion-label>
+            </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              <ion-label class="product__price-unit">$</ion-label>{{ dataSeenProducts[i].price | number: '1.0-2' }}
+              <ion-label class="product__price-unit">$</ion-label>
+              <ion-label  *ngIf="data[i].price !== 0">{{ data[i].price |number: '1.2-2'}}</ion-label>
+            <ion-label  *ngIf="data[i].price === 0">Request for quotes</ion-label>
+              
             </ion-label>
           </ion-item-group>
         </ion-col>
@@ -81,11 +92,14 @@
           <ion-img [src]="dataSeenProducts[i + 1].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2">
           </ion-img>
           <ion-item-group class="displayBlock">
-            <ion-label class="product__name">
+          <ion-label class="product__hastag">#MS1985</ion-label>
+            <p class="product__name">
               {{ dataSeenProducts[i + 1].name }}
-            </ion-label>
+            </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              <ion-label class="product__price-unit">$</ion-label> {{ dataSeenProducts[i + 1].price | number: '1.0-2' }}
+              <ion-label class="product__price-unit">$</ion-label>
+              <ion-label  *ngIf="data[i].price !== 0">{{ data[i].price |number: '1.2-2'}}</ion-label>
+            <ion-label  *ngIf="data[i].price === 0">Request for quotes</ion-label>
             </ion-label>
           </ion-item-group>
         </ion-col>
@@ -109,11 +123,15 @@
             [style.height.px]="(scrWidth - 40) / 2">
           </ion-img>
           <ion-item-group class="displayBlock">
-            <ion-label class="product__name">
+            <ion-label class="product__hastag">#MS1985</ion-label>
+            <p class="product__name">
               {{ dataTrending[i].name }}
-            </ion-label>
+            </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              <ion-label class="product__price-unit">$</ion-label>{{ dataTrending[i].price | number: '1.0-2' }}
+              <ion-label class="product__price-unit">$</ion-label>
+              <ion-label  *ngIf="data[i].price !== 0">{{ data[i].price |number: '1.2-2'}}</ion-label>
+            <ion-label  *ngIf="data[i].price === 0">Request for quotes</ion-label>
+              
             </ion-label>
           </ion-item-group>
         </ion-col>
@@ -122,11 +140,15 @@
             [style.height.px]="(scrWidth - 40) / 2">
           </ion-img>
           <ion-item-group class="displayBlock">
-            <ion-label class="product__name">
+            <ion-label class="product__hastag">#MS1985</ion-label>
+            <p class="product__name">
               {{ dataTrending[i + 1].name }}
-            </ion-label>
+            </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              <ion-label class="product__price-unit">$</ion-label>{{ dataTrending[i + 1].price | number: '1.0-2' }}
+              <ion-label class="product__price-unit">$</ion-label>
+              <ion-label  *ngIf="data[i].price !== 0">{{ data[i].price |number: '1.2-2'}}</ion-label>
+            <ion-label  *ngIf="data[i].price === 0">Request for quotes</ion-label>
+              
             </ion-label>
           </ion-item-group>
         </ion-col>
