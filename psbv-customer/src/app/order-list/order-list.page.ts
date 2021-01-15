@@ -138,7 +138,6 @@ export class OrderListPage implements OnInit {
       this.isLoading = false;
     })
   }
-
   loadDataHistory() {
     this.isLoadingHistory = true;
     this.ordersService.getHistory(this.pageRequestHistory).subscribe(data => {
@@ -146,7 +145,6 @@ export class OrderListPage implements OnInit {
         for (let item of data.orders) {
           this.dataHistory.push(item);
         }
-
         // this.loadingService.dismiss();
         this.infinityScrollHistory.complete();
         this.pageRequestHistory.page++;
@@ -160,7 +158,6 @@ export class OrderListPage implements OnInit {
       this.isLoadingHistory = false;
     })
   }
-
   getStatusColor(item) {
     for (let i of this.ordersService.STATUSES) {
       if (item.status == i.NAME) {
@@ -168,7 +165,6 @@ export class OrderListPage implements OnInit {
       }
     }
   }
-
   changeTabs(name) {
     if (this.activeTab == name) {
       this.scrollToTopSmoothly();
@@ -176,33 +172,11 @@ export class OrderListPage implements OnInit {
       this.scrollToTop();
       this.activeTab = name;
     }
-    if (this.activeTab == 'orderHistory' && this.dataHistory.length == 0) {
+    if (this.activeTab == 'orderHistory' && this.dataHistory.length == 0 && !this.loadedDataHistory) {
       this.firstTime = true;
       this.loadDataHistory();
     }
   }
-
-  // gotoDetailOrder(item) {
-  //   const data = {
-  //     orderId: item.id
-  //   }
-  //   this.router.navigate(['main/order-list/detail-order'], {
-  //     queryParams: {
-  //       data: JSON.stringify(data)
-  //     }
-  //   })
-  // }
-
-  // gotoOrderStatus(item) {
-  //   const data = {
-  //     orderId: item.id
-  //   }
-  //   this.router.navigate(['main/order-list/order-status-detail'], {
-  //     queryParams: {
-  //       data: JSON.stringify(data)
-  //     }
-  //   })
-  // }
 
   goToOrderDetail(item) {
     const data = {
@@ -226,12 +200,6 @@ export class OrderListPage implements OnInit {
     })
   }
 
-  // goToReOrder(item) {
-  //   const data = {
-  //     orderId: item.id
-  //   }
-  // }
-
   calProductsAmount(item) {
     return item.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME ? acc + cur.amount : acc, 0)
   }
@@ -239,15 +207,6 @@ export class OrderListPage implements OnInit {
   calAccessoriesAmount(item) {
     return item.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.ACCESSORY.NAME ? acc + cur.amount : acc, 0)
   }
-
-  // listProductsName(item) {
-  //   return item.order_details.reduce((acc, cur) => {
-  //     if (cur.yieldable_type == 'Product') {
-  //       acc += ', ' + cur.name;
-  //     }
-  //     return acc;
-  //   }, '').substring(2);
-  // }
 
   listProductsName(item) {
     return item.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.PRODUCT.NAME ? acc + ', ' + cur.name : acc, '').substring(2);

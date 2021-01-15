@@ -16,7 +16,7 @@
   <ion-img [src]="product.thumb_image.url" class="main-img" *ngIf="loadedProduct"></ion-img>
   <ion-card class="product-content">
     <ion-backdrop *ngIf="!loadedProduct"></ion-backdrop>
-    <ion-label class="" style="margin-left: 16px; font-weight: bold;">#{{product.code}}}</ion-label>
+    <ion-label class="" style="margin-left: 16px; font-weight: bold;">#{{product.code}}</ion-label>
     <ion-buttons class="product-name-wrapper">
       <ion-label class="product-name"[innerHTML]="product.name"></ion-label>
       <span class="product-price" *ngIf="!checkGuestPermission()">
@@ -27,10 +27,10 @@
     </ion-buttons>
     <!-- <ion-label style="color: #424242; font-size: 15px; margin-left: 16px;">Info</ion-label> -->
     <p class="product-desc"[innerHTML]="product.description"></p>
-    <p *ngIf="checkPremiumPermission()" class="technical">
-      Technical drawings <br>
-      <span class="link" (click)="downloadTechnical()">https://docs.google.com/d...</span>
-      <ion-img class="download-icon" src="assets/detail-product/download.svg" (click)="downloadTechnical()"></ion-img>
+    <p *ngIf="checkPremiumPermission()" class="technical" style="font-weight: bold;">
+      Catalogues <br>
+      <span class="link" (click)="downloadTechnical()">Download</span>
+      <ion-img class="download-icon" src="assets/detail-product/download.svg" (click)="downloadTechnical()" style="margin-left:10px"></ion-img>
     </p>
   </ion-card>
 </ion-content>
