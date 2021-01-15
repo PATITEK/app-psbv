@@ -21,9 +21,8 @@
         <ion-img [src]="data[i].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2"> 
          </ion-img>
         <ion-item-group>
-          <ion-label class="product__hastag">#MS00234</ion-label>
-          <p class="product__name">
-            {{ data[i].name}}
+          <ion-label class="product__hastag">#{{data[i].code}}</ion-label>
+          <p class="product__name" [innerHTML]="data[i].name ">
           </p>
           <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
             <ion-label class="product__price-unit" *ngIf="data[i].price !== 0">$</ion-label>
@@ -36,7 +35,7 @@
         <ion-img [src]="data[i + 1].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2">
         </ion-img>
         <ion-item-group>
-          <ion-label class="product__hastag">#MS1985</ion-label>
+          <ion-label class="product__hastag">#{{data[i+1].code}}</ion-label>
           <p class="product__name">
             {{ data[i + 1].name }}
           </p>

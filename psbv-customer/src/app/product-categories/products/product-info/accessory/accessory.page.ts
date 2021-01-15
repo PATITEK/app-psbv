@@ -65,10 +65,15 @@ export class AccessoryPage implements OnInit {
   }
 
   getCarts() {
-    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
-      const cartItems = data.preferences.cartItems;
-      this.cartItems = cartItems === undefined ? [] : cartItems;
-    })
+    if(PERMISSIONS[0].value === 'guest') {
+
+    }
+    else {
+      this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+        const cartItems = data.preferences.cartItems;
+        this.cartItems = cartItems === undefined ? [] : cartItems;
+      })
+    }
   }
 
   updateCartsLocal(amount) {
@@ -142,6 +147,12 @@ export class AccessoryPage implements OnInit {
       if (params.data !== undefined && !this.loadedAccessory) {
         this.accessoriesService.getAccessoryDetail(JSON.parse(params['data']).id).subscribe(data => {
           if (!this.loadedAccessory) {
+            if(data.accessory.thumb_image.url === null) {
+              const d = {
+                url: "https://i.imgur.com/Vm39DR3.jpg"
+              }
+              data.accessory.thumb_image.url = d.url;
+            }
             this.accessory = data.accessory;
             this.loadingService.dismiss();
             this.loadedAccessory = true;

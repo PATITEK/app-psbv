@@ -17,7 +17,7 @@
   <ion-card class="product-content">
     <ion-backdrop *ngIf="!loadedAccessory"></ion-backdrop>
     <ion-buttons class="product-name-wrapper">
-      <ion-label class="product-name">{{ accessory.name }}</ion-label>
+      <ion-label class="product-name" [innerHTML]="accessory.name"></ion-label>
       <span class="product-price" *ngIf="!checkGuestPermission()">
         <ion-label class="product__price-unit" *ngIf="accessory.price !== 0">$</ion-label>
         <ion-label *ngIf="accessory.price === 0">Request for quotes</ion-label>
@@ -26,7 +26,7 @@
       <!-- <ion-label class="product__price-unit">$</ion-label>{{ accessory.price | number: '1.2-2' }}</span> -->
     </ion-buttons>
     <!-- <ion-label style="color: #424242; font-size: 15px; margin-left: 16px;">Info</ion-label> -->
-    <p class="product-desc">{{ accessory.description }}</p>
+    <p class="product-desc"[innerHTML]="accessory.description"></p>
   </ion-card>
 </ion-content>
 
