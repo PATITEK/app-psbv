@@ -8,7 +8,9 @@ import { GlobalVariablesService } from 'src/app/@app-core/global-variables.servi
 import { ModalController } from '@ionic/angular';
 import { ModalAddComponent } from './modal-add/modal-add.component';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
-
+// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+// import { HTTP } from '@ionic-native/http/ngx';
+// import { File } from '@ionic-native/file/ngx';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.page.html',
@@ -41,7 +43,10 @@ export class ProductDetailPage implements OnInit {
     public globalVariablesService: GlobalVariablesService,
     public modalController: ModalController,
     private connectivityService: ConnectivityService,
-    private shoppingCartsService: ShoppingCartsService
+    private shoppingCartsService: ShoppingCartsService,
+    //   private nativeHTTP: HTTP,
+    //  private transfer: FileTransfer,
+    // private file: File
   ) {
     this.checkOnline();
   }
@@ -110,7 +115,7 @@ export class ProductDetailPage implements OnInit {
       });
     }
   }
-  
+
   updateCartsSever() {
     this.shoppingCartsService.updateShoppingCarts(this.cartItems).subscribe();
   }
@@ -171,6 +176,27 @@ export class ProductDetailPage implements OnInit {
     }
     this.pageNotiService.setdataStatusNoti(data);
     this.router.navigate(['/statusNoti']);
+    // var url = this.product.thumb_image.url;
+    // const filePath = this.file.dataDirectory; 
+    // // for iOS use this.file.documentsDirectory
+
+    //   this.nativeHTTP.downloadFile(url, {}, {}, filePath).then(response => {
+    //   // prints 200
+    //   console.log('success block...', response);
+    //   }).catch(err => {
+    //   // prints 403
+    //   console.log('error block ... ', err.status);
+    //   // prints Permission denied
+    //   console.log('error block ... ', err.error);
+    //   })
+    // const fileTransfer: FileTransferObject = this.transfer.create();
+    // 
+    // fileTransfer.download(url, this.file.dataDirectory + 'file.pdf').then((entry) => {
+    //   console.log('download complete: ' + entry.toURL());
+    // }, (error) => {
+    //   // handle error
+    //   console.log(error);
+    // });
   }
 
   goToCart(): void {

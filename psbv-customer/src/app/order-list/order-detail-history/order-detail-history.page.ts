@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
-import { OrdersService } from 'src/app/@app-core/http';
+import { OrdersService, ShoppingCartsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 
@@ -30,7 +30,8 @@ export class OrderDetailHistoryPage implements OnInit {
     private loadingService: LoadingService,
     private alertController: AlertController,
     private connectivityService: ConnectivityService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private shoppingCartsService: ShoppingCartsService
   ) {
     this.connectivityService.appIsOnline$.subscribe(online => {
       if (online) {
@@ -62,14 +63,6 @@ export class OrderDetailHistoryPage implements OnInit {
         this.ordersService.getOrderDetail(JSON.parse(params['data']).orderId).subscribe(data => {
           if (this.data.id == '') {
             this.data = data.order;
-
-            // if (this.checkConfirmedStatus()) {
-            //   const dateTime = this.data.audits[0].created_at;
-            //   this.pushData(dateTime, 'Time confirmed');
-            // } else if (this.checkShippingStatus()) {
-            //   const dateTime1 = this.data.audits[0].created_at;
-            //   const dateTime2 = this.data.audits[1].created_at;
-            //   this.pushData(dateTime1, 'Time confirmed', dateTime2, 'Time shipping');
             if (this.checkReceivedStatus()) {
               const dateTime1 = this.data.audits[1].created_at;
               const dateTime2 = this.data.audits[2].created_at;
@@ -111,14 +104,6 @@ export class OrderDetailHistoryPage implements OnInit {
     }
   }
 
-  // checkConfirmedStatus(): boolean {
-  //   return this.data.status == this.ordersService.STATUSES[0].NAME;
-  // }
-
-  // checkShippingStatus() {
-  //   return this.data.status == this.ordersService.STATUSES[1].NAME;
-  // }
-
   checkReceivedStatus(): boolean {
     return this.data.status == this.ordersService.STATUSES[2].NAME;
   }
@@ -148,7 +133,7 @@ export class OrderDetailHistoryPage implements OnInit {
         {
           text: 'Yes',
           handler: () => {
-            this.alertToast();
+            this.updateShoppingCarts();
             return;
           }
         },
@@ -169,5 +154,34 @@ export class OrderDetailHistoryPage implements OnInit {
       duration: 1000
     });
     toast.present();
+  }
+
+  updateShoppingCarts() {
+    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+      const cartItems = data.preferences.cartItems || [];
+
+      this.data.order_details.forEach(order => {
+        let duplicated = false;
+        for (let i of cartItems) {
+          if (i.kind == order.kind && i.id == order.id) {
+            i.amount += order.amount;
+            duplicated = true;
+            break;
+          }
+        }
+        if (!duplicated) {
+          cartItems.push({
+            id: order.yieldable_id,
+            name: order.name,
+            price: order.price,
+            kind: order.kind,
+            amount: order.amount
+          });
+        }
+      })
+      this.shoppingCartsService.updateShoppingCarts(cartItems).subscribe(() => {
+        this.alertToast();
+      })
+    })
   }
 }

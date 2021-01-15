@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
-import { OrdersService } from 'src/app/@app-core/http';
+import { OrdersService, ShoppingCartsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 
@@ -60,6 +60,7 @@ export class OrderDetailPage implements OnInit {
     public toastController: ToastController,
     public sanitizer: DomSanitizer,
     private connectivityService: ConnectivityService,
+    private shoppingCartsService: ShoppingCartsService
   ) {
     this.getScreenSize();
     this.connectivityService.appIsOnline$.subscribe(online => {
@@ -192,7 +193,7 @@ export class OrderDetailPage implements OnInit {
         {
           text: 'Yes',
           handler: () => {
-            this.alertToast();
+            this.updateShoppingCarts();
             return;
           }
         },
@@ -246,5 +247,34 @@ export class OrderDetailPage implements OnInit {
       }
     }
     return 100;
+  }
+
+  updateShoppingCarts() {
+    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+      const cartItems = data.preferences.cartItems || [];
+
+      this.data.order_details.forEach(order => {
+        let duplicated = false;
+        for (let i of cartItems) {
+          if (i.kind == order.kind && i.id == order.id) {
+            i.amount += order.amount;
+            duplicated = true;
+            break;
+          }
+        }
+        if (!duplicated) {
+          cartItems.push({
+            id: order.yieldable_id,
+            name: order.name,
+            price: order.price,
+            kind: order.kind,
+            amount: order.amount
+          });
+        }
+      })
+      this.shoppingCartsService.updateShoppingCarts(cartItems).subscribe(() => {
+        this.alertToast();
+      })
+    })
   }
 }
