@@ -15,12 +15,14 @@
     </div>
     <ion-label class="" style="margin-left: 16px;">#MS1985</ion-label>
     <ion-buttons class="product-name-wrapper">
-      <ion-label class="product-name">{{ product.name }}</ion-label>
+      <ion-label class="product-name" [innerHTML]="product.name"></ion-label>
       <span class="product-price" *ngIf="!checkGuestPermission()">
-        <ion-label class="product__name-price--unit">$</ion-label>{{ product.price | number: '1.2-2' }}</span>
+        <ion-label class="product__name-price--unit">$</ion-label>
+        {{ product.price | number: '1.2-2' }}
+      </span>
     </ion-buttons>
     <ion-label style="color: #424242; font-size: 15px; margin-left: 16px;">Info</ion-label>
-    <p class="product-desc">{{ checkGuestPermission() ? product.short_description : product.description }}</p>
+    <p class="product-desc" [innerHTML]="checkGuestPermission() ? product.short_description : product.description"></p>
   </ion-card>
 </ion-content>
 

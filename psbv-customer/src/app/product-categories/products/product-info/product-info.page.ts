@@ -88,10 +88,15 @@ export class ProductInfoPage implements OnInit {
   }
 
   getCarts() {
-    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
-      const cartItems = data.preferences.cartItems;
-      this.cartItems = cartItems === undefined ? [] : cartItems;
-    })
+    if(PERMISSIONS[0].value === 'guest') {
+
+    }
+    else {
+      this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+        const cartItems = data.preferences.cartItems;
+        this.cartItems = cartItems === undefined ? [] : cartItems;
+      })
+    }
   }
 
   getScreenSize(event?) {
@@ -177,6 +182,12 @@ export class ProductInfoPage implements OnInit {
       if (params.data !== undefined && !this.loadedProduct) {
         this.productService.getProductDetail(JSON.parse(params['data']).id)
           .subscribe(data => {
+            if(data.product.thumb_image.url === null) {
+              const d = {
+                url: "https://i.imgur.com/Vm39DR3.jpg"
+              }
+              data.product.thumb_image.url = d.url;
+            }
             this.product = data.product;
             this.loadedProduct = true;
             if (this.loadedProduct && this.loadedAccessories) {
@@ -187,6 +198,12 @@ export class ProductInfoPage implements OnInit {
         this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, JSON.parse(params['data']).id).subscribe(data => {
           if (!this.accessories.some(a => a.id == data.accessories[0].id)) {
             for (let item of data.accessories) {
+              if(item.thumb_image.url === null) {
+                  const d = {
+                    url: "https://i.imgur.com/Vm39DR3.jpg"
+                  }
+                  item.thumb_image.url = d.url;
+                }
               this.accessories.push(item);
               this.accessoryIds.push({
                 id: item.id,

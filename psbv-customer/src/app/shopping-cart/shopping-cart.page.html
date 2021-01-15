@@ -35,7 +35,10 @@
       <span class="delivery-day">1 day</span>
     </ion-buttons>
     <ion-buttons class="total-group">
-      <span><ion-label class="product__price-unit">$</ion-label>{{ item.price * item.amount | number: '1.2-2' }}</span>
+      <span>
+        <ion-label class="product__price-unit">$</ion-label>
+        {{ item.price * item.amount | number: '1.2-2' }}
+      </span>
       <span class="separation"></span>
       <span *ngIf="item.kind == 'Product'">{{ item.amount }} products</span>
       <span *ngIf="item.kind == 'Accessory'">{{ item.amount }} accessories</span>

@@ -12,7 +12,7 @@ import { CoreModule } from './@app-core';
 import { AuthGuard } from './@app-core/auth-guard.service';
 import { Network } from '@ionic-native/network/ngx';
 import {HttpClientModule} from '@angular/common/http';
-import { HTTP } from '@ionic-native/http/ngx';
+// import { HTTP } from '@ionic-native/http/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -27,7 +27,7 @@ import { HTTP } from '@ionic-native/http/ngx';
   ],
   providers: [
     StatusBar,
-    HTTP,
+    // HTTP,
     SplashScreen,
     AuthGuard,
     PageNotiService,

@@ -32,7 +32,6 @@ export class ProductsPage implements OnInit {
   isOnline;
   isLoading = true;
   data1 = [];
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -75,13 +74,12 @@ export class ProductsPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+   
   }
-
   getScreenSize(event?) {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
   }
-
   loadData() {
     setTimeout(() => {
       if (this.id != '') {
@@ -94,12 +92,11 @@ export class ProductsPage implements OnInit {
                   url: "https://i.imgur.com/Vm39DR3.jpg"
                 }
                 item.thumb_image.url = d.url;
-              }
+              } 
               this.data.push(item);
             }
             this.infinityScroll.complete();
             this.pageRequest.page++;
-            
             // check max data
             if (this.data.length >= data.meta.pagination.total_objects) {
               this.infinityScroll.disabled = true;
@@ -116,7 +113,6 @@ export class ProductsPage implements OnInit {
       }
     }, 50);
   }
-
   checkGuestPermission(): boolean {
     return this.permission === PERMISSIONS[0].value;
   }
@@ -154,7 +150,8 @@ export class ProductsPage implements OnInit {
       id: item.id,
       name: item.name,
       thumb_image: item.thumb_image,
-      price: item.price
+      price: item.price,
+      code: item.code
     }
 
     for (let i = 0, n = dataSeenProducts.length; i < n; i++) {
