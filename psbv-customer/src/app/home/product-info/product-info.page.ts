@@ -142,50 +142,6 @@ export class ProductInfoPage implements OnInit {
   }
 
   addProduct(): void {
-    // add product to cart
-    // const product = {
-    //   id: this.product.id,
-    //   name: this.product.name,
-    //   quantity: 1, // default = 1
-    //   price: this.product.price,
-    //   accessories: this.accessoryIds.reduce((acc, cur) => {
-    //     if (cur.quantity > 0) {
-    //       let name;
-    //       for (let i of this.accessories) {
-    //         if (cur.id == i.id) {
-    //           name = i.name;
-    //           break;
-    //         }
-    //       }
-    //       acc.push({
-    //         id: cur.id,
-    //         name: name,
-    //         quantity: cur.quantity,
-    //         price: cur.price
-    //       });
-    //     }
-    //     return acc;
-    //   }, [])
-    // }
-
-    // let duplicate = false;
-    // for (let j of this.cartItems) {
-    //   if (product.id == j.id && this.isEqual(product.accessories, j.accessories)) {
-    //     j.quantity++;
-    //     duplicate = true;
-    //     break;
-    //   }
-    // }
-    // if (!duplicate) {
-    //   this.cartItems.push(product);
-    // }
-
-    // // update data
-    // this.setLocalStorage();
-
-    // // reset selected item
-    // this.accessoryIds.forEach(accessory => accessory.quantity = 0);
-
     const data = {
       id: this.product.id,
       doesOpenModal: true
@@ -198,7 +154,9 @@ export class ProductInfoPage implements OnInit {
   }
 
   addAccessory(accessory) {
-    if (!this.checkGuestPermission()) {
+    if (this.checkGuestPermission()) {
+      this.router.navigateByUrl('/auth/login');
+    } else {
       const data = {
         id: accessory.id,
       }

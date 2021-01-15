@@ -27,9 +27,9 @@
     </ion-buttons>
     <!-- <ion-label style="color: #424242; font-size: 15px; margin-left: 16px;">Info</ion-label> -->
     <p class="product-desc">{{ product.description }}</p>
-    <p *ngIf="checkPremiumPermission()" class="technical">
-      Technical drawings <br>
-      <span class="link" (click)="downloadTechnical()">https://docs.google.com/d...</span>
+    <p  class="technical">
+      Catalogued <br>
+      <span class="link" (click)="downloadTechnical()">Download</span>
       <ion-img class="download-icon" src="assets/detail-product/download.svg" (click)="downloadTechnical()"></ion-img>
     </p>
   </ion-card>

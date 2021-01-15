@@ -41,7 +41,7 @@ export class ProductDetailPage implements OnInit {
     public globalVariablesService: GlobalVariablesService,
     public modalController: ModalController,
     private connectivityService: ConnectivityService,
-    private shoppingCartsService: ShoppingCartsService
+    private shoppingCartsService: ShoppingCartsService,
   ) {
     this.connectivityService.appIsOnline$.subscribe(online => {
       if (online) {
