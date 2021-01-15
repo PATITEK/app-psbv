@@ -151,6 +151,12 @@ export class ProductDetailPage implements OnInit {
       if (params.data !== undefined && !this.loadedProduct) {
         this.productService.getProductDetail(JSON.parse(params['data']).id).subscribe(data => {
           if (!this.loadedProduct) {
+            if (data.product.thumb_image.url === null) {
+              const d = {
+                url: "https://i.imgur.com/Vm39DR3.jpg"
+              }
+              data.product.thumb_image.url = d.url;
+            }
             this.product = data.product;
             this.loadedProduct = true;
             this.loadingService.dismiss();
