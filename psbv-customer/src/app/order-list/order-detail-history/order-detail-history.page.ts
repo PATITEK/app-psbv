@@ -114,7 +114,7 @@ export class OrderDetailHistoryPage implements OnInit {
 
   goToDetailComponent() {
     if (this.checkReceivedStatus()) {
-      this.router.navigateByUrl('main/order-list/detail-order/detail-component');
+      this.router.navigateByUrl('main/order-list/order-detail/detail-component');
     }
   }
 
