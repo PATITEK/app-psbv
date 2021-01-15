@@ -16,17 +16,17 @@
   <ion-img [src]="product.thumb_image.url" class="main-img" *ngIf="loadedProduct"></ion-img>
   <ion-card class="product-content">
     <ion-backdrop *ngIf="!loadedProduct"></ion-backdrop>
-    <ion-label class="" style="margin-left: 16px;">#MS1985</ion-label>
+    <ion-label class="" style="margin-left: 16px; font-weight: bold;">#{{product.code}}}</ion-label>
     <ion-buttons class="product-name-wrapper">
-      <ion-label class="product-name">{{ product.name }}</ion-label>
+      <ion-label class="product-name"[innerHTML]="product.name"></ion-label>
       <span class="product-price" *ngIf="!checkGuestPermission()">
         <ion-label class="product__price-unit"  *ngIf="product.price !== 0">$</ion-label>
         <ion-label  *ngIf="product.price === 0">Request for quotes</ion-label>
-        <ion-label  *ngIf="product.price !== 0"> {{ product.price | number: '1.2-2' }}</ion-label>
+        <ion-label  *ngIf="product.price !== 0" [innerHTML]="product.price | number: '1.2-2'"> </ion-label>
       </span>
     </ion-buttons>
     <!-- <ion-label style="color: #424242; font-size: 15px; margin-left: 16px;">Info</ion-label> -->
-    <p class="product-desc">{{ product.description }}</p>
+    <p class="product-desc"[innerHTML]="product.description"></p>
     <p *ngIf="checkPremiumPermission()" class="technical">
       Technical drawings <br>
       <span class="link" (click)="downloadTechnical()">https://docs.google.com/d...</span>

@@ -41,7 +41,7 @@ export class ProductDetailPage implements OnInit {
     public globalVariablesService: GlobalVariablesService,
     public modalController: ModalController,
     private connectivityService: ConnectivityService,
-    private shoppingCartsService: ShoppingCartsService
+    private shoppingCartsService: ShoppingCartsService,
   ) {
     this.connectivityService.appIsOnline$.subscribe(online => {
       if (online) {
@@ -69,10 +69,15 @@ export class ProductDetailPage implements OnInit {
   }
 
   getCarts() {
-    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
-      const cartItems = data.preferences.cartItems;
-      this.cartItems = cartItems === undefined ? [] : cartItems;
-    })
+    if(PERMISSIONS[0].value === 'guest') {
+
+    }
+    else {
+      this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+        const cartItems = data.preferences.cartItems;
+        this.cartItems = cartItems === undefined ? [] : cartItems;
+      })
+    }
   }
 
   updateCartsLocal(amount) {

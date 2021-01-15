@@ -17,22 +17,22 @@
   <ion-card class="product-content">
     <ion-backdrop *ngIf="!loadedAccessory"></ion-backdrop>
     <ion-buttons class="product-name-wrapper">
-      <ion-label class="product-name">{{ accessory.name }}</ion-label>
+      <ion-label class="product-name" [innerHTML]="accessory.name"></ion-label>
       <span class="product-price" *ngIf="!checkGuestPermission()">
         <ion-label class="product__price-unit"  *ngIf="accessory.price !== 0">$</ion-label>
         <ion-label  *ngIf="accessory.price === 0">Request for quotes</ion-label>
-        <ion-label  *ngIf="accessory.price !== 0"> {{ accessory.price | number: '1.2-2' }}</ion-label>
+        <ion-label  *ngIf="accessory.price !== 0"[innerHTML]="accessory.price | number: '1.2-2'"></ion-label>
       </span>
-        <!-- <ion-label class="product__price-unit">$</ion-label>{{ accessory.price | number: '1.2-2' }}</span> -->
+      <!-- <ion-label class="product__price-unit">$</ion-label>{{ accessory.price | number: '1.2-2' }}</span> -->
     </ion-buttons>
     <!-- <ion-label style="color: #424242; font-size: 15px; margin-left: 16px;">Info</ion-label> -->
-    <p class="product-desc">{{ accessory.description }}</p>
+    <p class="product-desc"[innerHTML]="accessory.description"></p>
   </ion-card>
 </ion-content>
 
 <ion-footer *ngIf="loadedAccessory">
   <!-- <ion-button expand="block" (click)="openModalAdd()">Add to cart</ion-button> -->
-  <ion-button expand="block" *ngIf="product.price>0" (click)="openModalAdd()">Add to cart</ion-button>
-  <ion-button expand="block" *ngIf="product.price==0" (click)="linkContactUs()">Contact us</ion-button>
+  <ion-button expand="block" *ngIf="accessory.price>0" (click)="openModalAdd()">Add to cart</ion-button>
+  <ion-button expand="block" *ngIf="accessory.price==0" (click)="linkContactUs()">Contact us</ion-button>
   <p *ngIf="!checkGuestPermission()">We will show detail component of product after you receive the item!</p>
 </ion-footer>

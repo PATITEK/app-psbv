@@ -11,25 +11,28 @@ import { FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { CoreModule } from './@app-core';
 import { AuthGuard } from './@app-core/auth-guard.service';
 import { Network } from '@ionic-native/network/ngx';
-
+import {HttpClientModule} from '@angular/common/http';
+// import { HTTP } from '@ionic-native/http/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
     FormsModule, 
+    HttpClientModule,
     ReactiveFormsModule,
     IonicModule.forRoot(), 
     AppRoutingModule,
-    CoreModule.forRoot()
+    CoreModule.forRoot(),
   ],
   providers: [
     StatusBar,
+    // HTTP,
     SplashScreen,
     AuthGuard,
     PageNotiService,
     Network,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent]
 })

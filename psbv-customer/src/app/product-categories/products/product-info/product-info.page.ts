@@ -88,10 +88,15 @@ export class ProductInfoPage implements OnInit {
   }
 
   getCarts() {
-    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
-      const cartItems = data.preferences.cartItems;
-      this.cartItems = cartItems === undefined ? [] : cartItems;
-    })
+    if(PERMISSIONS[0].value === 'guest') {
+
+    }
+    else {
+      this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+        const cartItems = data.preferences.cartItems;
+        this.cartItems = cartItems === undefined ? [] : cartItems;
+      })
+    }
   }
 
   getScreenSize(event?) {
@@ -142,50 +147,6 @@ export class ProductInfoPage implements OnInit {
   }
 
   addProduct(): void {
-    // add product to cart
-    // const product = {
-    //   id: this.product.id,
-    //   name: this.product.name,
-    //   quantity: 1, // default = 1
-    //   price: this.product.price,
-    //   accessories: this.accessoryIds.reduce((acc, cur) => {
-    //     if (cur.quantity > 0) {
-    //       let name;
-    //       for (let i of this.accessories) {
-    //         if (cur.id == i.id) {
-    //           name = i.name;
-    //           break;
-    //         }
-    //       }
-    //       acc.push({
-    //         id: cur.id,
-    //         name: name,
-    //         quantity: cur.quantity,
-    //         price: cur.price
-    //       });
-    //     }
-    //     return acc;
-    //   }, [])
-    // }
-
-    // let duplicate = false;
-    // for (let j of this.cartItems) {
-    //   if (product.id == j.id && this.isEqual(product.accessories, j.accessories)) {
-    //     j.quantity++;
-    //     duplicate = true;
-    //     break;
-    //   }
-    // }
-    // if (!duplicate) {
-    //   this.cartItems.push(product);
-    // }
-
-    // // update data
-    // this.setLocalStorage();
-
-    // // reset selected item
-    // this.accessoryIds.forEach(accessory => accessory.quantity = 0);
-
     const data = {
       id: this.product.id,
       doesOpenModal: true
@@ -198,7 +159,9 @@ export class ProductInfoPage implements OnInit {
   }
 
   addAccessory(accessory) {
-    if (!this.checkGuestPermission()) {
+    if (this.checkGuestPermission()) {
+      this.router.navigateByUrl('/auth/login');
+    } else {
       const data = {
         id: accessory.id,
       }
@@ -219,6 +182,12 @@ export class ProductInfoPage implements OnInit {
       if (params.data !== undefined && !this.loadedProduct) {
         this.productService.getProductDetail(JSON.parse(params['data']).id)
           .subscribe(data => {
+            if(data.product.thumb_image.url === null) {
+              const d = {
+                url: "https://i.imgur.com/Vm39DR3.jpg"
+              }
+              data.product.thumb_image.url = d.url;
+            }
             this.product = data.product;
             this.loadedProduct = true;
             if (this.loadedProduct && this.loadedAccessories) {
@@ -229,6 +198,12 @@ export class ProductInfoPage implements OnInit {
         this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, JSON.parse(params['data']).id).subscribe(data => {
           if (!this.accessories.some(a => a.id == data.accessories[0].id)) {
             for (let item of data.accessories) {
+              if(item.thumb_image.url === null) {
+                  const d = {
+                    url: "https://i.imgur.com/Vm39DR3.jpg"
+                  }
+                  item.thumb_image.url = d.url;
+                }
               this.accessories.push(item);
               this.accessoryIds.push({
                 id: item.id,
