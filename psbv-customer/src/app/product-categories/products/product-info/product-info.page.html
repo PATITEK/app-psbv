@@ -62,7 +62,7 @@
       <ion-col size="8">
         <div class="content-block" [style.color]="getItem(accessoryIds[i]).color">
           <ion-label>{{ accessory.name }}</ion-label>
-          <p>{{ accessory.description }}</p>
+          <p ng-bind-html= "accessory.description">{{ accessory.description }}</p>
         </div>
       </ion-col>
 
