@@ -172,7 +172,8 @@ export class ProductsPage implements OnInit {
       id: item.id,
       name: item.name,
       thumb_image: item.thumb_image,
-      price: item.price
+      price: item.price,
+      code: item.code
     }
 
     for (let i = 0, n = dataSeenProducts.length; i < n; i++) {

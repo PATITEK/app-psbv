@@ -101,10 +101,11 @@ ion-content {
     padding: 5px 12px;
     position: absolute;
     left: 0;
+    display: flex;
     top: 50%;
     transform: translateY(-50%);
     height: 42px;
-    .group__price {
+    span {
       display: flex;
       .product__name-price--unit {
         margin-right: 3px;

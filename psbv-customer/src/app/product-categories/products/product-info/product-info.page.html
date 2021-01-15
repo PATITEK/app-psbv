@@ -13,9 +13,9 @@
           <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
         </ion-button>
       </div>
-      <ion-card-subtitle style="font-size: 12px; margin-bottom: -5px;">#MS1985</ion-card-subtitle>
-      <ion-card-subtitle>{{ product.name }}</ion-card-subtitle>
-      <p>{{ product.short_description }}</p>
+      <ion-card-subtitle style="font-size: 12px; margin-bottom: -5px;">#{{product.code}}</ion-card-subtitle>
+      <ion-card-subtitle [innerHTML]="product.name"></ion-card-subtitle>
+      <p [innerHTML]="product.short_description"></p>
     </ion-card-content>
   </ion-card>
   <!-- for ios device -->
@@ -61,8 +61,8 @@
       </ion-col>
       <ion-col size="8">
         <div class="content-block" [style.color]="getItem(accessoryIds[i]).color">
-          <ion-label>{{ accessory.name }}</ion-label>
-          <p>{{ accessory.description }}</p>
+          <ion-label [innerHTML]="accessory.name"></ion-label>
+          <p [innerHTML]="accessory.description"></p>
         </div>
       </ion-col>
 

@@ -69,10 +69,15 @@ export class ProductDetailPage implements OnInit {
   }
 
   getCarts() {
-    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
-      const cartItems = data.preferences.cartItems;
-      this.cartItems = cartItems === undefined ? [] : cartItems;
-    })
+    if(PERMISSIONS[0].value === 'guest') {
+
+    }
+    else {
+      this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+        const cartItems = data.preferences.cartItems;
+        this.cartItems = cartItems === undefined ? [] : cartItems;
+      })
+    }
   }
 
   updateCartsLocal(amount) {

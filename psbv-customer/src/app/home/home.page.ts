@@ -265,17 +265,18 @@ export class HomePage implements OnInit {
       if (!this.data.some(a => a.id == data.order_details[0].id)) {
         for (let item of data.order_details) {
           // image not found
-          if (item.product.thumb_image === null) {
+          if (item.product.thumb_image.url === null) {
             const d = {
-              url: "https://i.imgur.com/dbpoag5.png"
+              url: "https://i.imgur.com/Vm39DR3.jpg"
             }
-            item.product.thumb_image = d;
+            item.product.thumb_image.url = d.url;
           }
           this.dataTrending.push({
             id: item.product.id,
             name: item.product.name,
             thumb_image: item.product.thumb_image,
-            price: item.product.price
+            price: item.product.price,
+            code :item.product.code
           });
         }
 
@@ -341,7 +342,8 @@ export class HomePage implements OnInit {
       id: item.id,
       name: item.name,
       thumb_image: item.thumb_image,
-      price: item.price
+      price: item.price,
+      code: item.code
     }
 
     for (let i = 0, n = this.dataSeenProducts.length; i < n; i++) {
