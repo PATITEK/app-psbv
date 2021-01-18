@@ -28,6 +28,10 @@ ion-header{
         display: inline-block;
         overflow: hidden;
         white-space: nowrap;
+        @media screen and (max-width: 320px){
+            margin-left: calc(50% - 38px);
+            transform: translateX(-50%);
+        }
     }
     &__element__shop-icon{
         width: 30px;
