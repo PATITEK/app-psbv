@@ -24,13 +24,17 @@ ion-header{
     font-weight: 700;
     display: flex;
     &__element__text{
-        margin-left: calc(50% - 22px);
-        transform: translateX(-50%);
+        margin-left: calc(50% - 25px);
+        transform: translateX(-45%);
         width: 160px;
         clear: both;
         display: inline-block;
         overflow: hidden;
         white-space: nowrap;
+        @media screen and (max-width: 320px){
+            margin-left: calc(50% - 38px);
+            transform: translateX(-45%);
+        }
     }
     &__element__shop-icon{
         width: 30px;
@@ -63,7 +67,6 @@ ion-content {
         width: 100%;
         margin-left: -14px;
         margin: 0 auto;
-      
         position: relative;
        --background: #F6F6F6;
        .item__wrapper {

@@ -77,7 +77,7 @@
             <p class="product__name"[innerHTML]="dataSeenProducts[i].name" >
             </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              <ion-label class="product__price-unit"   *ngIf="dataSeenProducts[i].price === 0">$</ion-label>
+              <ion-label class="product__price-unit"   *ngIf="dataSeenProducts[i].price !== 0">$</ion-label>
               <ion-label  *ngIf="dataSeenProducts[i].price !== 0"[innerHTML]="dataSeenProducts[i].price |number: '1.2-2'" ></ion-label>
             <ion-label  *ngIf="dataSeenProducts[i].price === 0 || dataSeenProducts[i].price === null">Request for quotes</ion-label>
               
@@ -93,7 +93,7 @@
             
             </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              <ion-label class="product__price-unit"  *ngIf="dataSeenProducts[i].price === 0">$</ion-label>
+              <ion-label class="product__price-unit"  *ngIf="dataSeenProducts[i].price !== 0">$</ion-label>
               <ion-label  *ngIf="dataSeenProducts[i+1].price !== 0"  [innerHTML]="dataSeenProducts[i+1].price |number: '1.2-2'"></ion-label>
             <ion-label  *ngIf="dataSeenProducts[i+1].price === 0 || dataSeenProducts[i+1].price === null">Request for quotes</ion-label>
             </ion-label>
