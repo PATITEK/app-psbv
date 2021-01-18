@@ -16,6 +16,7 @@
   <ion-img [src]="accessory.thumb_image.url" class="main-img" *ngIf="loadedAccessory"></ion-img>
   <ion-card class="product-content">
     <ion-backdrop *ngIf="!loadedAccessory"></ion-backdrop>
+    <ion-label class="" style="margin-left: 16px; font-weight:bold">#{{accessory.code}}</ion-label>
     <ion-buttons class="product-name-wrapper">
       <ion-label class="product-name" [innerHTML]="accessory.name"></ion-label>
       <span class="product-price" *ngIf="!checkGuestPermission()">
