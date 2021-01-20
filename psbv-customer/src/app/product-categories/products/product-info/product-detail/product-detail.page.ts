@@ -5,10 +5,13 @@ import { PERMISSIONS, ProductsService, ShoppingCartsService } from 'src/app/@app
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { ModalAddComponent } from 'src/app/home/product-info/product-detail/modal-add/modal-add.component';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
-
+import { HTTP } from '@ionic-native/http/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+// import { File } from '@ionic-native/file';
+import { File } from '@ionic-native/file/ngx';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.page.html',
@@ -42,6 +45,12 @@ export class ProductDetailPage implements OnInit {
     public modalController: ModalController,
     private connectivityService: ConnectivityService,
     private shoppingCartsService: ShoppingCartsService,
+    private transfer: FileTransfer,
+    private nativeHTTP: HTTP, 
+    private file: File,
+    private storage: Storage,
+    public platform: Platform
+
   ) {
     this.connectivityService.appIsOnline$.subscribe(online => {
       if (online) {
@@ -52,7 +61,7 @@ export class ProductDetailPage implements OnInit {
       }
     })
   }
-
+  private win: any = window;
   ngOnInit() {
     this.storageService.infoAccount.subscribe(data => {
       this.permission = data !== null ? data.role : PERMISSIONS[0].value;
@@ -169,6 +178,76 @@ export class ProductDetailPage implements OnInit {
       }
     })
   }
+//   public downloadTechnical() {
+//     //
+//     const filePath = this.file.dataDirectory ; 
+//     console.log(filePath);
+//                      // for iOS use this.file.documentsDirectory
+//     this.nativeHTTP.downloadFile('https://post.healthline.com/wp-content/uploads/2020/08/edible-flowers-732x549-thumbnail.jpg', {}, {}, filePath).then(response => {
+//        // prints 200
+//        console.log('success block...', response);
+//     }).catch(err => {
+//         // prints 403
+//         console.log('error block ... ', err.status);
+//         // prints Permission denied
+//         console.log('error block ... ', err.error);
+//     })
+//  }
+//  public async checkFile() {
+//   const fileUrl = 'https://post.healthline.com/wp-content/uploads/2020/08/edible-flowers-732x549-thumbnail.jpg';
+//   let stringURL = String(fileUrl);
+//   let fileName = stringURL.split('//')[1].replace(/\//g, '-');
+//   let directory;
+
+//       if (this.platform.is("desktop")) {
+//         return fileUrl;
+//       }
+//       if (this.platform.is("android")) {
+//         directory = this.file.dataDirectory;
+//       }
+//       if (this.platform.is("ios")) {
+//         directory = this.file.dataDirectory;
+//       }
+
+//   return this.file.checkFile(directory, fileName)
+//     .then(
+//       async result => {
+//         console.log(directory);
+//         if (result) {
+//           return this.win.Ionic.WebView.convertFileSrc(directory + fileName);
+//         } else {
+//           return fileUrl;
+//         }
+//       }
+//     )
+//     .catch(
+//       async err => {
+//         //FileError.NOT_FOUND_ERR
+//         if (err.code == 1) {
+//           let fileTransfer: FileTransferObject = this.transfer.create();
+//           fileTransfer.download(fileUrl, directory + fileName, true)
+//             .then(
+//               result => {
+//                 console.log('thanh cong');
+//               }
+//             )
+//             .catch(
+//               error => {
+//                 console.log('loi');
+//                 console.error(error);
+//                 throw error;
+//               }
+//             )
+//         }
+//         return fileUrl;
+
+//       }
+//     )
+
+
+// }
+
+
 
   downloadTechnical() {
     const data: IDataNoti = {
@@ -176,6 +255,13 @@ export class ProductDetailPage implements OnInit {
       description: '',
       routerLink: 'main/home'
     }
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    const url = 'https://post.healthline.com/wp-content/uploads/2020/08/edible-flowers-732x549-thumbnail.jpg';
+    fileTransfer.download(url, this.file.dataDirectory + 'file.pdf').then((entry) => {
+      console.log('download complete: ' + entry.toURL());
+    }, (error) => {
+      // handle error
+    });
     this.pageNotiService.setdataStatusNoti(data);
     this.router.navigate(['/statusNoti']);
   }
