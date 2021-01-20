@@ -36,7 +36,7 @@
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
               <ion-label class="product__price-unit"  *ngIf="data[i].price !== 0">$</ion-label>
               <ion-label  *ngIf="data[i].price !== 0" [innerHTML]="data[i].price |number: '1.2-2'"></ion-label>
-            <ion-label  *ngIf="data[i].price === 0">Request for quotes</ion-label>
+            <ion-label  *ngIf="data[i].price === 0 || data[i].price === null">Request for quotes</ion-label>
               
             </ion-label>
           </ion-item-group>
@@ -51,7 +51,7 @@
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
               <ion-label class="product__price-unit"   *ngIf="data[i].price !== 0">$</ion-label>
               <ion-label  *ngIf="data[i+1].price !== 0"[innerHTML]="data[i+1].price |number: '1.2-2'" ></ion-label>
-            <ion-label  *ngIf="data[i+1].price === 0">Request for quotes</ion-label>
+            <ion-label  *ngIf="data[i+1].price === 0 || data[i+1].price === null">Request for quotes</ion-label>
             </ion-label>
           </ion-item-group>
         </ion-col>
@@ -125,7 +125,7 @@
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
               <ion-label class="product__price-unit"*ngIf="dataTrending[i].price !== 0" >$</ion-label>
               <ion-label  *ngIf="dataTrending[i].price !== 0"[innerHTML]="dataTrending[i].price |number: '1.2-2'" ></ion-label>
-            <ion-label  *ngIf="dataTrending[i].price === 0">Request for quotes</ion-label>
+            <ion-label  *ngIf="dataTrending[i].price === 0 || dataTrending[i].price === null">Request for quotes</ion-label>
               
             </ion-label>
           </ion-item-group>
@@ -141,7 +141,7 @@
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
               <ion-label class="product__price-unit" *ngIf="dataTrending[i].price !== 0">$</ion-label>
               <ion-label  *ngIf="dataTrending[i+1].price !== 0"[innerHTML]="dataTrending[i].price |number: '1.2-2'"></ion-label>
-            <ion-label  *ngIf="dataTrending[i+1].price === 0">Request for quotes</ion-label>
+            <ion-label  *ngIf="dataTrending[i+1].price === 0 || dataTrending[i+1].price === null">Request for quotes</ion-label>
               
             </ion-label>
           </ion-item-group>

@@ -21,7 +21,7 @@
       <ion-label class="product-name"[innerHTML]="product.name"></ion-label>
       <span class="product-price" *ngIf="!checkGuestPermission()">
         <ion-label class="product__price-unit"  *ngIf="product.price !== 0">$</ion-label>
-        <ion-label  *ngIf="product.price === 0">Request for quotes</ion-label>
+        <ion-label  *ngIf="product.price === 0 || product.price === null">Request for quotes</ion-label>
         <ion-label  *ngIf="product.price !== 0" [innerHTML]="product.price | number: '1.2-2'"> </ion-label>
       </span>
     </ion-buttons>
@@ -37,7 +37,7 @@
 
 <ion-footer *ngIf="loadedProduct">
   <!-- <ion-button expand="block" (click)="openModalAdd()">Add to cart</ion-button> -->
-  <ion-button expand="block" *ngIf="product.price>0" (click)="openModalAdd()">Add to cart</ion-button>
-  <ion-button expand="block" *ngIf="product.price==0" (click)="linkContactUs()">Contact us</ion-button>
+  <ion-button expand="block" *ngIf="product.price > 0" (click)="openModalAdd()">Add to cart</ion-button>
+  <ion-button expand="block" *ngIf="product.price ==0 || product.price == null" (click)="linkContactUs()">Contact us</ion-button>
   <p *ngIf="!checkGuestPermission()">We will show detail component of product after you receive the item!</p>
 </ion-footer>

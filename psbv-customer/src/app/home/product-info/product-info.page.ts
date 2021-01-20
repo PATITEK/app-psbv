@@ -199,12 +199,13 @@ export class ProductInfoPage implements OnInit {
         this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, JSON.parse(params['data']).id).subscribe(data => {
           if (!this.accessories.some(a => a.id == data.accessories[0].id)) {
             for (let item of data.accessories) {
-                if (item.thumb_image.url === null) {
-                  const d = {
-                    url: "https://i.imgur.com/Vm39DR3.jpg"
-                  }
-                  item.thumb_image.url = d.url;
-                }
+              const d = {
+                url: "https://i.imgur.com/Vm39DR3.jpg"
+              }
+              if(item.thumb_image == null) {
+               
+               item['thumb_image'] = d;
+              }
               this.accessories.push(item);
               this.accessoryIds.push({
                 id: item.id,
@@ -232,6 +233,13 @@ export class ProductInfoPage implements OnInit {
   loadMoreAccessories() {
     this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, this.product.id).subscribe(data => {
       for (let item of data.accessories) {
+        const d = {
+          url: "https://i.imgur.com/Vm39DR3.jpg"
+        }
+        if(item.thumb_image == null) {
+         
+         item['thumb_image'] = d;
+        }
         this.accessories.push(item);
         this.accessoryIds.push({
           id: item.id,

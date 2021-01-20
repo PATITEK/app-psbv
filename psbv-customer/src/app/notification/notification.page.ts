@@ -20,7 +20,6 @@ export class NotificationPage implements OnInit {
 
   ngOnInit() {
     this.previousUrl =  this.router.url;
-    console.log(this.previousUrl);
     this.authService.sendData(this.previousUrl);
   }
 

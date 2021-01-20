@@ -25,7 +25,6 @@ export class ProductGroupsService {
  public searchProductGroup(request: IPageRequest, nameProductGroup: string, counter: number) {
   return this.http.get(`${APICONFIG.PRODUCT_GROUP.SEARCH(nameProductGroup)}&${(requestQuery(request))}`).pipe(
     map((result) => {
-      // console.log(result);
       return result;
     }),
   catchError((errorRes) =>{throw errorRes.error}));

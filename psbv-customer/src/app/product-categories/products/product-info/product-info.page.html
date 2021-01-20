@@ -8,7 +8,7 @@
     <ion-card-content>
       <div class="img-box">
         <ion-img *ngIf="loadedProduct" [src]="product.thumb_image.url"></ion-img>
-        <ion-button size="small" class="detail-button" (click)="goToDetail()" *ngIf="product.id != ''">
+        <ion-button size="small" class="detail-button" (click)="goToDetail()">
           Detail
           <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
         </ion-button>
@@ -20,20 +20,20 @@
   </ion-card>
   <!-- for ios device -->
   <img src="assets/detail-product/add-btn.svg" class="add-product-button" (click)="addProduct()"
-    *ngIf="product.price > 0 && !checkGuestPermission() && loadedProduct && loadedAccessories">
+    *ngIf="product.price > 0 && !checkGuestPermission()">
 </ion-header>
 
 <ion-content>
-  <div class="cart-wrapper" (click)="goToCart()" *ngIf="!checkGuestPermission() && loadedProduct && loadedAccessories">
+  <div class="cart-wrapper" (click)="goToCart()" *ngIf="!checkGuestPermission()">
     <img src="assets/detail-product/cart.svg" class="cart-btn">
     <span>+{{ cartItems.length }}</span>
   </div>
 
-  <p class="absolute-center absolute-center-text" *ngIf="accessories.length == 0 && loadedAccessories">Not found
+  <p class="absolute-center absolute-center-text" *ngIf="accessories.length == 0">Not found
     accessories.</p>
   <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
   <img src="assets/detail-product/add-btn.svg" class="add-product-button" (click)="addProduct()"
-    *ngIf="product.price > 0 && !checkGuestPermission() && loadedProduct && loadedAccessories">
+    *ngIf="product.price > 0 && !checkGuestPermission()">
 
   <ion-card class="accessories" *ngIf="accessories.length != 0">
     <ion-card-header class="ion-text-center">
@@ -68,7 +68,7 @@
         </div>
       </ion-col>
 
-      <img *ngIf="!checkGuestPermission() && loadedProduct && loadedAccessories" src="assets/add-btn.svg"
+      <img *ngIf="!checkGuestPermission()" src="assets/add-btn.svg"
         class="add-accessory-btn">
     </ion-row>
   </ion-grid>

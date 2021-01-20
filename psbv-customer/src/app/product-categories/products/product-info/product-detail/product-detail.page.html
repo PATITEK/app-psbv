@@ -21,7 +21,7 @@
       <ion-label class="product-name"[innerHTML]="product.name"></ion-label>
       <span class="product-price" *ngIf="!checkGuestPermission()">
         <ion-label class="product__price-unit"  *ngIf="product.price !== 0">$</ion-label>
-        <ion-label  *ngIf="product.price === 0">Request for quotes</ion-label>
+        <ion-label  *ngIf="product.price === 0 || product.price === null">Request for quotes</ion-label>
         <ion-label  *ngIf="product.price !== 0" [innerHTML]="product.price | number: '1.2-2'"> </ion-label>
        
       </span>

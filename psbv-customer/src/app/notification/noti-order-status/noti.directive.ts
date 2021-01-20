@@ -9,6 +9,5 @@ export class NotiDirective {
   turnOffNoti(){
     this.firstCheck = false;
     this.el.nativeElement.style.display = 'none';
-    console.log("checked")
   } 
 }

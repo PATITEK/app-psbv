@@ -151,11 +151,12 @@ export class AccessoryPage implements OnInit {
       if (params.data !== undefined && !this.loadedAccessory) {
         this.accessoriesService.getAccessoryDetail(JSON.parse(params['data']).id).subscribe(data => {
           if (!this.loadedAccessory) {
-            if ( data.accessory.thumb_image.url === null) {
-              const d = {
-                url: "https://i.imgur.com/Vm39DR3.jpg"
-              }
-               data.accessory.thumb_image.url = d.url;
+            const d = {
+              url: "https://i.imgur.com/Vm39DR3.jpg"
+            }
+            if(data.accessory.thumb_image == null) {
+             
+              data.accessory['thumb_image'] = d;
             }
             this.accessory = data.accessory;
             this.loadedAccessory = true;
