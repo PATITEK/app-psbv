@@ -177,18 +177,24 @@ export class ProductInfoPage implements OnInit {
   checkGuestPermission(): boolean {
     return this.permission == PERMISSIONS[0].value;
   }
-
+  imgnotFound(item) {
+    const d = {
+      url: "https://i.imgur.com/Vm39DR3.jpg"
+    }
+    if(item.thumb_image == null ) {
+      item['thumb_image'] = d;
+     }
+     else if(item.thumb_image.url == null) {
+       item.thumb_image.url = d.url;
+     }
+    }
   loadData() {
+    
     this.route.queryParams.subscribe(params => {
       if (params.data !== undefined && !this.loadedProduct) {
         this.productService.getProductDetail(JSON.parse(params['data']).id)
           .subscribe(data => {
-            if (data.product.thumb_image.url === null) {
-              const d = {
-                url: "https://i.imgur.com/Vm39DR3.jpg"
-              }
-              data.product.thumb_image.url = d.url;
-            }
+            this.imgnotFound(data.product);
             this.product = data.product;
             this.loadedProduct = true;
             if (this.loadedProduct && this.loadedAccessories) {
@@ -199,13 +205,7 @@ export class ProductInfoPage implements OnInit {
         this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, JSON.parse(params['data']).id).subscribe(data => {
           if (!this.accessories.some(a => a.id == data.accessories[0].id)) {
             for (let item of data.accessories) {
-              const d = {
-                url: "https://i.imgur.com/Vm39DR3.jpg"
-              }
-              if(item.thumb_image == null) {
-               
-               item['thumb_image'] = d;
-              }
+              this.imgnotFound(item);
               this.accessories.push(item);
               this.accessoryIds.push({
                 id: item.id,
@@ -233,13 +233,7 @@ export class ProductInfoPage implements OnInit {
   loadMoreAccessories() {
     this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, this.product.id).subscribe(data => {
       for (let item of data.accessories) {
-        const d = {
-          url: "https://i.imgur.com/Vm39DR3.jpg"
-        }
-        if(item.thumb_image == null) {
-         
-         item['thumb_image'] = d;
-        }
+       this.imgnotFound(item);
         this.accessories.push(item);
         this.accessoryIds.push({
           id: item.id,

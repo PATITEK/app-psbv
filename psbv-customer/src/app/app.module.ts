@@ -12,7 +12,6 @@ import { CoreModule } from './@app-core';
 import { AuthGuard } from './@app-core/auth-guard.service';
 import { Network } from '@ionic-native/network/ngx';
 import {HttpClientModule} from '@angular/common/http';
-// import { AngularFirestore } from 'angularfire2/firestore';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +19,6 @@ import {HttpClientModule} from '@angular/common/http';
   imports: [
     BrowserModule,
     FormsModule, 
-    // AngularFireModule.initializeApp(environment.firebase),
     HttpClientModule,
     ReactiveFormsModule,
    
@@ -30,7 +28,6 @@ import {HttpClientModule} from '@angular/common/http';
   ],
   providers: [
     StatusBar,
-    // AngularFirestore,
     SplashScreen,
     AuthGuard,
     PageNotiService,

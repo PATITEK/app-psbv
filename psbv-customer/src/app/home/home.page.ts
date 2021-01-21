@@ -206,19 +206,11 @@ export class HomePage implements OnInit {
         if (!this.data.some(a => a.id == data.products[0].id)) {
           for (let item of data.products) {
             // image not found
-            
-            if (item.thumb_image.url === null) {
-              const d = {
-                url: "https://i.imgur.com/Vm39DR3.jpg"
-              }
-              item.thumb_image.url = d.url;
-            }
+            this.imgnotFound(item);
             this.data.push(item);
           }
-
           this.infinityScroll.complete();
           this.pageRequest.page++;
-
           // check max data
           if (this.data.length >= data.meta.pagination.total_objects) {
             this.infinityScroll.disabled = true;
@@ -231,18 +223,23 @@ export class HomePage implements OnInit {
       }
     })
   }
-
+  imgnotFound(item) {
+    const d = {
+      url: "https://i.imgur.com/Vm39DR3.jpg"
+    }
+    if(item.thumb_image == null ) {
+      item['thumb_image'] = d;
+     }
+     else if(item.thumb_image.url == null) {
+       item.thumb_image.url = d.url;
+     }
+  }
   loadProducts(event?) {
     this.productService.getProducts(this.pageRequest).subscribe(data => {
       if (!this.data.some(a => a.id == data.products[0].id)) {
         for (let item of data.products) {
           // image not found
-          if (item.thumb_image.url === null) {
-            const d = {
-              url: "https://i.imgur.com/Vm39DR3.jpg"
-            }
-            item.thumb_image.url = d.url;
-          }
+         this.imgnotFound(item);
           this.data.push(item);
         }
 
@@ -265,12 +262,7 @@ export class HomePage implements OnInit {
       if (!this.data.some(a => a.id == data.order_details[0].id)) {
         for (let item of data.order_details) {
           // image not found
-          if (item.product.thumb_image.url === null) {
-            const d = {
-              url: "https://i.imgur.com/Vm39DR3.jpg"
-            }
-            item.product.thumb_image.url = d.url;
-          }
+          this.imgnotFound(item);
           this.dataTrending.push({
             id: item.product.id,
             name: item.product.name,

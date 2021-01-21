@@ -23,8 +23,6 @@ import { File } from '@ionic-native/file/ngx';
      FileTransfer,
      File,
      HTTP,
-
-
   ],
   declarations: [ProductDetailPage]
 })

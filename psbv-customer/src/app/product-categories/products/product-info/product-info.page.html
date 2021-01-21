@@ -8,12 +8,16 @@
     <ion-card-content>
       <div class="img-box">
         <ion-img *ngIf="loadedProduct" [src]="product.thumb_image.url"></ion-img>
-        <ion-button size="small" class="detail-button" (click)="goToDetail()">
+        <ion-button size="small" class="detail-button" (click)="goToDetail()" *ngIf="loadedProduct">
           Detail
           <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
         </ion-button>
       </div>
-      <ion-card-subtitle style="font-size: 12px; margin-bottom: -5px;">#{{product.code}}</ion-card-subtitle>
+      <ion-card-subtitle style="font-size: 12px; margin-bottom: -26px;">
+        <ion-label *ngIf="loadedProduct">
+          #
+        </ion-label>
+        {{product.code}}</ion-card-subtitle>
       <ion-card-subtitle [innerHTML]="product.name"></ion-card-subtitle>
       <p [innerHTML]="product.short_description"></p>
     </ion-card-content>
