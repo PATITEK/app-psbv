@@ -65,15 +65,15 @@ export class AccessoryPage implements OnInit {
   }
 
   getCarts() {
-    if(PERMISSIONS[0].value === 'guest') {
+    // if(PERMISSIONS[0].value === 'guest') {
 
-    }
-    else {
+    // }
+    // else {
       this.shoppingCartsService.getShoppingCarts().subscribe(data => {
         const cartItems = data.preferences.cartItems;
         this.cartItems = cartItems === undefined ? [] : cartItems;
       })
-    }
+    //}
   }
 
   updateCartsLocal(amount) {
@@ -142,18 +142,23 @@ export class AccessoryPage implements OnInit {
   linkContactUs() {
     this.router.navigateByUrl('/account/user-info/about-us');
 }
+imgnotFound(item) {
+  const d = {
+    url: "https://i.imgur.com/Vm39DR3.jpg"
+  }
+  if(item.thumb_image == null ) {
+    item['thumb_image'] = d;
+   }
+   else if(item.thumb_image.url == null) {
+     item.thumb_image.url = d.url;
+   }
+  }
   loadData() {
     this.route.queryParams.subscribe(params => {
       if (params.data !== undefined && !this.loadedAccessory) {
         this.accessoriesService.getAccessoryDetail(JSON.parse(params['data']).id).subscribe(data => {
           if (!this.loadedAccessory) {
-            const d = {
-              url: "https://i.imgur.com/Vm39DR3.jpg"
-            }
-            if(data.accessory.thumb_image == null) {
-             
-              data.accessory['thumb_image'] = d;
-            }
+            this.imgnotFound(data.accessory);
             this.accessory = data.accessory;
             this.loadingService.dismiss();
             this.loadedAccessory = true;

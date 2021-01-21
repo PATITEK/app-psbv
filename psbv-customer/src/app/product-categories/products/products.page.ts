@@ -80,6 +80,17 @@ export class ProductsPage implements OnInit {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
   }
+  imgnotFound(item) {
+    const d = {
+      url: "https://i.imgur.com/Vm39DR3.jpg"
+    }
+    if(item.thumb_image == null ) {
+      item['thumb_image'] = d;
+     }
+     else if(item.thumb_image.url == null) {
+       item.thumb_image.url = d.url;
+     }
+    }
   loadData() {
     setTimeout(() => {
       if (this.id != '') {
@@ -87,12 +98,7 @@ export class ProductsPage implements OnInit {
           if (!this.data.some(a => a.id == data.products[0].id)) {
             for (let item of data.products) {
               // image not found
-              if (item.thumb_image.url === null) {
-                const d = {
-                  url: "https://i.imgur.com/Vm39DR3.jpg"
-                }
-                item.thumb_image.url = d.url;
-              } 
+              this.imgnotFound(item);
               this.data.push(item);
             }
             this.infinityScroll.complete();
@@ -145,7 +151,6 @@ export class ProductsPage implements OnInit {
 
   setCartLocalStorage(item) {
     let dataSeenProducts = JSON.parse(localStorage.getItem('seenProducts')) || [];
-
     const product = {
       id: item.id,
       name: item.name,

@@ -8,10 +8,10 @@ import { GlobalVariablesService } from 'src/app/@app-core/global-variables.servi
 import { ModalController, Platform } from '@ionic/angular';
 import { ModalAddComponent } from 'src/app/home/product-info/product-detail/modal-add/modal-add.component';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
-import { HTTP } from '@ionic-native/http/ngx';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+// import { HTTP } from '@ionic-native/http/ngx';
+// import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 // import { File } from '@ionic-native/file';
-import { File } from '@ionic-native/file/ngx';
+// import { File } from '@ionic-native/file/ngx';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.page.html',
@@ -45,11 +45,10 @@ export class ProductDetailPage implements OnInit {
     public modalController: ModalController,
     private connectivityService: ConnectivityService,
     private shoppingCartsService: ShoppingCartsService,
-    private transfer: FileTransfer,
-    private nativeHTTP: HTTP, 
-    private file: File,
-    private storage: Storage,
-    public platform: Platform
+    // private transfer: FileTransfer,
+    // private nativeHTTP: HTTP, 
+    // private file: File,
+    // public platform: Platform
 
   ) {
     this.connectivityService.appIsOnline$.subscribe(online => {
@@ -74,19 +73,18 @@ export class ProductDetailPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.getCarts();
+      if (localStorage.getItem('Authorization') !== null) {
+         this.getCarts();
+      }
+      else {
+      }
   }
 
   getCarts() {
-    if(PERMISSIONS[0].value === 'guest') {
-
-    }
-    else {
       this.shoppingCartsService.getShoppingCarts().subscribe(data => {
         const cartItems = data.preferences.cartItems;
         this.cartItems = cartItems === undefined ? [] : cartItems;
       })
-    }
   }
 
   updateCartsLocal(amount) {
@@ -155,17 +153,23 @@ export class ProductDetailPage implements OnInit {
   linkContactUs() {
     this.router.navigateByUrl('/account/user-info/about-us');
 }
+imgnotFound(item) {
+  const d = {
+    url: "https://i.imgur.com/Vm39DR3.jpg"
+  }
+  if(item.thumb_image == null ) {
+    item['thumb_image'] = d;
+   }
+   else if(item.thumb_image.url == null) {
+     item.thumb_image.url = d.url;
+   }
+  }
   loadData() {
     this.route.queryParams.subscribe(params => {
       if (params.data !== undefined && !this.loadedProduct) {
         this.productService.getProductDetail(JSON.parse(params['data']).id).subscribe(data => {
           if (!this.loadedProduct) {
-            if (data.product.thumb_image.url === null) {
-              const d = {
-                url: "https://i.imgur.com/Vm39DR3.jpg"
-              }
-              data.product.thumb_image.url = d.url;
-            }
+           this.imgnotFound(data.product);
             this.product = data.product;
             this.loadedProduct = true;
             this.loadingService.dismiss();
@@ -255,13 +259,13 @@ export class ProductDetailPage implements OnInit {
       description: '',
       routerLink: 'main/home'
     }
-    const fileTransfer: FileTransferObject = this.transfer.create();
-    const url = 'https://post.healthline.com/wp-content/uploads/2020/08/edible-flowers-732x549-thumbnail.jpg';
-    fileTransfer.download(url, this.file.dataDirectory + 'file.pdf').then((entry) => {
-      console.log('download complete: ' + entry.toURL());
-    }, (error) => {
-      // handle error
-    });
+    // const fileTransfer: FileTransferObject = this.transfer.create();
+    // const url = 'https://post.healthline.com/wp-content/uploads/2020/08/edible-flowers-732x549-thumbnail.jpg';
+    // fileTransfer.download(url, this.file.dataDirectory + 'file.pdf').then((entry) => {
+    //   console.log('download complete: ' + entry.toURL());
+    // }, (error) => {
+    //   // handle error
+    // });
     this.pageNotiService.setdataStatusNoti(data);
     this.router.navigate(['/statusNoti']);
   }
