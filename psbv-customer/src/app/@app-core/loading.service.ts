@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +11,7 @@ export class LoadingService {
   isLoading = false;
 
   constructor(
+    private http: HttpClient,
     public loadingController: LoadingController
   ) { }
 
@@ -35,4 +38,5 @@ export class LoadingService {
       topLoader = await this.loadingController.getTop();
     }
   }
+ 
 }

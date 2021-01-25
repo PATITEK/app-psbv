@@ -123,18 +123,23 @@ export class ProductCategoriesPage implements OnInit {
     this.counter++;
     this.loadData();
   }
-
+  imgnotFound(item) {
+    const d = {
+      url: "https://i.imgur.com/Vm39DR3.jpg"
+    }
+    if(item.thumb_image == null ) {
+      item['thumb_image'] = d;
+     }
+     else if(item.thumb_image.url == null) {
+       item.thumb_image.url = d.url;
+     }
+    }
   loadProductGroup() {
     this.productGroupService.getProductGroups(this.pageRequest).subscribe(data => {
       if (!this.data.some(a => a.id == data.product_groups[0].id)) {
         for (let item of data.product_groups) {
           // image not found
-          if (item.thumb_image.url === null) {
-            const d = {
-              url: "https://i.imgur.com/Vm39DR3.jpg"
-            }
-            item.thumb_image.url = d.url;
-          }
+         this.imgnotFound(item);
           this.data.push(item);
         }
 
@@ -161,12 +166,7 @@ export class ProductCategoriesPage implements OnInit {
         if (!this.data.some(a => a.id == data.product_groups[0].id)) {
           for (let item of data.product_groups) {
             // image not found
-            if (item.thumb_image === null) {
-              const d = {
-                url: "https://i.imgur.com/dbpoag5.png"
-              }
-              item.thumb_image = d;
-            }
+            this.imgnotFound(item);
             this.data.push(item);
           }
           this.counter++;

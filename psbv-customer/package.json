@@ -89,7 +89,8 @@
             "cordova-android-support-gradle-release": {},
             "cordova-plugin-network-information": {},
             "cordova-plugin-file": {},
-            "cordova-plugin-file-transfer": {}
+            "cordova-plugin-file-transfer": {},
+            "cordova-plugin-advanced-http": {}
         },
         "platforms": [
             "android"

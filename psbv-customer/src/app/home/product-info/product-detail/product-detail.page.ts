@@ -155,17 +155,23 @@ export class ProductDetailPage implements OnInit {
   linkContactUs() {
     this.router.navigateByUrl('/account/user-info/about-us');
   }
+  imgnotFound(item) {
+    const d = {
+      url: "https://i.imgur.com/Vm39DR3.jpg"
+    }
+    if(item.thumb_image == null ) {
+      item['thumb_image'] = d;
+     }
+     else if(item.thumb_image.url == null) {
+       item.thumb_image.url = d.url;
+     }
+    }
   loadData() {
     this.route.queryParams.subscribe(params => {
       if (params.data !== undefined && !this.loadedProduct) {
         this.productService.getProductDetail(JSON.parse(params['data']).id).subscribe(data => {
           if (!this.loadedProduct) {
-            if ( data.product.thumb_image.url === null) {
-              const d = {
-                url: "https://i.imgur.com/Vm39DR3.jpg"
-              }
-               data.product.thumb_image.url = d.url;
-            }
+           this.imgnotFound(data.product);
             this.product = data.product;
             this.loadedProduct = true;
             this.loadingService.dismiss();
