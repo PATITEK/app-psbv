@@ -28,7 +28,7 @@ export class OrderListPage implements OnInit {
   dataHistory: any = [];
   pageRequestHistory = {
     page: 1,
-    per_page: 4,
+    per_page: 6,
     total_objects: 20
   };
   loadedDataHistory = false;
@@ -49,16 +49,16 @@ export class OrderListPage implements OnInit {
     this.connectivityService.appIsOnline$.subscribe(online => {
       if (online) {
         this.isOnline = true;
-        switch (this.activeTab) {
-          case 'orderStatus':
-            this.loadData();
-            break;
-          case 'orderHistory':
-            this.loadDataHistory();
-            break;
-          default:
-            break;
-        }
+        // switch (this.activeTab) {
+        //   case 'orderStatus':
+        //     this.loadData();
+        //     break;
+        //   case 'orderHistory':
+        //     this.loadDataHistory();
+        //     break;
+        //   default:
+        //     break;
+        // }
       } else {
         this.isOnline = false;
       }
@@ -66,8 +66,10 @@ export class OrderListPage implements OnInit {
   }
 
   ngOnInit() {
+    this.loadingService.present();
     if (this.isOnline === true) {
       this.loadData();
+      this.loadDataHistory();
     }
   }
 
@@ -117,45 +119,52 @@ export class OrderListPage implements OnInit {
     this.backButtonService.unsubscribe();
   }
 
-  loadData() {
-    this.isLoading = true;
+  loadData(func?) {
     this.ordersService.getOrders(this.pageRequest).subscribe(data => {
-      if (!this.data.some(a => a.id == data.orders[0].id)) {
-        for (let item of data.orders) {
-          this.data.push(item);
-        }
+      for (let item of data.orders) {
+        this.data.push(item);
+      }
+      this.loadingService.dismiss();
+      func && func();
+      this.pageRequest.page++;
 
-        // this.loadingService.dismiss();
-        this.infinityScroll.complete();
-        this.pageRequest.page++;
-
-        // check max data
-        if (this.data.length >= data.meta.pagination.total_objects) {
+      // check max data
+      if (this.data.length >= data.meta.pagination.total_objects) {
+        this.loadedData = true;
+        if (this.infinityScroll) {
           this.infinityScroll.disabled = true;
-          this.loadedData = true;
         }
       }
-      this.isLoading = false;
     })
   }
-  loadDataHistory() {
-    this.isLoadingHistory = true;
-    this.ordersService.getHistory(this.pageRequestHistory).subscribe(data => {
-      if (!this.dataHistory.some(a => a.id == data.orders[0].id)) {
-        for (let item of data.orders) {
-          this.dataHistory.push(item);
-        }
-        // this.loadingService.dismiss();
-        this.infinityScrollHistory.complete();
-        this.pageRequestHistory.page++;
 
-        // check max data
-        if (this.dataHistory.length >= data.meta.pagination.total_objects) {
+  loadMoreData(event) {
+    this.loadData(() => {
+      event.target.complete();
+    })
+  }
+
+  loadMoreDataHistory(event) {
+    this.loadDataHistory(() => {
+      event.target.complete();
+    })
+  }
+
+  loadDataHistory(func?) {
+    this.ordersService.getHistory(this.pageRequestHistory).subscribe(data => {
+      for (let item of data.orders) {
+        this.dataHistory.push(item);
+      }
+      func && func();
+      this.pageRequestHistory.page++;
+
+      // check max data
+      if (this.dataHistory.length >= data.meta.pagination.total_objects) {
+        this.loadedDataHistory = true;
+        if (this.infinityScrollHistory) {
           this.infinityScrollHistory.disabled = true;
-          this.loadedDataHistory = true;
         }
       }
-      this.isLoadingHistory = false;
     })
   }
   getStatusColor(item) {
@@ -169,12 +178,7 @@ export class OrderListPage implements OnInit {
     if (this.activeTab == name) {
       this.scrollToTopSmoothly();
     } else {
-      this.scrollToTop();
       this.activeTab = name;
-    }
-    if (this.activeTab == 'orderHistory' && this.dataHistory.length == 0 && !this.loadedDataHistory) {
-      this.firstTime = true;
-      this.loadDataHistory();
     }
   }
 
