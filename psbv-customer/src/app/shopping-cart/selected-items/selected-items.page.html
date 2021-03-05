@@ -13,9 +13,12 @@
       <ion-label class="item-name">{{ item.name }}</ion-label>
     </ion-buttons>
     <ion-buttons>
-      <p class="item-price">
+      <p class="item-price" *ngIf="item.price != 0">
         <ion-label class="product__price--unit">$</ion-label>
-        {{ item.price * item.amount | number: '1.2-2' }}</p>
+        {{ item.price * item.amount | number: '1.2-2' }}
+      </p>
+      <p class="item-price" *ngIf="item.price == 0">RFQ
+      </p>
       <ion-img src="assets/shopping-cart/deliver-black.svg" class="delivery-icon"></ion-img>
       <span class="delivery-day">1 day</span>
     </ion-buttons>
@@ -23,8 +26,7 @@
 </ion-content>
 
 <ion-footer>
-  <p class="email">Your email: PSBV.infomation@gmail.com</p>
-  <p class="id">ID order: #12345</p>
+  <p class="email">Your email: {{email}}</p>
   <ion-buttons class="ion-justify-content-between">
     <ion-item-group class="total-product-group">
       <ion-buttons>
@@ -42,7 +44,9 @@
         <ion-img src="assets/shopping-cart/deliver-black.svg" class="delivery-icon"></ion-img>
         <span class="delivery-day">1 day</span>
       </ion-buttons>
-      <ion-button class="btn-send" [disabled]="!isOnline" (click)="sendMailQuote()">Send a quote</ion-button>
+      <ion-button class="btn-send" [disabled]="!isOnline" (click)="sendMailQuote()">
+        Send a quote
+      </ion-button>
     </ion-item-group>
   </ion-buttons>
 </ion-footer>

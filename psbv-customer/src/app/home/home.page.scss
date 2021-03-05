@@ -19,10 +19,6 @@ ion-header {
   }
 
   .icon-box {
-    // img {
-    //   margin-left: 19px;
-    // }
-
     ion-icon {
       font-size: 21px;
       color: #fff;
@@ -35,6 +31,7 @@ ion-header {
     margin: 20px auto 20px;
     border-radius: 10px;
     --background: #f3f0f0;
+    padding: 0 16px;
   }
 
   ion-segment {
@@ -137,6 +134,11 @@ ion-grid {
           min-width: 70px;
           border-radius: 10px;
           max-width: calc(100% - 4px);
+          ion-label {
+            @media screen and (max-height: 569px) {
+              font-size: 10px;
+            }
+          }
         }
         
       }

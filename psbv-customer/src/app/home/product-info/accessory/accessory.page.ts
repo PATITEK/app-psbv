@@ -69,15 +69,15 @@ export class AccessoryPage implements OnInit {
   }
 
   getCarts() {
-    if(PERMISSIONS[0].value === 'guest') {
+    // if(PERMISSIONS[0].value === 'guest') {
 
-    }
-    else {
+    // }
+    // else {
       this.shoppingCartsService.getShoppingCarts().subscribe(data => {
         const cartItems = data.preferences.cartItems;
         this.cartItems = cartItems === undefined ? [] : cartItems;
       })
-    }
+    //}
   }
 
   updateCartsLocal(amount) {

@@ -89,14 +89,13 @@ export class ProductInfoPage implements OnInit {
   }
 
   getCarts() {
-    if(PERMISSIONS[0].value === 'guest') {
-
-    }
-    else {
+   if (localStorage.getItem('Authorization') !== null) {
       this.shoppingCartsService.getShoppingCarts().subscribe(data => {
         const cartItems = data.preferences.cartItems;
         this.cartItems = cartItems === undefined ? [] : cartItems;
       })
+    } else {
+      
     }
     
   }

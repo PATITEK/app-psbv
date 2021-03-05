@@ -1,15 +1,15 @@
 <ion-header>
-  <!-- <ion-searchbar (ionInput)="onInput($event)" autocorrect="off" [value]="inputValue"
-  [ngClass]="checkSystem ? 'margin-search':''"></ion-searchbar> -->
+ 
   <ion-buttons>
     <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
     <ion-label class="title">{{ title }}</ion-label>
-
     <ion-buttons class="icon-box">
       <ion-icon name="notifications-outline" (click)="goToNoti()"></ion-icon>
       <ion-icon name="person-outline" (click)="goToUserInfo()"></ion-icon>
     </ion-buttons>
   </ion-buttons>
+   <ion-searchbar (ionInput)="onInput($event)" autocorrect="off" [value]="inputValue"
+  [ngClass]="checkSystem ? 'margin-search':''"></ion-searchbar>
 </ion-header>
 <ion-content>
   <p class="absolute-center absolute-center-text" *ngIf="data.length == 0 && loadedData">Not found products.</p>
@@ -41,8 +41,8 @@
           </p>
           <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
             <ion-label class="product__price-unit" *ngIf="data[i].price !== 0">$</ion-label>
-            <ion-label *ngIf="data[i].price !== 0">{{ data[i].price |number: '1.2-2'}}</ion-label>
-            <ion-label *ngIf="data[i].price === 0 || data[i].price === null">Request for quotes</ion-label>
+            <ion-label *ngIf="data[i+1].price !== 0">{{ data[i].price |number: '1.2-2'}}</ion-label>
+            <ion-label *ngIf="data[i+1].price === 0 || data[i].price === null">Request for quotes</ion-label>
           </ion-label>
         </ion-item-group>
       </ion-col>

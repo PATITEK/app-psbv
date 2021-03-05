@@ -83,9 +83,9 @@ export class SignUpPage implements OnInit {
     await toast.present();
   }
 
-  async presentFailedToast() {
+  async presentFailedToast(message) {
     const toast = await this.toastController.create({
-      message: 'Sign up Failed',
+      message: message,
       duration: 1000
     });
     await toast.present();
@@ -99,21 +99,18 @@ export class SignUpPage implements OnInit {
         "fullname": this.formSignup.get('name').value
       }
      
-      this.authService.signup(tem_obj).subscribe((data:any) => {
-        this.showSpinner = true;
-        this.presentSuccessToast();
-        setTimeout(() => {
-            this.router.navigateByUrl("auth/login");
-        }, 1000);
-      
-      },
-      (data: any) => {
-        if(data.error) {
+      this.authService.signup(tem_obj).subscribe((data) => {
         this.showSpinner = false;
-        this.presentFailedToast();
-        }
-      }
-      )
+        this.presentSuccessToast();
+        setTimeout(()=>{
+          this.router.navigateByUrl('main/auth-manager')
+        },2000)
+      },
+      (data) =>{
+        this.presentFailedToast('Fail! please try again.');
+        this.showSpinner = false;
+        console.log(data)
+      })
     }
     showPassword2(){
       this.showPass2 = !this.showPass2;

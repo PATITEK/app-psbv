@@ -107,9 +107,7 @@ export class HomePage implements OnInit {
       if (this.router.url === '/main/home') {
         this.presentAlert();
       }
-      else {
-        return;
-      }
+      
     })
   }
 
@@ -262,7 +260,7 @@ export class HomePage implements OnInit {
       if (!this.data.some(a => a.id == data.order_details[0].id)) {
         for (let item of data.order_details) {
           // image not found
-          this.imgnotFound(item);
+          this.imgnotFound(item.product);
           this.dataTrending.push({
             id: item.product.id,
             name: item.product.name,
@@ -271,7 +269,6 @@ export class HomePage implements OnInit {
             code :item.product.code
           });
         }
-
         this.infinityScrollTrending.complete();
         // this.loading.dismiss();
         this.pageRequestTrending.page++;

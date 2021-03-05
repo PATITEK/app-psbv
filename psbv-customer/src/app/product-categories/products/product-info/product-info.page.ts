@@ -83,20 +83,25 @@ export class ProductInfoPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+      if (localStorage.getItem('Authorization') !== null) {
+         this.getCarts();
+      }
+      else {
 
-    this.getCarts();
+      }
+    
   }
 
   getCarts() {
-    if(PERMISSIONS[0].value === 'guest') {
+    // if(PERMISSIONS[0].value === 'guest') {
 
-    }
-    else {
+    // }
+    // else {
       this.shoppingCartsService.getShoppingCarts().subscribe(data => {
         const cartItems = data.preferences.cartItems;
         this.cartItems = cartItems === undefined ? [] : cartItems;
       })
-    }
+    //}
   }
 
   getScreenSize(event?) {
