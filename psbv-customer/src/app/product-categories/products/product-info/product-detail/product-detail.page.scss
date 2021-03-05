@@ -31,6 +31,7 @@ ion-header {
 
 ion-content {
   --background: #232323;
+  position: relative;
 }
 
 ion-footer {
@@ -63,13 +64,11 @@ ion-footer {
 .technical {
   font-size: 15px;
   color: #424242;
-  margin-left: 16px;
   margin-right: 16px;
-
   .link {
+    display: inline-block;
     color: #7193ff;
   }
-
   .download-icon {
     height: 19px;
     display: inline-block;
@@ -90,7 +89,7 @@ ion-footer {
   left: 50%;
   transform: translateX(-50%);
 
-  @media screen and (max-width: 320px) {
+  @media screen and (max-height: 569px) {
     width: 210px;
     height: 210px;
   }
@@ -109,18 +108,27 @@ ion-footer {
   top: 240px;
   min-height: calc(100% - 240px);
 
-  @media screen and (max-width: 320px) {
+  @media screen and (max-height: 569px) {
     top: 190px;
     min-height: calc(100% - 190px);
   }
 }
 
 .cart-wrapper {
-  position: absolute;
+  position: fixed;
   right: 15px;
-  bottom: 10px;
+  bottom: 115px;
   z-index: 1;
+  // @media screen and (max-height: 737px) {
+  //   bottom: -43px !important;
+  // }
 
+  // @media screen and (max-height: 641px) {
+  //   bottom: 164px !important;
+  // }
+  // @media screen and (max-height: 569px) {
+  //   bottom: 135px !important;
+  // }
   .cart-btn {
     height: 65px;
   }
@@ -152,7 +160,6 @@ ion-footer {
     color: #383737;
     font-size: 17px;
     font-weight: 700;
-    margin-left: 16px;
     margin-right: 8px;
     text-overflow: ellipsis;
     width: 68%;
@@ -172,7 +179,6 @@ ion-footer {
 }
 
 .product-desc {
-  margin-left: 16px;
   margin-right: 83px;
   font-size: 12px;
   color: #424242;

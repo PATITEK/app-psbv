@@ -16,7 +16,8 @@ export class ModalAddComponent implements OnInit {
     public toastController: ToastController
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+  }
 
   decreaseAmount() {
     if (this.amount > 1) {

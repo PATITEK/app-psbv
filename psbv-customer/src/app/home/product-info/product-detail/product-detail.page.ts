@@ -5,9 +5,11 @@ import { PERMISSIONS, ProductsService, ShoppingCartsService } from 'src/app/@app
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { ModalAddComponent } from './modal-add/modal-add.component';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 // import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 // import { HTTP } from '@ionic-native/http/ngx';
 // import { File } from '@ionic-native/file/ngx';
@@ -32,7 +34,7 @@ export class ProductDetailPage implements OnInit {
   permission = '';
   isOnline;
   cartItems = [];
-
+  url:any;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -44,6 +46,8 @@ export class ProductDetailPage implements OnInit {
     public modalController: ModalController,
     private connectivityService: ConnectivityService,
     private shoppingCartsService: ShoppingCartsService,
+    private iab: InAppBrowser,
+     private toastController: ToastController,
     //   private nativeHTTP: HTTP,
     //  private transfer: FileTransfer,
     // private file: File
@@ -52,16 +56,22 @@ export class ProductDetailPage implements OnInit {
   }
 
   ngOnInit() {
-    // this.storageService.infoAccount.subscribe(data => {
-    //   this.permission = data !== null ? data.role : PERMISSIONS[0].value;
-    // })
+    this.storageService.infoAccount.subscribe(data => {
+      this.permission = data !== null ? data.role : PERMISSIONS[0].value;
+    })
 
     if (this.isOnline === true) {
       this.loadingService.present();
       this.loadData();
     }
   }
-
+  async presentFailedToast() {
+    const toast = await this.toastController.create({
+      message: 'Catalogue is not imported, Please connect admin!',
+      duration: 2000
+    });
+    await toast.present();
+  }
   ionViewWillEnter() {
       if (localStorage.getItem('Authorization') !== null) {
          this.getCarts();
@@ -182,9 +192,11 @@ export class ProductDetailPage implements OnInit {
           if (!this.loadedProduct) {
            this.imgnotFound(data.product);
             this.product = data.product;
+            this.url = data.product.catalogue.url;
+            console.log(this.url)
+            console.log(this.product)
             this.loadedProduct = true;
             this.loadingService.dismiss();
-
             if (JSON.parse(params['data']).doesOpenModal) {
               this.openModalAdd();
             }
@@ -195,34 +207,24 @@ export class ProductDetailPage implements OnInit {
   }
 
   downloadTechnical() {
-    const data: IDataNoti = {
-      title: 'DOWNLOAD DONE',
-      description: '',
-      routerLink: 'main/home'
+    // const data: IDataNoti = {
+    //   title: 'DOWNLOAD DONE',
+    //   description: '',
+    //   routerLink: 'main/home'
+    // }
+    // this.pageNotiService.setdataStatusNoti(data);
+    // this.router.navigate(['/statusNoti']);
+   
+    if(this.url == null || this.url == '') {
+      this.presentFailedToast();
     }
-    this.pageNotiService.setdataStatusNoti(data);
-    this.router.navigate(['/statusNoti']);
-    // var url = this.product.thumb_image.url;
-    // const filePath = this.file.dataDirectory; 
-    // // for iOS use this.file.documentsDirectory
-
-    //   this.nativeHTTP.downloadFile(url, {}, {}, filePath).then(response => {
-    //   // prints 200
-    //   console.log('success block...', response);
-    //   }).catch(err => {
-    //   // prints 403
-    //   console.log('error block ... ', err.status);
-    //   // prints Permission denied
-    //   console.log('error block ... ', err.error);
-    //   })
-    // const fileTransfer: FileTransferObject = this.transfer.create();
-    // 
-    // fileTransfer.download(url, this.file.dataDirectory + 'file.pdf').then((entry) => {
-    //   console.log('download complete: ' + entry.toURL());
-    // }, (error) => {
-    //   // handle error
-    //   console.log(error);
-    // });
+    else {
+      const browser = this.iab.create(this.url,'_system', 'location=yes');
+      browser.on('loadstop').subscribe(event => {
+        browser.insertCSS({ code: "body{color: red;" });
+      });
+      browser.close();
+    }
   }
 
   goToCart(): void {

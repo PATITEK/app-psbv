@@ -12,7 +12,6 @@ import { CoreModule } from './@app-core';
 import { AuthGuard } from './@app-core/auth-guard.service';
 import { Network } from '@ionic-native/network/ngx';
 import {HttpClientModule} from '@angular/common/http';
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -21,7 +20,6 @@ import {HttpClientModule} from '@angular/common/http';
     FormsModule, 
     HttpClientModule,
     ReactiveFormsModule,
-   
     IonicModule.forRoot(), 
     AppRoutingModule,
     CoreModule.forRoot(),

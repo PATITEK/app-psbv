@@ -23,6 +23,7 @@ export class AccountService {
       map((result: any) => {
       localStorage.setItem('email', result['user']['email']);
       localStorage.setItem('role', result['user']['role']);
+      localStorage.setItem('fullname', result['user']['fullname'])
         return result;
       }),
       catchError((errorRes) => { 

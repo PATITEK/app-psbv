@@ -2,19 +2,12 @@ ion-img {
   border-radius: 10px;
   overflow: hidden;
 }
-
 ion-card {
   box-shadow: none;
 }
-
 ion-header {
   background: #232323;
-  height: 392px;
-
-  @media screen and (max-width: 370px) {
-    height: 372px;
-  }
-
+  height: 436px;
   ion-buttons {
     position: relative;
     height: 90px;
@@ -27,7 +20,6 @@ ion-header {
       top: calc(50% + 5px);
       transform: translateY(-50%);
     }
-
     ion-label {
       font-size: 20px;
       color: #fff;
@@ -50,16 +42,12 @@ ion-header {
 ion-content {
   z-index: 11;
   position: absolute;
-  height: calc(100% - 375px);
+  height: calc(100% - 416px);
   bottom: 0;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   overflow: hidden;
   --background: #fff;
-
-  @media screen and (max-width: 360px) {
-    height: calc(100% - 353px);
-  }
 }
 
 .product {
@@ -112,8 +100,10 @@ ion-content {
       color: white;
       margin-left: 10px;
       margin-right: 10px;
+      margin-bottom: 10px;
       text-overflow: ellipsis;
       height: 36px;
+    
     }
 
     p {
@@ -126,6 +116,7 @@ ion-content {
       line-height: 1.5;
       height: 60px;
       margin: 0 10px;
+     
     }
   }
 }
@@ -233,18 +224,18 @@ ion-grid {
 
 .add-product-button {
   position: fixed;
-  top: 376px;
+  top: 416px;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
   box-shadow: 0px 3px 6px rgba(black, 0.8);
   border-radius: 50%;
 
-  @media screen and (max-width: 360px) {
-    top: 357px;
-  }
 }
-
+.three-dot {
+  margin-top: 4px !important;
+  height: 62px !important;
+}
 ion-infinite-scroll {
   background: #fff;
 }
@@ -278,11 +269,12 @@ ion-infinite-scroll {
   right: 15px;
   bottom: 110px;
   z-index: 1;
-
+  @media screen and (max-width: 360px) {
+    bottom: 85px;
+  }
   .cart-btn {
     height: 65px;
   }
-
   span {
     display: inline-flex;
     justify-content: center;

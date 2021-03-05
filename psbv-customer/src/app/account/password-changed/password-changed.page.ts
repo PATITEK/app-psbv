@@ -193,9 +193,11 @@ export class PasswordChangedPage implements OnInit {
           this.accountService.updatePassword(result_object).subscribe(
             (data) => {
               this.pageNotiService.setdataStatusNoti(datapasing);
+              console.log(data)
               this.router.navigate(['/statusNoti']);
             },
             (data) => {
+              console.log(data)
                 this.presentToast(data.errors);
             }
           )

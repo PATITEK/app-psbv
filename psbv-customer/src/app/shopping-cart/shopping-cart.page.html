@@ -15,10 +15,14 @@
     <ion-buttons class="item-header">
       <ion-buttons (click)="toggleSelected(cartItemsSelected[i])">
         <span class="selected-btn" [style.background]="cartItemsSelected[i].selected ? '#91E29B' : 'white'"></span>
-        <ion-label class="item-name" [style.max-width.px]="scrWidth - 170">{{ item.name }}</ion-label>
+        <ion-label class="item-name" >{{ item.name }}</ion-label>
+      </ion-buttons >
+      <ion-buttons class="item-price"*ngIf="item.price != 0">
+        <ion-label class="product__price-unit">$</ion-label>{{ item.price * item.amount | number: '1.2-2' }}
       </ion-buttons>
-      <ion-buttons class="item-price">
-        <ion-label class="product__price-unit">$</ion-label>{{ item.price * item.amount | number: '1.2-2' }}</ion-buttons>
+      <ion-buttons class="item-price" *ngIf="item.price == 0">
+       RFQ
+      </ion-buttons>
     </ion-buttons>
     <ion-buttons class="ion-justify-content-end">
       <!-- <ion-img [src]="item.url" class="item-img"></ion-img> -->
@@ -35,9 +39,12 @@
       <span class="delivery-day">1 day</span>
     </ion-buttons>
     <ion-buttons class="total-group">
-      <span>
+      <span *ngIf="item.price != 0">
         <ion-label class="product__price-unit">$</ion-label>
         {{ item.price * item.amount | number: '1.2-2' }}
+      </span>
+      <span *ngIf="item.price == 0">
+        RFQ        
       </span>
       <span class="separation"></span>
       <span *ngIf="item.kind == 'Product'">{{ item.amount }} products</span>

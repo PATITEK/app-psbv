@@ -5,13 +5,17 @@ import { PERMISSIONS, ProductsService, ShoppingCartsService } from 'src/app/@app
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController, Platform, ToastController } from '@ionic/angular';
 import { ModalAddComponent } from 'src/app/home/product-info/product-detail/modal-add/modal-add.component';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+// import { FileOpener } from '@ionic-native/file-opener/ngx';
+// import { HTTP } from "@ionic-native/http/ngx";
+// import { FileTransferObject } from '@ionic-native/file-transfer/ngx';
 // import { HTTP } from '@ionic-native/http/ngx';
-// import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-// import { File } from '@ionic-native/file';
-// import { File } from '@ionic-native/file/ngx';
+// import { Plugins, CameraResultType, CameraSource, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
+import {  File  } from '@ionic-native/file';  
+
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.page.html',
@@ -28,12 +32,12 @@ export class ProductDetailPage implements OnInit {
     },
     price: 0
   }
-
   loadedProduct = false;
   permission = '';
   cartItems = [];
+  url: any;
   isOnline;
-
+//  private fileTransfer: FileTransferObject;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -45,10 +49,13 @@ export class ProductDetailPage implements OnInit {
     public modalController: ModalController,
     private connectivityService: ConnectivityService,
     private shoppingCartsService: ShoppingCartsService,
+    private iab: InAppBrowser,
+    private toastController: ToastController
+    // private fileOpener: FileOpener,
     // private transfer: FileTransfer,
-    // private nativeHTTP: HTTP, 
     // private file: File,
-    // public platform: Platform
+    // private http: HTTP,
+
 
   ) {
     this.connectivityService.appIsOnline$.subscribe(online => {
@@ -60,18 +67,18 @@ export class ProductDetailPage implements OnInit {
       }
     })
   }
+  
   private win: any = window;
   ngOnInit() {
     this.storageService.infoAccount.subscribe(data => {
       this.permission = data !== null ? data.role : PERMISSIONS[0].value;
     })
-
     if (this.isOnline === true) {
       this.loadingService.present();
       this.loadData();
     }
   }
-
+ 
   ionViewWillEnter() {
       if (localStorage.getItem('Authorization') !== null) {
          this.getCarts();
@@ -171,9 +178,9 @@ imgnotFound(item) {
           if (!this.loadedProduct) {
            this.imgnotFound(data.product);
             this.product = data.product;
+            this.url = data.product.catalogue.url;
             this.loadedProduct = true;
             this.loadingService.dismiss();
-
             if (JSON.parse(params['data']).doesOpenModal) {
               this.openModalAdd();
             }
@@ -182,94 +189,26 @@ imgnotFound(item) {
       }
     })
   }
-//   public downloadTechnical() {
-//     //
-//     const filePath = this.file.dataDirectory ; 
-//     console.log(filePath);
-//                      // for iOS use this.file.documentsDirectory
-//     this.nativeHTTP.downloadFile('https://post.healthline.com/wp-content/uploads/2020/08/edible-flowers-732x549-thumbnail.jpg', {}, {}, filePath).then(response => {
-//        // prints 200
-//        console.log('success block...', response);
-//     }).catch(err => {
-//         // prints 403
-//         console.log('error block ... ', err.status);
-//         // prints Permission denied
-//         console.log('error block ... ', err.error);
-//     })
-//  }
-//  public async checkFile() {
-//   const fileUrl = 'https://post.healthline.com/wp-content/uploads/2020/08/edible-flowers-732x549-thumbnail.jpg';
-//   let stringURL = String(fileUrl);
-//   let fileName = stringURL.split('//')[1].replace(/\//g, '-');
-//   let directory;
-
-//       if (this.platform.is("desktop")) {
-//         return fileUrl;
-//       }
-//       if (this.platform.is("android")) {
-//         directory = this.file.dataDirectory;
-//       }
-//       if (this.platform.is("ios")) {
-//         directory = this.file.dataDirectory;
-//       }
-
-//   return this.file.checkFile(directory, fileName)
-//     .then(
-//       async result => {
-//         console.log(directory);
-//         if (result) {
-//           return this.win.Ionic.WebView.convertFileSrc(directory + fileName);
-//         } else {
-//           return fileUrl;
-//         }
-//       }
-//     )
-//     .catch(
-//       async err => {
-//         //FileError.NOT_FOUND_ERR
-//         if (err.code == 1) {
-//           let fileTransfer: FileTransferObject = this.transfer.create();
-//           fileTransfer.download(fileUrl, directory + fileName, true)
-//             .then(
-//               result => {
-//                 console.log('thanh cong');
-//               }
-//             )
-//             .catch(
-//               error => {
-//                 console.log('loi');
-//                 console.error(error);
-//                 throw error;
-//               }
-//             )
-//         }
-//         return fileUrl;
-
-//       }
-//     )
-
-
-// }
-
-
-
-  downloadTechnical() {
-    const data: IDataNoti = {
-      title: 'DOWNLOAD DONE',
-      description: '',
-      routerLink: 'main/home'
-    }
-    // const fileTransfer: FileTransferObject = this.transfer.create();
-    // const url = 'https://post.healthline.com/wp-content/uploads/2020/08/edible-flowers-732x549-thumbnail.jpg';
-    // fileTransfer.download(url, this.file.dataDirectory + 'file.pdf').then((entry) => {
-    //   console.log('download complete: ' + entry.toURL());
-    // }, (error) => {
-    //   // handle error
-    // });
-    this.pageNotiService.setdataStatusNoti(data);
-    this.router.navigate(['/statusNoti']);
+  async presentFailedToast() {
+    const toast = await this.toastController.create({
+      message: 'Catalogue is not imported, Please connect admin!',
+      duration: 2000
+    });
+    await toast.present();
   }
-
+  gotoDownload(){
+    if(this.url == null || this.url == '') {
+      this.presentFailedToast();
+    }
+    else {
+      const browser = this.iab.create(this.url,'_system', 'location=yes');
+      browser.on('loadstop').subscribe(event => {
+        browser.insertCSS({ code: "body{color: red;" });
+      });
+     browser.close();
+    }
+   
+  }
   goToCart(): void {
     this.globalVariablesService.backUrlShoppingCart = this.router.url;
     this.router.navigateByUrl('main/shopping-cart');

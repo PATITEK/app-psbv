@@ -7,6 +7,8 @@ import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/@app-core/storage.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { AccountService } from '../account';
+
 
 @Injectable()
 export class AuthService {
@@ -17,6 +19,7 @@ export class AuthService {
     // private toastr: ToastrService,
     private router: Router,
     private storage: StorageService,
+    private accountService: AccountService
   ) { }
 
   public get receiveData(): Observable<any> {
@@ -70,10 +73,7 @@ export class AuthService {
       map((result: any) => {
         this.storage.clear();
         localStorage.setItem('Authorization', result.token);
-        localStorage.setItem('fullname', result.fullname);
         this.storage.setInfoAccount();
-        
-        //  this.toastr.success(SUCCESS.AUTH.LOGIN);
         return result;
       }),
       catchError((errorRes: any) => {
@@ -88,20 +88,21 @@ export class AuthService {
     localStorage.clear();
     this.storage.clear();
     this.storage.setInfoAccount();
-    // this.router.navigateByUrl('/main/product-categories');
     window.location.assign('/');
   }
   public signup(req) {
     return this.http.post(`${APICONFIG.AUTH.SIGNUP}`, req).pipe(
-      map((result) => {
-        // this.toastr.success(SUCCESS.AUTH.LOGIN);
+      map((result:any) => {
+        this.storage.clear();
+        localStorage.setItem('Authorization', result.token);
+        this.storage.setInfoAccount();
+       
         return result;
       }),
       catchError((errorRes: any) => {
         throw errorRes.error;
       }));
   }
- 
   checkLogin() {
     const token = localStorage.getItem('Authorization');
     if (!token) {

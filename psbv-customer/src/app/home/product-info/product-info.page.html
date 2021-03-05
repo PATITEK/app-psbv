@@ -13,30 +13,34 @@
           <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
         </ion-button>
       </div>
-      
-      <ion-card-subtitle style="font-size: 12px; margin-bottom: -26px;">
-        <ion-label  *ngIf="loadedProduct">#</ion-label>
-        {{product.code}}</ion-card-subtitle>
-      <ion-card-subtitle [innerHTML]="product.name"></ion-card-subtitle>
-      <p  [innerHTML]=" product.short_description"></p>
+      <ion-card-subtitle style="font-size: 10px; margin-bottom: -26px;">
+        <ion-label *ngIf="loadedProduct">
+          #
+        </ion-label>
+        {{product.code}}
+      </ion-card-subtitle>
+      <ion-card-subtitle [innerHTML]="product.name" class="three-dot"></ion-card-subtitle>
+      <p class="des"  [innerHTML]="product.short_description">
+
+      </p>
     </ion-card-content>
   </ion-card>
   <!-- for ios device -->
   <img src="assets/detail-product/add-btn.svg" class="add-product-button" (click)="addProduct()"
-    *ngIf="product.price > 0 && !checkGuestPermission()">
+    *ngIf="!checkGuestPermission()">
 </ion-header>
 
 <ion-content>
   <div class="cart-wrapper" (click)="goToCart()" *ngIf="!checkGuestPermission()">
     <img src="assets/detail-product/cart.svg" class="cart-btn">
-    <span>+{{ cartItems.length}}</span>
+    <span>+{{ cartItems.length }}</span>
   </div>
 
   <p class="absolute-center absolute-center-text" *ngIf="accessories.length == 0">Not found
     accessories.</p>
   <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
   <img src="assets/detail-product/add-btn.svg" class="add-product-button" (click)="addProduct()"
-    *ngIf="product.price > 0 && !checkGuestPermission()">
+    *ngIf="!checkGuestPermission()">
 
   <ion-card class="accessories" *ngIf="accessories.length != 0">
     <ion-card-header class="ion-text-center">
@@ -52,6 +56,7 @@
         </ion-button> -->
       </ion-item>
     </ion-card-content>
+
   </ion-card>
 
   <ion-grid>
@@ -63,13 +68,17 @@
       </ion-col>
       <ion-col size="8">
         <div class="content-block" [style.color]="getItem(accessoryIds[i]).color">
-          <ion-label style="font-size: 12px;">#{{accessory.code}}</ion-label>
+          <ion-label style="font-size: 12px; font-weight:bold;">#{{accessory.code}}</ion-label>
+
           <ion-label [innerHTML]="accessory.name"></ion-label>
-          <p [innerHTML]="accessory.description"></p>
+          <p [innerHTML]="accessory.description">
+            
+          </p>
         </div>
       </ion-col>
 
-      <img *ngIf="!checkGuestPermission()" src="assets/add-btn.svg" class="add-accessory-btn">
+      <img *ngIf="!checkGuestPermission()" src="assets/add-btn.svg"
+        class="add-accessory-btn">
     </ion-row>
   </ion-grid>
 
