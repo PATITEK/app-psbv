@@ -115,20 +115,11 @@ ion-footer {
 }
 
 .cart-wrapper {
-  position: fixed;
+  position: absolute;
   right: 15px;
   bottom: 115px;
   z-index: 1;
-  // @media screen and (max-height: 737px) {
-  //   bottom: -43px !important;
-  // }
-
-  // @media screen and (max-height: 641px) {
-  //   bottom: 164px !important;
-  // }
-  // @media screen and (max-height: 569px) {
-  //   bottom: 135px !important;
-  // }
+ 
   .cart-btn {
     height: 65px;
   }

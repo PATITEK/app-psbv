@@ -102,6 +102,7 @@
             "cordova-android-support-gradle-release": {},
             "cordova-plugin-network-information": {},
             "cordova-plugin-file": {},
+<<<<<<< HEAD
             "cordova-plugin-advanced-http": {},
             "cordova-plugin-file-transfer": {},
             "cordova-plugin-document-viewer": {},
@@ -111,6 +112,10 @@
             "cordova-plugin-androidx": {},
             "cordova-plugin-androidx-adapter": {},
             "cordova-plugin-inappbrowser": {}
+=======
+            "cordova-plugin-file-transfer": {},
+            "cordova-plugin-advanced-http": {}
+>>>>>>> 65c5705eaeef0d2baaf19c19a7a6c9587006e168
         },
         "platforms": [
             "android",

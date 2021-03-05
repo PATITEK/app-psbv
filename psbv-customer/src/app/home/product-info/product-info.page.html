@@ -13,6 +13,7 @@
           <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
         </ion-button>
       </div>
+<<<<<<< HEAD
       <ion-card-subtitle style="font-size: 10px; margin-bottom: -26px;">
         <ion-label *ngIf="loadedProduct">
           #
@@ -23,6 +24,14 @@
       <p class="des"  [innerHTML]="product.short_description">
 
       </p>
+=======
+      
+      <ion-card-subtitle style="font-size: 12px; margin-bottom: -26px;">
+        <ion-label  *ngIf="loadedProduct">#</ion-label>
+        {{product.code}}</ion-card-subtitle>
+      <ion-card-subtitle [innerHTML]="product.name"></ion-card-subtitle>
+      <p  [innerHTML]=" product.short_description"></p>
+>>>>>>> 65c5705eaeef0d2baaf19c19a7a6c9587006e168
     </ion-card-content>
   </ion-card>
   <!-- for ios device -->

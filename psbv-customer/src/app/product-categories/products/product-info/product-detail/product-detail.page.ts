@@ -9,12 +9,6 @@ import { ModalController, Platform, ToastController } from '@ionic/angular';
 import { ModalAddComponent } from 'src/app/home/product-info/product-detail/modal-add/modal-add.component';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-// import { FileOpener } from '@ionic-native/file-opener/ngx';
-// import { HTTP } from "@ionic-native/http/ngx";
-// import { FileTransferObject } from '@ionic-native/file-transfer/ngx';
-// import { HTTP } from '@ionic-native/http/ngx';
-// import { Plugins, CameraResultType, CameraSource, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
-import {  File  } from '@ionic-native/file';  
 
 @Component({
   selector: 'app-product-detail',
@@ -52,10 +46,6 @@ export class ProductDetailPage implements OnInit {
     private iab: InAppBrowser,
     private toastController: ToastController
     // private fileOpener: FileOpener,
-    // private transfer: FileTransfer,
-    // private file: File,
-    // private http: HTTP,
-
 
   ) {
     this.connectivityService.appIsOnline$.subscribe(online => {

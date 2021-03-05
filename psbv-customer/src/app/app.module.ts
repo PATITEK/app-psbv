@@ -20,6 +20,7 @@ import {HttpClientModule} from '@angular/common/http';
     FormsModule, 
     HttpClientModule,
     ReactiveFormsModule,
+   
     IonicModule.forRoot(), 
     AppRoutingModule,
     CoreModule.forRoot(),
