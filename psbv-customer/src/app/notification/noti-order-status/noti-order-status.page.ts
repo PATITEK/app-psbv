@@ -21,50 +21,50 @@ export class NotiOrderStatusPage implements OnInit {
 
   Details: IDetails[] = [
     {
-      title: "Sản phẩm mới",
-      des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
+      title: "News",
+      des: "Your item #34353333 status status, Your item #34353333 status status",
       day: "10/10/2020",
       src: "assets/img/products/11.png",
       check: false
     },
     {
-      title: "Trải nghiệm tính năng mới",
-      des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
+      title: "News",
+      des: "Your item #34353333 status status, Your item #34353333 status status",
       day: "01/08/2020",
       src: "assets/img/products/11.png",
       check: false
     },
     {
-      title: "Thị trường 2020 có gì",
-      des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
+      title: "News",
+      des: "Your item #34353333 status status, Your item #34353333 status status",
       day: "10/10/2020",
       src: "assets/img/products/11.png",
       check: false
     },
     {
-      title: "Tháng 10 có gì hot",
-      des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
+      title: "News",
+      des: "Your item #34353333 status status, Your item #34353333 status status",
       day: "10/10/2020",
       src: "assets/img/products/11.png",
       check: false
     },
     {
-      title: "",
-      des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
+      title: "News",
+      des: "Your item #34353333 status status, Your item #34353333 status status",
       day: "10/10/2020",
       src: "assets/img/products/11.png",
       check: false
     },
     {
-      title: "Tháng 10 có gì hot",
-      des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
+      title: "News",
+      des: "Your item #34353333 status status, Your item #34353333 status status",
       day: "10/10/2020",
       src: "assets/img/products/11.png",
       check: false
     },
     {
-      title: "",
-      des: "Sản phẩm 7989RF đời mới ra mắt vào tháng 9/2020",
+      title: "News",
+      des: "Your item #34353333 status status, Your item #34353333 status status",
       day: "10/10/2020",
       src: "assets/img/products/11.png",
       check: false

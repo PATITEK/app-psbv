@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { AlertController, IonInfiniteScroll, Platform } from '@ionic/angular';
+import { AlertController, IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
 import { IPageRequest, PERMISSIONS, ProductGroupsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
@@ -14,10 +14,9 @@ import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.servic
 })
 export class ProductsPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
-
+  @ViewChild(IonContent) ionContent: IonContent;
   scrHeight: any;
   scrWidth: any;
-
   pageRequest: IPageRequest = {
     page: 1,
     per_page: 10,
@@ -29,6 +28,9 @@ export class ProductsPage implements OnInit {
   id = '';
   priceString = '';
   loadedData = false;
+  isMaxData = false;
+  counter = 0;
+  inputValue: string = '';
   isOnline;
   isLoading = true;
   data1 = [];
@@ -81,17 +83,18 @@ export class ProductsPage implements OnInit {
     this.scrWidth = window.innerWidth;
   }
   imgnotFound(item) {
-    const d = {
-      url: "https://i.imgur.com/Vm39DR3.jpg"
+    // const d = {
+    //   url: "https://i.imgur.com/Vm39DR3.jpg"
+    // }
+    // if(item.thumb_image == null ) {
+    //   item['thumb_image'] = d;
+    //  }
+    //  else if(item.thumb_image.url == null) {
+    //    item.thumb_image.url = d.url;
+    //  }
+     !item?.thumb_image?.url && (item.thumb_image = {url: "https://i.imgur.com/Vm39DR3.jpg"});
     }
-    if(item.thumb_image == null ) {
-      item['thumb_image'] = d;
-     }
-     else if(item.thumb_image.url == null) {
-       item.thumb_image.url = d.url;
-     }
-    }
-  loadData() {
+  loadDataProduct() {
     setTimeout(() => {
       if (this.id != '') {
         this.productGroupService.getProductGroupDetail(this.id, this.pageRequest).subscribe(data => {
@@ -119,6 +122,66 @@ export class ProductsPage implements OnInit {
       }
     }, 50);
   }
+  onInput(event: any) {
+    this.infinityScroll.disabled = false;
+    this.inputValue = event.target.value;
+    this.reset();
+    this.scrollContent();
+    this.counter++;
+    this.loadData();
+  }
+  scrollContent() {
+    this.ionContent.scrollToTop(500);
+  }
+  reset() {
+    this.pageRequest = {
+      page: 1,
+      per_page: 6,
+      total_objects: 20
+    }
+    this.data = [];
+    this.isLoading = true;
+    this.isMaxData = false;
+  }
+  searchProductGroup() {
+    const counterTemp = this.counter;
+    this.productGroupService.searchProductGroup(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
+      if (counterTemp == this.counter) {
+        if (!this.data.some(a => a.id == data.product_groups[0].id)) {
+          for (let item of data.product_groups) {
+            // image not found
+            this.imgnotFound(item);
+            this.data.push(item);
+          }
+          this.counter++;
+
+          this.infinityScroll.complete();
+          // this.loading.dismiss();
+          this.pageRequest.page++;
+
+          // check max data
+          if (this.data.length >= data.meta.pagination.total_objects) {
+            this.infinityScroll.disabled = true;
+            this.isMaxData = true;
+          }
+        }
+        this.isLoading = false;
+      }
+    })
+  }
+
+  loadData() {
+    if (this.isOnline && !this.isMaxData) {
+      if (this.inputValue !== '') {
+        this.searchProductGroup();
+      } else {
+        this.loadDataProduct();
+      }
+    } else {
+      this.infinityScroll.complete();
+    }
+  }
+
   checkGuestPermission(): boolean {
     return this.permission === PERMISSIONS[0].value;
   }

@@ -31,8 +31,12 @@ ion-header{
         display: inline-block;
         overflow: hidden;
         white-space: nowrap;
+        @media screen and (max-width: 375px){
+            margin-left: calc(50% - 45px);
+            transform: translateX(-45%);
+        }
         @media screen and (max-width: 320px){
-            margin-left: calc(50% - 38px);
+            margin-left: calc(50% - 45px);
             transform: translateX(-45%);
         }
     }

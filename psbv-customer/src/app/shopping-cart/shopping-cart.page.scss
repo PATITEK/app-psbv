@@ -75,8 +75,9 @@ ion-content {
       color: #515151;
       font-size: 16px;
       font-weight: 700;
+      flex: 1;
       text-transform: none;
-      margin: 0 10px;
+      padding: 5px;
     }
   }
 
@@ -218,6 +219,9 @@ ion-footer {
   bottom: 0;
   transform: translate(-50%, 50%);
   min-width: 185px;
+  @media screen and (max-height: 668px){
+      min-width: 195px;
+  }
   .separation {
     width: 1px;
     height: 26px;

@@ -36,6 +36,12 @@
 .icon-header + .icon-header {
   margin-left: 12px;
 }
+.three-dot {
+  display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 .modal-add-detail-product {
   .modal-wrapper {
     height: 170px;

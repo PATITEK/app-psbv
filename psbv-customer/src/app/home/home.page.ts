@@ -107,9 +107,7 @@ export class HomePage implements OnInit {
       if (this.router.url === '/main/home') {
         this.presentAlert();
       }
-      else {
-        return;
-      }
+      
     })
   }
 
@@ -224,15 +222,8 @@ export class HomePage implements OnInit {
     })
   }
   imgnotFound(item) {
-    const d = {
-      url: "https://i.imgur.com/Vm39DR3.jpg"
-    }
-    if(item.thumb_image == null ) {
-      item['thumb_image'] = d;
-     }
-     else if(item.thumb_image.url == null) {
-       item.thumb_image.url = d.url;
-     }
+     !item?.thumb_image?.url && (item.thumb_image = {url: "https://i.imgur.com/Vm39DR3.jpg"});
+
   }
   loadProducts(event?) {
     this.productService.getProducts(this.pageRequest).subscribe(data => {
@@ -262,7 +253,7 @@ export class HomePage implements OnInit {
       if (!this.data.some(a => a.id == data.order_details[0].id)) {
         for (let item of data.order_details) {
           // image not found
-          this.imgnotFound(item);
+          this.imgnotFound(item.product);
           this.dataTrending.push({
             id: item.product.id,
             name: item.product.name,
@@ -271,7 +262,6 @@ export class HomePage implements OnInit {
             code :item.product.code
           });
         }
-
         this.infinityScrollTrending.complete();
         // this.loading.dismiss();
         this.pageRequestTrending.page++;

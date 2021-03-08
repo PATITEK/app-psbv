@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import { OrdersService } from 'src/app/@app-core/http';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
@@ -13,13 +14,14 @@ export class SelectedItemsPage implements OnInit {
   items = [];
   receiveData = [];
   isOnline: boolean;
-
+  email: any;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private pageNotiService: PageNotiService,
     private order: OrdersService,
     private connectivityService: ConnectivityService,
+    private loadingController: LoadingController
   ) {
     this.connectivityService.appIsOnline$.subscribe(online => {
       this.isOnline = online ? true : false;
@@ -30,9 +32,11 @@ export class SelectedItemsPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.items = JSON.parse(params['data']).selectedItems;
     })
+    
   }
 
   ionViewWillEnter() {
+    this.email = localStorage.getItem('email');
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
@@ -40,6 +44,7 @@ export class SelectedItemsPage implements OnInit {
   }
 
   sendMailQuote() {
+    this.presentLoading();
     const d: IDataNoti = {
       title: 'SEND A EMAIL QUOTE',
       description: '',
@@ -64,11 +69,26 @@ export class SelectedItemsPage implements OnInit {
     }
 
     this.order.createOrder(order).subscribe((data: any) => {
+      this.dismissLoading();
+      console.log(data);
       this.pageNotiService.setdataStatusNoti(d);
       this.router.navigate(['/statusNoti']);
+    },
+    (data)=> {
+      this.dismissLoading();
     })
   }
-
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Wait a minute...',
+    });
+    await loading.present();
+    
+  }
+  async dismissLoading() {
+   await this.loadingController.dismiss();
+  }
   calTotalPrice() {
     return this.items.reduce((acc, cur) => acc + cur.price * cur.amount, 0);
   }
