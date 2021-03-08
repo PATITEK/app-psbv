@@ -5,12 +5,11 @@ import { PERMISSIONS, ProductsService, ShoppingCartsService } from 'src/app/@app
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { ModalAddComponent } from './modal-add/modal-add.component';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
-// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-// import { HTTP } from '@ionic-native/http/ngx';
-// import { File } from '@ionic-native/file/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.page.html',
@@ -32,7 +31,7 @@ export class ProductDetailPage implements OnInit {
   permission = '';
   isOnline;
   cartItems = [];
-
+  url:any;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -44,9 +43,8 @@ export class ProductDetailPage implements OnInit {
     public modalController: ModalController,
     private connectivityService: ConnectivityService,
     private shoppingCartsService: ShoppingCartsService,
-    //   private nativeHTTP: HTTP,
-    //  private transfer: FileTransfer,
-    // private file: File
+    private iab: InAppBrowser,
+     private toastController: ToastController,
   ) {
     this.checkOnline();
   }
@@ -61,9 +59,20 @@ export class ProductDetailPage implements OnInit {
       this.loadData();
     }
   }
-
+  async presentFailedToast() {
+    const toast = await this.toastController.create({
+      message: 'Catalogue is not imported, Please connect admin!',
+      duration: 2000
+    });
+    await toast.present();
+  }
   ionViewWillEnter() {
-    this.getCarts();
+      if (localStorage.getItem('Authorization') !== null) {
+         this.getCarts();
+      }
+      else {
+
+      }
   }
 
   checkOnline() {
@@ -90,15 +99,14 @@ export class ProductDetailPage implements OnInit {
   }
 
   getCarts() {
-    if(PERMISSIONS[0].value === 'guest') {
-
-    }
-    else {
+    //if (localStorage.getItem('Authorization') !== null) {
       this.shoppingCartsService.getShoppingCarts().subscribe(data => {
         const cartItems = data.preferences.cartItems;
         this.cartItems = cartItems === undefined ? [] : cartItems;
       })
-    }
+    // } else {
+      
+    // }
   }
 
   updateCartsLocal(amount) {
@@ -122,7 +130,10 @@ export class ProductDetailPage implements OnInit {
   }
 
   updateCartsSever() {
+    if (localStorage.getItem('Authorization') !== null) {
     this.shoppingCartsService.updateShoppingCarts(this.cartItems).subscribe();
+    } else {
+    }
   }
 
   async openModalAdd() {
@@ -139,7 +150,6 @@ export class ProductDetailPage implements OnInit {
             amount: 0,
             price: this.product.price,
             kind: 'Product'
-            // url: this.product.thumb_image.url
           }
         }
       });
@@ -156,15 +166,7 @@ export class ProductDetailPage implements OnInit {
     this.router.navigateByUrl('/account/user-info/about-us');
   }
   imgnotFound(item) {
-    const d = {
-      url: "https://i.imgur.com/Vm39DR3.jpg"
-    }
-    if(item.thumb_image == null ) {
-      item['thumb_image'] = d;
-     }
-     else if(item.thumb_image.url == null) {
-       item.thumb_image.url = d.url;
-     }
+    !item?.thumb_image?.url && (item.thumb_image = {url: "https://i.imgur.com/Vm39DR3.jpg"});
     }
   loadData() {
     this.route.queryParams.subscribe(params => {
@@ -173,9 +175,12 @@ export class ProductDetailPage implements OnInit {
           if (!this.loadedProduct) {
            this.imgnotFound(data.product);
             this.product = data.product;
+            this.url = data.product.catalogue?.url;
+            console.log(this.url)
+            console.log(this.product)
+            
             this.loadedProduct = true;
             this.loadingService.dismiss();
-
             if (JSON.parse(params['data']).doesOpenModal) {
               this.openModalAdd();
             }
@@ -186,34 +191,16 @@ export class ProductDetailPage implements OnInit {
   }
 
   downloadTechnical() {
-    const data: IDataNoti = {
-      title: 'DOWNLOAD DONE',
-      description: '',
-      routerLink: 'main/home'
+    if(this.url == null || this.url == '') {
+      this.presentFailedToast();
     }
-    this.pageNotiService.setdataStatusNoti(data);
-    this.router.navigate(['/statusNoti']);
-    // var url = this.product.thumb_image.url;
-    // const filePath = this.file.dataDirectory; 
-    // // for iOS use this.file.documentsDirectory
-
-    //   this.nativeHTTP.downloadFile(url, {}, {}, filePath).then(response => {
-    //   // prints 200
-    //   console.log('success block...', response);
-    //   }).catch(err => {
-    //   // prints 403
-    //   console.log('error block ... ', err.status);
-    //   // prints Permission denied
-    //   console.log('error block ... ', err.error);
-    //   })
-    // const fileTransfer: FileTransferObject = this.transfer.create();
-    // 
-    // fileTransfer.download(url, this.file.dataDirectory + 'file.pdf').then((entry) => {
-    //   console.log('download complete: ' + entry.toURL());
-    // }, (error) => {
-    //   // handle error
-    //   console.log(error);
-    // });
+    else {
+      const browser = this.iab.create(this.url,'_system', 'location=yes');
+      browser.on('loadstop').subscribe(event => {
+        browser.insertCSS({ code: "body{color: red;" });
+      });
+      browser.close();
+    }
   }
 
   goToCart(): void {

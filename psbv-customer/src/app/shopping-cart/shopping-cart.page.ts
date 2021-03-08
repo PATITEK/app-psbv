@@ -51,7 +51,6 @@ export class ShoppingCartPage implements OnInit {
         this.presentAlert();
       }
       else {
-
         if (this.previousUrl.search('/main/home/product-info') != -1) {
           this.router.navigateByUrl(this.previousUrl);
         }

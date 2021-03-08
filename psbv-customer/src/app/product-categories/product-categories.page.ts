@@ -124,15 +124,7 @@ export class ProductCategoriesPage implements OnInit {
     this.loadData();
   }
   imgnotFound(item) {
-    const d = {
-      url: "https://i.imgur.com/Vm39DR3.jpg"
-    }
-    if(item.thumb_image == null ) {
-      item['thumb_image'] = d;
-     }
-     else if(item.thumb_image.url == null) {
-       item.thumb_image.url = d.url;
-     }
+    !item?.thumb_image?.url && (item.thumb_image = {url: "https://i.imgur.com/Vm39DR3.jpg"});
     }
   loadProductGroup() {
     this.productGroupService.getProductGroups(this.pageRequest).subscribe(data => {

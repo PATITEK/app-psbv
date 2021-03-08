@@ -158,6 +158,11 @@ ion-content{
     }
 
 }
+@media screen and (max-height: 640px) {
+    .input {
+        height: 36px;
+    }
+}
 @media screen and (max-height: 569px) {
     ion-header {
         height: 39px;
@@ -170,7 +175,7 @@ ion-content{
         }
     }
     .input {
-        height: 36px;
+        height: 32px;
     }
     ion-content {
         .have-account {

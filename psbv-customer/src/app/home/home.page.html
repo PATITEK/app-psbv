@@ -140,7 +140,7 @@
             </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
               <ion-label class="product__price-unit" *ngIf="dataTrending[i+1].price !== 0">$</ion-label>
-              <ion-label  *ngIf="dataTrending[i+1].price !== 0"[innerHTML]="dataTrending[i].price |number: '1.2-2'"></ion-label>
+              <ion-label  *ngIf="dataTrending[i+1].price !== 0"[innerHTML]="dataTrending[i+1].price |number: '1.2-2'"></ion-label>
             <ion-label  *ngIf="dataTrending[i+1].price === 0 || dataTrending[i+1].price === null">Request for quotes</ion-label>
               
             </ion-label>
