@@ -251,12 +251,11 @@ export class OrderDetailPage implements OnInit {
 
   updateShoppingCarts() {
     this.shoppingCartsService.getShoppingCarts().subscribe(data => {
-      const cartItems = data.preferences.cartItems || [];
-
+      const cartItems = data?.preferences?.cartItems || []; 
       this.data.order_details.forEach(order => {
         let duplicated = false;
         for (let i of cartItems) {
-          if (i.kind == order.kind && i.id == order.id) {
+          if (i.kind == order.yieldable_type && i.id == order.yieldable_id) {
             i.amount += order.amount;
             duplicated = true;
             break;
@@ -267,12 +266,12 @@ export class OrderDetailPage implements OnInit {
             id: order.yieldable_id,
             name: order.name,
             price: order.price,
-            kind: order.kind,
+            kind: order.yieldable_type,
             amount: order.amount
           });
         }
       })
-      this.shoppingCartsService.updateShoppingCarts(cartItems).subscribe(() => {
+      this.shoppingCartsService.updateShoppingCarts(cartItems).subscribe((data) => {
         this.alertToast();
       })
     })

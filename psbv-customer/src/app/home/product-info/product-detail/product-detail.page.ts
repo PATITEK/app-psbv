@@ -101,8 +101,9 @@ export class ProductDetailPage implements OnInit {
   getCarts() {
     //if (localStorage.getItem('Authorization') !== null) {
       this.shoppingCartsService.getShoppingCarts().subscribe(data => {
-        const cartItems = data.preferences.cartItems;
-        this.cartItems = cartItems === undefined ? [] : cartItems;
+        this.cartItems = data?.preferences?.cartItems || [];  
+        // const cartItems = data.preferences.cartItems;
+        // this.cartItems = cartItems === undefined ? [] : cartItems;
       })
     // } else {
       
@@ -176,8 +177,6 @@ export class ProductDetailPage implements OnInit {
            this.imgnotFound(data.product);
             this.product = data.product;
             this.url = data.product.catalogue?.url;
-            console.log(this.url)
-            console.log(this.product)
             
             this.loadedProduct = true;
             this.loadingService.dismiss();

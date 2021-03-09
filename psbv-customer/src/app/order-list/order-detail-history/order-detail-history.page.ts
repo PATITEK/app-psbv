@@ -158,8 +158,7 @@ export class OrderDetailHistoryPage implements OnInit {
 
   updateShoppingCarts() {
     this.shoppingCartsService.getShoppingCarts().subscribe(data => {
-      const cartItems = data.preferences.cartItems || [];
-
+      const cartItems = data?.preferences?.cartItems || []; 
       this.data.order_details.forEach(order => {
         let duplicated = false;
         for (let i of cartItems) {

@@ -84,8 +84,9 @@ export class ShoppingCartPage implements OnInit {
 
   getCarts() {
     this.shoppingCartsService.getShoppingCarts().subscribe(data => {
-      const cartItems = data.preferences.cartItems;
-      this.cartItems = cartItems === undefined ? [] : cartItems;
+
+       this.cartItems = data.preferences?.cartItems;
+      // this.cartItems = cartItems === undefined ? [] : cartItems;
       this.cartItemsSelected = [];
       this.cartItems.forEach(() => this.cartItemsSelected.push({selected: false}));
     })
@@ -166,22 +167,6 @@ export class ShoppingCartPage implements OnInit {
       }
     }
   }
-  
-  // isEqual(a, b) {
-  //   // if length is not equal 
-  //   if (a.length != b.length)
-  //     return false;
-  //   else {
-  //     // comapring each element of array 
-  //     for (var i = 0; i < a.length; i++) {
-  //       if (a[i].id != b[i].id || a[i].quantity != b[i].quantity) {
-  //         return false;
-  //       }
-  //     }
-  //     return true;
-  //   }
-  // }
-
   async openModalRemove(item) {
     const alert = await this.alertController.create({
       message: 'Delete item from your cart?',
@@ -243,24 +228,6 @@ export class ShoppingCartPage implements OnInit {
     }
     return total;
   }
-
-  // calSelectedAccessories() {
-  //   let total = 0;
-  //   for (let i = 0; i < this.cartItemsSelected.length; i++) {
-  //     if (this.cartItemsSelected[i].selected) {
-  //       total += this.cartItems[i].accessories.reduce((acc, cur) => {
-  //         return acc + cur.quantity;
-  //       }, 0);
-  //     }
-  //   }
-  //   return total;
-  // }
-
-  // calAccessoriesQuantity(item) {
-  //   return item.accessories.reduce((acc, cur) => {
-  //     return acc + cur.quantity;
-  //   }, 0);
-  // }
 
   goToSelectedItems() {
     let data = {

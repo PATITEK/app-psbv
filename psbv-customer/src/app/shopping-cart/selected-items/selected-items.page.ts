@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { OrdersService } from 'src/app/@app-core/http';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
@@ -21,7 +21,9 @@ export class SelectedItemsPage implements OnInit {
     private pageNotiService: PageNotiService,
     private order: OrdersService,
     private connectivityService: ConnectivityService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private toastController: ToastController,
+
   ) {
     this.connectivityService.appIsOnline$.subscribe(online => {
       this.isOnline = online ? true : false;
@@ -32,7 +34,6 @@ export class SelectedItemsPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.items = JSON.parse(params['data']).selectedItems;
     })
-    
   }
 
   ionViewWillEnter() {
@@ -41,6 +42,13 @@ export class SelectedItemsPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+  }
+  async presentFailedToast() {
+    const toast = await this.toastController.create({
+      message: 'Fail, Please try again !',
+      duration: 2000
+    });
+    await toast.present();
   }
 
   sendMailQuote() {
@@ -67,15 +75,15 @@ export class SelectedItemsPage implements OnInit {
         "order_details_attributes": this.receiveData
       }
     }
-
     this.order.createOrder(order).subscribe((data: any) => {
       this.dismissLoading();
-      console.log(data);
       this.pageNotiService.setdataStatusNoti(d);
       this.router.navigate(['/statusNoti']);
     },
     (data)=> {
       this.dismissLoading();
+      this.presentFailedToast();
+      
     })
   }
   async presentLoading() {

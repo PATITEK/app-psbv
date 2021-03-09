@@ -109,7 +109,6 @@ export class SignUpPage implements OnInit {
       (data) =>{
         this.presentFailedToast('Fail! please try again.');
         this.showSpinner = false;
-        console.log(data)
       })
     }
     showPassword2(){

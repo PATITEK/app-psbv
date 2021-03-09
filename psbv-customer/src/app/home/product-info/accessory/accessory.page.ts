@@ -74,8 +74,9 @@ export class AccessoryPage implements OnInit {
     // }
     // else {
       this.shoppingCartsService.getShoppingCarts().subscribe(data => {
-        const cartItems = data.preferences.cartItems;
-        this.cartItems = cartItems === undefined ? [] : cartItems;
+        this.cartItems = data?.preferences?.cartItems || [];  
+        // const cartItems = data.preferences.cartItems;
+        // this.cartItems = cartItems === undefined ? [] : cartItems;
       })
     //}
   }
