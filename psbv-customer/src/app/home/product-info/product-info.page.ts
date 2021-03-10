@@ -30,6 +30,7 @@ export class ProductInfoPage implements OnInit {
     id: '',
     name: ' ',
     description: ' ',
+    code: '',
     short_description: ' ',
     thumb_image: {
       url: ''

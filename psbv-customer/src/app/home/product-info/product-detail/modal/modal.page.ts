@@ -2,23 +2,20 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-modal-add',
-  templateUrl: './modal-add.component.html',
-  styleUrls: ['./modal-add.component.scss'],
+  selector: 'app-modal',
+  templateUrl: './modal.page.html',
+  styleUrls: ['./modal.page.scss'],
 })
-export class ModalAddComponent implements OnInit {
-  @Input() data: any;
-
+export class ModalPage implements OnInit {
   amount = 1;
-
   constructor(
     private modalController: ModalController,
     public toastController: ToastController
   ) { }
+  @Input() data: any;
 
-  ngOnInit() { 
+  ngOnInit() {
   }
-
   decreaseAmount() {
     if (this.amount > 1) {
       this.amount--;

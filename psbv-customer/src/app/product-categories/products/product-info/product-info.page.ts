@@ -29,6 +29,7 @@ export class ProductInfoPage implements OnInit {
   product = {
     id: '',
     name: ' ',
+    code: '',
     description: ' ',
     short_description: ' ',
     thumb_image: {
@@ -87,9 +88,7 @@ export class ProductInfoPage implements OnInit {
          this.getCarts();
       }
       else {
-
       }
-    
   }
 
   getCarts() {

@@ -12,9 +12,7 @@ export interface IDetails {
   templateUrl: './noti-order-status.page.html',
   styleUrls: ['./noti-order-status.page.scss'],
 })
-@Directive({
-  selector: 'appNoti'
-})
+
 export class NotiOrderStatusPage implements OnInit {
 
   constructor(private el: ElementRef) { }

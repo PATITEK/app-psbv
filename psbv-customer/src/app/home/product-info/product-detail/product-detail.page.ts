@@ -6,9 +6,9 @@ import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
 import { ModalController, ToastController } from '@ionic/angular';
-import { ModalAddComponent } from './modal-add/modal-add.component';
 import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { ModalPage } from './modal/modal.page';
 
 @Component({
   selector: 'app-product-detail',
@@ -19,6 +19,7 @@ export class ProductDetailPage implements OnInit {
   product = {
     id: '',
     name: ' ',
+    code: '',
     description: ' ',
     short_description: ' ',
     thumb_image: {
@@ -142,7 +143,7 @@ export class ProductDetailPage implements OnInit {
       this.router.navigateByUrl('auth/login');
     } else {
       const modal = await this.modalController.create({
-        component: ModalAddComponent,
+        component: ModalPage,
         cssClass: 'modal-add-detail-product',
         componentProps: {
           data: {

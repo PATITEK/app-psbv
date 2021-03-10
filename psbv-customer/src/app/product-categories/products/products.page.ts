@@ -29,6 +29,7 @@ export class ProductsPage implements OnInit {
   priceString = '';
   loadedData = false;
   isMaxData = false;
+  checkSystem = false;
   counter = 0;
   inputValue: string = '';
   isOnline;

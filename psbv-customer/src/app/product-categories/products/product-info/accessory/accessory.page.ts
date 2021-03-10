@@ -6,7 +6,7 @@ import { PERMISSIONS, AccessoriesService, ShoppingCartsService } from 'src/app/@
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
 import { ConnectivityService } from 'src/app/@app-core/utils';
-import { ModalAddComponent } from 'src/app/home/product-info/product-detail/modal-add/modal-add.component';
+import { ModalPage } from 'src/app/home/product-info/product-detail/modal/modal.page';
 
 @Component({
   selector: 'app-accessory',
@@ -17,6 +17,7 @@ export class AccessoryPage implements OnInit {
   accessory = {
     id: '',
     name: ' ',
+    code: '',
     description: ' ',
     thumb_image: {
       url: ''
@@ -119,7 +120,7 @@ export class AccessoryPage implements OnInit {
       this.router.navigateByUrl('auth/login');
     } else {
       const modal = await this.modalController.create({
-        component: ModalAddComponent,
+        component: ModalPage,
         cssClass: 'modal-add-detail-product',
         componentProps: {
           data: {

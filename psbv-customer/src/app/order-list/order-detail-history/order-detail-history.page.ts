@@ -126,7 +126,7 @@ export class OrderDetailHistoryPage implements OnInit {
     return this.data.order_details.reduce((acc, cur) => cur.yieldable_type == this.ordersService.TYPES.ACCESSORY.NAME ? acc + cur.amount : acc, 0)
   }
 
-  async openModalReOrder(item) {
+  async openModalReOrder() {
     const alert = await this.alertController.create({
       message: `Add ${this.calProductsAmount()} products & ${this.calAccessoriesAmount()} accessories to cart?`,
       buttons: [
