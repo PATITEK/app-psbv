@@ -22,8 +22,15 @@ export class ProductGroupsService {
       catchError((errorRes) => { throw errorRes.error; }));
   }
  //Search
- public searchProductGroup(request: IPageRequest, nameProductGroup: string, counter: number) {
-  return this.http.get(`${APICONFIG.PRODUCT_GROUP.SEARCH(nameProductGroup)}&${(requestQuery(request))}`).pipe(
+ public searchProductGroup(request: IPageRequest, nameProductGroup: string, code: string,counter: number) {
+  return this.http.get(`${APICONFIG.PRODUCT_GROUP.SEARCH_PRODUCTS(nameProductGroup, code)}&${(requestQuery(request))}`).pipe(
+    map((result) => {
+      return result;
+    }),
+  catchError((errorRes) =>{throw errorRes.error}));
+}
+public searchGroup(request: IPageRequest, nameProductGroup: string,counter: number) {
+  return this.http.get(`${APICONFIG.PRODUCT_GROUP.SEARCH_GROUP(nameProductGroup)}&${(requestQuery(request))}`).pipe(
     map((result) => {
       return result;
     }),

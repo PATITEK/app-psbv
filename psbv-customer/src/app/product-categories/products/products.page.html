@@ -12,7 +12,7 @@
   [ngClass]="checkSystem ? 'margin-search':''"></ion-searchbar>
 </ion-header>
 <ion-content>
-  <p class="absolute-center absolute-center-text" *ngIf="data.length == 0 && loadedData">Not found products.</p>
+  <p class="absolute-center absolute-center-text" *ngIf="!isLoading && data.length == 0">Not found products.</p>
   <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
 
   <ion-grid>
@@ -40,9 +40,9 @@
             {{ data[i + 1].name }}
           </p>
           <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-            <ion-label class="product__price-unit" *ngIf="data[i].price !== 0">$</ion-label>
+            <ion-label class="product__price-unit" *ngIf="data[i+1].price !== 0">$</ion-label>
             <ion-label *ngIf="data[i+1].price !== 0">{{ data[i].price |number: '1.2-2'}}</ion-label>
-            <ion-label *ngIf="data[i+1].price === 0 || data[i].price === null">Request for quotes</ion-label>
+            <ion-label *ngIf="data[i+1].price === 0 || data[i+1].price === null">Request for quotes</ion-label>
           </ion-label>
         </ion-item-group>
       </ion-col>

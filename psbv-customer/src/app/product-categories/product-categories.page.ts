@@ -153,7 +153,7 @@ export class ProductCategoriesPage implements OnInit {
 
   searchProductGroup() {
     const counterTemp = this.counter;
-    this.productGroupService.searchProductGroup(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
+    this.productGroupService.searchGroup(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
       if (counterTemp == this.counter) {
         if (!this.data.some(a => a.id == data.product_groups[0].id)) {
           for (let item of data.product_groups) {

@@ -29,7 +29,6 @@ export class LoginPage implements OnInit {
       this.isOnline = online ? true : false;
     })
   }
-
   async presentSuccessToast() {
     const toast = await this.toastController.create({
       color: 'green',
@@ -38,7 +37,6 @@ export class LoginPage implements OnInit {
     });
     await toast.present();
   }
-
   async presentFailedToast() {
     const toast = await this.toastController.create({
       message: 'Email or Password invalid !',
@@ -46,13 +44,12 @@ export class LoginPage implements OnInit {
     });
     await toast.present();
   }
-
-
   profileForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
   });
   ngOnInit() {
+
   }
 
   showPassword2() {

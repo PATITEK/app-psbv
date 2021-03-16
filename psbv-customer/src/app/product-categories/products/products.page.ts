@@ -146,10 +146,10 @@ export class ProductsPage implements OnInit {
   }
   searchProductGroup() {
     const counterTemp = this.counter;
-    this.productGroupService.searchProductGroup(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
+    this.productGroupService.searchProductGroup(this.pageRequest, this.inputValue, this.inputValue, counterTemp).subscribe((data: any) => {
       if (counterTemp == this.counter) {
-        if (!this.data.some(a => a.id == data.product_groups[0].id)) {
-          for (let item of data.product_groups) {
+        if (!this.data.some(a => a.id == data.products[0].id)) {
+          for (let item of data.products) {
             // image not found
             this.imgnotFound(item);
             this.data.push(item);
@@ -168,6 +168,9 @@ export class ProductsPage implements OnInit {
         }
         this.isLoading = false;
       }
+      else {
+        this.infinityScroll.complete();
+      } 
     })
   }
 

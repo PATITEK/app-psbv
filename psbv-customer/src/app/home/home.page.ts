@@ -199,7 +199,8 @@ export class HomePage implements OnInit {
 
   searchProducts(event?) {
     const counterTemp = this.counter;
-    this.productService.searchProduct(this.pageRequest, this.inputValue, counterTemp).subscribe((data: any) => {
+    this.productService.searchProduct(this.pageRequest, this.inputValue, this.inputValue, counterTemp).subscribe((data: any) => {
+      console.log(data)
       if (counterTemp == this.counter) {
         if (!this.data.some(a => a.id == data.products[0].id)) {
           for (let item of data.products) {
@@ -223,7 +224,6 @@ export class HomePage implements OnInit {
   }
   imgnotFound(item) {
      !item?.thumb_image?.url && (item.thumb_image = {url: "https://i.imgur.com/Vm39DR3.jpg"});
-
   }
   loadProducts(event?) {
     this.productService.getProducts(this.pageRequest).subscribe(data => {
@@ -233,11 +233,9 @@ export class HomePage implements OnInit {
          this.imgnotFound(item);
           this.data.push(item);
         }
-
         this.infinityScroll.complete();
         // this.loading.dismiss();
         this.pageRequest.page++;
-
         // check max data
         if (this.data.length >= data.meta.pagination.total_objects) {
           this.infinityScroll.disabled = true;

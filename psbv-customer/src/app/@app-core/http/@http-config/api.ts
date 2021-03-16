@@ -26,7 +26,8 @@ export const APICONFIG = {
   },
   PRODUCT_GROUP: {
     GET: `/app/product_groups`,
-    SEARCH: (search_term) => `/app/product_groups?name=${search_term}`,
+    SEARCH_PRODUCTS: (search_term, code) => `/app/products?name=${search_term}&code=${code}`,
+    SEARCH_GROUP: (search_group) =>`/app/product_groups?name=${search_group}`,
     GETDETAIL: (id) => `/app/product_groups/${id}`,
     CREATE: `/app/product_groups`,
     EDIT: (id) => `/app/product_groups/${id}`,
@@ -35,7 +36,7 @@ export const APICONFIG = {
   PRODUCTS: {
     GET: `/app/products`,
     GET_TRENDING: `/app/products/trending`,
-    SEARCH: (name) => `/app/products?name=${name}`,
+    SEARCH: (name,code) => `/app/products?name=${name}&code=${code}`,
     GETDETAIL: (id) => `/app/products/${id}`,
     CREATE: `/app/products`,
     EDIT: (id) => `/app/products/${id}`,

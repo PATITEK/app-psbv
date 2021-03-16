@@ -24,11 +24,12 @@
     </ion-card-content>
   </ion-card>
   <!-- for ios device -->
-  <img src="assets/detail-product/add-btn.svg" class="add-product-button" (click)="addProduct()"
-    *ngIf="!checkGuestPermission()">
+ 
 </ion-header>
 
 <ion-content>
+  <img src="assets/detail-product/add-btn.svg" class="add-product-button" (click)="addProduct()">
+  
   <div class="cart-wrapper" (click)="goToCart()" *ngIf="!checkGuestPermission()">
     <img src="assets/detail-product/cart.svg" class="cart-btn">
     <span>+{{ cartItems.length }}</span>
