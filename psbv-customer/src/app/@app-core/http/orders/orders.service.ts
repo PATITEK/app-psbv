@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
-import { IPageRequest, APICONFIG } from '..';
 import { requestQuery } from '../../utils';
+import { APICONFIG } from '../@http-config';
+import { IPageRequest } from '../global';
 
 @Injectable()
 export class OrdersService {

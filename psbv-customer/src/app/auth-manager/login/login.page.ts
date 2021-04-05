@@ -88,11 +88,9 @@ export class LoginPage implements OnInit {
           // this.router.navigateByUrl('/main/product-categories');
           window.location.assign('/');
         },
-        (data: any) => {
-          if (data.error) {
-            this.showSpinner = false;
-            this.presentFailedToast();
-          }
+        (error: any) => {
+          this.showSpinner = false;
+          throw error;
         }
       )
     } else {

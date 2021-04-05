@@ -110,3 +110,15 @@ export const STATUS_SERVICE = [
     value: 'locked'
   }
 ]
+
+export const COLOR_POPUP = {
+  primary: 'primary',
+  secondary: 'secondary',
+  tertiary: 'tertiary',
+  success: 'success',
+  warning: 'warning',
+  danger: 'danger',
+  light: 'light',
+  medium: 'medium',
+  dark: 'dark'
+}
