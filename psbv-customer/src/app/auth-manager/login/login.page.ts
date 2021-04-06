@@ -23,7 +23,7 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     public alertCtrl: AlertController,
     private toastController: ToastController,
-    private connectivityService: ConnectivityService
+    private connectivityService: ConnectivityService,
   ) {
     this.connectivityService.appIsOnline$.subscribe(online => {
       this.isOnline = online ? true : false;

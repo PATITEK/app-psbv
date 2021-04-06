@@ -8,7 +8,7 @@ import { StorageService } from './storage.service';
 import { environment } from 'src/environments/environment.prod';
 import { GlobalErrorHandler } from './GlobalErrorHandler';
 import { ConnectivityService } from './utils/connectivity.service';
-// import { PresentToast } from './presentToast.service';
+import { PresentToast } from './presentToast.service';
 
 @NgModule({
   declarations: [],
@@ -22,7 +22,7 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
-        // PresentToast,
+        PresentToast,
         { provide: API_URL, useValue: environment.apiUrl },
         { provide: HTTP_INTERCEPTORS, useClass: IntercepterService, multi: true },
         { provide: ErrorHandler, useClass: GlobalErrorHandler },
