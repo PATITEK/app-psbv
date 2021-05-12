@@ -55,7 +55,7 @@
         "@types/jasminewd2": "~2.0.3",
         "@types/node": "^12.11.1",
         "codelyzer": "^6.0.0",
-        "cordova-android": "^9.0.0",
+        "cordova-android": "9.1.0",
         "cordova-android-support-gradle-release": "^3.0.1",
         "cordova-plugin-advanced-http": "^3.1.0",
         "cordova-plugin-androidx": "^3.0.0",
@@ -96,7 +96,9 @@
             },
             "cordova-plugin-ionic-keyboard": {},
             "cordova.plugins.diagnostic": {},
-            "cordova-android-support-gradle-release": {},
+            "cordova-android-support-gradle-release": {
+                "ANDROID_SUPPORT_VERSION": "27.+"
+            },
             "cordova-plugin-network-information": {},
             "cordova-plugin-file": {},
             "cordova-plugin-file-transfer": {},
