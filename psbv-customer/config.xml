@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget encoding="utf-8" id="com.psbv.patitek" version="0.0.2" xmlns:gap="http://phonegap.com/ns/1.0"> 
+<widget encoding="utf-8" id="com.psbv.patitek" version="1.0.2" xmlns:gap="http://phonegap.com/ns/1.0"> 
 xmlns="http://www.w3.org/ns/widgets" 
 xmlns:cdv="http://cordova.apache.org/ns/1.0"&gt;
-                                                                                                                                                                                                                                                                                                                                            <name>PSB Global</name>
+                                                                                                                                                                                                                                                                                                                                                                <name>PSB Global</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
