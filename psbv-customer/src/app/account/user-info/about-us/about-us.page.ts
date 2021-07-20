@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/@app-core/http';
 import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
@@ -24,7 +24,7 @@ export class AboutUsPage implements OnInit {
   goBack() {
     this.router.navigateByUrl('account/user-info');
   }
-  onSubmit(){
+  onSubmit(f: NgForm){
     const datapasing: IDataNoti = {
       title: 'SUCCESS !',
       description: 'Your response has been delivered',
@@ -34,6 +34,7 @@ export class AboutUsPage implements OnInit {
         "email_customer": localStorage.getItem('email'),
         "content": this.model.question
     }
+    console.log(obj_req)
    this.accountService.ContactAdmin(obj_req).subscribe((data)=> {
       this.pageNotiService.setdataStatusNoti(datapasing);
         this.router.navigate(['/statusNoti']);

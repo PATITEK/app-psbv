@@ -1,6 +1,15 @@
 ion-header{
     background-color: #232323;
     height: 117px;
+    ion-row {
+        ion-col {
+            ion-back-button {
+                color: #fff;
+                margin-top: -6px;
+            }
+        }
+    }
+    
     .noti-bell {
         color: white;
         font-size: 26px;
@@ -8,26 +17,28 @@ ion-header{
     }
 }
 .ion-heading{
-    margin-top: 3rem;
-    margin-bottom: 1.2rem;
+    margin-top: 6%;
     color: white;
     font-size: 20px;
 
     font-weight: 700;
     display: flex;
     &__element__text{
-        margin-left: 39%;
-        transform: translateX(-50%);
-        @media screen and (max-width: 360px) {
-            margin-left: 38%;
-            transform: translateX(-50%);
-            
-        }
+        margin-left: calc(50% - 25px);
+        transform: translateX(-45%);
         width: 160px;
         clear: both;
         display: inline-block;
         overflow: hidden;
         white-space: nowrap;
+        @media screen and (max-width: 375px){
+            margin-left: calc(50% - 45px);
+            transform: translateX(-45%);
+        }
+        @media screen and (max-width: 320px){
+            margin-left: calc(50% - 45px);
+            transform: translateX(-45%);
+        }
     }
     &__element__shop-icon{
         width: 30px;
@@ -60,7 +71,6 @@ ion-content {
         width: 100%;
         margin-left: -14px;
         margin: 0 auto;
-      
         position: relative;
        --background: #F6F6F6;
        .item__wrapper {

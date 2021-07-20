@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { AccountService, PERMISSIONS } from './http';
+import { PERMISSIONS } from './http/@http-config';
+import { AccountService } from './http/account';
 // import * as jwt_decode from 'jwt-decode';
 
 @Injectable()

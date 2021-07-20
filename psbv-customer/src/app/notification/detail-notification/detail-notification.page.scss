@@ -1,6 +1,14 @@
 ion-header{
     background-color: #232323;
     height: 117px;
+    ion-row {
+        ion-col {
+            ion-back-button {
+                color: #fff;
+                margin-top: -6px;
+            }
+        }
+    }
     .noti-bell {
         color: white;
         font-size: 26px;
@@ -8,21 +16,14 @@ ion-header{
     }
 }
 .ion-heading{
-    margin-top: 3rem;
-    margin-bottom: 1.2rem;
+    margin-top: 6%;
     color: white;
     font-size: 20px;
-
     font-weight: 700;
     display: flex;
     &__element__text{
-        margin-left: 39%;
+        margin-left: calc(50% - 22px);
         transform: translateX(-50%);
-        @media screen and (max-width: 360px) {
-            margin-left: 38%;
-            transform: translateX(-50%);
-            
-        }
         width: 143px;
     }
     &__element__shop-icon{

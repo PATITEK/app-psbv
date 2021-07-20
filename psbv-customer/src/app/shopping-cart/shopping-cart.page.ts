@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { Router, RoutesRecognized } from '@angular/router';
+import { AlertController, Platform } from '@ionic/angular';
 import { GlobalVariablesService } from '../@app-core/global-variables.service';
+import { AuthService, ShoppingCartsService } from '../@app-core/http';
+import { ConnectivityService } from '../@app-core/utils/connectivity.service';
+
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.page.html',
@@ -15,34 +18,105 @@ export class ShoppingCartPage implements OnInit {
 
   scrHeight: any;
   scrWidth: any;
+  private previousUrl: string = undefined;
+  private currentUrl: string = undefined;
+  private backButtonService: any;
+  isOnline;
 
   constructor(
-    private alertCrtl: AlertController,
+    private alertController: AlertController,
     private router: Router,
-    private globalVariablesService: GlobalVariablesService
+    private platform: Platform,
+    private authService: AuthService,
+    private globalVariablesService: GlobalVariablesService,
+    private connectivityService: ConnectivityService,
+    private shoppingCartsService: ShoppingCartsService
   ) {
     this.getScreenSize();
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      this.isOnline = online ? true : false;
+    })
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.currentUrl = this.router.url;
+    this.authService.receiveData.subscribe((data: any) => {
+      this.previousUrl = data;
+    })
+  }
+
+  backButtonSystem(attr) {
+    this.backButtonService = this.platform.backButton.subscribe(() => {
+      if (attr === 'flex') {
+        this.presentAlert();
+      }
+      else {
+        if (this.previousUrl.search('/main/home/product-info') != -1) {
+          this.router.navigateByUrl(this.previousUrl);
+        }
+        else if (this.previousUrl.search('/main/product-categories/products/product-info') != -1) {
+          this.router.navigateByUrl(this.previousUrl);
+        }
+      }
+    })
+  }
+
+  ionViewDidLeave() {
+    this.backButtonService.unsubscribe();
+  }
 
   ionViewWillEnter() {
     const tabs = document.querySelectorAll('ion-tab-bar');
-    Object.keys(tabs).map((key) => {
-      tabs[key].style.display = 'flex';
-    });
-
     if (this.hasBackButton()) {
       Object.keys(tabs).map((key) => {
         tabs[key].style.display = 'none';
+        this.backButtonSystem(tabs[key].style.display);
       });
     }
+    else {
+      Object.keys(tabs).map((key) => {
+        tabs[key].style.display = 'flex';
+        this.backButtonSystem(tabs[key].style.display);
+      });
+    };
+    this.getCarts();
+  }
 
-    this.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsSelected = [];
-    this.cartItems.forEach(() => this.cartItemsSelected.push({
-      selected: false
-    }))
+  getCarts() {
+    this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+
+       this.cartItems = data.preferences?.cartItems;
+      // this.cartItems = cartItems === undefined ? [] : cartItems;
+      this.cartItemsSelected = [];
+      this.cartItems.forEach(() => this.cartItemsSelected.push({selected: false}));
+    })
+  }
+
+  updateCarts() {
+    this.shoppingCartsService.updateShoppingCarts(this.cartItems).subscribe();
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'logout-alert',
+      message: 'Do you want to exit app?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            navigator['app'].exitApp();
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            return;
+          }
+        },
+
+      ]
+    });
+    await alert.present();
   }
 
   getScreenSize(event?) {
@@ -58,7 +132,6 @@ export class ShoppingCartPage implements OnInit {
     const backUrl = this.globalVariablesService.backUrlShoppingCart;
     return backUrl.search('main/home/product-info') != -1 || backUrl.search('main/product-categories/products/product-info') != -1;
   }
-  
 
   // calPrice(item) {
   //   return (item.price + item.accessories.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)) * item.quantity;
@@ -73,19 +146,15 @@ export class ShoppingCartPage implements OnInit {
   decreaseAmount(item) {
     if (item.amount > 1) {
       item.amount--;
-      this.setLocalStorage();
+      this.updateCarts();
     }
   }
 
   increaseAmount(item) {
     if (item.amount < 999) {
       item.amount++;
-      this.setLocalStorage();
+      this.updateCarts();
     }
-  }
-
-  setLocalStorage() {
-    localStorage.setItem('cartItems', JSON.stringify(this.cartItems))
   }
 
   removeItem(item) {
@@ -93,29 +162,13 @@ export class ShoppingCartPage implements OnInit {
       if (item.id == i.id) {
         this.cartItems.splice(this.cartItems.indexOf(item), 1);
         this.cartItemsSelected.splice(this.cartItems.indexOf(item), 1);
-        this.setLocalStorage();
+        this.updateCarts();
         break;
       }
     }
   }
-
-  // isEqual(a, b) {
-  //   // if length is not equal 
-  //   if (a.length != b.length)
-  //     return false;
-  //   else {
-  //     // comapring each element of array 
-  //     for (var i = 0; i < a.length; i++) {
-  //       if (a[i].id != b[i].id || a[i].quantity != b[i].quantity) {
-  //         return false;
-  //       }
-  //     }
-  //     return true;
-  //   }
-  // }
-
   async openModalRemove(item) {
-    const alert = await this.alertCrtl.create({
+    const alert = await this.alertController.create({
       message: 'Delete item from your cart?',
       buttons: [
         {
@@ -159,36 +212,27 @@ export class ShoppingCartPage implements OnInit {
   calSelectedProducts() {
     let total = 0;
     for (let i = 0; i < this.cartItemsSelected.length; i++) {
-      if (this.cartItemsSelected[i].selected) {
+      if (this.cartItemsSelected[i].selected && this.cartItems[i].kind == 'Product') {
         total += this.cartItems[i].amount;
       }
     }
     return total;
   }
 
-  // calSelectedAccessories() {
-  //   let total = 0;
-  //   for (let i = 0; i < this.cartItemsSelected.length; i++) {
-  //     if (this.cartItemsSelected[i].selected) {
-  //       total += this.cartItems[i].accessories.reduce((acc, cur) => {
-  //         return acc + cur.quantity;
-  //       }, 0);
-  //     }
-  //   }
-  //   return total;
-  // }
-
-  // calAccessoriesQuantity(item) {
-  //   return item.accessories.reduce((acc, cur) => {
-  //     return acc + cur.quantity;
-  //   }, 0);
-  // }
+  calSelectedAccessories() {
+    let total = 0;
+    for (let i = 0; i < this.cartItemsSelected.length; i++) {
+      if (this.cartItemsSelected[i].selected && this.cartItems[i].kind == 'Accessory') {
+        total += this.cartItems[i].amount;
+      }
+    }
+    return total;
+  }
 
   goToSelectedItems() {
     let data = {
       selectedItems: []
     }
-
     this.cartItemsSelected.forEach((a, index) => {
       if (a.selected) {
         const product = {
@@ -199,7 +243,6 @@ export class ShoppingCartPage implements OnInit {
           kind: this.cartItems[index].kind
           // accessories: this.cartItems[index].accessories.filter(a => a.quantity > 0)
         }
-
         data.selectedItems.push(product);
       }
     })

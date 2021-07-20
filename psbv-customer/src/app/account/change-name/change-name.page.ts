@@ -36,7 +36,6 @@ export class ChangeNamePage implements OnInit {
   onSubmit(f: NgForm) {
     this.showSpinner = true;
     var name = f.value;
-    console.log(name.fullname);
     const datapasing: IDataNoti = {
       title: 'USER NAME CHANGED!',
       description: 'User name has been changed, Continue to start using app',

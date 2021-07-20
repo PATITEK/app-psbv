@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 // import { ToastrService } from 'ngx-toastr';
-import { AuthService } from './http';
 import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { AuthService } from './http';
 import { StorageService } from './storage.service';
 
 @Injectable()

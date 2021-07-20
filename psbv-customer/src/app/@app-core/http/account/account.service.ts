@@ -1,21 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { APICONFIG, SUCCESS, STATUS } from '../@http-config';
-// import { ToastrService } from 'ngx-toastr';
 import { catchError, map } from 'rxjs/operators';
 import { requestQuery } from 'src/app/@app-core/utils';
 import { IPageRequest } from '../global';
 import { IAccount, IGetAccounts, IPageAccount } from './account.DTO';
 import { promise } from 'protractor';
 import { StorageService } from '../../storage.service';
-
 @Injectable()
 export class AccountService {
 
   constructor(
     private http: HttpClient,
-    // private storage: StorageService,
-    // private toastr: ToastrService,
   ) { }
 
   public getAccounts() {
@@ -23,6 +19,7 @@ export class AccountService {
       map((result: any) => {
       localStorage.setItem('email', result['user']['email']);
       localStorage.setItem('role', result['user']['role']);
+      localStorage.setItem('fullname', result['user']['fullname'])
         return result;
       }),
       catchError((errorRes) => { 

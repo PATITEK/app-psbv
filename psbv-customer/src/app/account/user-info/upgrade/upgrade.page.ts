@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/@app-core/http';
 import { IDataNoti, PageNotiService } from 'src/app/@modular/page-noti/page-noti.service';
@@ -25,7 +26,7 @@ export class UpgradePage implements OnInit {
   setFalse() {
 
   }
-  onSubmit() {
+  onSubmit(f: NgForm) {
       var param = {
         "email": localStorage.getItem('email')
       }

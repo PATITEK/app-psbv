@@ -7,13 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: OrderListPage,
-  },  {
-    path: 'order-status-detail',
-    loadChildren: () => import('./order-status-detail/order-status-detail.module').then( m => m.OrderStatusDetailPageModule)
   },
   {
-    path: 'detail-order',
-    loadChildren: () => import('./detail-order/detail-order.module').then( m => m.DetailOrderPageModule)
+    path: 'order-detail',
+    loadChildren: () => import('./order-detail/order-detail.module').then( m => m.OrderDetailPageModule)
+  },
+  {
+    path: 'order-detail-history',
+    loadChildren: () => import('./order-detail-history/order-detail-history.module').then( m => m.OrderDetailHistoryPageModule)
   }
 
 ]

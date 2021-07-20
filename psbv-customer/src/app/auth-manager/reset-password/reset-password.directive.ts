@@ -14,7 +14,6 @@ export class ResetPasswordDirective {
   }
   @HostListener('keydown',['$event']) onkeyup(el:any) {
     if(el.srcElement.maxLength === el.srcElement.value.length){
-      console.log(el.srcElement.value.length);
       el.preventDefault();
      
     }
