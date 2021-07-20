@@ -29,7 +29,19 @@
   margin-inline-end: 0;
   --background-activated: var(--main-color);
 }
-
+.icon-header {
+  color: white;
+  font-size: 20px;
+}
+.icon-header + .icon-header {
+  margin-left: 12px;
+}
+.three-dot {
+  display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 .modal-add-detail-product {
   .modal-wrapper {
     height: 170px;
@@ -44,5 +56,29 @@
 
   ion-backdrop {
     background: transparent;
+  }
+}
+.product-name-wrapper {
+  .product__price-unit {
+    display: inline-flex;
+    margin-right: 4px;
+  }
+}
+.total-group {
+  .product__price-unit {
+    display: inline-flex;
+    margin-right: 0px;
+  }
+}
+.item-price {
+  .product__price-unit {
+    display: inline-flex;
+    margin-right: 4px;
+  }
+}
+.displayBlock {
+  .product__price-unit {
+    display: inline-flex;
+    margin-right: 4px;
   }
 }

@@ -4,6 +4,7 @@ import { IPageRequest } from '../global';
 import { map, catchError } from 'rxjs/operators';
 import { requestQuery } from 'src/app/@app-core/utils';
 import { APICONFIG, SUCCESS, STATUS } from '../@http-config';
+import { Observable } from 'rxjs';
 // import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
@@ -13,7 +14,7 @@ export class ProductsService {
     // private toastr: ToastrService,
     private http: HttpClient,
   ) { }
-
+ 
   public getProducts(request: IPageRequest) {
     return this.http.get<any>(`${APICONFIG.PRODUCTS.GET}?${(requestQuery(request))}`).pipe(
       map((result) => {
@@ -21,11 +22,11 @@ export class ProductsService {
       }),
       catchError((errorRes) => { throw errorRes.error; }));
   }
+
   //Search
-  public searchProduct(request: IPageRequest, nameProduct: string, counter: number) {
-    return this.http.get(`${APICONFIG.PRODUCTS.SEARCH(nameProduct)}&${(requestQuery(request))}`).pipe(
+  public searchProduct(request: IPageRequest, nameProduct: string, code: string, counter: number) {
+    return this.http.get(`${APICONFIG.PRODUCTS.SEARCH(nameProduct, code)}&${(requestQuery(request))}`).pipe(
       map((result) => {
-        // console.log(result);
         return result;
       }),
     catchError((errorRes) =>{throw errorRes.error}));

@@ -131,7 +131,7 @@ export class NewPasswordPage implements OnInit {
     }
     const datapasing: IDataNoti = {
       title: 'PASSWORD CHANGED!',
-      description: 'Your password has been changed, Continue using app',
+      description: 'Your password has been changed',
       routerLink: '/auth/login'
     }
     var result_object = {

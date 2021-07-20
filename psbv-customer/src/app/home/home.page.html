@@ -1,13 +1,11 @@
 <ion-header>
-  <ion-item class="top-group">
-    <ion-img src="assets/icon/logo.svg" (click)="gotoHome()" slot="start"></ion-img>
-  </ion-item>
-  <ion-buttons class="icon-box">
-    <img src="assets/noti.svg" (click)="goToNoti()"/>
-      <img src="assets/user.svg" (click)="goToUserInfo()"/>
+  <ion-buttons class="wrapper">
+    <img src="assets/icon/logo.svg" alt="" (click)="gotoHome()">
+    <ion-buttons class="icon-box">
+      <ion-icon name="notifications-outline" (click)="goToNoti()"></ion-icon>
+      <ion-icon name="person-outline" (click)="goToUserInfo()"></ion-icon>
+    </ion-buttons>
   </ion-buttons>
-
-
   <ion-searchbar (ionInput)="onInput($event)" debounce="500" autocorrect="off" [value]="inputValue"></ion-searchbar>
 
   <ion-segment>
@@ -19,11 +17,12 @@
   </ion-segment>
 </ion-header>
 
-<ion-content>
+<ion-content [style.--padding-top.px]="!isOnline ? 32 : 0">
+  <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
   <ion-item-group *ngIf="activeTab == filterProducts[0].id">
     <ion-spinner class="absolute-center" *ngIf="isLoading"></ion-spinner>
-    <p class="absolute-center" *ngIf="data.length == 0 && !isLoading">Not found products.</p>
-
+    <p class="absolute-center absolute-center-text" *ngIf="data.length == 0 && !isLoading">Not found products.</p>
+    
     <ion-grid>
       <ion-backdrop *ngIf="data.length == 0 || isLoading"></ion-backdrop>
       <ion-row *ngFor="let item of data; let i = index">
@@ -31,11 +30,14 @@
           <ion-img [src]="data[i].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2">
           </ion-img>
           <ion-item-group class="displayBlock">
-            <ion-label class="product__name">
-              {{ data[i].name }}
-            </ion-label>
+          <ion-label class="product__hastag" >#{{data[i].code}}</ion-label>
+            <p class="product__name"[innerHTML]="data[i].name">
+            </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              {{ data[i].price | number: '1.0-2' }}
+              <ion-label class="product__price-unit"  *ngIf="data[i].price !== 0">$</ion-label>
+              <ion-label  *ngIf="data[i].price !== 0" [innerHTML]="data[i].price |number: '1.2-2'"></ion-label>
+            <ion-label  *ngIf="data[i].price === 0 || data[i].price === null">Request for quotes</ion-label>
+              
             </ion-label>
           </ion-item-group>
         </ion-col>
@@ -43,11 +45,13 @@
           <ion-img [src]="data[i + 1].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2">
           </ion-img>
           <ion-item-group class="displayBlock">
-            <ion-label class="product__name">
-              {{ data[i + 1].name }}
-            </ion-label>
+            <ion-label class="product__hastag">#{{data[i+1].code}}</ion-label>
+            <p class="product__name"[innerHTML]="data[i + 1].name">
+            </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              {{ data[i + 1].price | number: '1.0-2' }}
+              <ion-label class="product__price-unit"   *ngIf="data[i+1].price !== 0">$</ion-label>
+              <ion-label  *ngIf="data[i+1].price !== 0"[innerHTML]="data[i+1].price |number: '1.2-2'" ></ion-label>
+            <ion-label  *ngIf="data[i+1].price === 0 || data[i+1].price === null">Request for quotes</ion-label>
             </ion-label>
           </ion-item-group>
         </ion-col>
@@ -61,8 +65,7 @@
 
   <ion-item-group *ngIf="activeTab == filterProducts[1].id">
     <!-- <ion-spinner class="absolute-center" *ngIf="isLoading"></ion-spinner> -->
-    <p class="absolute-center" *ngIf="dataSeenProducts.length == 0">Not found products.</p>
-
+    <p class="absolute-center  absolute-center-text" *ngIf="dataSeenProducts.length == 0">Not found products.</p>
     <ion-grid>
       <ion-backdrop *ngIf="dataSeenProducts.length == 0"></ion-backdrop>
       <ion-row *ngFor="let item of dataSeenProducts; let i = index">
@@ -70,11 +73,14 @@
           <ion-img [src]="dataSeenProducts[i].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2">
           </ion-img>
           <ion-item-group class="displayBlock">
-            <ion-label class="product__name">
-              {{ dataSeenProducts[i].name }}
-            </ion-label>
+          <ion-label class="product__hastag">#{{dataSeenProducts[i].code}}</ion-label>
+            <p class="product__name"[innerHTML]="dataSeenProducts[i].name" >
+            </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              {{ dataSeenProducts[i].price | number: '1.0-2' }}
+              <ion-label class="product__price-unit"   *ngIf="dataSeenProducts[i].price !== 0">$</ion-label>
+              <ion-label  *ngIf="dataSeenProducts[i].price !== 0"[innerHTML]="dataSeenProducts[i].price |number: '1.2-2'" ></ion-label>
+            <ion-label  *ngIf="dataSeenProducts[i].price === 0 || dataSeenProducts[i].price === null">Request for quotes</ion-label>
+              
             </ion-label>
           </ion-item-group>
         </ion-col>
@@ -82,11 +88,14 @@
           <ion-img [src]="dataSeenProducts[i + 1].thumb_image.url" class="ion-card--image" [style.height.px]="(scrWidth - 40) / 2">
           </ion-img>
           <ion-item-group class="displayBlock">
-            <ion-label class="product__name">
-              {{ dataSeenProducts[i + 1].name }}
-            </ion-label>
+          <ion-label class="product__hastag">#{{dataSeenProducts[i+1].code}}</ion-label>
+            <p class="product__name" [innerHTML]="dataSeenProducts[i + 1].name">
+            
+            </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              {{ dataSeenProducts[i + 1].price | number: '1.0-2' }}
+              <ion-label class="product__price-unit"  *ngIf="dataSeenProducts[i+1].price !== 0">$</ion-label>
+              <ion-label  *ngIf="dataSeenProducts[i+1].price !== 0"  [innerHTML]="dataSeenProducts[i+1].price |number: '1.2-2'"></ion-label>
+            <ion-label  *ngIf="dataSeenProducts[i+1].price === 0 || dataSeenProducts[i+1].price === null">Request for quotes</ion-label>
             </ion-label>
           </ion-item-group>
         </ion-col>
@@ -100,7 +109,7 @@
 
   <ion-item-group *ngIf="activeTab == filterProducts[2].id">
     <ion-spinner class="absolute-center" *ngIf="isLoadingTrending"></ion-spinner>
-    <p class="absolute-center" *ngIf="dataTrending.length == 0 && !isLoadingTrending">Not found products.</p>
+    <p class="absolute-center absolute-center-text" *ngIf="dataTrending.length == 0 && !isLoadingTrending">Not found products.</p>
 
     <ion-grid>
       <ion-backdrop *ngIf="dataTrending.length == 0 || isLoadingTrending"></ion-backdrop>
@@ -110,11 +119,14 @@
             [style.height.px]="(scrWidth - 40) / 2">
           </ion-img>
           <ion-item-group class="displayBlock">
-            <ion-label class="product__name">
-              {{ dataTrending[i].name }}
-            </ion-label>
+            <ion-label class="product__hastag">#{{dataTrending[i].code}}</ion-label>
+            <p class="product__name"[innerHTML]="dataTrending[i].name">
+            </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              {{ dataTrending[i].price | number: '1.0-2' }}
+              <ion-label class="product__price-unit"*ngIf="dataTrending[i].price !== 0" >$</ion-label>
+              <ion-label  *ngIf="dataTrending[i].price !== 0"[innerHTML]="dataTrending[i].price |number: '1.2-2'" ></ion-label>
+            <ion-label  *ngIf="dataTrending[i].price === 0 || dataTrending[i].price === null">Request for quotes</ion-label>
+              
             </ion-label>
           </ion-item-group>
         </ion-col>
@@ -123,11 +135,14 @@
             [style.height.px]="(scrWidth - 40) / 2">
           </ion-img>
           <ion-item-group class="displayBlock">
-            <ion-label class="product__name">
-              {{ dataTrending[i + 1].name }}
-            </ion-label>
+            <ion-label class="product__hastag">#{{dataTrending[i+1].code}}</ion-label>
+            <p class="product__name" [innerHTML]=" dataTrending[i + 1].name">
+            </p>
             <ion-label class="product__name-price" *ngIf="!checkGuestPermission()">
-              {{ dataTrending[i + 1].price | number: '1.0-2' }}
+              <ion-label class="product__price-unit" *ngIf="dataTrending[i+1].price !== 0">$</ion-label>
+              <ion-label  *ngIf="dataTrending[i+1].price !== 0"[innerHTML]="dataTrending[i+1].price |number: '1.2-2'"></ion-label>
+            <ion-label  *ngIf="dataTrending[i+1].price === 0 || dataTrending[i+1].price === null">Request for quotes</ion-label>
+              
             </ion-label>
           </ion-item-group>
         </ion-col>

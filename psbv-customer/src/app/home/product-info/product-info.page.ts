@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
-import { AccessoriesService, IPageRequest, PERMISSIONS, ProductsService } from 'src/app/@app-core/http';
+import { AccessoriesService, AuthService, IPageRequest, PERMISSIONS, ProductsService, ShoppingCartsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
+import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 
 @Component({
   selector: 'app-product-info',
@@ -23,13 +24,13 @@ export class ProductInfoPage implements OnInit {
     per_page: 6,
     total_objects: 20
   }
-  // counter: number = 0;
-  permission: string;
+  permission = '';
   accessories = [];
   product = {
     id: '',
     name: ' ',
     description: ' ',
+    code: '',
     short_description: ' ',
     thumb_image: {
       url: ''
@@ -38,10 +39,11 @@ export class ProductInfoPage implements OnInit {
   }
   accessoryIds = [];
   products = [];
-  cartItemsLength = 0;
+  cartItems = [];
   loadedProduct = false;
   loadedAccessories = false;
-  added = JSON.parse(localStorage.getItem('added')) || false;
+  previousUrl: any;
+  isOnline;
 
   constructor(
     private router: Router,
@@ -50,34 +52,52 @@ export class ProductInfoPage implements OnInit {
     private loading: LoadingService,
     private accessoriesService: AccessoriesService,
     private storageService: StorageService,
-    private globalVariablesService: GlobalVariablesService
+    private authService: AuthService,
+    private globalVariablesService: GlobalVariablesService,
+    private connectivityService: ConnectivityService,
+    private shoppingCartsService: ShoppingCartsService
   ) {
-    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsLength = arr.length;
     this.getScreenSize();
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.isOnline = true;
+        this.loadData();
+      } else {
+        this.isOnline = false;
+      }
+    })
   }
 
   ngOnInit() {
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
-    this.loading.present();
-    this.loadData();
+    if (this.isOnline === true) {
+      this.loading.present();
+      this.loadData();
+    }
+    this.previousUrl = this.router.url;
+    this.authService.sendData(this.previousUrl);
   }
 
   ionViewWillEnter() {
-    this.added = JSON.parse(localStorage.getItem('added')) || false;
-    const arr = JSON.parse(localStorage.getItem('cartItems')) || [];
-    this.cartItemsLength = arr.length;
-
     const tabs = document.querySelectorAll('ion-tab-bar');
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+
+    this.getCarts();
   }
 
-  ngOnDestroy() {
-    localStorage.removeItem('added');
+  getCarts() {
+   if (localStorage.getItem('Authorization') !== null) {
+      this.shoppingCartsService.getShoppingCarts().subscribe(data => {
+        this.cartItems = data?.preferences?.cartItems || [];  
+        // const cartItems = data.preferences.cartItems;
+        // this.cartItems = cartItems === undefined ? [] : cartItems;
+      })
+    } else {
+    }
   }
 
   getScreenSize(event?) {
@@ -91,7 +111,6 @@ export class ProductInfoPage implements OnInit {
     } else {
       const data = {
         id: this.product.id,
-        added: this.added
       }
       this.router.navigate(['/main/home/product-info/product-detail'], {
         queryParams: {
@@ -128,53 +147,8 @@ export class ProductInfoPage implements OnInit {
   }
 
   addProduct(): void {
-    // add product to cart
-    // const product = {
-    //   id: this.product.id,
-    //   name: this.product.name,
-    //   quantity: 1, // default = 1
-    //   price: this.product.price,
-    //   accessories: this.accessoryIds.reduce((acc, cur) => {
-    //     if (cur.quantity > 0) {
-    //       let name;
-    //       for (let i of this.accessories) {
-    //         if (cur.id == i.id) {
-    //           name = i.name;
-    //           break;
-    //         }
-    //       }
-    //       acc.push({
-    //         id: cur.id,
-    //         name: name,
-    //         quantity: cur.quantity,
-    //         price: cur.price
-    //       });
-    //     }
-    //     return acc;
-    //   }, [])
-    // }
-
-    // let duplicate = false;
-    // for (let j of this.cartItems) {
-    //   if (product.id == j.id && this.isEqual(product.accessories, j.accessories)) {
-    //     j.quantity++;
-    //     duplicate = true;
-    //     break;
-    //   }
-    // }
-    // if (!duplicate) {
-    //   this.cartItems.push(product);
-    // }
-
-    // // update data
-    // this.setLocalStorage();
-
-    // // reset selected item
-    // this.accessoryIds.forEach(accessory => accessory.quantity = 0);
-
     const data = {
       id: this.product.id,
-      added: this.added,
       doesOpenModal: true
     }
     this.router.navigate(['/main/home/product-info/product-detail'], {
@@ -185,26 +159,33 @@ export class ProductInfoPage implements OnInit {
   }
 
   addAccessory(accessory) {
-    const data = {
-      id: accessory.id,
-      added: this.added
-    }
-    this.router.navigate(['/main/home/product-info/accessory'], {
-      queryParams: {
-        data: JSON.stringify(data)
+    if (this.checkGuestPermission()) {
+      this.router.navigateByUrl('/auth/login');
+    } else {
+      const data = {
+        id: accessory.id,
       }
-    });
+      this.router.navigate(['/main/home/product-info/accessory'], {
+        queryParams: {
+          data: JSON.stringify(data)
+        }
+      });
+    }
   }
 
   checkGuestPermission(): boolean {
     return this.permission == PERMISSIONS[0].value;
   }
-
+  imgnotFound(item) {
+    !item?.thumb_image?.url && (item.thumb_image = {url: "https://i.imgur.com/Vm39DR3.jpg"});
+    }
   loadData() {
+    
     this.route.queryParams.subscribe(params => {
       if (params.data !== undefined && !this.loadedProduct) {
         this.productService.getProductDetail(JSON.parse(params['data']).id)
           .subscribe(data => {
+            this.imgnotFound(data.product);
             this.product = data.product;
             this.loadedProduct = true;
             if (this.loadedProduct && this.loadedAccessories) {
@@ -213,25 +194,28 @@ export class ProductInfoPage implements OnInit {
           });
 
         this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, JSON.parse(params['data']).id).subscribe(data => {
-          for (let item of data.accessories) {
-            this.accessories.push(item);
-            this.accessoryIds.push({
-              id: item.id,
-              quantity: 0,
-              price: item.price
-            })
-          }
+          if (!this.accessories.some(a => a.id == data.accessories[0].id)) {
+            for (let item of data.accessories) {
+              this.imgnotFound(item);
+              this.accessories.push(item);
+              this.accessoryIds.push({
+                id: item.id,
+                quantity: 0,
+                price: item.price
+              })
+            }
 
+            if (this.loadedProduct && this.loadedAccessories) {
+              this.loading.dismiss();
+            }
+            this.pageRequest.page++;
+
+            // check max data
+            if (this.accessories.length >= data.meta.pagination.total_objects) {
+              this.infinityScroll.disabled = true;
+            }
+          }
           this.loadedAccessories = true;
-          if (this.loadedProduct && this.loadedAccessories) {
-            this.loading.dismiss();
-          }
-          this.pageRequest.page++;
-
-          // check max data
-          if (this.accessories.length >= data.meta.pagination.total_objects) {
-            this.infinityScroll.disabled = true;
-          }
         })
       }
     })
@@ -240,6 +224,7 @@ export class ProductInfoPage implements OnInit {
   loadMoreAccessories() {
     this.accessoriesService.getAccessoriesWithProductId(this.pageRequest, this.product.id).subscribe(data => {
       for (let item of data.accessories) {
+       this.imgnotFound(item);
         this.accessories.push(item);
         this.accessoryIds.push({
           id: item.id,
@@ -258,20 +243,20 @@ export class ProductInfoPage implements OnInit {
     })
   }
 
-  isEqual(a, b) {
-    // if length is not equal 
-    if (a.length != b.length)
-      return false;
-    else {
-      // comapring each element of array 
-      for (var i = 0; i < a.length; i++) {
-        if (a[i].id != b[i].id || a[i].quantity != b[i].quantity) {
-          return false;
-        }
-      }
-      return true;
-    }
-  }
+  // isEqual(a, b) {
+  //   // if length is not equal 
+  //   if (a.length != b.length)
+  //     return false;
+  //   else {
+  //     // comapring each element of array 
+  //     for (var i = 0; i < a.length; i++) {
+  //       if (a[i].id != b[i].id || a[i].quantity != b[i].quantity) {
+  //         return false;
+  //       }
+  //     }
+  //     return true;
+  //   }
+  // }
 
   // setLocalStorage() {
   //   localStorage.setItem('cartItems', JSON.stringify(this.cartItems))

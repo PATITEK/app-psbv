@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { AlertController, IonContent, IonInfiniteScroll, Platform } from '@ionic/angular';
+import { GlobalVariablesService } from 'src/app/@app-core/global-variables.service';
 import { IPageRequest, PERMISSIONS, ProductGroupsService } from 'src/app/@app-core/http';
 import { LoadingService } from 'src/app/@app-core/loading.service';
 import { StorageService } from 'src/app/@app-core/storage.service';
+import { ConnectivityService } from 'src/app/@app-core/utils/connectivity.service';
 
 @Component({
   selector: 'app-products',
@@ -12,10 +14,9 @@ import { StorageService } from 'src/app/@app-core/storage.service';
 })
 export class ProductsPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infinityScroll: IonInfiniteScroll;
-
+  @ViewChild(IonContent) ionContent: IonContent;
   scrHeight: any;
   scrWidth: any;
-
   pageRequest: IPageRequest = {
     page: 1,
     per_page: 10,
@@ -25,22 +26,40 @@ export class ProductsPage implements OnInit {
   permission: string;
   title = '';
   id = '';
-
+  priceString = '';
   loadedData = false;
-
+  isMaxData = false;
+  checkSystem = false;
+  counter = 0;
+  inputValue: string = '';
+  isOnline;
+  isLoading = true;
+  data1 = [];
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private productGroupService: ProductGroupsService,
     private loading: LoadingService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private alertController: AlertController,
+    private connectivityService: ConnectivityService
   ) {
     this.getScreenSize();
-   }
+    this.connectivityService.appIsOnline$.subscribe(online => {
+      if (online) {
+        this.isOnline = true;
+        this.loadData();
+      } else {
+        this.isOnline = false;
+      }
+    })
+  }
 
   ngOnInit() {
-    this.loading.present();
-    this.loadData();
+    if (this.isOnline === true) {
+      this.loading.present();
+      this.loadData();
+    }
     this.storageService.infoAccount.subscribe((data) => {
       this.permission = (data !== null) ? data.role : PERMISSIONS[0].value;
     })
@@ -58,48 +77,113 @@ export class ProductsPage implements OnInit {
     Object.keys(tabs).map((key) => {
       tabs[key].style.display = 'none';
     });
+   
   }
-
   getScreenSize(event?) {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
   }
-
-  loadData() {
+  imgnotFound(item) {
+    // const d = {
+    //   url: "https://i.imgur.com/Vm39DR3.jpg"
+    // }
+    // if(item.thumb_image == null ) {
+    //   item['thumb_image'] = d;
+    //  }
+    //  else if(item.thumb_image.url == null) {
+    //    item.thumb_image.url = d.url;
+    //  }
+     !item?.thumb_image?.url && (item.thumb_image = {url: "https://i.imgur.com/Vm39DR3.jpg"});
+    }
+  loadDataProduct() {
     setTimeout(() => {
       if (this.id != '') {
-        this.productGroupService.getProductGroupDetail(this.id, this.pageRequest)
-          .subscribe(data => {
+        this.productGroupService.getProductGroupDetail(this.id, this.pageRequest).subscribe(data => {
+          if (!this.data.some(a => a.id == data.products[0].id)) {
             for (let item of data.products) {
               // image not found
-              if (item.thumb_image === null) {
-                const d = {
-                  url: "https://i.imgur.com/dbpoag5.png"
-                }
-                item.thumb_image = d;
-              }
+              this.imgnotFound(item);
               this.data.push(item);
             }
-
-            this.loadedData = true;
-
             this.infinityScroll.complete();
-            this.loading.dismiss();
             this.pageRequest.page++;
-
             // check max data
             if (this.data.length >= data.meta.pagination.total_objects) {
               this.infinityScroll.disabled = true;
             }
-
-            // cal left per_page
-            const temp = data.meta.pagination.total_objects - this.data.length;
-            if (temp <= this.pageRequest.per_page) {
-              this.pageRequest.per_page = temp;
-            }
-          })
+            // // cal left per_page
+            // const temp = data.meta.pagination.total_objects - this.data.length;
+            // if (temp <= this.pageRequest.per_page) {
+            //   this.pageRequest.per_page = temp;
+            // }
+          }
+          this.loadedData = true;
+          this.loading.dismiss();
+        })
       }
-    }, 50)
+    }, 50);
+  }
+  onInput(event: any) {
+    this.infinityScroll.disabled = false;
+    this.inputValue = event.target.value;
+    this.reset();
+    this.scrollContent();
+    this.counter++;
+    this.loadData();
+  }
+  scrollContent() {
+    this.ionContent.scrollToTop(500);
+  }
+  reset() {
+    this.pageRequest = {
+      page: 1,
+      per_page: 6,
+      total_objects: 20
+    }
+    this.data = [];
+    this.isLoading = true;
+    this.isMaxData = false;
+  }
+  searchProductGroup() {
+    const counterTemp = this.counter;
+    this.productGroupService.searchProductGroup(this.pageRequest, this.inputValue, this.inputValue, counterTemp).subscribe((data: any) => {
+      if (counterTemp == this.counter) {
+        if (!this.data.some(a => a.id == data.products[0].id)) {
+          for (let item of data.products) {
+            // image not found
+            this.imgnotFound(item);
+            this.data.push(item);
+          }
+          this.counter++;
+
+          this.infinityScroll.complete();
+          // this.loading.dismiss();
+          this.pageRequest.page++;
+
+          // check max data
+          if (this.data.length >= data.meta.pagination.total_objects) {
+            this.infinityScroll.disabled = true;
+            this.isMaxData = true;
+          }
+        }
+        this.isLoading = false;
+      }
+      else {
+        this.infinityScroll.complete();
+      } 
+    })
+  }
+
+  loadData() {
+    if (this.isOnline && !this.isMaxData) {
+      if (this.inputValue !== '') {
+        this.searchProductGroup();
+      } else {
+        this.loadDataProduct();
+      }
+    } else {
+      this.infinityScroll.complete();
+    }
   }
 
   checkGuestPermission(): boolean {
@@ -120,7 +204,6 @@ export class ProductsPage implements OnInit {
 
   goToDetail(item) {
     this.setCartLocalStorage(item);
-
     const data = {
       id: item.id,
       categoryId: this.id,
@@ -135,12 +218,12 @@ export class ProductsPage implements OnInit {
 
   setCartLocalStorage(item) {
     let dataSeenProducts = JSON.parse(localStorage.getItem('seenProducts')) || [];
-
     const product = {
       id: item.id,
       name: item.name,
       thumb_image: item.thumb_image,
-      price: item.price
+      price: item.price,
+      code: item.code
     }
 
     for (let i = 0, n = dataSeenProducts.length; i < n; i++) {
@@ -150,7 +233,6 @@ export class ProductsPage implements OnInit {
       }
     }
     dataSeenProducts.unshift(product);
-
     localStorage.setItem('seenProducts', JSON.stringify(dataSeenProducts));
   }
 }

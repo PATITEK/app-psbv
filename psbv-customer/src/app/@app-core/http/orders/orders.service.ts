@@ -1,29 +1,32 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
-import { IPageRequest, APICONFIG } from '..';
 import { requestQuery } from '../../utils';
+import { APICONFIG } from '../@http-config';
+import { IPageRequest } from '../global';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class OrdersService {
   public STATUSES = [
     {
       NAME: 'confirmed',
-      COLOR: '#B2E9FB'
+      COLOR: '#B2E9FB',
+      URL: 'assets/order-status/confirmed-icon.svg'
     },
     {
       NAME: 'shipping',
-      COLOR: '#F7BDAE'
+      COLOR: '#F7BDAE',
+      URL: 'assets/order-status/shipping-icon.svg'
     },
     {
       NAME: 'received',
-      COLOR: '#F9D775'
+      COLOR: '#F9D775',
+      URL: 'assets/order-status/received-icon.svg'
     },
     {
       NAME: 'canceled',
-      COLOR: '#CE091C'
+      COLOR: '#CCBAFC',
+      URL: 'assets/order-status/canceled-icon.svg'
     }
   ];
   public TYPES = {

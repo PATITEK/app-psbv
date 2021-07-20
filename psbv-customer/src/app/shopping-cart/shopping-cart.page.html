@@ -5,17 +5,24 @@
   </ion-buttons>
 </ion-header>
 
-<ion-content [style.height]="getIonContentAttribute(80).height" [style.bottom]="getIonContentAttribute(80).bottom">
-  <p class="absolute-center" *ngIf="cartItems.length == 0">Empty cart.</p>
+<ion-content [style.height]="getIonContentAttribute(80).height" [style.bottom]="getIonContentAttribute(80).bottom"
+  [style.--padding-top.px]="!isOnline ? 32 : 0">
+  <span class="no-internet-popup" *ngIf="!isOnline">No internet connection</span>
+  <p class="absolute-center absolute-center-text" *ngIf="cartItems.length == 0">Empty cart.</p>
 
   <ion-card class="cart-item" *ngFor="let item of cartItems; let i = index;">
     <ion-icon name="close-outline" class="remove-btn" (click)="openModalRemove(item)"></ion-icon>
     <ion-buttons class="item-header">
       <ion-buttons (click)="toggleSelected(cartItemsSelected[i])">
         <span class="selected-btn" [style.background]="cartItemsSelected[i].selected ? '#91E29B' : 'white'"></span>
-        <ion-label class="item-name" [style.max-width.px]="scrWidth - 170">{{ item.name }}</ion-label>
+        <ion-label class="item-name" >{{ item.name }}</ion-label>
+      </ion-buttons >
+      <ion-buttons class="item-price"*ngIf="item.price != 0">
+        <ion-label class="product__price-unit">$</ion-label>{{ item.price * item.amount | number: '1.2-2' }}
       </ion-buttons>
-      <ion-buttons class="item-price">{{ item.price * item.amount | number: '1.0-2' }}</ion-buttons>
+      <ion-buttons class="item-price" *ngIf="item.price == 0">
+       RFQ
+      </ion-buttons>
     </ion-buttons>
     <ion-buttons class="ion-justify-content-end">
       <!-- <ion-img [src]="item.url" class="item-img"></ion-img> -->
@@ -32,10 +39,16 @@
       <span class="delivery-day">1 day</span>
     </ion-buttons>
     <ion-buttons class="total-group">
-      <span>{{ item.price * item.amount | number: '1.0-2' }}</span>
+      <span *ngIf="item.price != 0">
+        <ion-label class="product__price-unit">$</ion-label>
+        {{ item.price * item.amount | number: '1.2-2' }}
+      </span>
+      <span *ngIf="item.price == 0">
+        RFQ        
+      </span>
       <span class="separation"></span>
-      <span *ngIf="item.kind == 'product'">{{ item.amount }} products</span>
-      <span *ngIf="item.kind == 'accessory'">{{ item.amount }} accessories</span>
+      <span *ngIf="item.kind == 'Product'">{{ item.amount }} products</span>
+      <span *ngIf="item.kind == 'Accessory'">{{ item.amount }} accessories</span>
     </ion-buttons>
   </ion-card>
 </ion-content>
@@ -49,6 +62,7 @@
     <ion-item-group class="total-product-group">
       <span class="total-product-label">Total:</span>
       <span class="total-product">{{ calSelectedProducts() }} products</span>
+      <span class="total-accessory">{{ calSelectedAccessories() }} accessories</span>
       <span class="total-price"></span>
     </ion-item-group>
     <ion-button class="btn-send" [disabled]="checkAllNotSelected()" (click)="goToSelectedItems()">Send a quote

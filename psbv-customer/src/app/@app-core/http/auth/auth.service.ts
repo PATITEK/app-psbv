@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { APICONFIG } from '../@http-config/api';
-import { catchError, map } from 'rxjs/operators';
+import { APICONFIG } from '../@http-config';
 // import { ToastrService } from 'ngx-toastr';
 // import { SUCCESS } from '../@http-config/messages';
 import { Router } from '@angular/router';
-import { StorageService } from 'src/app/@app-core/storage.service';
+import { AccountService } from '../account';
+import { StorageService } from '../../storage.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
 
 @Injectable()
 export class AuthService {
@@ -17,6 +19,7 @@ export class AuthService {
     // private toastr: ToastrService,
     private router: Router,
     private storage: StorageService,
+    private accountService: AccountService
   ) { }
 
   public get receiveData(): Observable<any> {
@@ -69,12 +72,8 @@ export class AuthService {
     return this.http.post(`${APICONFIG.AUTH.LOGIN}`, req).pipe(
       map((result: any) => {
         this.storage.clear();
-        console.log(result);
         localStorage.setItem('Authorization', result.token);
-        localStorage.setItem('fullname', result.fullname);
         this.storage.setInfoAccount();
-        
-        //  this.toastr.success(SUCCESS.AUTH.LOGIN);
         return result;
       }),
       catchError((errorRes: any) => {
@@ -89,19 +88,21 @@ export class AuthService {
     localStorage.clear();
     this.storage.clear();
     this.storage.setInfoAccount();
-    this.router.navigateByUrl('/main/home');
+    window.location.assign('/');
   }
   public signup(req) {
     return this.http.post(`${APICONFIG.AUTH.SIGNUP}`, req).pipe(
-      map((result) => {
-        // this.toastr.success(SUCCESS.AUTH.LOGIN);
+      map((result:any) => {
+        this.storage.clear();
+        localStorage.setItem('Authorization', result.token);
+        this.storage.setInfoAccount();
+       
         return result;
       }),
       catchError((errorRes: any) => {
         throw errorRes.error;
       }));
   }
- 
   checkLogin() {
     const token = localStorage.getItem('Authorization');
     if (!token) {

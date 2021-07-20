@@ -70,7 +70,6 @@ export class ResetPasswordPage implements OnInit {
       (data:any) => {
       this.router.navigateByUrl("/auth/reset-password");
   });
-    
   }
   onSubmit() {
       var c1 = this.inputCode.get('code1').value;

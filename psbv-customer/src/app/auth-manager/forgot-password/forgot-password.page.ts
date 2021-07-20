@@ -49,7 +49,6 @@ export class ForgotPasswordPage implements OnInit {
     }
     else if (!this.checkrequired && this.inputEmail.get('email').invalid && this.inputEmail.get('email').touched) {
       this.checkpattern = true;
-      console.log('pattern', this.checkpattern);
     }
     else this.checkpattern = false;
 

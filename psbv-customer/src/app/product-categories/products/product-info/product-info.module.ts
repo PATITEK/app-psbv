@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { ProductInfoPageRoutingModule } from './product-info-routing.module';
 
 import { ProductInfoPage } from './product-info.page';
+// import { HTTP } from '@ionic-native/http/ngx';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    // HTTP,
     ProductInfoPageRoutingModule
   ],
   declarations: [ProductInfoPage]
